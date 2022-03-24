@@ -25,11 +25,6 @@
 #include <string.h>
 #include <time.h>
 
-#ifdef TABBOZ_WIN
-#include <dos.h>
-#include <bwcc.h>
-#endif
-
 #include "zarrosim.h"
 #ifdef TABBOZ_WIN
 #ifndef NONETWORK

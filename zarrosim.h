@@ -33,11 +33,6 @@
 /* Per attivare il Prompt ... */
 // #define PROMPT_ACTIVE
 
-/* Per la versione a 32 bit ... */
-#ifdef TABBOZ_WIN32
-#define TABBOZ32
-#endif
-
 #ifndef lint
 static char copyright[] =
 "@(#) Copyright (c) 1997-2001 Andrea Bonomi, Emanuele Caccialanza, Daniele Gazzarri.\n\

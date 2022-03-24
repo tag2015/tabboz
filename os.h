@@ -19,20 +19,14 @@
 
 // #define TABBOZ_LINUX
 // #define TABBOZ_WIN16
-#define TABBOZ_WIN32
+#define TABBOZ_WIN
 
 // Linux
 #ifdef TABBOZ_LINUX
 #endif
 
-// Windows 16bit
-#ifdef TABBOZ_WIN16
-#define TABBOZ_WIN
-#include <windows.h>
-#endif
-
 // Windows 32bit
-#ifdef TABBOZ_WIN32
-#define TABBOZ_WIN
-#include <windows.h>
+#ifdef TABBOZ_WIN
+#define TABBOZ32  // 32 bit di default
+//#include <windows.h>
 #endif
