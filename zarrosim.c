@@ -43,7 +43,7 @@
 
 static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
-//extern void     Atinom(HANDLE hInstance);
+//extern void     Atinom(HANDLE hInstance);  //visualizza messaggio extra in about
 extern int      vvc(int i);        /* 15 Giugno 1998 - v0.7.1 - Verifica Valori Chiave */
 extern u_long   new_counter;
 //extern ATOM     RegisterBMPTipaClass(HANDLE hInst);
@@ -585,30 +585,30 @@ static void CaricaTutto(void)
 //*******************************************************************
 void FineProgramma(char *caller)
 {
-     char tmp[128];
+    char tmp[128];
 
-#ifdef TABBOZ_DEBUG
-     sprintf(tmp,"tabboz: FineProgramma chiamato da <%s>",caller);
-     writelog(tmp);
-#endif
+    #ifdef TABBOZ_DEBUG
+        sprintf(tmp,"tabboz: FineProgramma chiamato da <%s>",caller);
+        writelog(tmp);
+    #endif
 
-#ifndef NONETWORK
-     if (net_enable == 1) {
-         WSACleanup();
-#ifdef TABBOZ_DEBUG
-         writelog("tabboz: WSACleanup()");
-#endif
-         }
-#endif
+    #ifndef NONETWORK
+        if (net_enable == 1) {
+            WSACleanup();
+            #ifdef TABBOZ_DEBUG
+                writelog("tabboz: WSACleanup()");
+            #endif
+            }
+    #endif
 
-     if (nome_del_file_su_cui_salvare[0] == 0) {
-         /* Salva lo stato del tabbozzo */
-         /* 0.8.1pr 29 Novembre 1998 Ora non salva piu' nel WIN.INI con WriteProfileString,
-         ma salva nel registro di configurazione... */
-         TabbozAddKey("Exe", _argv[0]);
-     }
+    if (nome_del_file_su_cui_salvare[0] == 0) {
+        /* Salva lo stato del tabbozzo */
+        /* 0.8.1pr 29 Novembre 1998 Ora non salva piu' nel WIN.INI con WriteProfileString,
+        ma salva nel registro di configurazione... */
+        TabbozAddKey("Exe", _argv[0]);
+    }
 
-     SalvaTutto();
+    SalvaTutto();
 }
 
 //*******************************************************************
@@ -616,173 +616,172 @@ void FineProgramma(char *caller)
 //*******************************************************************
 
 static void SalvaTutto(void) {
-     char tmp[128];
-     int i;
+    char tmp[128];
+    int i;
 
-     new_reset_check();
+    new_reset_check();
 
-     sprintf(tmp,"%lu",new_check_l(Soldi));
-     TabbozAddKey("Soldi", tmp);
+    sprintf(tmp,"%lu",new_check_l(Soldi));
+    TabbozAddKey("Soldi", tmp);
 
-     sprintf(tmp,"%lu",new_check_l(Paghetta));
-     TabbozAddKey("Paghetta", tmp);
+    sprintf(tmp,"%lu",new_check_l(Paghetta));
+    TabbozAddKey("Paghetta", tmp);
 
-     sprintf(tmp,"%d",new_check_i(Reputazione));
-     TabbozAddKey("Reputazione", tmp);
+    sprintf(tmp,"%d",new_check_i(Reputazione));
+    TabbozAddKey("Reputazione", tmp);
 
-     sprintf(tmp,"%d",new_check_i(Studio));
-     TabbozAddKey("Studio", tmp);
+    sprintf(tmp,"%d",new_check_i(Studio));
+    TabbozAddKey("Studio", tmp);
 
-     sprintf(tmp,"%d",new_check_i(Fama));
-     TabbozAddKey("Fama", tmp);
+    sprintf(tmp,"%d",new_check_i(Fama));
+    TabbozAddKey("Fama", tmp);
 
-     sprintf(tmp,"%d",new_check_i(Rapporti));
-     TabbozAddKey("Rapporti", tmp);
+    sprintf(tmp,"%d",new_check_i(Rapporti));
+    TabbozAddKey("Rapporti", tmp);
 
-     sprintf(tmp,"%d",new_check_i(Stato));
-     TabbozAddKey("Stato", tmp);
+    sprintf(tmp,"%d",new_check_i(Stato));
+    TabbozAddKey("Stato", tmp);
 
-     sprintf(tmp,"%lu",new_check_l(DDP));
-     TabbozAddKey("DdP", tmp);
+    sprintf(tmp,"%lu",new_check_l(DDP));
+    TabbozAddKey("DdP", tmp);
 
-     sprintf(tmp,"%d",new_check_i(FigTipa));
-     TabbozAddKey("FigTipa", tmp);
+    sprintf(tmp,"%d",new_check_i(FigTipa));
+    TabbozAddKey("FigTipa", tmp);
 
-     TabbozAddKey("Nome", Nome);
-     TabbozAddKey("Cognome", Cognome);
-     TabbozAddKey("Nometipa", Nometipa);
-     TabbozAddKey("City", City);
-     TabbozAddKey("Residenza", Residenza);
-     TabbozAddKey("Street", Street);
+    TabbozAddKey("Nome", Nome);
+    TabbozAddKey("Cognome", Cognome);
+    TabbozAddKey("Nometipa", Nometipa);
+    TabbozAddKey("City", City);
+    TabbozAddKey("Residenza", Residenza);
+    TabbozAddKey("Street", Street);
 
-     sprintf(tmp,"123456789");    // 9 materie
-     for (i=1;i<10;i++) {
-                     tmp[i-1]=(char)(65 + MaterieMem[i].xxx);
-     }
+    sprintf(tmp,"123456789");    // 9 materie
+    for (i=1;i<10;i++) {
+        tmp[i-1]=(char)(65 + MaterieMem[i].xxx);
+    }
+    TabbozAddKey("Materie", tmp);
 
-     TabbozAddKey("Materie", tmp);
+    sprintf(tmp,"%d",new_check_i(Fortuna));
+    TabbozAddKey("Fortuna", tmp);
 
-     sprintf(tmp,"%d",new_check_i(Fortuna));
-     TabbozAddKey("Fortuna", tmp);
+    sprintf(tmp,"%d",x_mese);
+    TabbozAddKey("Mese", tmp);
+    sprintf(tmp,"%d",x_giorno);
+    TabbozAddKey("Giorno", tmp);
+    sprintf(tmp,"%d",x_giornoset);
+    TabbozAddKey("GiornoSet", tmp);
+    sprintf(tmp,"%d",x_anno_bisesto);
+    TabbozAddKey("AnnoBisestile",tmp);
 
-     sprintf(tmp,"%d",x_mese);
-     TabbozAddKey("Mese", tmp);
-     sprintf(tmp,"%d",x_giorno);
-     TabbozAddKey("Giorno", tmp);
-     sprintf(tmp,"%d",x_giornoset);
-     TabbozAddKey("GiornoSet", tmp);
-     sprintf(tmp,"%d",x_anno_bisesto);
-     TabbozAddKey("AnnoBisestile",tmp);
+    sprintf(tmp,"%d",comp_mese);
+    TabbozAddKey("CompMese", tmp);
+    sprintf(tmp,"%d",comp_giorno);
+    TabbozAddKey("CompGiorno", tmp);
 
-     sprintf(tmp,"%d",comp_mese);
-     TabbozAddKey("CompMese", tmp);
-     sprintf(tmp,"%d",comp_giorno);
-     TabbozAddKey("CompGiorno", tmp);
+    sprintf(tmp,"%d",numeroditta);
+    TabbozAddKey("NumeroDitta", tmp);
+    sprintf(tmp,"%d", scad_pal_giorno);
+    TabbozAddKey("ScadPalGiorno", tmp);
+    sprintf(tmp,"%d",scad_pal_mese);
+    TabbozAddKey("ScadPalMese", tmp);
 
-     sprintf(tmp,"%d",numeroditta);
-     TabbozAddKey("NumeroDitta", tmp);
-     sprintf(tmp,"%d", scad_pal_giorno);
-     TabbozAddKey("ScadPalGiorno", tmp);
-     sprintf(tmp,"%d",scad_pal_mese);
-     TabbozAddKey("ScadPalMese", tmp);
+    sprintf(tmp,"%d",new_check_i(impegno));
+    TabbozAddKey("Impegno", tmp);
+    sprintf(tmp,"%d",new_check_i(giorni_di_lavoro));
+    TabbozAddKey("GiorniDiLavoro", tmp);
+    sprintf(tmp,"%d",new_check_i(stipendio));
+    TabbozAddKey("Stipendio", tmp);
 
-     sprintf(tmp,"%d",new_check_i(impegno));
-     TabbozAddKey("Impegno", tmp);
-     sprintf(tmp,"%d",new_check_i(giorni_di_lavoro));
-     TabbozAddKey("GiorniDiLavoro", tmp);
-     sprintf(tmp,"%d",new_check_i(stipendio));
-     TabbozAddKey("Stipendio", tmp);
+    sprintf(tmp,"%d",new_check_i(sizze));
+    TabbozAddKey("Sigarette", tmp);
 
-     sprintf(tmp,"%d",new_check_i(sizze));
-     TabbozAddKey("Sigarette", tmp);
+    sprintf(tmp,"%d",new_check_i(current_testa));
+    TabbozAddKey("Testa", tmp);
 
-     sprintf(tmp,"%d",new_check_i(current_testa));
-     TabbozAddKey("Testa", tmp);
+    sprintf(tmp,"%d",new_check_i(current_gibbotto));
+    TabbozAddKey("Giubbotto", tmp);
 
-     sprintf(tmp,"%d",new_check_i(current_gibbotto));
-     TabbozAddKey("Giubbotto", tmp);
+    sprintf(tmp,"%d",new_check_i(current_pantaloni));
+    TabbozAddKey("Pantaloni", tmp);
 
-     sprintf(tmp,"%d",new_check_i(current_pantaloni));
-     TabbozAddKey("Pantaloni", tmp);
+    sprintf(tmp,"%d",new_check_i(current_scarpe));
+    TabbozAddKey("Scarpe", tmp);
 
-     sprintf(tmp,"%d",new_check_i(current_scarpe));
-     TabbozAddKey("Scarpe", tmp);
+    sprintf(tmp,"%d",euro);
+    TabbozAddKey("Euro", tmp);
 
-     sprintf(tmp,"%d",euro);
-     TabbozAddKey("Euro", tmp);
+    sprintf(tmp,"%d",STARTcmdShow);
+    TabbozAddKey("STARTcmdShow", tmp);
 
-     sprintf(tmp,"%d",STARTcmdShow);
-     TabbozAddKey("STARTcmdShow", tmp);
+    sprintf(tmp,"%d",timer_active);
+    TabbozAddKey("TimerActive", tmp);
 
-     sprintf(tmp,"%d",timer_active);
-     TabbozAddKey("TimerActive", tmp);
-
-     sprintf(tmp,"%d",sound_active);
-     TabbozAddKey("SoundActive", tmp);
+    sprintf(tmp,"%d",sound_active);
+    TabbozAddKey("SoundActive", tmp);
 
 #ifndef NOTABBOZZA
-     sprintf(tmp,"%c",sesso);
-     TabbozAddKey("Sesso", tmp);
+    sprintf(tmp,"%c",sesso);
+    TabbozAddKey("Sesso", tmp);
 #endif
 
 #ifndef NONETWORK
-     sprintf(tmp,"%d",net_enable);
-     TabbozAddKey("NetEnable", tmp);
-     sprintf(tmp,"%d",PortNumber);
-     TabbozAddKey("NetPort", tmp);
+    sprintf(tmp,"%d",net_enable);
+    TabbozAddKey("NetEnable", tmp);
+    sprintf(tmp,"%d",PortNumber);
+    TabbozAddKey("NetPort", tmp);
 #endif
 
 #ifdef TABBOZ_DEBUG
-     sprintf(tmp,"%d",debug_active);
-     TabbozAddKey("Debug", tmp);
+    sprintf(tmp,"%d",debug_active);
+    TabbozAddKey("Debug", tmp);
 #endif
 
-     sprintf(tmp,"%d",new_check_i(ScooterData.speed));
-     TabbozAddKey("Scooter\\Speed", tmp);
-     sprintf(tmp,"%d",new_check_i(ScooterData.marmitta));
-     TabbozAddKey("Scooter\\Marmitta", tmp);
-     sprintf(tmp,"%d",new_check_i(ScooterData.carburatore));
-     TabbozAddKey("Scooter\\Carburatore", tmp);
-     sprintf(tmp,"%d",new_check_i(ScooterData.cc));
-     TabbozAddKey("Scooter\\CC", tmp);
-     sprintf(tmp,"%d",new_check_i(ScooterData.filtro));
-     TabbozAddKey("Scooter\\Filtro", tmp);
-     sprintf(tmp,"%d",new_check_i(ScooterData.prezzo));
-     TabbozAddKey("Scooter\\Prezzo", tmp);
-     sprintf(tmp,"%d",new_check_i(ScooterData.attivita));
-     TabbozAddKey("Scooter\\Attivita", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.speed));
+    TabbozAddKey("Scooter\\Speed", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.marmitta));
+    TabbozAddKey("Scooter\\Marmitta", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.carburatore));
+    TabbozAddKey("Scooter\\Carburatore", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.cc));
+    TabbozAddKey("Scooter\\CC", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.filtro));
+    TabbozAddKey("Scooter\\Filtro", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.prezzo));
+    TabbozAddKey("Scooter\\Prezzo", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.attivita));
+    TabbozAddKey("Scooter\\Attivita", tmp);
 
-     sprintf(tmp,"%d",new_check_i(ScooterData.stato));
-     TabbozAddKey("Scooter\\Stato", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.stato));
+    TabbozAddKey("Scooter\\Stato", tmp);
 
-     sprintf(tmp,"%d",new_check_i(benzina));
-     TabbozAddKey("Scooter\\Benzina", tmp);
+    sprintf(tmp,"%d",new_check_i(benzina));
+    TabbozAddKey("Scooter\\Benzina", tmp);
 
-/*  sprintf(tmp,"%d",antifurto);
-     TabbozAddKey("Scooter\\Antifurto", tmp); */
+//    sprintf(tmp,"%d",antifurto);
+//    TabbozAddKey("Scooter\\Antifurto", tmp);
 
-     TabbozAddKey("Scooter\\Nome", ScooterData.nome);
+    TabbozAddKey("Scooter\\Nome", ScooterData.nome);
 
-     sprintf(tmp,"%d",new_check_i(AbbonamentData.dualonly));
-     TabbozAddKey("Cellular\\DualOnly",tmp);
-     sprintf(tmp,"%d",new_check_i(AbbonamentData.creditorest));
-     TabbozAddKey("Cellular\\CreditoRest",tmp);
+    sprintf(tmp,"%d",new_check_i(AbbonamentData.dualonly));
+    TabbozAddKey("Cellular\\DualOnly",tmp);
+    sprintf(tmp,"%d",new_check_i(AbbonamentData.creditorest));
+    TabbozAddKey("Cellular\\CreditoRest",tmp);
 
-     TabbozAddKey("Cellular\\NomeAbb",AbbonamentData.nome);
+    TabbozAddKey("Cellular\\NomeAbb",AbbonamentData.nome);
 
-     sprintf(tmp,"%d",new_check_i(CellularData.dual));
-     TabbozAddKey("Cellular\\DualBand",tmp);
-     sprintf(tmp,"%d",new_check_i(CellularData.stato));
-     TabbozAddKey("Cellular\\Stato",tmp);
-     sprintf(tmp,"%d",new_check_i(CellularData.prezzo));
-     TabbozAddKey("Cellular\\Prezzo",tmp);
+    sprintf(tmp,"%d",new_check_i(CellularData.dual));
+    TabbozAddKey("Cellular\\DualBand",tmp);
+    sprintf(tmp,"%d",new_check_i(CellularData.stato));
+    TabbozAddKey("Cellular\\Stato",tmp);
+    sprintf(tmp,"%d",new_check_i(CellularData.prezzo));
+    TabbozAddKey("Cellular\\Prezzo",tmp);
 
-     TabbozAddKey("Cellular\\Nome",CellularData.nome);
+    TabbozAddKey("Cellular\\Nome",CellularData.nome);
 
-     sprintf(tmp,"%lu",new_counter);
-     TabbozAddKey("SoftCheck", tmp);
+    sprintf(tmp,"%lu",new_counter);
+    TabbozAddKey("SoftCheck", tmp);
 
-     TabbozAddKey("Version", VERSION);
+    TabbozAddKey("Version", VERSION);
 
 // #ifdef TABBOZ_DEBUG
 //     sprintf(tmp,"tabboz: (W) new_counter %lu", new_counter);
@@ -796,422 +795,425 @@ static void SalvaTutto(void) {
 /********************************************************************/
 /* About...                                                         */
 /********************************************************************/
+//TAG2015 Schermata about, interessante per la questione cheat ma
+//ovviamente per ora non vitale
+// # pragma argsused
+// BOOL FAR PASCAL About(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+// {
+//      char          buf[128];
+//      char          tmp[128];
+//      int                  i;
 
-# pragma argsused
-BOOL FAR PASCAL About(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-     char          buf[128];
-     char          tmp[128];
-     int                  i;
+//      if (message == WM_INITDIALOG) {
+//         sprintf(tmp, "%s", Andrea);
+//         SetDlgItemText(hDlg, 110, tmp);
+//         sprintf(tmp, "%s", Caccia);
+//         SetDlgItemText(hDlg, 111, tmp);
+//         sprintf(tmp, "%s", Daniele);
+//         SetDlgItemText(hDlg, 112, tmp);
 
-     if (message == WM_INITDIALOG) {
-        sprintf(tmp, "%s", Andrea);
-        SetDlgItemText(hDlg, 110, tmp);
-        sprintf(tmp, "%s", Caccia);
-        SetDlgItemText(hDlg, 111, tmp);
-        sprintf(tmp, "%s", Daniele);
-        SetDlgItemText(hDlg, 112, tmp);
+//         sprintf(tmp, "%s, %s", VERSION,__DATE__);
+//         SetDlgItemText(hDlg, 115, tmp);
 
-        sprintf(tmp, "%s, %s", VERSION,__DATE__);
-        SetDlgItemText(hDlg, 115, tmp);
+//         sprintf(tmp, "%s", Obscured);    /* Obscured Truckware (se il nome e' diverso, crash ! ) */
+//         SetDlgItemText(hDlg, 116, tmp);
 
-        sprintf(tmp, "%s", Obscured);    /* Obscured Truckware (se il nome e' diverso, crash ! ) */
-        SetDlgItemText(hDlg, 116, tmp);
-
-        cheat = 0;
-        return(TRUE);
-
-
-    } else if (message == WM_COMMAND) {
-    switch (LOWORD(wParam))
-    {
-       case IDOK:
-          EndDialog(hDlg, TRUE);
-          return(TRUE);
-        case IDCANCEL:
-          EndDialog(hDlg, TRUE);
-          return(TRUE);
-
-        case 203:
-        case 113:
-          Atinom(hDlg);
-          return(TRUE);
-
-        case 257:
-          cheat=cheat+1;
-          if (cheat >= 10) { /* Lunedi' 13 Aprile 1998 - Ora il trukko viene un attimo modificato... */
-
-            sprintf(buf,"%s %s",Nome,Cognome);
-
-            LoadString(hInst, 13, tmp, sizeof(tmp));  /* Dino... */
-            if (! strcmp(tmp,buf)) {
-                Soldi=Soldi+1000;
-                Reputazione=random(4);
-                Fama=random(40);
-            }
-
-            LoadString(hInst, 14, tmp, sizeof(tmp));  /* Fratello di Dino... */
-            if (! strcmp(tmp,buf)) {
-                Soldi=Soldi+1000;
-                Reputazione=random(30);
-                Fama=random(5);
-            }
-
-            if (! strcmp(Daniele,buf)) {    /* Murdock, ti regala una macchinina... */
-                ScooterData=ScooterMem[7];
-                benzina=850;
-                Reputazione=100;
-            }
-
-            if (! strcmp(Caccia,buf)) {    /* Caccia fa' aumentare i dindi... */
-                Soldi=Soldi+10000;
-                Fama=100;
-            }
+//         cheat = 0;
+//         return(TRUE);
 
 
-            if (! strcmp(Andrea,buf)) {    /* Io porto la scuola e la tipa al 100% */
-                for (i=1;i<10;i++)
-                    MaterieMem[i].xxx=10;
-                CalcolaStudio();
-                if ( Rapporti > 1 )
-                    Rapporti=100;
-                impegno=100;
-                numeroditta=1;
-            stipendio=5000;
-            }
+//     } else if (message == WM_COMMAND) {
+//     switch (LOWORD(wParam))
+//     {
+//        case IDOK:
+//           EndDialog(hDlg, TRUE);
+//           return(TRUE);
+//         case IDCANCEL:
+//           EndDialog(hDlg, TRUE);
+//           return(TRUE);
+
+//         case 203:
+//         case 113:
+//         //  Atinom(hDlg);
+//           return(TRUE);
+
+//         case 257:
+//           cheat=cheat+1;
+//           if (cheat >= 10) { /* Lunedi' 13 Aprile 1998 - Ora il trukko viene un attimo modificato... */
+
+//             sprintf(buf,"%s %s",Nome,Cognome);
+
+//             LoadString(hInst, 13, tmp, sizeof(tmp));  /* Dino... */
+//             if (! strcmp(tmp,buf)) {
+//                 Soldi=Soldi+1000;
+//                 Reputazione=random(4);
+//                 Fama=random(40);
+//             }
+
+//             LoadString(hInst, 14, tmp, sizeof(tmp));  /* Fratello di Dino... */
+//             if (! strcmp(tmp,buf)) {
+//                 Soldi=Soldi+1000;
+//                 Reputazione=random(30);
+//                 Fama=random(5);
+//             }
+
+//             if (! strcmp(Daniele,buf)) {    /* Murdock, ti regala una macchinina... */
+//                 ScooterData=ScooterMem[7];
+//                 benzina=850;
+//                 Reputazione=100;
+//             }
+
+//             if (! strcmp(Caccia,buf)) {    /* Caccia fa' aumentare i dindi... */
+//                 Soldi=Soldi+10000;
+//                 Fama=100;
+//             }
 
 
-            cheat = 0;
-            }
-        default:
-        return(TRUE);
-    }
-    }
+//             if (! strcmp(Andrea,buf)) {    /* Io porto la scuola e la tipa al 100% */
+//                 for (i=1;i<10;i++)
+//                     MaterieMem[i].xxx=10;
+//                 CalcolaStudio();
+//                 if ( Rapporti > 1 )
+//                     Rapporti=100;
+//                 impegno=100;
+//                 numeroditta=1;
+//             stipendio=5000;
+//             }
 
-     return(FALSE);
-}
+
+//             cheat = 0;
+//             }
+//         default:
+//         return(TRUE);
+//     }
+//     }
+
+//      return(FALSE);
+// }
 
 /********************************************************************/
 /* Logo...                                                          */
 /********************************************************************/
+//TAG2015 più che il logo è lo splash screen. Verrà implementata
+//direttamente nella gui
+// # pragma argsused
 
-# pragma argsused
+// BOOL FAR PASCAL Logo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+// {
+// int    x,y,w,h;
 
-BOOL FAR PASCAL Logo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-int    x,y,w,h;
+//     if (message == WM_INITDIALOG) {
 
-    if (message == WM_INITDIALOG) {
+//     if (sound_active) TabbozPlaySound(0);
 
-    if (sound_active) TabbozPlaySound(0);
+//     /* [[[ Posiziona il logo a centro dello schermo ]]] Veneedi' 17 Aprile 1998 */
+//     /* GetWindowRect(hDlg, (LPRECT) &wrect);                                    */
+//     /* w = wrect.right - wrect.left;                                            */
+//     /* h = wrect.bottom - wrect.top;                        */
 
-    /* [[[ Posiziona il logo a centro dello schermo ]]] Veneedi' 17 Aprile 1998 */
-    /* GetWindowRect(hDlg, (LPRECT) &wrect);                                    */
-    /* w = wrect.right - wrect.left;                                            */
-    /* h = wrect.bottom - wrect.top;                        */
+//     w = 522; /* dimensioni dell' immagine del logo */
+//     h = 402;
 
-    w = 522; /* dimensioni dell' immagine del logo */
-    h = 402;
+//     x=GetSystemMetrics(SM_CXSCREEN);
+//     y=GetSystemMetrics(SM_CYSCREEN);
 
-    x=GetSystemMetrics(SM_CXSCREEN);
-    y=GetSystemMetrics(SM_CYSCREEN);
+//     x= (x - w) / 2;
+//     y= (y - h) / 2;
 
-    x= (x - w) / 2;
-    y= (y - h) / 2;
+//     MoveWindow(hDlg, x, y, w, h, 1);
 
-    MoveWindow(hDlg, x, y, w, h, 1);
+//     if ( fase_di_avvio == 1)
+//         SetTimer(hDlg, WM_TIMER, 10000, NULL);    /* 10 Secondi */
 
-    if ( fase_di_avvio == 1)
-        SetTimer(hDlg, WM_TIMER, 10000, NULL);    /* 10 Secondi */
+//     return(TRUE);
+//     }
 
-    return(TRUE);
-    }
+//     if (message == WM_TIMER) {
+//     if ( fase_di_avvio == 1) {
+//         KillTimer(hDlg, WM_TIMER);         /* Distrugge il timer... */
+//         EndDialog(hDlg, TRUE);
+//         }
+//     }
 
-    if (message == WM_TIMER) {
-    if ( fase_di_avvio == 1) {
-        KillTimer(hDlg, WM_TIMER);         /* Distrugge il timer... */
-        EndDialog(hDlg, TRUE);
-        }
-    }
+//      if (message == WM_COMMAND) {
+//     switch (LOWORD(wParam))
+//     {
+//          case IDOK:
+//          case 202:
+//          case 203:
+//         if ( fase_di_avvio == 1) {
+//             KillTimer(hDlg, WM_TIMER);
+//             }
+//         EndDialog(hDlg, TRUE);
+//         return(TRUE);
+//          default:
+//         return(TRUE);
+//     }
+//      }
 
-     if (message == WM_COMMAND) {
-    switch (LOWORD(wParam))
-    {
-         case IDOK:
-         case 202:
-         case 203:
-        if ( fase_di_avvio == 1) {
-            KillTimer(hDlg, WM_TIMER);
-            }
-        EndDialog(hDlg, TRUE);
-        return(TRUE);
-         default:
-        return(TRUE);
-    }
-     }
-
-     return(FALSE);
-}
+//      return(FALSE);
+// }
 
 /********************************************************************/
 /* Spegnimi... 11 giugno 1998                                       */
 /********************************************************************/
+// //TAG2015 shutdown disabilitato, dubito sia portabile 'sta roba
+// # pragma argsused
+// BOOL FAR PASCAL Spegnimi(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+// {
+// int     x,y,w,h;
+// static RECT   wrect;
 
-# pragma argsused
-BOOL FAR PASCAL Spegnimi(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-int     x,y,w,h;
-static RECT   wrect;
+//      if (message == WM_INITDIALOG) {
+//         /* Centra la finestra... */
+//         GetWindowRect(hDlg, (LPRECT) &wrect);
+//         w = wrect.right - wrect.left;
+//         h = wrect.bottom - wrect.top;
 
-     if (message == WM_INITDIALOG) {
-        /* Centra la finestra... */
-        GetWindowRect(hDlg, (LPRECT) &wrect);
-        w = wrect.right - wrect.left;
-        h = wrect.bottom - wrect.top;
+//         x=GetSystemMetrics(SM_CXSCREEN);
+//         y=GetSystemMetrics(SM_CYSCREEN);
 
-        x=GetSystemMetrics(SM_CXSCREEN);
-        y=GetSystemMetrics(SM_CYSCREEN);
+//         x= (x - w) / 2;
+//         y= (y - h) / 2;
 
-        x= (x - w) / 2;
-        y= (y - h) / 2;
+//         MoveWindow(hDlg, x, y, w, h, 1);
+//         boolean_shutdown=1; // Uscita normale...
 
-        MoveWindow(hDlg, x, y, w, h, 1);
-        boolean_shutdown=1; // Uscita normale...
+//         SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, FALSE, 0L);
+//         SendMessage(GetDlgItem(hDlg, 101), BM_SETCHECK, TRUE, 0L);
+//         return(TRUE);
 
-        SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, FALSE, 0L);
-        SendMessage(GetDlgItem(hDlg, 101), BM_SETCHECK, TRUE, 0L);
-        return(TRUE);
+//     } else if (message == WM_COMMAND) {
 
-    } else if (message == WM_COMMAND) {
+//         switch (LOWORD(wParam)) {
 
-        switch (LOWORD(wParam)) {
+//         case 101: // Un bug nella v 0.8.51pr impediva l' uscita corretta...
+//             boolean_shutdown=1; // 1=uscita
+//             return(TRUE);
 
-        case 101: // Un bug nella v 0.8.51pr impediva l' uscita corretta...
-            boolean_shutdown=1; // 1=uscita
-            return(TRUE);
+//         case 102:
+//             boolean_shutdown=2; // 2=shutdown
+//             return(TRUE);
 
-        case 102:
-            boolean_shutdown=2; // 2=shutdown
-            return(TRUE);
+//         case 110:
+//             MessageBox( hDlg,
+//              "'Spegni il computer ed esci di casa'\n\nPubblicita' Progresso per il recupero dei giovani disadattati a causa dei computer sponsorizzata da Obscured Truckware.",
+//              "Guida del Tabboz Simulator", MB_OK );
+//             return(TRUE);
 
-        case 110:
-            MessageBox( hDlg,
-             "'Spegni il computer ed esci di casa'\n\nPubblicita' Progresso per il recupero dei giovani disadattati a causa dei computer sponsorizzata da Obscured Truckware.",
-             "Guida del Tabboz Simulator", MB_OK );
-            return(TRUE);
+//         case IDOK:
+// #ifdef TABBOZ32
+//             SpegniISuoni();
+// #endif
+//             EndDialog(hDlg, TRUE);
+//             return(TRUE);
 
-        case IDOK:
-#ifdef TABBOZ32
-            SpegniISuoni();
-#endif
-            EndDialog(hDlg, TRUE);
-            return(TRUE);
+//         case IDCANCEL:
+//             boolean_shutdown=0; // non e' proprio un boolean, ma va bene lo stesso...
+//             EndDialog(hDlg, TRUE);
+//             return(TRUE);
 
-        case IDCANCEL:
-            boolean_shutdown=0; // non e' proprio un boolean, ma va bene lo stesso...
-            EndDialog(hDlg, TRUE);
-            return(TRUE);
+//         default:
+//             return(TRUE);
+//         }
+//      }
 
-        default:
-            return(TRUE);
-        }
-     }
-
-     return(FALSE);
-}
+//      return(FALSE);
+// }
 
 
 
 /********************************************************************/
 /* Configuration...                                                 */
 /********************************************************************/
+// //Schermata config con impostazione difficoltà, etc. In futuro
+// # pragma argsused
+// BOOL FAR PASCAL Configuration(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+// {
+//     FARPROC  lpproc;
+// #ifdef TABBOZ_DEBUG
+// static    int    temp_debug;
+// #endif
+//      if (message == WM_INITDIALOG) {
+// #ifdef TABBOZ_DEBUG
+//         temp_debug=debug_active;
+// #endif
 
-# pragma argsused
-BOOL FAR PASCAL Configuration(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-    FARPROC  lpproc;
-#ifdef TABBOZ_DEBUG
-static    int    temp_debug;
-#endif
-     if (message == WM_INITDIALOG) {
-#ifdef TABBOZ_DEBUG
-        temp_debug=debug_active;
-#endif
+//         if (STARTcmdShow)
+//             SendMessage(GetDlgItem(hDlg, 106), BM_SETCHECK, TRUE, 0L);
+//         if (euro)
+//             SendMessage(GetDlgItem(hDlg, 107), BM_SETCHECK, TRUE, 0L);
+//         if (timer_active)
+//             SendMessage(GetDlgItem(hDlg, 108), BM_SETCHECK, TRUE, 0L);
 
-        if (STARTcmdShow)
-            SendMessage(GetDlgItem(hDlg, 106), BM_SETCHECK, TRUE, 0L);
-        if (euro)
-            SendMessage(GetDlgItem(hDlg, 107), BM_SETCHECK, TRUE, 0L);
-        if (timer_active)
-            SendMessage(GetDlgItem(hDlg, 108), BM_SETCHECK, TRUE, 0L);
+// #ifdef TABBOZ_DEBUG
+//         if (debug_active)
+//             SendMessage(GetDlgItem(hDlg, 109), BM_SETCHECK, TRUE, 0L);
+// #endif
 
-#ifdef TABBOZ_DEBUG
-        if (debug_active)
-            SendMessage(GetDlgItem(hDlg, 109), BM_SETCHECK, TRUE, 0L);
-#endif
+//         if (sound_active)
+//             SendMessage(GetDlgItem(hDlg, 110), BM_SETCHECK, TRUE, 0L);
 
-        if (sound_active)
-            SendMessage(GetDlgItem(hDlg, 110), BM_SETCHECK, TRUE, 0L);
+//         if ( Fortuna >= 20 ) SendMessage(GetDlgItem(hDlg, 101), BM_SETCHECK, TRUE, 0L); else
+//         if ( Fortuna >= 15 ) SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, TRUE, 0L); else
+//         if ( Fortuna >= 10 ) SendMessage(GetDlgItem(hDlg, 103), BM_SETCHECK, TRUE, 0L); else
+//         if ( Fortuna >=  5 ) SendMessage(GetDlgItem(hDlg, 104), BM_SETCHECK, TRUE, 0L); else
+//         SendMessage(GetDlgItem(hDlg, 105), BM_SETCHECK, TRUE, 0L);
 
-        if ( Fortuna >= 20 ) SendMessage(GetDlgItem(hDlg, 101), BM_SETCHECK, TRUE, 0L); else
-        if ( Fortuna >= 15 ) SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, TRUE, 0L); else
-        if ( Fortuna >= 10 ) SendMessage(GetDlgItem(hDlg, 103), BM_SETCHECK, TRUE, 0L); else
-        if ( Fortuna >=  5 ) SendMessage(GetDlgItem(hDlg, 104), BM_SETCHECK, TRUE, 0L); else
-        SendMessage(GetDlgItem(hDlg, 105), BM_SETCHECK, TRUE, 0L);
+//         return(TRUE);
+//     }
+//     else if (message == WM_COMMAND)
+//     {
 
-        return(TRUE);
-    }
-    else if (message == WM_COMMAND)
-    {
+//     switch (LOWORD(wParam))
+//     {
+//         case 101: Fortuna=20; return(TRUE);    /* Livelli di Difficolta' */
+//         case 102: Fortuna=15; return(TRUE);
+//         case 103: Fortuna=10; return(TRUE);
+//         case 104: Fortuna= 5; return(TRUE);
+//         case 105: Fortuna= 0; return(TRUE);
+//         case 106:
+//             STARTcmdShow=!STARTcmdShow;
+//             return(TRUE);
+//         case 107:
+//             euro=!euro;
+//             return(TRUE);
+//         case 108:
+//             timer_active=!timer_active;
+//             return(TRUE);
+// #ifdef TABBOZ_DEBUG
+//         case 109:
+//             debug_active=!debug_active;
+//             return(TRUE);
+// #endif
+//         case 110:
+//             sound_active=!sound_active;
+//             return(TRUE);
 
-    switch (LOWORD(wParam))
-    {
-        case 101: Fortuna=20; return(TRUE);    /* Livelli di Difficolta' */
-        case 102: Fortuna=15; return(TRUE);
-        case 103: Fortuna=10; return(TRUE);
-        case 104: Fortuna= 5; return(TRUE);
-        case 105: Fortuna= 0; return(TRUE);
-        case 106:
-            STARTcmdShow=!STARTcmdShow;
-            return(TRUE);
-        case 107:
-            euro=!euro;
-            return(TRUE);
-        case 108:
-            timer_active=!timer_active;
-            return(TRUE);
-#ifdef TABBOZ_DEBUG
-        case 109:
-            debug_active=!debug_active;
-            return(TRUE);
-#endif
-        case 110:
-            sound_active=!sound_active;
-            return(TRUE);
+//         case 203:    // Reset - 26 Marzo 1999
+//             EndDialog(hDlg, TRUE);
 
-        case 203:    // Reset - 26 Marzo 1999
-            EndDialog(hDlg, TRUE);
+//             // Se il tabboz e' chiamato con il parametro "config", hWndMain NON ESITE !
+//             if (hWndMain != 0)
+//                 ShowWindow(hWndMain, WIN_PICCOLO);
 
-            // Se il tabboz e' chiamato con il parametro "config", hWndMain NON ESITE !
-            if (hWndMain != 0)
-                ShowWindow(hWndMain, WIN_PICCOLO);
+//             lpproc = MakeProcInstance(FormatTabboz, hInst);
+//             DialogBox(hInst,
+//                     MAKEINTRESOURCE(15),
+//                     hDlg,
+//                     lpproc);
+//             FreeProcInstance(lpproc);
 
-            lpproc = MakeProcInstance(FormatTabboz, hInst);
-            DialogBox(hInst,
-                    MAKEINTRESOURCE(15),
-                    hDlg,
-                    lpproc);
-            FreeProcInstance(lpproc);
+//             return(TRUE);
 
-            return(TRUE);
+//         case IDOK:
+//         case IDCANCEL:
+// #ifdef TABBOZ_DEBUG
+//             if (debug_active != temp_debug) {
+//               if (debug_active) {
+//                  openlog();
+//                  writelog("tabboz: Start logging...");
+//               } else {
+//                  writelog("tabboz: Stop logging...");
+//                  closelog();
+//               }
+//             }
+// #endif
+//             EndDialog(hDlg, TRUE);
+//             return(TRUE);
+//         default:
+//             return(TRUE);
+//     }
+//      }
 
-        case IDOK:
-        case IDCANCEL:
-#ifdef TABBOZ_DEBUG
-            if (debug_active != temp_debug) {
-              if (debug_active) {
-                 openlog();
-                 writelog("tabboz: Start logging...");
-              } else {
-                 writelog("tabboz: Stop logging...");
-                 closelog();
-              }
-            }
-#endif
-            EndDialog(hDlg, TRUE);
-            return(TRUE);
-        default:
-            return(TRUE);
-    }
-     }
-
-     return(FALSE);
-}
+//      return(FALSE);
+// }
 
 
 /********************************************************************/
 /* Personal Information...                                          */
 /********************************************************************/
+//TAG2015 Schermata info tabbozzo, verrà implementata in futuro
+//dato che non serve a nulla
+// # pragma argsused
+// BOOL FAR PASCAL PersonalInfo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+// {
+//      char          tmp[128];
 
-# pragma argsused
-BOOL FAR PASCAL PersonalInfo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-     char          tmp[128];
+//      if (message == WM_INITDIALOG) {
+//         sprintf(tmp, " %d %s", comp_giorno,InfoMese[comp_mese-1].nome);
+//         SetDlgItemText(hDlg, 103, tmp);            // Data di nascita
+//         sprintf(tmp, "%d", (comp_giorno * 13 + comp_mese * 3 + 6070));
+//         SetDlgItemText(hDlg, 104, tmp);            // Numero documento di nascita (inutile ma da' spessore...)
 
-     if (message == WM_INITDIALOG) {
-        sprintf(tmp, " %d %s", comp_giorno,InfoMese[comp_mese-1].nome);
-        SetDlgItemText(hDlg, 103, tmp);            // Data di nascita
-        sprintf(tmp, "%d", (comp_giorno * 13 + comp_mese * 3 + 6070));
-        SetDlgItemText(hDlg, 104, tmp);            // Numero documento di nascita (inutile ma da' spessore...)
+//         if (numeroditta < 1) {        // Professione
+//             if (sesso == 'M')
+//                 sprintf(tmp,"Studente");
+//             else
+//                 sprintf(tmp,"Studentessa");
+//         } else
+//             sprintf(tmp,"Sfruttat%c",ao);
 
-        if (numeroditta < 1) {        // Professione
-            if (sesso == 'M')
-                sprintf(tmp,"Studente");
-            else
-                sprintf(tmp,"Studentessa");
-        } else
-            sprintf(tmp,"Sfruttat%c",ao);
+//         SetDlgItemText(hDlg, 108, tmp);
 
-        SetDlgItemText(hDlg, 108, tmp);
+//         sprintf(tmp,"Nat%c il", ao); SetDlgItemText(hDlg, 109, tmp); // Nata/o il
+//         if (sesso == 'M') SetDlgItemText(hDlg, 110, "Celibe"); else SetDlgItemText(hDlg, 110, "Libera");
 
-        sprintf(tmp,"Nat%c il", ao); SetDlgItemText(hDlg, 109, tmp); // Nata/o il
-        if (sesso == 'M') SetDlgItemText(hDlg, 110, "Celibe"); else SetDlgItemText(hDlg, 110, "Libera");
+//         SetDlgItemText(hDlg, 111, Residenza);        // Residenza
+//         SetFocus(GetDlgItem(hDlg, 111));
 
-        SetDlgItemText(hDlg, 111, Residenza);        // Residenza
-        SetFocus(GetDlgItem(hDlg, 111));
+//         SetDlgItemText(hDlg, 107, Street);            // Indirizzo (inutile ma da' spessore...)
+//         SetFocus(GetDlgItem(hDlg, 107));
 
-        SetDlgItemText(hDlg, 107, Street);            // Indirizzo (inutile ma da' spessore...)
-        SetFocus(GetDlgItem(hDlg, 107));
+//         SetDlgItemText(hDlg, 105, City);                // Citta' di nascita (inutile ma da' spessore...)
+//         SetFocus(GetDlgItem(hDlg, 105));
 
-        SetDlgItemText(hDlg, 105, City);                // Citta' di nascita (inutile ma da' spessore...)
-        SetFocus(GetDlgItem(hDlg, 105));
+//         SetDlgItemText(hDlg, 101, Cognome);            // Cognome
+//         SetFocus(GetDlgItem(hDlg, 101));
 
-        SetDlgItemText(hDlg, 101, Cognome);            // Cognome
-        SetFocus(GetDlgItem(hDlg, 101));
+//         SetDlgItemText(hDlg, QX_NOME, Nome);        // Nome
+//         SetFocus(GetDlgItem(hDlg, QX_NOME));
 
-        SetDlgItemText(hDlg, QX_NOME, Nome);        // Nome
-        SetFocus(GetDlgItem(hDlg, QX_NOME));
+//         return(TRUE);
+//     }
 
-        return(TRUE);
-    }
+//     else if (message == WM_COMMAND)
+//     {
 
-    else if (message == WM_COMMAND)
-    {
+//       switch (LOWORD(wParam))
+//       {
+//          case 111:
+//             GetDlgItemText(hDlg, wParam, Residenza, sizeof(Residenza));
+//             break;
 
-      switch (LOWORD(wParam))
-      {
-         case 111:
-            GetDlgItemText(hDlg, wParam, Residenza, sizeof(Residenza));
-            break;
+//          case 107:
+//             GetDlgItemText(hDlg, wParam, Street, sizeof(Street));
+//             break;
 
-         case 107:
-            GetDlgItemText(hDlg, wParam, Street, sizeof(Street));
-            break;
+//          case 105:
+//             GetDlgItemText(hDlg, wParam, City, sizeof(City));
+//             break;
 
-         case 105:
-            GetDlgItemText(hDlg, wParam, City, sizeof(City));
-            break;
+//          case 101:                  /* Cognome del tabbozzo */
+//             GetDlgItemText(hDlg, wParam, Cognome, sizeof(Cognome));
+//             break;
 
-         case 101:                  /* Cognome del tabbozzo */
-            GetDlgItemText(hDlg, wParam, Cognome, sizeof(Cognome));
-            break;
+//          case QX_NOME:              /* Nome del tabbozzo */
+//             GetDlgItemText(hDlg, wParam, Nome, sizeof(Nome));
+//             break;
 
-         case QX_NOME:              /* Nome del tabbozzo */
-            GetDlgItemText(hDlg, wParam, Nome, sizeof(Nome));
-            break;
+//          case IDOK:
+//          case IDCANCEL:
+//         EndDialog(hDlg, TRUE);
+//         return(TRUE);
 
-         case IDOK:
-         case IDCANCEL:
-        EndDialog(hDlg, TRUE);
-        return(TRUE);
+//          default:
+//         return(TRUE);
+//     }
+//      }
 
-         default:
-        return(TRUE);
-    }
-     }
-
-    return(FALSE);
-}
+//     return(FALSE);
+// }
 
 
 /********************************************************************/
@@ -1499,141 +1501,145 @@ BOOL FAR PASCAL Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 //*******************************************************************
 // Nomoney...
 //*******************************************************************
-
-void nomoney(HWND parent,int tipo)
-{
- char tmp[256];
- switch (tipo) {
-    case DISCO:
-        sprintf(tmp,"Appena entrat%c ti accorgi di non avere abbastanza soldi per pagare il biglietto.\n Un energumeno buttafuori ti deposita gentilmente in un cassonetto della spazzatura poco distante dalla discoteca.",ao);
-        MessageBox( parent, tmp,
-          "Bella figura", MB_OK | MB_ICONSTOP);
-        if (Reputazione > 3 )
-            Reputazione-=1;
-        break;;
-    case VESTITI:
-        sprintf(tmp,"Con cosa avresti intenzione di pagare, stronzett%c ??? Caramelle ???",ao);
-        MessageBox( parent, tmp,
-          "Bella figura", MB_OK | MB_ICONSTOP);
-        if (Fama > 12 )
-           Fama-=3;
-        if (Reputazione > 4 )
-           Reputazione-=2;
-        break;;
-    case PALESTRA:
-        if (sesso == 'M') {
-            MessageBox( parent,
-                "L' enorme istruttore di bodybulding ultra-palestrato ti suona come una zampogna e ti scaraventa fuori dalla palestra.",
-                  "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
-        } else {
-            MessageBox( parent,
-                "L' enorme istruttore di bodybulding ultra-palestrato ti scaraventa fuori dalla palestra.",
-                  "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
-        }
-        if (Fama > 14 )
-            Fama-=4;    /* Ah,ah ! fino al 10 Jan 1999 c'era scrittto Reputazione-=4... */
-        if (Reputazione > 18 )
-            Reputazione-=4;
-        break;;
-    case SCOOTER:
-        if (sesso == 'M') {
-            MessageBox( parent,
-              "L' enorme meccanico ti affera con una sola mano, ti riempe di pugni, e non esita a scaraventare te ed il tuo motorino fuori dall' officina.",
-              "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
-            if (Reputazione > 7 )
-                Reputazione-=5;
-            if (ScooterData.stato > 7 )
-                ScooterData.stato-=5;
-        } else {
-            MessageBox( parent,
-              "Con un sonoro calcio nel culo, vieni buttata fuori dall' officina.",
-              "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
-            if (Reputazione > 6 )
-                Reputazione-=4;
-            if (Fama > 3 )
-                Fama-=2;
-        }
-        break;;
-    case TABACCAIO:
-        sprintf(tmp,"Fai fuori dal mio locale, brut%c pezzente !, esclama il tabaccaio con un AK 47 in mano...",ao);
-        MessageBox( parent, tmp,
-          "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
-        if (Fama > 2)
-            Fama-=1;
-        break;;
-    case CELLULRABBONAM:
-        sprintf(tmp,"Forse non ti sei accorto di non avere abbastanza soldi, stronzett%c...",ao);
-        MessageBox( parent, tmp,
-          "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
-        if (Fama > 2)
-            Fama-=1;
-        break;
-    }
-}
+//TAG2015 Questa visualizza un semplice messaggio se i soldi non sono abbastanza, si può tenere
+//uguale al 90% e basta cambiare le chiamate ai messagebox. Per ora tutta commentata perchè
+//disco, negozi etc non sono ancora implementati
+// void nomoney(HWND parent,int tipo)
+// {
+//  char tmp[256];
+//  switch (tipo) {
+//     case DISCO:
+//         sprintf(tmp,"Appena entrat%c ti accorgi di non avere abbastanza soldi per pagare il biglietto.\n Un energumeno buttafuori ti deposita gentilmente in un cassonetto della spazzatura poco distante dalla discoteca.",ao);
+//         MessageBox( parent, tmp,
+//           "Bella figura", MB_OK | MB_ICONSTOP);
+//         if (Reputazione > 3 )
+//             Reputazione-=1;
+//         break;;
+//     case VESTITI:
+//         sprintf(tmp,"Con cosa avresti intenzione di pagare, stronzett%c ??? Caramelle ???",ao);
+//         MessageBox( parent, tmp,
+//           "Bella figura", MB_OK | MB_ICONSTOP);
+//         if (Fama > 12 )
+//            Fama-=3;
+//         if (Reputazione > 4 )
+//            Reputazione-=2;
+//         break;;
+//     case PALESTRA:
+//         if (sesso == 'M') {
+//             MessageBox( parent,
+//                 "L' enorme istruttore di bodybulding ultra-palestrato ti suona come una zampogna e ti scaraventa fuori dalla palestra.",
+//                   "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+//         } else {
+//             MessageBox( parent,
+//                 "L' enorme istruttore di bodybulding ultra-palestrato ti scaraventa fuori dalla palestra.",
+//                   "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+//         }
+//         if (Fama > 14 )
+//             Fama-=4;    /* Ah,ah ! fino al 10 Jan 1999 c'era scrittto Reputazione-=4... */
+//         if (Reputazione > 18 )
+//             Reputazione-=4;
+//         break;;
+//     case SCOOTER:
+//         if (sesso == 'M') {
+//             MessageBox( parent,
+//               "L' enorme meccanico ti affera con una sola mano, ti riempe di pugni, e non esita a scaraventare te ed il tuo motorino fuori dall' officina.",
+//               "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
+//             if (Reputazione > 7 )
+//                 Reputazione-=5;
+//             if (ScooterData.stato > 7 )
+//                 ScooterData.stato-=5;
+//         } else {
+//             MessageBox( parent,
+//               "Con un sonoro calcio nel culo, vieni buttata fuori dall' officina.",
+//               "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
+//             if (Reputazione > 6 )
+//                 Reputazione-=4;
+//             if (Fama > 3 )
+//                 Fama-=2;
+//         }
+//         break;;
+//     case TABACCAIO:
+//         sprintf(tmp,"Fai fuori dal mio locale, brut%c pezzente !, esclama il tabaccaio con un AK 47 in mano...",ao);
+//         MessageBox( parent, tmp,
+//           "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+//         if (Fama > 2)
+//             Fama-=1;
+//         break;;
+//     case CELLULRABBONAM:
+//         sprintf(tmp,"Forse non ti sei accorto di non avere abbastanza soldi, stronzett%c...",ao);
+//         MessageBox( parent, tmp,
+//           "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
+//         if (Fama > 2)
+//             Fama-=1;
+//         break;
+//     }
+// }
 
 //*******************************************************************
 // Aggiorna la finestra principale
 //*******************************************************************
+//TAG2015 routine che aggiorna i parametri visualizzati in finestra
+//principale, questa va reimplementata
 
-void AggiornaPrincipale(HWND parent)
-{
-char tmp[128];
+// void AggiornaPrincipale(HWND parent)
+// {
+// char tmp[128];
 
-     ShowWindow(parent, WIN_GRANDE);
+//      ShowWindow(parent, WIN_GRANDE);
 
-     sprintf(tmp, "%s %s",Nome,Cognome);
-     SetDlgItemText(parent, QX_NOME, tmp);
+//      sprintf(tmp, "%s %s",Nome,Cognome);
+//      SetDlgItemText(parent, QX_NOME, tmp);
 
-     SetDlgItemText(parent, QX_SOLDI, MostraSoldi(Soldi));
+//      SetDlgItemText(parent, QX_SOLDI, MostraSoldi(Soldi));
 
-     sprintf(tmp, "%d/100", Fama);        // Figosita'
-     SetDlgItemText(parent, 151, tmp);
+//      sprintf(tmp, "%d/100", Fama);        // Figosita'
+//      SetDlgItemText(parent, 151, tmp);
 
-     sprintf(tmp, "%d/100", Reputazione);    // Reputazione
-     SetDlgItemText(parent, 152, tmp);
+//      sprintf(tmp, "%d/100", Reputazione);    // Reputazione
+//      SetDlgItemText(parent, 152, tmp);
 
-     sprintf(tmp, "%d/100", Studio);        // Profitto scolastico
-     SetDlgItemText(parent, 153, tmp);
+//      sprintf(tmp, "%d/100", Studio);        // Profitto scolastico
+//      SetDlgItemText(parent, 153, tmp);
 
-     if ( Rapporti != 0 ) {
-         sprintf(tmp, "%s", Nometipa);    // Nometipa
-         SetDlgItemText(parent, 155, tmp);
-         sprintf(tmp, "%d/100", Rapporti);    // Rapporti con la tipa
-         SetDlgItemText(parent, 154, tmp);
-     } else {
-         sprintf(tmp, " ");            // Nometipa
-         SetDlgItemText(parent, 155, tmp);
-         SetDlgItemText(parent, 154, tmp);
-     }
+//      if ( Rapporti != 0 ) {
+//          sprintf(tmp, "%s", Nometipa);    // Nometipa
+//          SetDlgItemText(parent, 155, tmp);
+//          sprintf(tmp, "%d/100", Rapporti);    // Rapporti con la tipa
+//          SetDlgItemText(parent, 154, tmp);
+//      } else {
+//          sprintf(tmp, " ");            // Nometipa
+//          SetDlgItemText(parent, 155, tmp);
+//          SetDlgItemText(parent, 154, tmp);
+//      }
 
 
-     if (ScooterData.stato != -1) {
-        sprintf(tmp, "%s", ScooterData.nome);
-        SetDlgItemText(parent, 150, tmp);    // Nomescooter
-        sprintf(tmp, "%d/100", ScooterData.stato);
-        SetDlgItemText(parent, 156, tmp);    // Stato scooter
-     } else {
-        sprintf(tmp, " ");
-        SetDlgItemText(parent, 150, tmp);    // Nomescooter
-        SetDlgItemText(parent, 156, tmp);    // Stato scooter
-     }
+//      if (ScooterData.stato != -1) {
+//         sprintf(tmp, "%s", ScooterData.nome);
+//         SetDlgItemText(parent, 150, tmp);    // Nomescooter
+//         sprintf(tmp, "%d/100", ScooterData.stato);
+//         SetDlgItemText(parent, 156, tmp);    // Stato scooter
+//      } else {
+//         sprintf(tmp, " ");
+//         SetDlgItemText(parent, 150, tmp);    // Nomescooter
+//         SetDlgItemText(parent, 156, tmp);    // Stato scooter
+//      }
 
-     sprintf(tmp, "%s %d %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome);  // Calendario
-     SetDlgItemText(parent, 157, tmp);
+//      sprintf(tmp, "%s %d %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome);  // Calendario
+//      SetDlgItemText(parent, 157, tmp);
 
-     if ( sesso == 'M' )    {// Non usare la variabile "ao" xche' qui e' necessario
-         DeleteMenu(GetMenu(parent), QX_TIPA, MF_BYCOMMAND);
-         AppendMenu( GetSubMenu(GetMenu(parent),1), MF_STRING, QX_TIPA, "&Tipa...");
-         SetDlgItemText(parent, 133, "Tipa"); // che ci sia scritto Tipa x il maschietto e
-         SetDlgItemText(parent, 170, "Rapporto con la tipa");
-     } else {                              //    Tipo x la femminuccia...
-         DeleteMenu( GetMenu(parent), QX_TIPA, MF_BYCOMMAND);
-         AppendMenu( GetSubMenu(GetMenu(parent),1), MF_STRING, QX_TIPA, "&Tipo...");
-         SetDlgItemText(parent, 133, "Tipo");
-         SetDlgItemText(parent, 170, "Rapporto con il tipo");
-     }
+//      if ( sesso == 'M' )    {// Non usare la variabile "ao" xche' qui e' necessario
+//          DeleteMenu(GetMenu(parent), QX_TIPA, MF_BYCOMMAND);
+//          AppendMenu( GetSubMenu(GetMenu(parent),1), MF_STRING, QX_TIPA, "&Tipa...");
+//          SetDlgItemText(parent, 133, "Tipa"); // che ci sia scritto Tipa x il maschietto e
+//          SetDlgItemText(parent, 170, "Rapporto con la tipa");
+//      } else {                              //    Tipo x la femminuccia...
+//          DeleteMenu( GetMenu(parent), QX_TIPA, MF_BYCOMMAND);
+//          AppendMenu( GetSubMenu(GetMenu(parent),1), MF_STRING, QX_TIPA, "&Tipo...");
+//          SetDlgItemText(parent, 133, "Tipo");
+//          SetDlgItemText(parent, 170, "Rapporto con il tipo");
+//      }
 
-}
+// }
 
 
 
@@ -1651,424 +1657,426 @@ char tmp[128];
 //             lParam        - The LONG parmater for this message
 //
 //*******************************************************************
+//TAG2015 questa è la mega-funzione che gestisce la finestra principale
+//e spawna le altre. Non serve più ma va considerata per vedere quando
+//fa i check logici e la gestione del tempo
+// #pragma argsused
+
+// #ifdef WIN32
+// #pragma argsused
+// BOOL CALLBACK _export TabbozWndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+// #else
+// #pragma argsused
+// BOOL FAR PASCAL TabbozWndProc(HWND hWnd, WORD message, WORD wParam, LONG lParam)
+// #endif
+// {
+// static HICON      hIcon;
+//          FARPROC  lpproc;
 
-#pragma argsused
-
-#ifdef WIN32
-#pragma argsused
-BOOL CALLBACK _export TabbozWndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-#else
-#pragma argsused
-BOOL FAR PASCAL TabbozWndProc(HWND hWnd, WORD message, WORD wParam, LONG lParam)
-#endif
-{
-static HICON      hIcon;
-         FARPROC  lpproc;
+//     switch (message) {
 
-    switch (message) {
+//     case WM_ENDSESSION:
+//          if (wParam)
+//             FineProgramma("end session");
+//          break;
+
+//     case WM_QUERYDRAGICON:       // 25 Feb 1999 - Questa e' l' icona per ALT-TAB...
+//          if (!hIcon)
+//             hIcon = LoadIcon(hInst,MAKEINTRESOURCE(1));
+//          return (long)hIcon;
+
+
+//     case WM_DESTROY:
+//          if (hIcon)
+//             DestroyIcon(hIcon);
+//          KillTimer(hWnd, WM_TIMER);
+//          break;
+
+//     case WM_SYSCOMMAND:
+//          switch (LOWORD(wParam))
+//          {
+//          FARPROC lpproc;
+
+//          case QX_ABOUT:
+//              /* Display about box. */
+//              lpproc = MakeProcInstance(About, hInst);
+//              DialogBox(hInst,
+//                     MAKEINTRESOURCE(ABOUT),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+
+//              return(TRUE);
+
+//          case SC_CLOSE:
+
+//             lpproc = MakeProcInstance(Spegnimi, hInst);
+//             DialogBox(hInst,
+//               MAKEINTRESOURCE(SPEGNIMI),
+//               hWnd,
+//               lpproc);
+//             FreeProcInstance(lpproc);
+
+//             if (boolean_shutdown != 0)
+//                 EndDialog(hWnd,TRUE); // Chiudi la baracca...
+
+//             return(TRUE);
+
+//          }
+//          return(FALSE);
+
+//     case WM_INITDIALOG:
+//          hIcon = LoadIcon(hInst,MAKEINTRESOURCE(1));
+//          hWndMain = hWnd;
+//          // Scrive quanti soldi ci sono... ( ed ora scrive anche molta altra roba...)
+//          AggiornaPrincipale(hWnd);
+
+
+// #ifndef NONETWORK
+//          hModule = GetModuleHandle("WINSOCK.DLL");
+
+//          NEThDlg=hWnd;
+
+//          if (net_enable)
+//         TabbozStartNet(NEThDlg);
+// #endif
+
+//          /* 11 Jun 98 - Modifika il menu' di sistema... */
+//          AppendMenu(GetSystemMenu(hWnd, 0), MF_SEPARATOR, 0, 0);
+//          AppendMenu(GetSystemMenu(hWnd, 0), MF_STRING, QX_ABOUT, "&About Tabboz Simulator...");
+
+// //        AppendMenu( GetSubMenu(GetMenu(hWnd),1), MF_STRING, QX_ABOUT, "&Chiesa..."); // Aggiunge la chiesa ai negozi :-)))
+// //        DeleteMenu(GetMenu(hWnd), QX_ABOUT, MF_BYCOMMAND); // Cancella l' about(per esempio...)
+// //        EnableMenuItem(GetMenu(hWnd), QX_NETWORK, MF_GRAYED); // Disabilita un menu'
+
+// #ifndef NONETWORK
+// // Aggiunge la voce "Network..." al menu' "Special" - 04 Jan 1999
+//          AppendMenu(GetSubMenu(GetMenu(hWnd),2), MF_SEPARATOR, 0, NULL);
+//          AppendMenu(GetSubMenu(GetMenu(hWnd),2), MF_STRING, QX_NETWORK, "&Network...");
+// #endif
+// #ifdef PROMPT_ACTIVE
+//          AppendMenu(GetSubMenu(GetMenu(hWnd),2), MF_SEPARATOR, 0, NULL);
+//          AppendMenu(GetSubMenu(GetMenu(hWnd),2), MF_STRING, QX_PROMPT, "&Prompt...");
+// #endif
 
-    case WM_ENDSESSION:
-         if (wParam)
-            FineProgramma("end session");
-         break;
+//          DrawMenuBar(hWnd);
 
-    case WM_QUERYDRAGICON:       // 25 Feb 1999 - Questa e' l' icona per ALT-TAB...
-         if (!hIcon)
-            hIcon = LoadIcon(hInst,MAKEINTRESOURCE(1));
-         return (long)hIcon;
-
-
-    case WM_DESTROY:
-         if (hIcon)
-            DestroyIcon(hIcon);
-         KillTimer(hWnd, WM_TIMER);
-         break;
 
-    case WM_SYSCOMMAND:
-         switch (LOWORD(wParam))
-         {
-         FARPROC lpproc;
-
-         case QX_ABOUT:
-             /* Display about box. */
-             lpproc = MakeProcInstance(About, hInst);
-             DialogBox(hInst,
-                    MAKEINTRESOURCE(ABOUT),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-
-             return(TRUE);
+// /*        MessageBeep(0x0050); Crea un beep. Non e' necessario qui, ma e' solo x ricordarselo... */
 
-         case SC_CLOSE:
 
-            lpproc = MakeProcInstance(Spegnimi, hInst);
-            DialogBox(hInst,
-              MAKEINTRESOURCE(SPEGNIMI),
-              hWnd,
-              lpproc);
-            FreeProcInstance(lpproc);
 
-            if (boolean_shutdown != 0)
-                EndDialog(hWnd,TRUE); // Chiudi la baracca...
-
-            return(TRUE);
-
-         }
-         return(FALSE);
-
-    case WM_INITDIALOG:
-         hIcon = LoadIcon(hInst,MAKEINTRESOURCE(1));
-         hWndMain = hWnd;
-         // Scrive quanti soldi ci sono... ( ed ora scrive anche molta altra roba...)
-         AggiornaPrincipale(hWnd);
-
-
-#ifndef NONETWORK
-         hModule = GetModuleHandle("WINSOCK.DLL");
-
-         NEThDlg=hWnd;
-
-         if (net_enable)
-        TabbozStartNet(NEThDlg);
-#endif
-
-         /* 11 Jun 98 - Modifika il menu' di sistema... */
-         AppendMenu(GetSystemMenu(hWnd, 0), MF_SEPARATOR, 0, 0);
-         AppendMenu(GetSystemMenu(hWnd, 0), MF_STRING, QX_ABOUT, "&About Tabboz Simulator...");
-
-//        AppendMenu( GetSubMenu(GetMenu(hWnd),1), MF_STRING, QX_ABOUT, "&Chiesa..."); // Aggiunge la chiesa ai negozi :-)))
-//        DeleteMenu(GetMenu(hWnd), QX_ABOUT, MF_BYCOMMAND); // Cancella l' about(per esempio...)
-//        EnableMenuItem(GetMenu(hWnd), QX_NETWORK, MF_GRAYED); // Disabilita un menu'
-
-#ifndef NONETWORK
-// Aggiunge la voce "Network..." al menu' "Special" - 04 Jan 1999
-         AppendMenu(GetSubMenu(GetMenu(hWnd),2), MF_SEPARATOR, 0, NULL);
-         AppendMenu(GetSubMenu(GetMenu(hWnd),2), MF_STRING, QX_NETWORK, "&Network...");
-#endif
-#ifdef PROMPT_ACTIVE
-         AppendMenu(GetSubMenu(GetMenu(hWnd),2), MF_SEPARATOR, 0, NULL);
-         AppendMenu(GetSubMenu(GetMenu(hWnd),2), MF_STRING, QX_PROMPT, "&Prompt...");
-#endif
-
-         DrawMenuBar(hWnd);
-
-
-/*        MessageBeep(0x0050); Crea un beep. Non e' necessario qui, ma e' solo x ricordarselo... */
-
-
-
-         /* Inizio implementazione timer: 9 giugno 1998 */
-         SetTimer(hWnd, WM_TIMER, 60000, NULL);     /* 60 secondi.. (il massimo e' 65534, 65 secondi...) */
-         t_random=6 + random(20);    /* 6 - 26 minuti tra un evento ed il seguente...*/
-         t_random=1;
-
-         fase_di_avvio=0;    /* 11 Giugno 1998 */
-         return TRUE;
-
-    case WM_TIMER :
-        if (timer_active == 1) {
-             /* Il timer viene contollato SOLO se la finestra e' ridotta ad ICONA */
-             if (IsIconic(hWndMain) != 0) {
-            if (t_random > 0) {
-                /* Per un altro minuto siamo a posto... */
-                t_random--;
-                break;
-            }
-            t_random=12 + random(20);    /* 12 - 21 minuti tra un evento ed il seguente...*/
-            t_random=1;
-
-            KillTimer(hWnd, WM_TIMER);         /* Distrugge il timer... */
-            ShowWindow(hWndMain, SW_SHOWNORMAL); /* Ingrandisce la finestra */
-            Giorno(hWnd);
-
-            SetTimer(hWnd, WM_TIMER, 60000, NULL);     /* 60 secondi.. (il massimo e' 65534, 65 secondi...) */
-             }
-        }
-        return TRUE;
-
-#ifndef NONETWORK
-    case SOCKET_MESSAGE:
-        switch(WSAGETSELECTEVENT(lParam))
-        {
-
-             case FD_ACCEPT:
-             {
-            /* Get a pending accept */
-
-            clientSocket = accept(serverSocket,(LPSOCKADDR) &clientSockAddr, &addrLen);
-
-            /* Memorizza l' indirizzo dell' ultima connessione... */
-
-            sprintf(lastconnect,"%d.%d.%d.%d",
-                clientSockAddr.sin_addr.s_net,clientSockAddr.sin_addr.s_host,
-                clientSockAddr.sin_addr.s_lh,clientSockAddr.sin_addr.s_impno);
-
-
-            #ifdef TABBOZ_DEBUG
-            sprintf(tmp,"tabboz: Got a connection from %s",lastconnect);
-            writelog(tmp);
-            #endif
-
-            if (clientSocket == INVALID_SOCKET)
-            {
-                #ifdef TABBOZ_DEBUG
-                writelog("tabboz: ERROR: Unable to accept connection.");
-                #endif
-                break;
-            }
-
-            SendReceiveToClient((void *)clientSocket);
-
-            }
-        }
-        break;
-#endif
-
-    case WM_COMMAND:
-         switch (LOWORD(wParam))
-         {
-         case QX_LOAD:
-             OpenFileDlg(hWnd);
-             AggiornaPrincipale(hWnd);
-             break;
-
-         case QX_SAVE:
-             SaveFileDlg(hWnd);
-             AggiornaPrincipale(hWnd);
-             break;
-
-         case QX_CLOSE:
-
-            lpproc = MakeProcInstance(Spegnimi, hInst);
-            DialogBox(hInst,
-              MAKEINTRESOURCE(SPEGNIMI),
-              hWnd,
-              lpproc);
-            FreeProcInstance(lpproc);
-
-            if (boolean_shutdown != 0)
-                EndDialog(hWnd,TRUE); // Chiudi la baracca...
-
-            return(TRUE);
-
-         case QX_ABOUT:
-             /* Display about box. */
-             lpproc = MakeProcInstance(About, hInst);
-             DialogBox(hInst,
-                    MAKEINTRESOURCE(ABOUT),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-
-             AggiornaPrincipale(hWnd);
-             break;
-        case QX_LOGO:
-             lpproc = MakeProcInstance(Logo, hInst);
-             DialogBox(hInst,
-                  MAKEINTRESOURCE(LOGO),
-                    hWnd,
-                  lpproc);
-            FreeProcInstance(lpproc);
-
-            AggiornaPrincipale(hWnd);
-            break;
-        case QX_CONFIG:
-             /* Display configuration box. */
-             lpproc = MakeProcInstance(Configuration, hInst);
-             DialogBox(hInst,
-                    MAKEINTRESOURCE(CONFIGURATION),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-
-             AggiornaPrincipale(hWnd);
-             break;
-//        case 251: /* Ex Immagine Tabbozzo */
-        case QX_INFO:
-             /* Display Personal Information box. */
-             lpproc = MakeProcInstance(PersonalInfo, hInst);
-             DialogBox(hInst,
-                    MAKEINTRESOURCE(PERSONALINFO),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-
-             AggiornaPrincipale(hWnd);
-             break;
-        case QX_FAMIGLIA:
-             ShowWindow(hWnd, WIN_PICCOLO);
-             /* Display Famiglia box. */
-             lpproc = MakeProcInstance(Famiglia, hInst);
-             DialogBox(hInst,
-                    MAKEINTRESOURCE(FAMIGLIA),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-
-             AggiornaPrincipale(hWnd);
-             break;
-        case QX_DISCO:
-             ShowWindow(hWnd, WIN_PICCOLO);
-             /* Display Disco box. */
-             lpproc = MakeProcInstance(Disco, hInst);
-             DialogBox(hInst,
-                    MAKEINTRESOURCE(DISCO),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-
-             AggiornaPrincipale(hWnd);
-             break;
-        case QX_COMPAGNIA:
-             ShowWindow(hWnd, WIN_PICCOLO);
-             /* Display Compagnia box. */
-             lpproc = MakeProcInstance(Compagnia, hInst);
-
-              DialogBox(hInst,
-                    MAKEINTRESOURCE(COMPAGNIA),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-
-             AggiornaPrincipale(hWnd);
-             break;
-        case QX_SCUOLA:
-             if ( x_vacanza == 0 ) {
-                 ShowWindow(hWnd, WIN_PICCOLO);
-                 /* Display Scuola box. */
-                 lpproc = MakeProcInstance(Scuola, hInst);
-                  DialogBox(hInst,
-                        MAKEINTRESOURCE(SCUOLA),
-                        hWnd,
-                        lpproc);
-                 FreeProcInstance(lpproc);
-                 AggiornaPrincipale(hWnd);
-
-             } else {
-                 MessageBox( hWnd,
-                        "Non puoi andare a scuola in un giorno di vacanza !",
-                        "Scuola", MB_OK | MB_ICONINFORMATION);
-             }
-
-             break;
-        case QX_SCOOTER:
-             /* Display Scooter box. */
-             ShowWindow(hWnd, WIN_PICCOLO);
-
-             lpproc = MakeProcInstance(Scooter, hInst);
-             DialogBox(hInst,
-                    MAKEINTRESOURCE(SCOOTER),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-
-             AggiornaPrincipale(hWnd);
-             break;
-        case QX_VESTITI:
-             /* Display Vestiti box. */
-             ShowWindow(hWnd, WIN_PICCOLO);
-
-             lpproc = MakeProcInstance(Vestiti, hInst);
-             DialogBox(hInst,
-                    MAKEINTRESOURCE(VESTITI),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-
-             AggiornaPrincipale(hWnd);
-             break;
-        case QX_TABACCHI:
-             ShowWindow(hWnd, WIN_PICCOLO);
-             RunTabacchi(hWnd);
-             AggiornaPrincipale(hWnd);
-             break;
-        case QX_PALESTRA:
-             ShowWindow(hWnd, WIN_PICCOLO);
-             RunPalestra(hWnd);
-             AggiornaPrincipale(hWnd);
-             break;
-        case QX_CELLULAR:  // 31 Marzo 1999
-             ShowWindow(hWnd, WIN_PICCOLO);
-             lpproc = MakeProcInstance(Cellular, hInst);
-             DialogBox(hInst,
-                    MAKEINTRESOURCE(CELLULAR),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-             AggiornaPrincipale(hWnd);
-             break;
-        case QX_VESTITI1:
-        case QX_VESTITI2:
-        case QX_VESTITI3:
-        case QX_VESTITI4:
-        case QX_VESTITI5:
-             ShowWindow(hWnd, WIN_PICCOLO);
-             RunVestiti(hWnd, (wParam - QX_VESTITI1 + BAUHOUSE));
-             AggiornaPrincipale(hWnd);
-             break;
-        case QX_TIPA:
-             ShowWindow(hWnd, WIN_PICCOLO);
-             lpproc = MakeProcInstance(Tipa, hInst);
-             if (sesso == 'M')
-                 DialogBox(hInst,
-                        MAKEINTRESOURCE(TIPA),
-                        hWnd,
-                        lpproc);
-             else
-                 DialogBox(hInst,
-                        MAKEINTRESOURCE(190),
-                        hWnd,
-                        lpproc);
-             FreeProcInstance(lpproc);
-
-             AggiornaPrincipale(hWnd);
-             break;
-        case QX_LAVORO:
-             ShowWindow(hWnd, WIN_PICCOLO);
-             // Display Lavoro box.
-             lpproc = MakeProcInstance(Lavoro, hInst);
-             DialogBox(hInst,
-                    MAKEINTRESOURCE(LAVORO),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-
-             AggiornaPrincipale(hWnd);
-             break;
-#ifdef PROMPT_ACTIVE
-        case QX_PROMPT:            /* Display Tabboz Simulator Prompt */
-             lpproc = MakeProcInstance(Prompt, hInst);
-             DialogBox(hInst,
-                    MAKEINTRESOURCE(PROMPT),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-
-             AggiornaPrincipale(hWnd);
-             break;
-#endif
-#ifndef NONETWORK
-        case QX_NETWORK:    /* Tabboz Simulator Network Config/Stat */
-             lpproc = MakeProcInstance(Network, hInst);
-             DialogBox(hInst,
-                    MAKEINTRESOURCE(NETWORK),
-                    hWnd,
-                    lpproc);
-             FreeProcInstance(lpproc);
-
-             AggiornaPrincipale(hWnd);
-             break;
-#endif
-        default:
-             break;
-         }
-         break;
-
-     }
-
-     return FALSE;
-}
+//          /* Inizio implementazione timer: 9 giugno 1998 */
+//          SetTimer(hWnd, WM_TIMER, 60000, NULL);     /* 60 secondi.. (il massimo e' 65534, 65 secondi...) */
+//          t_random=6 + random(20);    /* 6 - 26 minuti tra un evento ed il seguente...*/
+//          t_random=1;
+
+//          fase_di_avvio=0;    /* 11 Giugno 1998 */
+//          return TRUE;
+
+//     case WM_TIMER :
+//         if (timer_active == 1) {
+//              /* Il timer viene contollato SOLO se la finestra e' ridotta ad ICONA */
+//              if (IsIconic(hWndMain) != 0) {
+//             if (t_random > 0) {
+//                 /* Per un altro minuto siamo a posto... */
+//                 t_random--;
+//                 break;
+//             }
+//             t_random=12 + random(20);    /* 12 - 21 minuti tra un evento ed il seguente...*/
+//             t_random=1;
+
+//             KillTimer(hWnd, WM_TIMER);         /* Distrugge il timer... */
+//             ShowWindow(hWndMain, SW_SHOWNORMAL); /* Ingrandisce la finestra */
+//             Giorno(hWnd);
+
+//             SetTimer(hWnd, WM_TIMER, 60000, NULL);     /* 60 secondi.. (il massimo e' 65534, 65 secondi...) */
+//              }
+//         }
+//         return TRUE;
+
+// #ifndef NONETWORK
+//     case SOCKET_MESSAGE:
+//         switch(WSAGETSELECTEVENT(lParam))
+//         {
+
+//              case FD_ACCEPT:
+//              {
+//             /* Get a pending accept */
+
+//             clientSocket = accept(serverSocket,(LPSOCKADDR) &clientSockAddr, &addrLen);
+
+//             /* Memorizza l' indirizzo dell' ultima connessione... */
+
+//             sprintf(lastconnect,"%d.%d.%d.%d",
+//                 clientSockAddr.sin_addr.s_net,clientSockAddr.sin_addr.s_host,
+//                 clientSockAddr.sin_addr.s_lh,clientSockAddr.sin_addr.s_impno);
+
+
+//             #ifdef TABBOZ_DEBUG
+//             sprintf(tmp,"tabboz: Got a connection from %s",lastconnect);
+//             writelog(tmp);
+//             #endif
+
+//             if (clientSocket == INVALID_SOCKET)
+//             {
+//                 #ifdef TABBOZ_DEBUG
+//                 writelog("tabboz: ERROR: Unable to accept connection.");
+//                 #endif
+//                 break;
+//             }
+
+//             SendReceiveToClient((void *)clientSocket);
+
+//             }
+//         }
+//         break;
+// #endif
+
+//     case WM_COMMAND:
+//          switch (LOWORD(wParam))
+//          {
+//          case QX_LOAD:
+//              OpenFileDlg(hWnd);
+//              AggiornaPrincipale(hWnd);
+//              break;
+
+//          case QX_SAVE:
+//              SaveFileDlg(hWnd);
+//              AggiornaPrincipale(hWnd);
+//              break;
+
+//          case QX_CLOSE:
+
+//             lpproc = MakeProcInstance(Spegnimi, hInst);
+//             DialogBox(hInst,
+//               MAKEINTRESOURCE(SPEGNIMI),
+//               hWnd,
+//               lpproc);
+//             FreeProcInstance(lpproc);
+
+//             if (boolean_shutdown != 0)
+//                 EndDialog(hWnd,TRUE); // Chiudi la baracca...
+
+//             return(TRUE);
+
+//          case QX_ABOUT:
+//              /* Display about box. */
+//              lpproc = MakeProcInstance(About, hInst);
+//              DialogBox(hInst,
+//                     MAKEINTRESOURCE(ABOUT),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+
+//              AggiornaPrincipale(hWnd);
+//              break;
+//         case QX_LOGO:
+//              lpproc = MakeProcInstance(Logo, hInst);
+//              DialogBox(hInst,
+//                   MAKEINTRESOURCE(LOGO),
+//                     hWnd,
+//                   lpproc);
+//             FreeProcInstance(lpproc);
+
+//             AggiornaPrincipale(hWnd);
+//             break;
+//         case QX_CONFIG:
+//              /* Display configuration box. */
+//              lpproc = MakeProcInstance(Configuration, hInst);
+//              DialogBox(hInst,
+//                     MAKEINTRESOURCE(CONFIGURATION),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+
+//              AggiornaPrincipale(hWnd);
+//              break;
+// //        case 251: /* Ex Immagine Tabbozzo */
+//         case QX_INFO:
+//              /* Display Personal Information box. */
+//              lpproc = MakeProcInstance(PersonalInfo, hInst);
+//              DialogBox(hInst,
+//                     MAKEINTRESOURCE(PERSONALINFO),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+
+//              AggiornaPrincipale(hWnd);
+//              break;
+//         case QX_FAMIGLIA:
+//              ShowWindow(hWnd, WIN_PICCOLO);
+//              /* Display Famiglia box. */
+//              lpproc = MakeProcInstance(Famiglia, hInst);
+//              DialogBox(hInst,
+//                     MAKEINTRESOURCE(FAMIGLIA),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+
+//              AggiornaPrincipale(hWnd);
+//              break;
+//         case QX_DISCO:
+//              ShowWindow(hWnd, WIN_PICCOLO);
+//              /* Display Disco box. */
+//              lpproc = MakeProcInstance(Disco, hInst);
+//              DialogBox(hInst,
+//                     MAKEINTRESOURCE(DISCO),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+
+//              AggiornaPrincipale(hWnd);
+//              break;
+//         case QX_COMPAGNIA:
+//              ShowWindow(hWnd, WIN_PICCOLO);
+//              /* Display Compagnia box. */
+//              lpproc = MakeProcInstance(Compagnia, hInst);
+
+//               DialogBox(hInst,
+//                     MAKEINTRESOURCE(COMPAGNIA),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+
+//              AggiornaPrincipale(hWnd);
+//              break;
+//         case QX_SCUOLA:
+//              if ( x_vacanza == 0 ) {
+//                  ShowWindow(hWnd, WIN_PICCOLO);
+//                  /* Display Scuola box. */
+//                  lpproc = MakeProcInstance(Scuola, hInst);
+//                   DialogBox(hInst,
+//                         MAKEINTRESOURCE(SCUOLA),
+//                         hWnd,
+//                         lpproc);
+//                  FreeProcInstance(lpproc);
+//                  AggiornaPrincipale(hWnd);
+
+//              } else {
+//                  MessageBox( hWnd,
+//                         "Non puoi andare a scuola in un giorno di vacanza !",
+//                         "Scuola", MB_OK | MB_ICONINFORMATION);
+//              }
+
+//              break;
+//         case QX_SCOOTER:
+//              /* Display Scooter box. */
+//              ShowWindow(hWnd, WIN_PICCOLO);
+
+//              lpproc = MakeProcInstance(Scooter, hInst);
+//              DialogBox(hInst,
+//                     MAKEINTRESOURCE(SCOOTER),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+
+//              AggiornaPrincipale(hWnd);
+//              break;
+//         case QX_VESTITI:
+//              /* Display Vestiti box. */
+//              ShowWindow(hWnd, WIN_PICCOLO);
+
+//              lpproc = MakeProcInstance(Vestiti, hInst);
+//              DialogBox(hInst,
+//                     MAKEINTRESOURCE(VESTITI),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+
+//              AggiornaPrincipale(hWnd);
+//              break;
+//         case QX_TABACCHI:
+//              ShowWindow(hWnd, WIN_PICCOLO);
+//              RunTabacchi(hWnd);
+//              AggiornaPrincipale(hWnd);
+//              break;
+//         case QX_PALESTRA:
+//              ShowWindow(hWnd, WIN_PICCOLO);
+//              RunPalestra(hWnd);
+//              AggiornaPrincipale(hWnd);
+//              break;
+//         case QX_CELLULAR:  // 31 Marzo 1999
+//              ShowWindow(hWnd, WIN_PICCOLO);
+//              lpproc = MakeProcInstance(Cellular, hInst);
+//              DialogBox(hInst,
+//                     MAKEINTRESOURCE(CELLULAR),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+//              AggiornaPrincipale(hWnd);
+//              break;
+//         case QX_VESTITI1:
+//         case QX_VESTITI2:
+//         case QX_VESTITI3:
+//         case QX_VESTITI4:
+//         case QX_VESTITI5:
+//              ShowWindow(hWnd, WIN_PICCOLO);
+//              RunVestiti(hWnd, (wParam - QX_VESTITI1 + BAUHOUSE));
+//              AggiornaPrincipale(hWnd);
+//              break;
+//         case QX_TIPA:
+//              ShowWindow(hWnd, WIN_PICCOLO);
+//              lpproc = MakeProcInstance(Tipa, hInst);
+//              if (sesso == 'M')
+//                  DialogBox(hInst,
+//                         MAKEINTRESOURCE(TIPA),
+//                         hWnd,
+//                         lpproc);
+//              else
+//                  DialogBox(hInst,
+//                         MAKEINTRESOURCE(190),
+//                         hWnd,
+//                         lpproc);
+//              FreeProcInstance(lpproc);
+
+//              AggiornaPrincipale(hWnd);
+//              break;
+//         case QX_LAVORO:
+//              ShowWindow(hWnd, WIN_PICCOLO);
+//              // Display Lavoro box.
+//              lpproc = MakeProcInstance(Lavoro, hInst);
+//              DialogBox(hInst,
+//                     MAKEINTRESOURCE(LAVORO),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+
+//              AggiornaPrincipale(hWnd);
+//              break;
+// #ifdef PROMPT_ACTIVE
+//         case QX_PROMPT:            /* Display Tabboz Simulator Prompt */
+//              lpproc = MakeProcInstance(Prompt, hInst);
+//              DialogBox(hInst,
+//                     MAKEINTRESOURCE(PROMPT),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+
+//              AggiornaPrincipale(hWnd);
+//              break;
+// #endif
+// #ifndef NONETWORK
+//         case QX_NETWORK:    /* Tabboz Simulator Network Config/Stat */
+//              lpproc = MakeProcInstance(Network, hInst);
+//              DialogBox(hInst,
+//                     MAKEINTRESOURCE(NETWORK),
+//                     hWnd,
+//                     lpproc);
+//              FreeProcInstance(lpproc);
+
+//              AggiornaPrincipale(hWnd);
+//              break;
+// #endif
+//         default:
+//              break;
+//          }
+//          break;
+
+//      }
+
+//      return FALSE;
+// }
 
 //*******************************************************************
 
@@ -2087,18 +2095,18 @@ char *MostraSoldi(u_long i)
 }
 
 /*********************************************************************/
+//TAG2015 questa verrà implementata direttamente nella gui
+// void Atinom(HANDLE hInstance)
+// {
 
-void Atinom(HANDLE hInstance)
-{
+//     MessageBox( hInstance,
+// "Il biglietto e' valido solo dopo la convalida.Il biglietto deve essere conservato per tutta la durata \
+// del viaggio. Il diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto. \
+// Il passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile, \
+// o comunque non valido, verra' abbattuto. La notifica del decesso verra' inviata ai parenti solo previo pagamento \
+// delle spese postali.", "Norme di utilizzo", MB_OK | MB_ICONINFORMATION);
 
-    MessageBox( hInstance,
-"Il biglietto e' valido solo dopo la convalida.Il biglietto deve essere conservato per tutta la durata \
-del viaggio. Il diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto. \
-Il passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile, \
-o comunque non valido, verra' abbattuto. La notifica del decesso verra' inviata ai parenti solo previo pagamento \
-delle spese postali.", "Norme di utilizzo", MB_OK | MB_ICONINFORMATION);
-
-}
+// }
 
 /*********************************************************************/
 
@@ -2118,7 +2126,7 @@ int vvc(int i)        /* Verifica Valori Chiave */
 #ifdef TABBOZ_DEBUG
 void openlog()
 {
-    debugfile = fopen("\\ZARROSIM.LOG", "w");
+    debugfile = fopen("zarrosim.log", "w");
 }
 
 void closelog()
