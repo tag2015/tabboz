@@ -1,0 +1,123 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cpp}
+decl {int materia_selezionata;} {private global
+}
+
+decl {\#include "GUITabboz.h"} {private global
+}
+
+Function {GUITabbozScuola()} {open selected
+} {
+  Fl_Window win_scuola {
+    label Scuola open
+    xywh {254 495 550 330} type Double
+    code0 {materia_selezionata=1;} modal size_range {550 330 550 330} visible
+  } {
+    Fl_Return_Button {} {
+      label OK
+      callback {win_principale->show();
+win_scuola->hide();}
+      xywh {485 265 60 60}
+    }
+    Fl_Button {} {
+      label Studia
+      xywh {240 170 300 20}
+    }
+    Fl_Button {} {
+      label {Corrompi il prof di Attività Matematiche}
+      xywh {240 195 300 20}
+    }
+    Fl_Button {} {
+      label Minaccia
+      xywh {240 220 300 20}
+    }
+    Fl_Group {} {open
+      xywh {10 10 275 225}
+    } {
+      Fl_Round_Button {} {
+        label {Agraria...............}
+        callback {materia_selezionata=1;}
+        xywh {12 20 200 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+        code0 {o->set();}
+      }
+      Fl_Round_Button {} {
+        label {Fisica................}
+        callback {materia_selezionata=2;}
+        xywh {12 43 200 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Attività Culturali....}
+        callback {materia_selezionata=3;}
+        xywh {12 67 200 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Attività Matematiche..}
+        callback {materia_selezionata=4;}
+        xywh {12 91 200 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Scienze Industriali...}
+        callback {materia_selezionata=5;}
+        xywh {12 115 200 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Elettrochimica........}
+        callback {materia_selezionata=6;}
+        xywh {12 138 200 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Petrolchimica.........}
+        callback {materia_selezionata=7;}
+        xywh {12 162 200 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Filosofia Aziendale...}
+        callback {materia_selezionata=8;}
+        xywh {12 186 200 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Metallurgia...........}
+        callback {materia_selezionata=9;}
+        xywh {12 210 200 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+      }
+      Fl_Output tbz_voto1 {
+        label {output:}
+        xywh {210 15 15 24} box NO_BOX labeltype NO_LABEL textfont 6
+      }
+      Fl_Output tbz_voto2 {
+        label {output:}
+        xywh {210 38 15 24} box NO_BOX labeltype NO_LABEL textfont 6
+      }
+      Fl_Output tbz_voto3 {
+        label {output:}
+        xywh {210 62 15 24} box NO_BOX labeltype NO_LABEL textfont 6
+      }
+      Fl_Output tbz_voto4 {
+        label {output:}
+        xywh {210 86 15 24} box NO_BOX labeltype NO_LABEL textfont 6
+      }
+      Fl_Output tbz_voto5 {
+        label {output:}
+        xywh {210 110 15 24} box NO_BOX labeltype NO_LABEL textfont 6
+      }
+      Fl_Output tbz_voto6 {
+        label {output:}
+        xywh {210 133 15 24} box NO_BOX labeltype NO_LABEL textfont 6
+      }
+      Fl_Output tbz_voto7 {
+        label {output:}
+        xywh {210 157 15 24} box NO_BOX labeltype NO_LABEL textfont 6
+      }
+      Fl_Output tbz_voto8 {
+        label {output:}
+        xywh {210 181 15 24} box NO_BOX labeltype NO_LABEL textfont 6
+      }
+      Fl_Output tbz_voto9 {
+        label {output:}
+        xywh {210 205 15 24} box NO_BOX labeltype NO_LABEL textfont 6
+      }
+    }
+  }
+}
