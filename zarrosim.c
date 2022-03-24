@@ -32,16 +32,25 @@
 #endif
 #endif
 
+/* Header per toolkit FLTK */
+#include <FL/Fl.h>
+#include <FL/Fl_Window.h>
+#include <FL/Fl_Box.h>
+
+/* Header finestre GUI */
+#include "gui/GUITabboz.h"
+
+
 static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
-extern void     Atinom(HANDLE hInstance);
+//extern void     Atinom(HANDLE hInstance);
 extern int      vvc(int i);        /* 15 Giugno 1998 - v0.7.1 - Verifica Valori Chiave */
 extern u_long   new_counter;
-extern ATOM     RegisterBMPTipaClass(HANDLE hInst);
-extern ATOM     RegisterBMPViewClass(HANDLE hInst);
+//extern ATOM     RegisterBMPTipaClass(HANDLE hInst);
+//extern ATOM     RegisterBMPViewClass(HANDLE hInst);
 extern char     nome_del_file_su_cui_salvare[];
-extern void     OpenFileDlg(HWND hwnd);
-extern void     SaveFileDlg(HWND hwnd);
+//extern void     OpenFileDlg(HWND hwnd);
+//extern void     SaveFileDlg(HWND hwnd);
 static void     SalvaTutto(void);
 static void     CaricaTutto(void);
 
@@ -116,8 +125,8 @@ extern  int          PortNumber;
 HANDLE  hModule;
 #endif
 
-HANDLE    hInst;                    // hInstance dell'applicazione
-HWND      hWndMain;                 // hWnd della finestra principale
+//HANDLE    hInst;                    // hInstance dell'applicazione
+//HWND      hWndMain;                 // hWnd della finestra principale
 
 int     euro;
 char    sesso;
@@ -2141,11 +2150,6 @@ int PASCAL WinMain(HANDLE hInstance, HANDLE hPrevInstance,
 {
      hInst = hInstance;
 
-#ifdef TABBOZ_WIN16
-     /* Non si puo' lanciare piu' di una copia del Tabboz Simulator x volta... 17 Maggio 1998 */
-     if (hPrevInstance != NULL) return(NULL);
-#endif
-
      /* Inizializza il programma */
      InitTabboz();
 
@@ -2217,61 +2221,62 @@ int main (int argc, char **argv)
 
 #endif
 
+/* TAG2015 dialog salva/carica sono già presenti in fltk */
 
 //*******************************************************************
 // Dialog x la scelta del file da aprire...
 //*******************************************************************
 
-void OpenFileDlg(HWND hwnd)
-{
-#define OFN_LONGNAMES      0x00200000L
+// void OpenFileDlg(HWND hwnd)
+// {
+// #define OFN_LONGNAMES      0x00200000L
 
-  static char szFileName[MAX_PATH];
-  static OPENFILENAME ofn;
-  memset(&(ofn), 0, sizeof(OPENFILENAME));
+//   static char szFileName[MAX_PATH];
+//   static OPENFILENAME ofn;
+//   memset(&(ofn), 0, sizeof(OPENFILENAME));
 
-  ofn.lStructSize = sizeof(OPENFILENAME);
-  ofn.hwndOwner = hwnd;
-  ofn.hInstance = hInst;
-  ofn.lpstrFile = szFileName;
-  ofn.nMaxFile = MAX_PATH;
-  ofn.lpstrDefExt = "tbz";
-  ofn.lpstrFilter = "Tabboz Files (*.tbz)\000*.tbz\000";
-  ofn.Flags = OFN_HIDEREADONLY | OFN_LONGNAMES | OFN_FILEMUSTEXIST;
+//   ofn.lStructSize = sizeof(OPENFILENAME);
+//   ofn.hwndOwner = hwnd;
+//   ofn.hInstance = hInst;
+//   ofn.lpstrFile = szFileName;
+//   ofn.nMaxFile = MAX_PATH;
+//   ofn.lpstrDefExt = "tbz";
+//   ofn.lpstrFilter = "Tabboz Files (*.tbz)\000*.tbz\000";
+//   ofn.Flags = OFN_HIDEREADONLY | OFN_LONGNAMES | OFN_FILEMUSTEXIST;
 
-  if(GetOpenFileName(&ofn)) {
-        strcpy(nome_del_file_su_cui_salvare,szFileName);
-        CaricaTutto();
-        nome_del_file_su_cui_salvare[0]='\0';
-  }
-}
+//   if(GetOpenFileName(&ofn)) {
+//         strcpy(nome_del_file_su_cui_salvare,szFileName);
+//         CaricaTutto();
+//         nome_del_file_su_cui_salvare[0]='\0';
+//   }
+// }
 
 //*******************************************************************
 // Dialog x la scelta del file da salvare...
 //*******************************************************************
 
-void SaveFileDlg(HWND hwnd)
-{
-#define OFN_LONGNAMES      0x00200000L
-  static char szFileName[256];
-  static    OPENFILENAME ofn;
-  memset(&(ofn), 0, sizeof(OPENFILENAME));
+// void SaveFileDlg(HWND hwnd)
+// {
+// #define OFN_LONGNAMES      0x00200000L
+//   static char szFileName[256];
+//   static    OPENFILENAME ofn;
+//   memset(&(ofn), 0, sizeof(OPENFILENAME));
 
-  ofn.lStructSize = sizeof(OPENFILENAME);
-  ofn.hwndOwner = hwnd;
-  ofn.hInstance = hInst;
-  ofn.lpstrFile = szFileName;
-  ofn.nMaxFile = sizeof(szFileName);
-  ofn.lpstrDefExt = "tbz";
-  ofn.lpstrFilter = "Tabboz Files (*.tbz)\000*.tbz\000";
-  ofn.Flags = OFN_HIDEREADONLY | OFN_LONGNAMES | OFN_OVERWRITEPROMPT | OFN_NOTESTFILECREATE;
+//   ofn.lStructSize = sizeof(OPENFILENAME);
+//   ofn.hwndOwner = hwnd;
+//   ofn.hInstance = hInst;
+//   ofn.lpstrFile = szFileName;
+//   ofn.nMaxFile = sizeof(szFileName);
+//   ofn.lpstrDefExt = "tbz";
+//   ofn.lpstrFilter = "Tabboz Files (*.tbz)\000*.tbz\000";
+//   ofn.Flags = OFN_HIDEREADONLY | OFN_LONGNAMES | OFN_OVERWRITEPROMPT | OFN_NOTESTFILECREATE;
 
-  if(GetSaveFileName(&ofn)) {
-        strcpy(nome_del_file_su_cui_salvare,szFileName);
-        SalvaTutto();
-        nome_del_file_su_cui_salvare[0]='\0';
-  }
-}
+//   if(GetSaveFileName(&ofn)) {
+//         strcpy(nome_del_file_su_cui_salvare,szFileName);
+//         SalvaTutto();
+//         nome_del_file_su_cui_salvare[0]='\0';
+//   }
+// }
 
 
 //*******************************************************************
