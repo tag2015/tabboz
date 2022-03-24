@@ -2141,51 +2141,67 @@ void writelog(char *s)
 
 //*******************************************************************
 // PROCEDURA PRINCIPALE per la versione Windows.
+// TAG2015 adesso è portabile, define andrebbero editati
 
 #ifdef TABBOZ_WIN
 
-#pragma argsused
-int PASCAL WinMain(HANDLE hInstance, HANDLE hPrevInstance,
-            LPSTR lpszCmdLine, int cmdShow)
+//#pragma argsused
+//int PASCAL WinMain(HANDLE hInstance, HANDLE hPrevInstance, LPSTR lpszCmdLine, int cmdShow)
+int main(void)
 {
-     hInst = hInstance;
+    //hInst = hInstance;
 
-     /* Inizializza il programma */
-     InitTabboz();
+    /* Inizializza il programma */
+    InitTabboz();
 
-     /* Finestra principale */
-     DialogBox(hInst,MAKEINTRESOURCE(1),NULL,TabbozWndProc);
+    /* Finestra principale */
+    //DialogBox(hInst,MAKEINTRESOURCE(1),NULL,TabbozWndProc);
+    win_principale = GUITabboz();
+    win_principale->show();
+    Fl::run();
 
-     /* Chiusura */
+    /* Chiusura */
+    //TAG2015 Lasciamo perdere lo shutdown per ora
+    // Nuova chiusura - 19 Giugno 1999, speriamo che ora non crashi piu'...
+    // if (boolean_shutdown == 2) {
+    //     FineProgramma("shutdown"); // Salvataggio partita...
+    //     #ifdef TABBOZ_DEBUG
+    //         if (debug_active) {
+    //             writelog("tabboz: end (exit + shutdown)");
+    //             closelog();
+    //         }
+    //     #endif
+    //     ExitWindows(0, 0);
 
-     // Nuova chiusura - 19 Giugno 1999, speriamo che ora non crashi piu'...
-     if (boolean_shutdown == 2) {
-            FineProgramma("shutdown"); // Salvataggio partita...
-            #ifdef TABBOZ_DEBUG
+    // } else {
+    //     FineProgramma("main"); // Salvataggio partita...
+    //     #ifdef TABBOZ_DEBUG
+    //         if (debug_active) {
+    //             writelog("tabboz: end (standard exit)");
+    //             closelog();
+    //         }
+    //     #endif
+    // }
+
+    FineProgramma("main"); // Salvataggio partita...
+        #ifdef TABBOZ_DEBUG
             if (debug_active) {
-                    writelog("tabboz: end (exit + shutdown)");
-                    closelog();
+                writelog("tabboz: end (standard exit)");
+                closelog();
             }
-            #endif
-            ExitWindows(0, 0);
+        #endif
 
-     } else {
-            FineProgramma("main"); // Salvataggio partita...
-            #ifdef TABBOZ_DEBUG
-            if (debug_active) {
-                    writelog("tabboz: end (standard exit)");
-                    closelog();
-            }
-            #endif
-     }
-
-     return 0;
+    return 0;
 }
 #endif
 
 
 //*******************************************************************
 // 'Possibile' main per Linux usando le GTK+
+
+/* TAG2015 visto che abbiamo optato per fltk queste non servono ma la
+* ifdef per linux tanto vale tenerla per ora
+*/
 
 #ifdef LINUX
 
