@@ -25,7 +25,7 @@
 #define TABBOZ_DEBUG
 
 /* Per disattivare la possibilita' di giocare con la tabbozza */
-// #define NOTABBOZZA
+#define NOTABBOZZA
 
 /* Per disabilitare la rete... */
 #define NONETWORK
@@ -132,12 +132,17 @@ static char copyright[] =
 #define CELLULRABBONAM  123
 
 
-/* Attesa per soldi dai genitori*/
-#define ATTESAMAX   5
 
+#define ATTESAMAX   5   // Attesa per soldi dai genitori
+#define CHAR_MAX    128
 
 typedef unsigned long   u_long;
 
+/* INFORMAZIONI MATERIE SCOLASTICHE */
+typedef struct tagSTMATERIE {
+    char        nome[30];       // nome della materia
+    int         voto;           // voto materia
+  } STMATERIE;
 
 /* INFORMAZIONI SUGLI SCOOTER  (ora usato solo per cose generiche...)  */
 typedef struct tagSTSCOOTER {
@@ -189,7 +194,7 @@ typedef struct tagABB {
 extern   NEWSTSCOOTER ScooterData;
 extern   NEWSTSCOOTER ScooterMem[];
 
-extern   STSCOOTER    MaterieMem[];
+extern   STMATERIE    MaterieMem[];
 
 extern   STCEL        CellularData;
 extern   STCEL        CellularMem[];

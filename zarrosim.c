@@ -36,6 +36,7 @@
 #include <FL/Fl.h>
 #include <FL/Fl_Window.h>
 #include <FL/Fl_Box.h>
+#include <FL/Fl_Preferences.H>
 
 /* Header finestre GUI */
 #include "gui/GUITabboz.h"
@@ -43,8 +44,11 @@
 
 static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
+static const char *dir_profilo = "TabbozNG";
+static const char *file_profilo = "TabbozNG";
+
 //extern void     Atinom(HANDLE hInstance);  //visualizza messaggio extra in about
-extern int      vvc(int i);        /* 15 Giugno 1998 - v0.7.1 - Verifica Valori Chiave */
+extern int      vvc(int i);
 extern u_long   new_counter;
 //extern ATOM     RegisterBMPTipaClass(HANDLE hInst);
 //extern ATOM     RegisterBMPViewClass(HANDLE hInst);
@@ -183,7 +187,7 @@ void ResetMe(int primavolta)
 //    sprintf(Street,"%s n. %d",tmp,(1 + random(150)));
 
     for (i=1;i<10;i++)
-        MaterieMem[i].xxx=0;
+        MaterieMem[i].voto=0;
 
     CalcolaStudio();
 
@@ -297,9 +301,10 @@ static void InitTabboz(void)
     // #endif
 
     nome_del_file_su_cui_salvare[0]=0;
+    Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
     // Inizializzazione dei numeri casuali...
-    randomize();
+    srand(time(NULL));
 
     // Inizializza un po' di variabile...
     boolean_shutdown=0;               /* 0=resta dentro, 1=uscita, 2=shutdown */
@@ -323,7 +328,8 @@ static void InitTabboz(void)
     #endif
 
     #ifdef TABBOZ_DEBUG
-        debug_active=atoi (RRKey("Debug"));
+        //debug_active=atoi (RRKey("Debug"));
+        TabbozProfilo.get("Debug",debug_active,0);
         if (debug_active < 0) debug_active=0;
         if (debug_active == 1) {
             openlog();
@@ -334,10 +340,10 @@ static void InitTabboz(void)
 
     #ifdef TABBOZ_WIN
         // Ottieni i nomi dei creatori di sto coso...
-        LoadString(hInst, 10, Andrea,   sizeof(Andrea));
-        LoadString(hInst, 11, Caccia,   sizeof(Caccia));
-        LoadString(hInst, 12, Daniele,  sizeof(Daniele));
-        LoadString(hInst,  2, Obscured, sizeof(Obscured));
+        //LoadString(hInst, 10, Andrea,   sizeof(Andrea));
+        //LoadString(hInst, 11, Caccia,   sizeof(Caccia));
+        //LoadString(hInst, 12, Daniele,  sizeof(Daniele));
+        //LoadString(hInst,  2, Obscured, sizeof(Obscured));
 
         // Registra la Classe BMPView - E' giusto metterlo qui ???
         //RegisterBMPViewClass(hInst);
@@ -383,108 +389,194 @@ static void InitTabboz(void)
 
 static void CaricaTutto(void)
 {
-    char tmp[128];
+    char tmp[CHAR_MAX];
     int  i;
+
+    u_long buf_l;            //buffer long
+    int    buf_i;            //buffer int
+    char   buf_s[CHAR_MAX];  //buffer *char
+
+    Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
     /* Prima che vengano caricate le informazioni... */
     /* azzera il checksum...                         */
     new_reset_check();
 
     /* Cerca le informazioni registrate */
+    /* TAG2015 - Fl_prefs supporta i tipi, le conversioni da stringa non servono più */
 
-    Soldi=new_check_l(atol(RRKey("Soldi")));    // ATOL, visto che Soldi e' un LONG, non un semplice INT
+    //Soldi=new_check_l(atol(RRKey("Soldi")));    // ATOL, visto che Soldi e' un LONG, non un semplice INT
+    TabbozProfilo.get("Soldi",buf_l,0);
+    Soldi=new_check_l(buf_l);
 
-    Paghetta=new_check_l(atol(RRKey("Paghetta")));
+    //Paghetta=new_check_l(atol(RRKey("Paghetta")));
+    TabbozProfilo.get("Paghetta",buf_l,0);
+    Paghetta=new_check_l(buf_l);
+    
+    //Reputazione=vvc(new_check_i(atoi (RRKey("Reputazione")) ));
+    TabbozProfilo.get("Reputazione",buf_i,0);
+    Reputazione=vvc(buf_i);
 
-    Reputazione=vvc(new_check_i(atoi (RRKey("Reputazione")) ));
+    //Studio=vvc(new_check_i(atoi (RRKey("Studio")) ));
+    TabbozProfilo.get("Studio",buf_i,0);
+    Studio=vvc(buf_i);
+    
+    //Fama=vvc(new_check_i(atoi (RRKey("Fama")) ));
+    TabbozProfilo.get("Fama",buf_i,0);
+    Fama=vvc(buf_i);
+    
+    //Rapporti=vvc(new_check_i(atoi (RRKey("Rapporti")) ));
+    TabbozProfilo.get("Rapporti",buf_i,0);
+    Rapporti=vvc(buf_i);
+    
+    //Stato=vvc(new_check_i(atoi (RRKey("Stato")) ));
+    TabbozProfilo.get("Stato",buf_i,0);
+    Stato=vvc(buf_i);
 
-    Studio=vvc(new_check_i(atoi (RRKey("Studio")) ));
+    //DDP=new_check_l(atol(RRKey("DdP"))); // ATOL, visto che e' un LONG, non un semplice INT
+    TabbozProfilo.get("DdP",buf_l,0);
+    DDP=new_check_l(buf_l);
 
-    Fama=vvc(new_check_i(atoi (RRKey("Fama")) ));
+    //FigTipa=vvc(new_check_i(atoi (RRKey("FigTipa"))));
+    TabbozProfilo.get("FigTipa",buf_i,0);
+    FigTipa=vvc(buf_i);
 
-    Rapporti=vvc(new_check_i(atoi (RRKey("Rapporti")) ));
+    //if (TabbozReadKey("Nome",Nome)         == 0) Nome[0]='\0';
+    TabbozProfilo.get("Nome",Nome,"",CHAR_MAX);
 
-    Stato=vvc(new_check_i(atoi (RRKey("Stato")) ));
+    //if (TabbozReadKey("Cognome",Cognome)   == 0) Cognome[0]='\0';
+    TabbozProfilo.get("Cognome",Cognome,"",CHAR_MAX);
 
-    DDP=new_check_l(atol(RRKey("DdP"))); // ATOL, visto che e' un LONG, non un semplice INT
+    //if (TabbozReadKey("Nometipa",Nometipa) == 0) Nometipa[0]='\0';
+    TabbozProfilo.get("Nometipa",Nometipa,"",CHAR_MAX);
 
-    FigTipa=vvc(new_check_i(atoi (RRKey("FigTipa"))));
-
-    if (TabbozReadKey("Nome",Nome)         == 0) Nome[0]='\0';
-    if (TabbozReadKey("Cognome",Cognome)   == 0) Cognome[0]='\0';
-    if (TabbozReadKey("Nometipa",Nometipa) == 0) Nometipa[0]='\0';
-
-    if (TabbozReadKey("City",City) == 0)
+    TabbozProfilo.get("City",City,"",CHAR_MAX);
+    if(City[0] == '\0')
         firsttime=1;
+    //if (TabbozReadKey("City",City) == 0)
+    //  firsttime=1;
 
-    TabbozReadKey("Residenza",Residenza);
+    //TabbozReadKey("Residenza",Residenza);
+    TabbozProfilo.get("Residenza",Residenza,"",CHAR_MAX);
 
-    TabbozReadKey("Street",Street);
+    //TabbozReadKey("Street",Street);
+    TabbozProfilo.get("Street",Street,"",CHAR_MAX);
 
-     // la serie di 9 "A" messe nella riga sotto NON E' CASUALE
-     // non sostituirla con altre lettere !
+    // la serie di 9 "A" messe nella riga sotto NON E' CASUALE
+    // non sostituirla con altre lettere !
 
-    if (TabbozReadKey("Materie",tmp) == 0) sprintf(tmp,"AAAAAAAAA");
+    //if (TabbozReadKey("Materie",tmp) == 0) sprintf(tmp,"AAAAAAAAA");
+    TabbozProfilo.get("Materie",tmp,"",CHAR_MAX);
+    if(tmp[0]=='\0')  sprintf(tmp,"AAAAAAAAA");
 
     for (i=1;i<10;i++) {
-        MaterieMem[i].xxx=tmp[i-1] - 65;
-        if ((MaterieMem[i].xxx < 0) || (MaterieMem[i].xxx > 10)) MaterieMem[i].xxx=0;
+        MaterieMem[i].voto=tmp[i-1] - 65;
+        if ((MaterieMem[i].voto < 0) || (MaterieMem[i].voto > 10)) MaterieMem[i].voto=0;
     }
     CalcolaStudio();
 
-    Fortuna=vvc(new_check_i(atoi(RRKey("Fortuna")) ));
+    //Fortuna=vvc(new_check_i(atoi(RRKey("Fortuna")) ));
+    TabbozProfilo.get("Fortuna",buf_i,0);
+    Fortuna=vvc(buf_i);
 
     // Se e' la prima volta che parte il Tabboz Simulator, la data e' impostata al 30 Settembre
-    x_mese         = atoi (RRKey("Mese")); if (x_mese < 1) x_mese=9;
-    x_giorno       = atoi (RRKey("Giorno")); if (x_giorno < 1) x_giorno=30;
-    x_giornoset    = atoi (RRKey("GiornoSet")); if (x_giornoset < 1) x_giornoset=1;
-    x_anno_bisesto = atoi (RRKey("AnnoBisestile")); if (x_anno_bisesto > 3) x_anno_bisesto=3;
-
-    // Se non e' gia' settato,setta il compleanno
-    comp_mese=atoi (RRKey("CompMese"));
-    if (comp_mese < 1) comp_mese=random(12)+1;
-
-    comp_giorno=atoi (RRKey("CompGiorno"));
-    if (comp_giorno < 1) comp_giorno=random(InfoMese[comp_mese-1].num_giorni)+1;
-
-    numeroditta     = vvc(atoi (RRKey("NumeroDitta")) );
-    scad_pal_giorno = vvc(atoi (RRKey("ScadPalGiorno")) );
-    scad_pal_mese   = vvc(atoi (RRKey("ScadPalMese")) );
-
-    impegno          = vvc(new_check_i(atoi (RRKey("Impegno")) ));
-    giorni_di_lavoro = vvc(new_check_i(atoi (RRKey("GiorniDiLavoro")) ));
+    //x_mese         = atoi (RRKey("Mese"));
+    TabbozProfilo.get("Mese",x_mese,0);
+    if (x_mese < 1) x_mese=9;
     
-    stipendio        = new_check_i(atoi (RRKey("Stipendio")));
+    //x_giorno       = atoi (RRKey("Giorno"));
+    TabbozProfilo.get("Giorno",x_giorno,0);
+    if (x_giorno < 1) x_giorno=30;
+
+    //x_giornoset    = atoi (RRKey("GiornoSet"));
+    TabbozProfilo.get("GiornoSet",x_giornoset,0);
+    if (x_giornoset < 1) x_giornoset=1;
+    
+    //x_anno_bisesto = atoi (RRKey("AnnoBisestile"));
+    TabbozProfilo.get("AnnoBisestile",x_anno_bisesto,0);
+    if (x_anno_bisesto > 3) x_anno_bisesto=3;
+
+    // Se non e' gia' settato,setta il compleanno (a caso)
+    //comp_mese=atoi (RRKey("CompMese"));
+    TabbozProfilo.get("CompMese",comp_mese,0);
+    if (comp_mese < 1) comp_mese=rand() % 12 + 1;
+
+    //comp_giorno=atoi (RRKey("CompGiorno"));
+    //TAG2015 dovrebbero esistere metodi migliori anziche una struttura solo
+    //per il nro di giorni
+    TabbozProfilo.get("CompGiorno",comp_giorno,0);
+    if (comp_giorno < 1) comp_giorno=rand() % InfoMese[comp_mese-1].num_giorni + 1;
+
+//    numeroditta     = vvc(atoi (RRKey("NumeroDitta")) );
+    TabbozProfilo.get("NumeroDitta",buf_i,0);
+    numeroditta = vvc(buf_i);
+
+//    scad_pal_giorno = vvc(atoi (RRKey("ScadPalGiorno")) );
+    TabbozProfilo.get("ScadPalGiorno",buf_i,0);
+    scad_pal_giorno = vvc(buf_i);
+
+//    scad_pal_mese   = vvc(atoi (RRKey("ScadPalMese")) );
+    TabbozProfilo.get("ScadPalMese",buf_i,0);
+    scad_pal_mese = vvc(buf_i);
+
+//    impegno          = vvc(new_check_i(atoi (RRKey("Impegno")) ));
+    TabbozProfilo.get("Impegno",buf_i,0);
+    impegno = vvc(buf_i);
+
+//  giorni_di_lavoro = vvc(new_check_i(atoi (RRKey("GiorniDiLavoro")) ));
+    TabbozProfilo.get("GiorniDiLavoro",buf_i,0);
+    giorni_di_lavoro = vvc(new_check_i(buf_i));
+    
+//  stipendio        = new_check_i(atoi (RRKey("Stipendio")));
+    TabbozProfilo.get("Stipendio",buf_i,0);
+    stipendio = new_check_i(buf_i);
     if (stipendio < 0) stipendio=0;
 
-    sizze = new_check_i(atoi (RRKey("Sigarette")));
+//    sizze = new_check_i(atoi (RRKey("Sigarette")));
+    TabbozProfilo.get("Sigarette",buf_i,0);
+    sizze = new_check_i(buf_i);
     if (sizze < 0) sizze=0;
 
-    current_testa     = vvc(new_check_i(atoi (RRKey("Testa")) ));
-    current_gibbotto  = vvc(new_check_i(atoi (RRKey("Giubbotto")) ));
-    current_pantaloni = vvc(new_check_i(atoi (RRKey("Pantaloni")) ));
-    current_scarpe    = vvc(new_check_i(atoi (RRKey("Scarpe")) ));
+//    current_testa     = vvc(new_check_i(atoi (RRKey("Testa")) ));
+    TabbozProfilo.get("Testa",buf_i,0);
+    current_testa = vvc(new_check_i(buf_i));
 
-    euro = atoi (RRKey("Euro"));
+//    current_gibbotto  = vvc(new_check_i(atoi (RRKey("Giubbotto")) ));
+    TabbozProfilo.get("Giubbotto",buf_i,0);
+    current_gibbotto = vvc(new_check_i(buf_i));
+
+//    current_pantaloni = vvc(new_check_i(atoi (RRKey("Pantaloni")) ));
+    TabbozProfilo.get("Pantaloni",buf_i,0);
+    current_pantaloni = vvc(new_check_i(buf_i));
+
+//    current_scarpe = vvc(new_check_i(atoi (RRKey("Scarpe")) ));
+    TabbozProfilo.get("Scarpe",buf_i,0);
+    current_scarpe = vvc(new_check_i(buf_i));
+
+//    euro = atoi (RRKey("Euro"));
+    TabbozProfilo.get("Euro",euro,0);
     if (euro < 0) euro=0;
     
     #ifdef NOTABBOZZA
         sesso='M';
     #else
-        strcpy(tmp,(RRKey("Sesso")));
-        sesso=tmp[0];
+        TabbozProfilo.get("Sesso",buf_s,0);
+        sesso=buf_s[0];
         if ((sesso != 'M') && (sesso != 'F')) sesso = 'M';
     #endif
 
     CalcolaSesso();
 
-    STARTcmdShow = atoi (RRKey("STARTcmdShow"));
+ //   STARTcmdShow = atoi (RRKey("STARTcmdShow"));
+    TabbozProfilo.get("STARTcmdShow",STARTcmdShow,-1);
     if (STARTcmdShow < 0) STARTcmdShow=1;
 
-    timer_active = atoi (RRKey("TimerActive"));
+//    timer_active = atoi (RRKey("TimerActive"));
+    TabbozProfilo.get("TimerActive",timer_active,-1);
     if (timer_active < 0) timer_active=1;
 
-    sound_active = atoi (RRKey("SoundActive"));
+//    sound_active = atoi (RRKey("SoundActive"));
+    TabbozProfilo.get("SoundActive",sound_active,-1);
     if (sound_active < 0) sound_active=1;
 
     #ifndef NONETWORK
@@ -493,7 +585,7 @@ static void CaricaTutto(void)
         PortNumber   = atoi (RRKey("NetPort"));
         if (PortNumber < 1) PortNumber=79;
     #endif
-
+/*  TAG2015 scooter e cell x ora disabilitato xche mi sono rotto
     ScooterData.speed = new_check_i(atoi (RRKey("Scooter\\Speed")));
     if (ScooterData.speed < 0) ScooterData.speed=0;
     
@@ -515,7 +607,7 @@ static void CaricaTutto(void)
     ScooterData.attivita = new_check_i(atoi(RRKey("Scooter\\Attivita")));
     if (ScooterData.attivita < 0) ScooterData.attivita=0;
 
-    ScooterData.stato = new_check_i(atoi(RRKey("Scooter\\Stato"))); /* -1 = nessuno */
+    ScooterData.stato = new_check_i(atoi(RRKey("Scooter\\Stato")));  // -1 = nessuno
 
     benzina = new_check_i(atoi(RRKey("Scooter\\Benzina")));
     if (benzina < 0) benzina=0;
@@ -533,7 +625,7 @@ static void CaricaTutto(void)
     CellularData.stato  = new_check_i(atoi (RRKey("Cellular\\Stato")));
     CellularData.prezzo = new_check_i(atoi (RRKey("Cellular\\Prezzo")));
     
-    if (TabbozReadKey("Cellular\\Nome",CellularData.nome) == 0) CellularData.stato = -1;
+    if (TabbozReadKey("Cellular\\Nome",CellularData.nome) == 0) CellularData.stato = -1; */
 
     if (firsttime)
         ResetMe(1);
@@ -549,7 +641,7 @@ static void CaricaTutto(void)
 
     x_giorno--;  //Per evitare che avanzi di giorno ogni volta che si apre il programma
     x_giornoset--;
-    Giorno(hInst);
+//    Giorno(hInst);  TAG2015 controllare
 
     #ifdef TABBOZ_DEBUG
         // Non si possono mettere le infomazioni del counter nel file di log
@@ -561,8 +653,8 @@ static void CaricaTutto(void)
     #endif
 
     // Guarda se qualche "bastardino" ha modificato dei valori nel registro...
-    if (new_counter - atoi(RRKey("SoftCheck")))
-        ResetMe(0);
+    // if (new_counter - atoi(RRKey("SoftCheck")))  TAG2015 meglio disattivarlo x ora
+    //     ResetMe(0);
 
 }
 
@@ -644,7 +736,7 @@ static void SalvaTutto(void) {
 
     sprintf(tmp,"123456789");    // 9 materie
     for (i=1;i<10;i++) {
-        tmp[i-1]=(char)(65 + MaterieMem[i].xxx);
+        tmp[i-1]=(char)(65 + MaterieMem[i].voto);
     }
     TabbozAddKey("Materie", tmp);
 
@@ -858,7 +950,7 @@ static void SalvaTutto(void) {
 
 //             if (! strcmp(Andrea,buf)) {    /* Io porto la scuola e la tipa al 100% */
 //                 for (i=1;i<10;i++)
-//                     MaterieMem[i].xxx=10;
+//                     MaterieMem[i].voto=10;
 //                 CalcolaStudio();
 //                 if ( Rapporti > 1 )
 //                     Rapporti=100;
@@ -1840,7 +1932,7 @@ void CalcolaStudio()
 
     i2=0;
     for (i=1;i<10;i++)
-        i2+=MaterieMem[i].xxx;
+        i2+=MaterieMem[i].voto;
 
     i2=i2*10;
     x = div(i2,9);
@@ -1877,7 +1969,7 @@ char *MostraSoldi(u_long i)
 
 /*********************************************************************/
 
-int vvc(int i)        /* Verifica Valori Chiave */
+int vvc(int i)  //Verifica Valori Chiave (se tra min e max)
 {
     if ( i < 0)
         return 0;
