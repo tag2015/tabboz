@@ -228,23 +228,6 @@ char tmp[128];
    }
 }
 
-/* Calcola Studio */
-void
-CalcolaStudio()
-{
-int i,i2;
-div_t x;
-
-  i2=0;
-  for (i=1;i<10;i++)
-	 i2+=MaterieMem[i].xxx;
-
-  i2=i2*10;
-
-  x = div(i2,9);
-  Studio=x.quot;
-}
-
 
 /* Aggiorna */
 void

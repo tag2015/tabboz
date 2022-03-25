@@ -1,5 +1,5 @@
-// Tabboz Simulator
-// Copyright (c) 1997-2000 Andrea Bonomi
+/*             Tabboz Simulator             */
+/* (C) Copyright 1997-2000 by Andrea Bonomi */
 
 /*
      This file is part of Tabboz Simulator.
@@ -64,10 +64,10 @@ char    Andrea[14];
 char    Caccia[21];
 char    Daniele[17];
 char    Obscured[29];
-int     firsttime;       /* 29 Novembre 1998 - 0.8.1pr */
-int     ImgSelector;    /* 25 Febbraio 1999 - 0.8.3pr */
-int     TabbozRedraw;    /* 26 Febbraio 1999 - 0.8.3pr */
-int     ScuolaRedraw;    /* 27 Febbraio 1999 - 0.8.3pr */
+int     firsttime;
+int     ImgSelector;
+int     TabbozRedraw;
+int     ScuolaRedraw;
 
 /* DOPO LE CARATTERISTIKE */
 
@@ -109,20 +109,19 @@ int     sound_active;
 #define WIN_GRANDE  SW_SHOWNORMAL
 
 // Questo serve se e' attivo il debug...
-
 #ifdef TABBOZ_DEBUG
-FILE    *debugfile;
-int     debug_active;
+    FILE    *debugfile;
+    int     debug_active;
 #endif
 
 #ifndef NONETWORK
-extern  WSADATA      Data;
-extern  SOCKADDR_IN  serverSockAddr;
-extern  SOCKADDR_IN  clientSockAddr;
-extern  SOCKET       serverSocket;
-extern  SOCKET       clientSocket;
-extern  int          PortNumber;
-HANDLE  hModule;
+    extern  WSADATA      Data;
+    extern  SOCKADDR_IN  serverSockAddr;
+    extern  SOCKADDR_IN  clientSockAddr;
+    extern  SOCKET       serverSocket;
+    extern  SOCKET       clientSocket;
+    extern  int          PortNumber;
+    HANDLE  hModule;
 #endif
 
 //HANDLE    hInst;                    // hInstance dell'applicazione
@@ -140,7 +139,7 @@ static  char boolean_shutdown;
 
 
 /*******************************************************************
-/* Calcola Sesso 29 Maggio 1999 - Maschietto o Femminuccia
+/* Calcola Sesso - Maschietto o Femminuccia
 /*******************************************************************/
 
 static void CalcolaSesso(void)
@@ -155,7 +154,7 @@ static void CalcolaSesso(void)
 }
 
 //*******************************************************************
-// ResetMe  26 Marzo 1999 - Reset del Tabboz Simulator
+// ResetMe - Reset del Tabboz Simulator
 //*******************************************************************
 
 void ResetMe(int primavolta)
@@ -1832,6 +1831,21 @@ BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 // }
 
 //*******************************************************************
+
+/* Calcola Studio */
+void CalcolaStudio()
+{
+    int i,i2;
+    div_t x;
+
+    i2=0;
+    for (i=1;i<10;i++)
+        i2+=MaterieMem[i].xxx;
+
+    i2=i2*10;
+    x = div(i2,9);
+    Studio=x.quot;
+}
 
 char *MostraSoldi(u_long i)
 {
