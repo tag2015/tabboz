@@ -29,13 +29,8 @@ static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 char nome_del_file_su_cui_salvare[256];
 
 
-// Test delle funzioni di lettura/scrittura
-// #define RTEST /* 12 Marzo 1999 */
-
-#ifdef RTEST
-#include <stdio.h>
-#endif
-
+/* Test delle funzioni di lettura/scrittura */
+// #define RTEST
 
 // --------------------------------------------------------------------------
 // Windows 16 ---------------------------------------------------------------
@@ -88,16 +83,16 @@ char *RRKey(char *xKey)
 
 #ifdef TABBOZ32
 
-#include <mmsystem.h> // Per sndPlaySound
+//#include <mmsystem.h> // Per sndPlaySound
 
-#define REG_MAXSIZE30    // Numero massimo di caratteri
-#define TABBOZ_KEY_NAME "Software\\Obscured Truckware\\Tabboz Simulator 32"
+#define REG_MAXSIZE        30    // Numero massimo di caratteri
+#define TABBOZ_KEY_NAME    "Software\\Obscured Truckware\\Tabboz Simulator 32"
 
-void SpegniISuoni()
-{
-    PlaySound(NULL,NULL,0x0040);
-//    PlaySound(NULL,NULL,SND_PURGE);
-}
+// void SpegniISuoni()
+// {
+//     PlaySound(NULL,NULL,0x0040);
+// //    PlaySound(NULL,NULL,SND_PURGE);
+// }
 
 // Aggiunge una stringa al registro di configurazione
 void TabbozAddKey(char *KeyName,char *KeyValue)

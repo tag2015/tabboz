@@ -163,233 +163,218 @@ void ResetMe(int primavolta)
     int   i;
     char  tmp[128];
 
-    TabbozRedraw         =  1;
-        Soldi                    = 10;
-        Paghetta                = 30;
-        Reputazione            =  0;
-        Fama                    =  0;
-        Rapporti                =  0;
-        Stato                    =100;
-        impegno                =  0;
-        giorni_di_lavoro    =    0;
-        numeroditta            =  0;
+    TabbozRedraw      =    1;
+    Soldi             =   10;
+    Paghetta          =   30;
+    Reputazione       =    0;
+    Fama              =    0;
+    Rapporti          =    0;
+    Stato             =  100;
+    impegno           =    0;
+    giorni_di_lavoro  =    0;
+    numeroditta       =    0;
 
-        strcpy(Residenza,"Milano");
-        Nometipa[0]=0;
+    strcpy(Residenza,"Milano");
+    Nometipa[0]=0;
 
-        LoadString(hInst, (400 + random(22) ), City, (sizeof(City)-1));
+//TAG2015 abilitare questo
+ //   LoadString(hInst, (400 + random(22) ), City, (sizeof(City)-1));
 
-        LoadString(hInst, (450 + random(50) ), tmp, (sizeof(tmp)-1));
-        sprintf(Street,"%s n. %d",tmp,(1 + random(150)));
+//    LoadString(hInst, (450 + random(50) ), tmp, (sizeof(tmp)-1));
+//    sprintf(Street,"%s n. %d",tmp,(1 + random(150)));
 
-        for (i=1;i<10;i++)
-            MaterieMem[i].xxx=0;
+    for (i=1;i<10;i++)
+        MaterieMem[i].xxx=0;
 
-        CalcolaStudio();
+    CalcolaStudio();
 
-        x_mese                =  9;
-        x_giorno                = 30;
-        x_giornoset            =  1;
-        x_anno_bisesto        =    0;
+    x_mese         =  9;
+    x_giorno       = 30;
+    x_giornoset    =  1;
+    x_anno_bisesto =  0;
 
-        comp_mese            = random(12)+1;
-        comp_giorno            = random(InfoMese[comp_mese-1].num_giorni)+1;
+    comp_mese      = random(12)+1;
+    comp_giorno    = random(InfoMese[comp_mese-1].num_giorni)+1;
 
-        if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
-            STARTcmdShow        =  1;
-            timer_active        =  1;
-            sound_active        =  1;
-            euro                    =  0;
-            sesso                    = 'M';
-            strcpy(Nome,"Tizio");
-            strcpy(Cognome,"Caio");
-            CalcolaSesso();
-            }
+    if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
+        STARTcmdShow        =  1;
+        timer_active        =  1;
+        sound_active        =  1;
+        euro                =  0;
+        sesso               = 'M';
+        strcpy(Nome,"Tizio");
+        strcpy(Cognome,"Caio");
+        CalcolaSesso();
+    }
 
-        if (sesso == 'F') {
-            strcpy(Nome,"Nessuna");
-            strcpy(Cognome,"In Particolare");
-            }
+    if (sesso == 'F') {
+        strcpy(Nome,"Nessuna");
+        strcpy(Cognome,"In Particolare");
+    }
 
-        sizze                    =  0;
-        current_testa     =  0;
-        current_gibbotto  =  0;
-        current_pantaloni =  0;
-        current_scarpe    =  0;
+    sizze             =  0;
+    current_testa     =  0;
+    current_gibbotto  =  0;
+    current_pantaloni =  0;
+    current_scarpe    =  0;
 
-#ifndef NONETWORK
-        net_enable            =  1;
-        PortNumber            = 79;
-#endif
+    #ifndef NONETWORK
+        net_enable =  1;
+        PortNumber = 79;
+    #endif
 
-        ScooterData.stato    = -1;
+    ScooterData.stato    = -1;
 
-        AbbonamentData.creditorest = -1;
-        CellularData.stato             = -1;
+    AbbonamentData.creditorest = -1;
+    CellularData.stato         = -1;
 
 }
 
 //*******************************************************************
 // Formattazione iniziale Tabbozzo (scelta sesso, nome...) 14-01-2000
 //*******************************************************************
+//TAG2015 Questa routine non fa molto si può implementare in gui
+// #pragma argsused
+// BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+// {
+//     static char tmpsesso;
 
-#pragma argsused
-BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-static char tmpsesso;
+//     if (message == WM_INITDIALOG) {
+//         if (firsttime == 1) EnableWindow( GetDlgItem(hDlg,2), 0);
 
-     if (message == WM_INITDIALOG) {
-            if (firsttime == 1) EnableWindow( GetDlgItem(hDlg,2), 0);;
+//         SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, TRUE, 0L);
+//         if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
 
-            SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, TRUE, 0L);
-            if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
+//         //sprintf(buf,"prova");
+//         //SendMessage(GetDlgItem(hDlg, 110), CB_ADDSTRING, 0, t);
 
-//            sprintf(buf,"prova");
-//            SendMessage(GetDlgItem(hDlg, 110), CB_ADDSTRING, 0, t);
+//         return(TRUE);
+//         }
 
-            return(TRUE);
-            }
+//     if (message == WM_COMMAND) {
+//         switch (LOWORD(wParam))    {
+//             case 100: tmpsesso = 'M';
+//                       break;
+//             case 101: tmpsesso = 'F';
+//                       break;
+//             case 102: if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
+//                       break;
+//             case IDOK:
+//                       ResetMe(0);
+//                       sesso=tmpsesso;
+//                       CalcolaSesso();
+//                       EndDialog(hDlg, TRUE);
+//                       return(TRUE);
+//             case IDCANCEL:
+//                            if (firsttime == 1) {
+//                                sesso=tmpsesso;
+//                                CalcolaSesso();
+//                                EndDialog(hDlg, TRUE);
+//                            }
+//                            EndDialog(hDlg, TRUE);
+//                            return(TRUE);
 
-     if (message == WM_COMMAND) {
-            switch (LOWORD(wParam))    {
-                case 100: tmpsesso = 'M';
-                             break;
-                case 101: tmpsesso = 'F';
-                             break;
-                case 102: if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
-                             break;
+//             default: return(TRUE);
+//         }
+//     }
 
-                case IDOK:
-                    ResetMe(0);
-                    sesso=tmpsesso;
-                    CalcolaSesso();
-                    EndDialog(hDlg, TRUE);
-                    return(TRUE);
-
-                case IDCANCEL:
-                    if (firsttime == 1) {
-                        sesso=tmpsesso;
-                        CalcolaSesso();
-                        EndDialog(hDlg, TRUE);
-                    }
-                    EndDialog(hDlg, TRUE);
-                    return(TRUE);
-
-                default:
-                    return(TRUE);
-            }
-     }
-
-     return(FALSE);
-}
+//     return(FALSE);
+// }
 
 //*******************************************************************
 // InitTabboz
 //*******************************************************************
-#pragma argsused
+//#pragma argsused
 static void InitTabboz(void)
 {
-     char       tmp[128];
-#ifdef TABBOZ_WIN
-     FARPROC        lpproc;
+    char tmp[128];
+    // #ifdef TABBOZ_WIN
+    //     FARPROC        lpproc;
 
-     // Init della liberia grafica...
-     BWCCRegister(hInst); // Fanculo ! Mi sono magiato il fegato prima di trovare
-     // questa funzione ! non c'e' nessuno documento fottuto che mi abbia aiutato !
+    // // Init della liberia grafica...
+    // BWCCRegister(hInst); // Fanculo ! Mi sono magiato il fegato prima di trovare
+    // // questa funzione ! non c'e' nessuno documento fottuto che mi abbia aiutato !
 
-#endif
+    // #endif
 
-     nome_del_file_su_cui_salvare[0]=0;
+    nome_del_file_su_cui_salvare[0]=0;
 
-     // Inizializzazione dei numeri casuali...
-     randomize();
+    // Inizializzazione dei numeri casuali...
+    randomize();
 
-     // Inizializza un po' di variabile...
-     boolean_shutdown=0;          /* 0=resta dentro, 1=uscita, 2=shutdown 19 Giugno 1999 / 14 Ottoble 1999 */
+    // Inizializza un po' di variabile...
+    boolean_shutdown=0;               /* 0=resta dentro, 1=uscita, 2=shutdown */
 
-     Fortuna=0;                         /* Uguale a me...               */
-     ScooterData=ScooterMem[0];  /* nessuno scooter              */
-     Attesa=ATTESAMAX;           /* attesa per avere soldi...    */
-     ImgSelector=0;              /* W l' arte di arrangiarsi...  */
-     timer_active=1;                          /* 10 Giugno  1998 */
-     fase_di_avvio=1;                             /* 11 Giugno  1998 */
-     Tempo_trascorso_dal_pestaggio=0;    /* 12 Giugno  1998 */
-     current_tipa=0;                             /* 6  Maggio  1999 */
+    Fortuna=0;                        /* Uguale a me...               */
+    ScooterData=ScooterMem[0];        /* nessuno scooter              */
+    Attesa=ATTESAMAX;                 /* attesa per avere soldi...    */
+    ImgSelector=0;                    /* W l' arte di arrangiarsi...  */
+    timer_active=1;
+    fase_di_avvio=1;
+    Tempo_trascorso_dal_pestaggio=0;
+    current_tipa=0;
 
-#ifdef PROMPT_ACTIVE
-/* definitivamente rimosso il            10 Gennaio 1999 */
-    prompt_mode=0;                             /* 15 Maggio  1998 */
-#endif
+    #ifdef PROMPT_ACTIVE
+        /* definitivamente rimosso */
+        prompt_mode=0;
+    #endif
 
-#ifndef NONETWORK
-     Data.wVersion=0;                         /* 25 Giugno  1998 */
-#endif
+    #ifndef NONETWORK
+        Data.wVersion=0;
+    #endif
 
-#ifdef TABBOZ_DEBUG
+    #ifdef TABBOZ_DEBUG
+        debug_active=atoi (RRKey("Debug"));
+        if (debug_active < 0) debug_active=0;
+        if (debug_active == 1) {
+            openlog();
+            sprintf(tmp,"tabboz: Starting Tabboz Simulator %s %s",VERSION,__DATE__);
+            writelog(tmp);
+        }
+    #endif
 
-     debug_active=atoi (RRKey("Debug"));
+    #ifdef TABBOZ_WIN
+        // Ottieni i nomi dei creatori di sto coso...
+        LoadString(hInst, 10, Andrea,   sizeof(Andrea));
+        LoadString(hInst, 11, Caccia,   sizeof(Caccia));
+        LoadString(hInst, 12, Daniele,  sizeof(Daniele));
+        LoadString(hInst,  2, Obscured, sizeof(Obscured));
 
-     if (debug_active < 0) debug_active=0;
+        // Registra la Classe BMPView - E' giusto metterlo qui ???
+        //RegisterBMPViewClass(hInst);
 
-     if (debug_active == 1) {
-         openlog();
-         sprintf(tmp,"tabboz: Starting Tabboz Simulator %s %s",VERSION,__DATE__);
-         writelog(tmp);
-         }
-#endif
+        //Registra la Classe BMPTipa
+        //RegisterBMPTipaClass(hInst);
 
-#ifdef TABBOZ_WIN
-     // Ottieni i nomi dei creatori di sto coso...
-     LoadString(hInst, 10, Andrea,   sizeof(Andrea));
-     LoadString(hInst, 11, Caccia,   sizeof(Caccia));
-     LoadString(hInst, 12, Daniele,  sizeof(Daniele));
-     LoadString(hInst,  2, Obscured, sizeof(Obscured));
+        #ifndef NONETWORK
+            /* Azzera l' ultima connessione dalla rete */
+            sprintf(lastconnect,"none (Server is Down !)");
+            sprintf(lastneterror,"Network Server is Down");
+        #endif
+    #endif
 
-     /* Registra la Classe BMPView - E' giusto metterlo qui ??? - 25 Feb 1999 */
-     RegisterBMPViewClass(hInst);
-
-     /* Registra la Classe BMPTipa - 6 Maggio 1999 */
-     RegisterBMPTipaClass(hInst);
-
-#ifndef NONETWORK
-     /* Azzera l' ultima connessione dalla rete */
-     sprintf(lastconnect,"none (Server is Down !)");
-     sprintf(lastneterror,"Network Server is Down");
-#endif
-#endif
-
-     firsttime=0;
-     CaricaTutto();
-#ifdef TABBOZ_WIN
- // 15 Gen 1999 - Parametro 'config' sulla linea di comando
- // 12 Mar 1999 - A causa di un riordino generale, e' stata spostata qui...
-
-     if (_argc > 1)
-         if (! strcmp(_argv[1],"config") ) {
-             hWndMain = 0; // Segnala che non esiste proc. principale.
-             DialogBox(hInst,MAKEINTRESOURCE(CONFIGURATION),NULL,Configuration);
-             FineProgramma("config");
-             exit(0);
-             }
-
-// 15 Mar 1998 - Ora mostra anche il logo iniziale
-// 12 Mar 1999 - A causa di un riordino generale, e' stata spostata qui...
-
-     if (STARTcmdShow)
-        DialogBox(hInst,MAKEINTRESOURCE(LOGO),NULL,Logo);
-
-// 14 Gen 1999 - Formattazione iniziale Tabbozzo
-     if (firsttime == 1) {
-         lpproc = MakeProcInstance(FormatTabboz, hInst);
-         DialogBox(hInst,
-                MAKEINTRESOURCE(15),
-                hInst,
-                lpproc);
-         FreeProcInstance(lpproc);
-       }
-
-
-#endif
+    firsttime=0;
+    CaricaTutto();
+    #ifdef TABBOZ_WIN
+        /* Parametro 'config' sulla linea di comando */
+        //TAG2015 per ora commentiamo tutto sto pezzo ma è da controllare
+        // if (_argc > 1)
+        //     if ( !strcmp(_argv[1],"config") ) {
+        //         hWndMain = 0; // Segnala che non esiste proc. principale.
+        //         DialogBox(hInst,MAKEINTRESOURCE(CONFIGURATION),NULL,Configuration);
+        //         FineProgramma("config");
+        //         exit(0);
+        //     }
+        // if (STARTcmdShow)
+        //     DialogBox(hInst,MAKEINTRESOURCE(LOGO),NULL,Logo);
+        
+        // /* Formattazione iniziale Tabbozzo */
+        // if (firsttime == 1) {
+        //     lpproc = MakeProcInstance(FormatTabboz, hInst);
+        //     DialogBox(hInst, MAKEINTRESOURCE(15), hInst, lpproc);
+        //     FreeProcInstance(lpproc);
+        // }
+    #endif
 }
 
 
@@ -399,180 +384,183 @@ static void InitTabboz(void)
 
 static void CaricaTutto(void)
 {
-     char       tmp[128];
-     int            i;
+    char tmp[128];
+    int  i;
 
-     /* Prima che vengano caricate le informazioni... */
-     /* azzera il checksum... 15 Marzo 1999            */
-     new_reset_check();
+    /* Prima che vengano caricate le informazioni... */
+    /* azzera il checksum...                         */
+    new_reset_check();
 
-     /* Cerca le informazioni registrate */
+    /* Cerca le informazioni registrate */
 
-     Soldi=new_check_l(atol(RRKey("Soldi")));    // ATOL, visto che Soldi e' un LONG, non un semplice INT
+    Soldi=new_check_l(atol(RRKey("Soldi")));    // ATOL, visto che Soldi e' un LONG, non un semplice INT
 
-     Paghetta=new_check_l(atol(RRKey("Paghetta")));
+    Paghetta=new_check_l(atol(RRKey("Paghetta")));
 
-     Reputazione=vvc(new_check_i(atoi (RRKey("Reputazione")) ));
+    Reputazione=vvc(new_check_i(atoi (RRKey("Reputazione")) ));
 
-     Studio=vvc(new_check_i(atoi (RRKey("Studio")) ));
+    Studio=vvc(new_check_i(atoi (RRKey("Studio")) ));
 
-     Fama=vvc(new_check_i(atoi (RRKey("Fama")) ));
+    Fama=vvc(new_check_i(atoi (RRKey("Fama")) ));
 
-     Rapporti=vvc(new_check_i(atoi (RRKey("Rapporti")) ));
+    Rapporti=vvc(new_check_i(atoi (RRKey("Rapporti")) ));
 
-     Stato=vvc(new_check_i(atoi (RRKey("Stato")) ));
+    Stato=vvc(new_check_i(atoi (RRKey("Stato")) ));
 
-     DDP=new_check_l(atol(RRKey("DdP"))); // ATOL, visto che e' un LONG, non un semplice INT
+    DDP=new_check_l(atol(RRKey("DdP"))); // ATOL, visto che e' un LONG, non un semplice INT
 
-     FigTipa=vvc(new_check_i(atoi (RRKey("FigTipa"))));
+    FigTipa=vvc(new_check_i(atoi (RRKey("FigTipa"))));
 
-     if (TabbozReadKey("Nome",Nome)         == 0) Nome[0]='\0';
-     if (TabbozReadKey("Cognome",Cognome)   == 0) Cognome[0]='\0';
-     if (TabbozReadKey("Nometipa",Nometipa) == 0) Nometipa[0]='\0';
+    if (TabbozReadKey("Nome",Nome)         == 0) Nome[0]='\0';
+    if (TabbozReadKey("Cognome",Cognome)   == 0) Cognome[0]='\0';
+    if (TabbozReadKey("Nometipa",Nometipa) == 0) Nometipa[0]='\0';
 
-     if (TabbozReadKey("City",City) == 0)
+    if (TabbozReadKey("City",City) == 0)
         firsttime=1;
 
-     TabbozReadKey("Residenza",Residenza);
+    TabbozReadKey("Residenza",Residenza);
 
-     TabbozReadKey("Street",Street);
+    TabbozReadKey("Street",Street);
 
      // la serie di 9 "A" messe nella riga sotto NON E' CASUALE
      // non sostituirla con altre lettere !
 
-     if (TabbozReadKey("Materie",tmp)          == 0) sprintf(tmp,"AAAAAAAAA");
+    if (TabbozReadKey("Materie",tmp) == 0) sprintf(tmp,"AAAAAAAAA");
 
-     for (i=1;i<10;i++) {
+    for (i=1;i<10;i++) {
         MaterieMem[i].xxx=tmp[i-1] - 65;
         if ((MaterieMem[i].xxx < 0) || (MaterieMem[i].xxx > 10)) MaterieMem[i].xxx=0;
-     }
-     CalcolaStudio();
+    }
+    CalcolaStudio();
 
-     Fortuna=vvc(new_check_i(atoi(RRKey("Fortuna")) ));
+    Fortuna=vvc(new_check_i(atoi(RRKey("Fortuna")) ));
 
-     // Se e' la prima volta che parte il Tabboz Simulator, la data e' impostata al 30 Settembre
-     x_mese=atoi (RRKey("Mese")); if (x_mese < 1) x_mese=9;
-     x_giorno=atoi (RRKey("Giorno")); if (x_giorno < 1) x_giorno=30;
-     x_giornoset=atoi (RRKey("GiornoSet")); if (x_giornoset < 1) x_giornoset=1;
-     x_anno_bisesto=atoi (RRKey("AnnoBisestile")); if (x_anno_bisesto > 3) x_anno_bisesto=3;
+    // Se e' la prima volta che parte il Tabboz Simulator, la data e' impostata al 30 Settembre
+    x_mese         = atoi (RRKey("Mese")); if (x_mese < 1) x_mese=9;
+    x_giorno       = atoi (RRKey("Giorno")); if (x_giorno < 1) x_giorno=30;
+    x_giornoset    = atoi (RRKey("GiornoSet")); if (x_giornoset < 1) x_giornoset=1;
+    x_anno_bisesto = atoi (RRKey("AnnoBisestile")); if (x_anno_bisesto > 3) x_anno_bisesto=3;
 
-     // Se non e' gia' settato,setta il compleanno
-     comp_mese=atoi (RRKey("CompMese"));
-     if (comp_mese < 1)   comp_mese=random(12)+1;
+    // Se non e' gia' settato,setta il compleanno
+    comp_mese=atoi (RRKey("CompMese"));
+    if (comp_mese < 1) comp_mese=random(12)+1;
 
-     comp_giorno=atoi (RRKey("CompGiorno"));
-     if (comp_giorno < 1) comp_giorno=random(InfoMese[comp_mese-1].num_giorni)+1;
+    comp_giorno=atoi (RRKey("CompGiorno"));
+    if (comp_giorno < 1) comp_giorno=random(InfoMese[comp_mese-1].num_giorni)+1;
 
-     numeroditta     = vvc(atoi (RRKey("NumeroDitta")) );
-     scad_pal_giorno = vvc(atoi (RRKey("ScadPalGiorno")) );
-     scad_pal_mese   = vvc(atoi (RRKey("ScadPalMese")) );
+    numeroditta     = vvc(atoi (RRKey("NumeroDitta")) );
+    scad_pal_giorno = vvc(atoi (RRKey("ScadPalGiorno")) );
+    scad_pal_mese   = vvc(atoi (RRKey("ScadPalMese")) );
 
-     impegno     = vvc(new_check_i(atoi (RRKey("Impegno")) ));
-     giorni_di_lavoro     = vvc(new_check_i(atoi (RRKey("GiorniDiLavoro")) ));
-     stipendio     = new_check_i(atoi (RRKey("Stipendio")));
-     if (stipendio < 0) stipendio=0;
+    impegno          = vvc(new_check_i(atoi (RRKey("Impegno")) ));
+    giorni_di_lavoro = vvc(new_check_i(atoi (RRKey("GiorniDiLavoro")) ));
+    
+    stipendio        = new_check_i(atoi (RRKey("Stipendio")));
+    if (stipendio < 0) stipendio=0;
 
-     sizze     = new_check_i(atoi (RRKey("Sigarette")));
-     if (sizze < 0) sizze=0;
+    sizze = new_check_i(atoi (RRKey("Sigarette")));
+    if (sizze < 0) sizze=0;
 
-     current_testa =     vvc(new_check_i(atoi (RRKey("Testa")) ));
-     current_gibbotto =  vvc(new_check_i(atoi (RRKey("Giubbotto")) ));
-     current_pantaloni = vvc(new_check_i(atoi (RRKey("Pantaloni")) ));
-     current_scarpe =    vvc(new_check_i(atoi (RRKey("Scarpe")) ));
+    current_testa     = vvc(new_check_i(atoi (RRKey("Testa")) ));
+    current_gibbotto  = vvc(new_check_i(atoi (RRKey("Giubbotto")) ));
+    current_pantaloni = vvc(new_check_i(atoi (RRKey("Pantaloni")) ));
+    current_scarpe    = vvc(new_check_i(atoi (RRKey("Scarpe")) ));
 
-     euro      = atoi (RRKey("Euro"));
-     if (euro < 0) {
-        euro=0;
-     }
+    euro = atoi (RRKey("Euro"));
+    if (euro < 0) euro=0;
+    
+    #ifdef NOTABBOZZA
+        sesso='M';
+    #else
+        strcpy(tmp,(RRKey("Sesso")));
+        sesso=tmp[0];
+        if ((sesso != 'M') && (sesso != 'F')) sesso = 'M';
+    #endif
 
-#ifdef NOTABBOZZA
-     sesso='M';
-#else
-     strcpy(tmp,(RRKey("Sesso")));
-     sesso=tmp[0];
-     if ((sesso != 'M') && (sesso != 'F')) sesso = 'M';
-#endif
+    CalcolaSesso();
 
-     CalcolaSesso();
+    STARTcmdShow = atoi (RRKey("STARTcmdShow"));
+    if (STARTcmdShow < 0) STARTcmdShow=1;
 
-     STARTcmdShow = atoi (RRKey("STARTcmdShow"));
-     if (STARTcmdShow < 0) STARTcmdShow =1;
+    timer_active = atoi (RRKey("TimerActive"));
+    if (timer_active < 0) timer_active=1;
 
-     timer_active = atoi (RRKey("TimerActive"));
-     if (timer_active < 0) timer_active=1;
+    sound_active = atoi (RRKey("SoundActive"));
+    if (sound_active < 0) sound_active=1;
 
-     sound_active = atoi (RRKey("SoundActive"));
-     if (sound_active < 0) sound_active=1;
+    #ifndef NONETWORK
+        net_enable   = atoi (RRKey("NetEnable"));
+        if (net_enable < 0) net_enable=1;
+        PortNumber   = atoi (RRKey("NetPort"));
+        if (PortNumber < 1) PortNumber=79;
+    #endif
 
-#ifndef NONETWORK
-     net_enable   = atoi (RRKey("NetEnable"));
-     if (net_enable < 0) net_enable=1;
-     PortNumber   = atoi (RRKey("NetPort"));
-     if (PortNumber < 1) PortNumber=79;
-#endif
+    ScooterData.speed = new_check_i(atoi (RRKey("Scooter\\Speed")));
+    if (ScooterData.speed < 0) ScooterData.speed=0;
+    
+    ScooterData.marmitta = new_check_i(atoi (RRKey("Scooter\\Marmitta")));
+    if (ScooterData.marmitta < 0) ScooterData.marmitta=0;
+    
+    ScooterData.carburatore = new_check_i(atoi (RRKey("Scooter\\Carburatore")));
+    if (ScooterData.carburatore < 0) ScooterData.carburatore=0;
+    
+    ScooterData.cc = new_check_i(atoi (RRKey("Scooter\\CC")));
+    if (ScooterData.cc < 0) ScooterData.cc=0;
+    
+    ScooterData.filtro = new_check_i(atoi (RRKey("Scooter\\Filtro")));
+    if (ScooterData.filtro < 0) ScooterData.filtro=0;
+    
+    ScooterData.prezzo = new_check_i(atoi(RRKey("Scooter\\Prezzo")));
+    if (ScooterData.prezzo < 0) ScooterData.prezzo=0;
+    
+    ScooterData.attivita = new_check_i(atoi(RRKey("Scooter\\Attivita")));
+    if (ScooterData.attivita < 0) ScooterData.attivita=0;
 
+    ScooterData.stato = new_check_i(atoi(RRKey("Scooter\\Stato"))); /* -1 = nessuno */
 
-     ScooterData.speed        = new_check_i(atoi (RRKey("Scooter\\Speed")));
-     if (ScooterData.speed < 0) ScooterData.speed=0;
-     ScooterData.marmitta    = new_check_i(atoi (RRKey("Scooter\\Marmitta")));
-     if (ScooterData.marmitta < 0) ScooterData.marmitta=0;
-     ScooterData.carburatore = new_check_i(atoi (RRKey("Scooter\\Carburatore")));
-     if (ScooterData.carburatore < 0) ScooterData.carburatore=0;
-     ScooterData.cc        = new_check_i(atoi (RRKey("Scooter\\CC")));
-     if (ScooterData.cc < 0) ScooterData.cc=0;
-     ScooterData.filtro        = new_check_i(atoi (RRKey("Scooter\\Filtro")));
-     if (ScooterData.filtro < 0) ScooterData.filtro=0;
-     ScooterData.prezzo        = new_check_i(atoi(RRKey("Scooter\\Prezzo")));
-     if (ScooterData.prezzo < 0) ScooterData.prezzo=0;
-     ScooterData.attivita    = new_check_i(atoi(RRKey("Scooter\\Attivita")));
-     if (ScooterData.attivita < 0) ScooterData.attivita=0;
+    benzina = new_check_i(atoi(RRKey("Scooter\\Benzina")));
+    if (benzina < 0) benzina=0;
 
-     ScooterData.stato        = new_check_i(atoi(RRKey("Scooter\\Stato"))); /* -1 = nessuno */
+//    antifurto = atoi (RRKey("Scooter\\Antifurto") );
 
-     benzina            = new_check_i(atoi(RRKey("Scooter\\Benzina")));
-     if (benzina < 0) benzina=0;
-
-/*  antifurto            = atoi (RRKey("Scooter\\Antifurto") ); */
-
-     if (TabbozReadKey("Scooter\\Nome",ScooterData.nome) == 0) sprintf(ScooterData.nome,"nessuno");
+    if (TabbozReadKey("Scooter\\Nome",ScooterData.nome) == 0) sprintf(ScooterData.nome,"nessuno");
 
     //  Cellulare ----------------------
+    AbbonamentData.dualonly    = new_check_i(atoi (RRKey("Cellular\\DualOnly")));
+    AbbonamentData.creditorest = new_check_i(atoi (RRKey("Cellular\\CreditoRest")));
+    if (TabbozReadKey("Cellular\\NomeAbb",AbbonamentData.nome) == 0) AbbonamentData.creditorest= -1;
 
-     AbbonamentData.dualonly = new_check_i(atoi (RRKey("Cellular\\DualOnly")));
-     AbbonamentData.creditorest = new_check_i(atoi (RRKey("Cellular\\CreditoRest")));
-     if (TabbozReadKey("Cellular\\NomeAbb",AbbonamentData.nome) == 0) AbbonamentData.creditorest= -1;
+    CellularData.dual   = new_check_i(atoi (RRKey("Cellular\\DualBand")));
+    CellularData.stato  = new_check_i(atoi (RRKey("Cellular\\Stato")));
+    CellularData.prezzo = new_check_i(atoi (RRKey("Cellular\\Prezzo")));
+    
+    if (TabbozReadKey("Cellular\\Nome",CellularData.nome) == 0) CellularData.stato = -1;
 
-     CellularData.dual = new_check_i(atoi (RRKey("Cellular\\DualBand")));
-     CellularData.stato = new_check_i(atoi (RRKey("Cellular\\Stato")));
-     CellularData.prezzo = new_check_i(atoi (RRKey("Cellular\\Prezzo")));
-     if (TabbozReadKey("Cellular\\Nome",CellularData.nome) == 0) CellularData.stato = -1;
-
-     if (firsttime) /* 29 Novembre 1998 */
-         ResetMe(1);
+    if (firsttime)
+        ResetMe(1);
 
 
-     /* Controllo eventuali errori nella data (o data non settata...) */
-     if (x_giorno < 1)       x_giorno=1;
-     if (x_giorno > 31)      x_giorno=1;
-     if (x_mese < 1)       x_mese=1;
-     if (x_mese > 12)      x_mese=1;
-     if (x_giornoset < 1) x_giornoset=1;
-     if (x_giornoset > 7) x_giornoset=1;
+    // Controllo eventuali errori nella data (o data non settata...)
+    if (x_giorno < 1)     x_giorno=1;
+    if (x_giorno > 31)    x_giorno=1;
+    if (x_mese < 1)       x_mese=1;
+    if (x_mese > 12)      x_mese=1;
+    if (x_giornoset < 1)  x_giornoset=1;
+    if (x_giornoset > 7)  x_giornoset=1;
 
-     x_giorno--; /* Per evitare che avanzi di giorno ogni volta che si apre il programma */
-     x_giornoset--;
-     Giorno(hInst);
+    x_giorno--;  //Per evitare che avanzi di giorno ogni volta che si apre il programma
+    x_giornoset--;
+    Giorno(hInst);
 
-#ifdef TABBOZ_DEBUG
-// Non si possono mettere le infomazioni del counter nel file di log
-// perche' sarebbe facilissimo hackerale...
-//     sprintf(tmp,"tabboz: (R) new_counter %lu", new_counter);
-//     writelog(tmp);
-//     sprintf(tmp,"tabboz: (R) read_counter %lu", atoi(RRKey("SoftCheck")) );
-//     writelog(tmp);
-#endif
+    #ifdef TABBOZ_DEBUG
+        // Non si possono mettere le infomazioni del counter nel file di log
+        // perche' sarebbe facilissimo hackerale...
+        //sprintf(tmp,"tabboz: (R) new_counter %lu", new_counter);
+        //writelog(tmp);
+        //sprintf(tmp,"tabboz: (R) read_counter %lu", atoi(RRKey("SoftCheck")) );
+        //writelog(tmp);
+    #endif
 
-    // ven 10 marzo 2000
     // Guarda se qualche "bastardino" ha modificato dei valori nel registro...
     if (new_counter - atoi(RRKey("SoftCheck")))
         ResetMe(0);
