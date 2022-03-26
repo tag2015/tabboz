@@ -1,5 +1,5 @@
 /*             Tabboz Simulator             */
-/* (C) Copyright 1998-1999 by Andrea Bonomi */
+/* (C) Copyright 1997-2000 by Andrea Bonomi */
 
 /*
     This file is part of Tabboz Simulator.
