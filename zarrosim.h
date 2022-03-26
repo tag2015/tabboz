@@ -136,7 +136,7 @@ static char copyright[] =
 #define ATTESAMAX   5   // Attesa per soldi dai genitori
 #define CHAR_MAX    128
 
-typedef unsigned long   u_long;
+//typedef unsigned long   u_long;
 
 /* INFORMAZIONI MATERIE SCOLASTICHE */
 typedef struct tagSTMATERIE {
@@ -241,18 +241,18 @@ extern  char    showscooter;
 /* DOPO LE CARATTERISTIKE... */
 
 extern  int       Attesa;           // Tempo prima che ti diano altri soldi...
-extern  int       Fama;
+extern  int       Fama;             // Figosità
 extern  int       Reputazione;
 extern  int       Studio;           // Quanto vai bene a scuola (1 - 100)
-extern  u_long    Soldi;            // Long...per forza! lo zarro ha tanti soldi...
-extern  u_long    Paghetta;         // Paghetta Settimanale...
+extern  int       Soldi;            // Long...per forza! lo zarro ha tanti soldi... | Retrocesso a int, a 32bit è sufficiente
+extern  int       Paghetta;         // Paghetta Settimanale... | vedi sopra
 extern  char      Nome[30];
 extern  char      Cognome[30];
 extern  char      Nometipa[30];
-extern  int       FigTipa;
-extern  int       Rapporti;
+extern  int       FigTipa;          // Figosità tipa/o
+extern  int       Rapporti;         // Stabilità relazione con tipa/o
 extern  int       Stato;
-extern  u_long    DDP;              // DueDiPicche
+extern  int       DDP;              // DueDiPicche
 extern  int       AttPaghetta;
 extern  int       Fortuna;
 extern  int       numeroditta;
@@ -260,7 +260,7 @@ extern  int       impegno;
 extern  int       giorni_di_lavoro; // Serve x calcolare lo stipendio SOLO per il primo mese...
 extern  int       stipendio;
 extern  int       benzina;
-extern  int       antifurto;
+extern  int       antifurto;        // NON IMPLEMENTATO
 extern  int       sizze;
 extern  int       Tempo_trascorso_dal_pestaggio;
 extern  int       current_testa;      // Grado di abbronzatura del tabbozzo
@@ -340,11 +340,11 @@ extern  BOOL FAR PASCAL    Prompt(HWND hDlg, WORD message, WORD wParam, LONG lPa
 
 extern  void  FineProgramma(char *caller);
 extern  void  CalcolaStudio(void);
-extern  char  *MostraSoldi(u_long i);
+extern  char  *MostraSoldi(int i);
 
 extern  char    *RRKey(char *xKey);
 extern  int     new_check_i(int i);
-extern  u_long  new_check_l(u_long i);
+//extern  u_long  new_check_l(u_long i);
 extern  void    new_reset_check(void);
 
 //TAG2015 quelle sotto x ora commentate ma servono
