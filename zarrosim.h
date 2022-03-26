@@ -276,18 +276,18 @@ extern  char      *n_attivita[];      // situazione scooter
 
 /* Sistema di Debug ... */
 #ifdef TABBOZ_DEBUG
-extern  FILE    *debugfile;
-extern  void    writelog(char *s);
+    extern  FILE    *debugfile;
+    extern  void    writelog(char *s);
 #endif
 
 /* Supporto Rete */
 #ifndef NONETWORK
-extern   int     net_enable;         // Rete Attiva/Disattiva
-extern   char    lastneterror[255];
-extern   char    lastconnect[255];
-extern   int     addrLen;
-extern   HWND    NEThDlg;            // Punta alla procedura principale...
-extern   void    TabbozStartNet(HANDLE hDlg);
+    extern   int     net_enable;         // Rete Attiva/Disattiva
+    extern   char    lastneterror[255];
+    extern   char    lastconnect[255];
+    extern   int     addrLen;
+    extern   HWND    NEThDlg;            // Punta alla procedura principale...
+    extern   void    TabbozStartNet(HANDLE hDlg);
 #endif
 
 /* TAG2015 commentati tutti prototipi per la gui */
@@ -330,26 +330,27 @@ extern   void    TabbozStartNet(HANDLE hDlg);
 // extern  BOOL FAR PASCAL    MostraSalutieBaci(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 // extern  BOOL FAR PASCAL    Cellular(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
-extern  void  TabbozAddKey(char *key,char *v);
-extern  char  *TabbozReadKey(char *key,char *buf);
-extern  void  TabbozPlaySound(int number);
 
 #ifdef PROMPT_ACTIVE
-extern  BOOL FAR PASCAL    Prompt(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+    extern  BOOL FAR PASCAL    Prompt(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 #endif
 
 extern  void  FineProgramma(char *caller);
 extern  void  CalcolaStudio(void);
 extern  char  *MostraSoldi(int i);
 
-extern  char    *RRKey(char *xKey);
+/* TAG2015 Routine controllo checksum */
 extern  int     new_check_i(int i);
 //extern  u_long  new_check_l(u_long i);
 extern  void    new_reset_check(void);
 
-//TAG2015 quelle sotto x ora commentate ma servono
+/* TAG2015 Routine per file di log */
 extern  void   openlog(void);
 extern  void   closelog(void);
+
+//TAG2015 quelle sotto x ora commentate ma servono
+
+// extern  void  TabbozPlaySound(int number);
 //extern  void   nomoney(HWND parent,int tipo);
 extern  void   AggiornaPrincipale();
 //extern  void   Giorno(HANDLE hInstance);
@@ -359,3 +360,15 @@ extern  void   CalcolaStudio(void);
 //extern  void RunPalestra(HWND hDlg);
 //extern  void RunTabacchi(HWND hDlg);
 //extern  void RunVestiti(HWND hDlg,int numero);
+
+
+
+/* TAG2015 Vecchie routine per scrivere nel registro di configurazione */
+// extern  void  TabbozAddKey(char *key,char *v);
+// extern  char  *TabbozReadKey(char *key,char *buf);
+// extern  char  *RRKey(char *xKey);
+
+/* TAG2015 define temporanei per escludere parti non ancora implementate */
+
+//per disabilitare la gestione di calendario/date
+#define TAG2015_NOTEMPO
