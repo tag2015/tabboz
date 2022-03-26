@@ -26,25 +26,12 @@
 #include <time.h>
 
 #include "zarrosim.h"
+#include "scuola.h"
+
 static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 /* Per una questione di svogliatezza del programmatore, viene usata STSCOOTER anche x i vestiti, */
 /* le materie scolastiche e qualche altra cosa che adesso non mi viene in mente...               */
-
-STMATERIE MaterieMem[] =
-	{   {"---",                   0},
-		{"Agraria",               0},
-		{"Fisica",                0},
-		{"Attivita' culturali",   0},   /* fine alla 0.6.3 era "culurali..." */
-		{"Attivita' matematiche", 0},
-		{"Scienze industriali",   0},
-		{"Elettrochimica",        0},
-		{"Petrolchimica",         0},
-		{"Filosofia aziendale",   0},  /* fino alla 0.5.3 "aziendale" aveva due zeta... */
-		{"Metallurgia",           0} 
-	};
-		                   /*     |   */
-                           /*     \ voto in una materia */
 
 
 void ScriviVoti(HWND parent);
