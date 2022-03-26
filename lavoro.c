@@ -1,21 +1,21 @@
-// Tabboz Simulator
-// (C) Copyright 1998-1999 by Andrea Bonomi
+/*             Tabboz Simulator             */
+/* (C) Copyright 1997-2000 by Andrea Bonomi */
 
 /*
-	 This file is part of Tabboz Simulator.
+    This file is part of Tabboz Simulator.
 
-	 Tabboz Simulator is free software: you can redistribute it and/or modify
+    Tabboz Simulator is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Nome-Programma is distributed in the hope that it will be useful,
+    Tabboz Simulator is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
-	 You should have received a copy of the GNU General Public License
-	 along with Nome-Programma.  If not, see <http://www.gnu.org/licenses/>.
+    You should have received a copy of the GNU General Public License
+    along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 // 31 Maggio 1999 - Conversione Tabbozzo -> Tabbozza
@@ -27,22 +27,19 @@
 #include <time.h>
 
 #include "zarrosim.h"
+#include "lavoro.h"
+
 static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
-int    numeroditta;
-int    impegno;
-int    stipendio;
-int    giorni_di_lavoro;
-int    punti_scheda;
 
 BOOL FAR PASCAL ElencoDitte(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 BOOL FAR PASCAL CercaLavoro(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 void AggiornaLavoro(HWND hDlg);
 
-
-char Risposte1[3];
-char Risposte2[3];
-char Risposte3[3];
+int     punti_scheda;
+char    Risposte1[3];
+char    Risposte2[3];
+char    Risposte3[3];
 
 // Numero di ditte
 #define NUM_DITTE 8
