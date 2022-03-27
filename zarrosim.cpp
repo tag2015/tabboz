@@ -35,6 +35,8 @@
 #include "tempo.h"
 #include "proteggi.h"
 
+#include "debug.h"
+
 #ifdef TABBOZ_WIN
 #ifndef NONETWORK
 #include "net.h"
@@ -1948,28 +1950,6 @@ int vvc(int i)  //Verifica Valori Chiave (se tra min e max)
 
 /*********************************************************************/
 
-#ifdef TABBOZ_DEBUG
-void openlog()
-{
-    debugfile = fopen("zarrosim.log", "w");
-}
-
-void closelog()
-{
-    fclose(debugfile);
-}
-
-void writelog(char *s)
-{
-    time_t t;
-
-    if (debug_active) {
-        time(&t);
-        fprintf(debugfile,"%24.24s %s\n",ctime(&t),s);
-        fflush(debugfile); // Esegue il flush del file, cosi' anche se il Tabboz craschia si ha il file di log...
-    }
-}
-#endif
 
 
 //*******************************************************************

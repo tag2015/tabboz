@@ -33,6 +33,9 @@
 /* Per attivare il Prompt ... */
 // #define PROMPT_ACTIVE
 
+/* Abilita parti non più necessarie (e non compilabili) */
+#define DEADCODE
+
 #ifndef lint
 static char copyright[] =
 "@(#) Copyright (c) 1997-2001 Andrea Bonomi, Emanuele Caccialanza, Daniele Gazzarri.\n\
@@ -275,12 +278,6 @@ extern  char      ao;                 // lettera in funzione del sesso (tabbozza
 extern  char      un_una[];
 extern  char      *n_attivita[];      // situazione scooter 
 
-/* Sistema di Debug ... */
-#ifdef TABBOZ_DEBUG
-    extern  FILE    *debugfile;
-    extern  void    writelog(char *s);
-#endif
-
 /* Supporto Rete */
 #ifndef NONETWORK
     extern   int     net_enable;         // Rete Attiva/Disattiva
@@ -341,10 +338,6 @@ extern  void  CalcolaStudio(void);
 extern  char  *MostraSoldi(int i);
 
 
-/* TAG2015 Routine per file di log */
-extern  void   openlog(void);
-extern  void   closelog(void);
-
 //TAG2015 quelle sotto x ora commentate ma servono
 
 // extern  void  TabbozPlaySound(int number);
@@ -364,6 +357,3 @@ extern  void   CalcolaStudio(void);
 #define TAG2015_NOTEMPO
 #define TAG2015_NOSCOOTER
 #define TAG2015_NOCELL
-
-//abilita parti non più necessarie (e non compilabili)
-//#define DEADCODE
