@@ -12,7 +12,16 @@ extern Fl_Button *btn_scuola;
 #include <FL/Fl_Box.H>
 extern Fl_Box *box_figurino;
 #include <FL/Fl_Output.H>
-extern Fl_Output *out_nome;
-extern Fl_Output *out_soldi;
+extern Fl_Output *txtbox_nome;
+extern Fl_Output *txtbox_cognome;
+extern Fl_Output *txtbox_tipa;
+#include <FL/Fl_Value_Output.H>
+extern Fl_Value_Output *valbox_rapporti;
+extern Fl_Value_Output *valbox_soldi;
+extern Fl_Value_Output *valbox_paghetta;
+extern Fl_Value_Output *valbox_stipendio;
+extern Fl_Value_Output *valbox_rep;
+extern Fl_Value_Output *valbox_fama;
+extern Fl_Value_Output *valbox_studio;
 Fl_Double_Window* GUITabboz();
 #endif

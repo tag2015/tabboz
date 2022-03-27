@@ -2,7 +2,10 @@
 version 1.0308
 header_name {.h}
 code_name {.cpp}
-decl {\#include <FL/fl_ask.H>} {selected private global
+decl {\#include <FL/fl_ask.H>} {private global
+}
+
+decl {\#include "../zarrosim.h"} {private global
 }
 
 decl {\#include "GUIScuola.h"} {private global
@@ -11,8 +14,8 @@ decl {\#include "GUIScuola.h"} {private global
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
-    label {Tabboz Simulator Gitto Edition!} open
-    xywh {370 414 475 450} type Double color 47 align 5 size_range {475 450 475 450} visible
+    label {Tabboz Simulator Next Generation!} open
+    xywh {510 401 475 450} type Double color 54 align 5 size_range {475 450 475 450} visible
   } {
     Fl_Menu_Bar {} {open
       xywh {0 0 475 20}
@@ -26,12 +29,13 @@ Function {GUITabboz()} {open
         callback {GUITabbozScuola();
 win_scuola->show();
 win_principale->hide();}
-        image {icons/b_scuola.png} xywh {20 345 110 20} labelfont 2 align 272
+        image {icons/b_scuola.png} xywh {20 345 110 20} color 51 selection_color 51 labelfont 2 align 272
       }
       Fl_Button {} {
         label Lavoro
-        callback {fl_alert("Non ancora implementato!");}
-        xywh {20 375 110 20} labelfont 2
+        callback {fl_alert("Lavora, negro!");
+Soldi+=100;}
+        xywh {20 375 110 20} color 51 selection_color 51 labelfont 2
       }
     }
     Fl_Group {} {
@@ -41,17 +45,17 @@ win_principale->hide();}
       Fl_Button {} {
         label Tipa
         callback {fl_alert("Non ancora implementato!");}
-        image {icons/b_tipa.png} xywh {160 345 110 20} labelfont 2 align 256
+        image {icons/b_tipa.png} xywh {160 345 110 20} color 51 selection_color 51 labelfont 2 align 256
       }
       Fl_Button {} {
         label Compagnia
         callback {fl_alert("Non ancora implementato!");}
-        image {icons/b_compagnia.png} xywh {160 375 110 20} labelfont 2 align 256
+        image {icons/b_compagnia.png} xywh {160 375 110 20} color 51 selection_color 51 labelfont 2 align 256
       }
       Fl_Button {} {
         label Famiglia
         callback {fl_alert("Non ancora implementato!");}
-        image {icons/b_famiglia.png} xywh {160 405 110 20} labelfont 2 align 256
+        image {icons/b_famiglia.png} xywh {160 405 110 20} color 51 selection_color 51 labelfont 2 align 256
       }
     }
     Fl_Group {} {
@@ -61,17 +65,17 @@ win_principale->hide();}
       Fl_Button {} {
         label Scooter
         callback {fl_alert("Non ancora implementato!");}
-        xywh {300 345 110 20} labelfont 2
+        xywh {300 345 110 20} color 51 selection_color 51 labelfont 2
       }
       Fl_Button {} {
         label Negozi
         callback {fl_alert("Non ancora implementato!");}
-        xywh {300 375 110 20} labelfont 2
+        xywh {300 375 110 20} color 51 selection_color 51 labelfont 2
       }
       Fl_Button {} {
         label Disco
-        callback {fl_alert("Non ancora implementato!");}
-        xywh {300 405 110 20} labelfont 2
+        callback {fl_alert("Non ancora implementato!");} selected
+        xywh {300 405 110 20} color 51 selection_color 51 labelfont 2
       }
     }
     Fl_Box box_figurino {
@@ -82,13 +86,63 @@ win_principale->hide();}
       label {?}
       xywh {440 410 20 20}
     }
-    Fl_Output out_nome {
+    Fl_Output txtbox_nome {
       label Nome
-      xywh {290 65 150 35}
+      xywh {200 35 120 25} box NO_BOX labelfont 1
+      code0 {txtbox_nome->value(Nome);}
     }
-    Fl_Output out_soldi {
-      label Soldi
-      xywh {290 115 150 35}
+    Fl_Output txtbox_cognome {
+      xywh {325 35 135 25} box NO_BOX labeltype NO_LABEL
+      code0 {txtbox_cognome->value(Cognome);}
+    }
+    Fl_Group {} {
+      label Tipa open
+      xywh {160 85 135 85} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+    } {
+      Fl_Output txtbox_tipa {
+        label Tipa
+        xywh {167 95 120 25} box NO_BOX labeltype NO_LABEL labelfont 1 align 5
+        code0 {txtbox_tipa->value(Nometipa);}
+      }
+      Fl_Value_Output valbox_rapporti {
+        label {Rapporto }
+        xywh {240 130 35 25} box SHADOW_BOX color 7 labelsize 12
+        code0 {valbox_rapporti->value(Rapporti);}
+      }
+    }
+    Fl_Group {} {
+      label Soldi open
+      xywh {160 190 295 75} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+    } {
+      Fl_Value_Output valbox_soldi {
+        xywh {180 215 120 25} box ENGRAVED_BOX color 7 labeltype NO_LABEL labelsize 12 textfont 5
+        code0 {valbox_soldi->value(Soldi);}
+      }
+      Fl_Value_Output valbox_paghetta {
+        label Paghetta
+        tooltip {Paghetta settimanale} xywh {370 200 75 25} box ENGRAVED_BOX color 7 labelsize 12 textfont 5
+        code0 {valbox_paghetta->value(Paghetta);}
+      }
+      Fl_Value_Output valbox_stipendio {
+        label Stipendio
+        tooltip {Se non sei disoccupato...} xywh {370 230 75 25} box ENGRAVED_BOX color 7 labelsize 12 textfont 5
+        code0 {valbox_stipendio->value(stipendio);}
+      }
+    }
+    Fl_Value_Output valbox_rep {
+      label {Reputazione }
+      xywh {405 80 35 25} box SHADOW_BOX color 7 labelsize 12
+      code0 {valbox_rep->value(Reputazione);}
+    }
+    Fl_Value_Output valbox_fama {
+      label {Figosità }
+      tooltip {L'innato carisma del tabbozzo} xywh {405 110 35 25} box SHADOW_BOX color 7 labelsize 12
+      code0 {valbox_fama->value(Fama);}
+    }
+    Fl_Value_Output valbox_studio {
+      label {Media Voti }
+      tooltip {Media scolastica} xywh {405 140 35 25} box SHADOW_BOX color 7 labelsize 12
+      code0 {valbox_studio->value(Studio);}
     }
   }
 }
