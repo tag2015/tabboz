@@ -2,20 +2,20 @@
 /* (C) Copyright 1997-2000 by Andrea Bonomi */
 
 /*
-     This file is part of Tabboz Simulator.
+    This file is part of Tabboz Simulator.
 
-     Tabboz Simulator is free software: you can redistribute it and/or modify
-     it under the terms of the GNU General Public License as published by
-     the Free Software Foundation, either version 3 of the License, or
-     (at your option) any later version.
+    Tabboz Simulator is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-     Nome-Programma is distributed in the hope that it will be useful,
-     but WITHOUT ANY WARRANTY; without even the implied warranty of
-     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-     GNU General Public License for more details.
+    Tabboz Simulator is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-     You should have received a copy of the GNU General Public License
-     along with Nome-Programma.  If not, see <http://www.gnu.org/licenses/>.
+    You should have received a copy of the GNU General Public License
+    along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "os.h"
@@ -28,6 +28,13 @@
 //#include <mmsystem.h> // Per sndPlaySound
 
 #include "zarrosim.h"
+
+#include "scuola.h"
+#include "lavoro.h"
+
+#include "tempo.h"
+
+
 #ifdef TABBOZ_WIN
 #ifndef NONETWORK
 #include "net.h"
@@ -48,7 +55,7 @@ static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 static const char *dir_profilo = "TabbozNG";
 static const char *file_profilo = "TabbozNG";
-char              *nome_del_file_su_cui_salvare = "";  // TAG2015 per ora non usato
+char              nome_del_file_su_cui_salvare[STR_MAX]="dummy.tbz";  // TAG2015 per ora non usato
 
 
 //extern void     Atinom(HANDLE hInstance);  //visualizza messaggio extra in about
@@ -203,8 +210,11 @@ void ResetMe(int primavolta)
     x_giornoset    =  1;
     x_anno_bisesto =  0;
 #endif
-    comp_mese      = random(12)+1;
-    comp_giorno    = random(InfoMese[comp_mese-1].num_giorni)+1;
+    // comp_mese      = random(12)+1;
+    // comp_giorno    = random(InfoMese[comp_mese-1].num_giorni)+1;
+    comp_mese      = rand() % 12 + 1;
+    comp_giorno    = rand() % InfoMese[comp_mese-1].num_giorni + 1;
+
 
     if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
         STARTcmdShow        =  1;
@@ -318,7 +328,7 @@ static void InitTabboz(void)
     boolean_shutdown=0;               /* 0=resta dentro, 1=uscita, 2=shutdown */
 
     Fortuna=0;                        /* Uguale a me...               */
-    ScooterData=ScooterMem[0];        /* nessuno scooter              */
+//    ScooterData=ScooterMem[0];        /* nessuno scooter              */
     Attesa=ATTESAMAX;                 /* attesa per avere soldi...    */
     ImgSelector=0;                    /* W l' arte di arrangiarsi...  */
     timer_active=1;
@@ -397,11 +407,11 @@ static void InitTabboz(void)
 
 static void CaricaTutto(void)
 {
-    char tmp[CHAR_MAX];
+    char tmp[STR_MAX];
     int  i;
 
     int    buf_i;            //buffer int
-    char   buf_s[CHAR_MAX];  //buffer *char
+    char   buf_s[STR_MAX];  //buffer *char
 
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
@@ -449,31 +459,31 @@ static void CaricaTutto(void)
     FigTipa=vvc(buf_i);
 
     //if (TabbozReadKey("Nome",Nome)         == 0) Nome[0]='\0';
-    TabbozProfilo.get("Nome",Nome,"",CHAR_MAX);
+    TabbozProfilo.get("Nome",Nome,"",STR_MAX);
 
     //if (TabbozReadKey("Cognome",Cognome)   == 0) Cognome[0]='\0';
-    TabbozProfilo.get("Cognome",Cognome,"",CHAR_MAX);
+    TabbozProfilo.get("Cognome",Cognome,"",STR_MAX);
 
     //if (TabbozReadKey("Nometipa",Nometipa) == 0) Nometipa[0]='\0';
-    TabbozProfilo.get("Nometipa",Nometipa,"",CHAR_MAX);
+    TabbozProfilo.get("Nometipa",Nometipa,"",STR_MAX);
 
-    TabbozProfilo.get("City",City,"",CHAR_MAX);
+    TabbozProfilo.get("City",City,"",STR_MAX);
     if(City[0] == '\0')
         firsttime=1;
     //if (TabbozReadKey("City",City) == 0)
     //  firsttime=1;
 
     //TabbozReadKey("Residenza",Residenza);
-    TabbozProfilo.get("Residenza",Residenza,"",CHAR_MAX);
+    TabbozProfilo.get("Residenza",Residenza,"",STR_MAX);
 
     //TabbozReadKey("Street",Street);
-    TabbozProfilo.get("Street",Street,"",CHAR_MAX);
+    TabbozProfilo.get("Street",Street,"",STR_MAX);
 
     // la serie di 9 "A" messe nella riga sotto NON E' CASUALE
     // non sostituirla con altre lettere !
 
     //if (TabbozReadKey("Materie",tmp) == 0) sprintf(tmp,"AAAAAAAAA");
-    TabbozProfilo.get("Materie",tmp,"",CHAR_MAX);
+    TabbozProfilo.get("Materie",tmp,"",STR_MAX);
     if(tmp[0]=='\0')  sprintf(tmp,"AAAAAAAAA");
 
     for (i=1;i<10;i++) {
@@ -695,7 +705,8 @@ void FineProgramma(char *caller)
         /* Salva lo stato del tabbozzo */
         /* 0.8.1pr 29 Novembre 1998 Ora non salva piu' nel WIN.INI con WriteProfileString,
         ma salva nel registro di configurazione... */
-        TabbozProfilo.set("Exe", _argv[0]);
+        //TabbozProfilo.set("Exe", _argv[0]);  a che serve?
+
     }
 
     SalvaTutto();
@@ -707,7 +718,7 @@ void FineProgramma(char *caller)
 
 static void SalvaTutto(void) {
     
-    char tmp[CHAR_MAX];
+    char tmp[STR_MAX];
     
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
@@ -896,13 +907,14 @@ static void SalvaTutto(void) {
 
 //     sprintf(tmp,"%lu",new_counter);
 //     TabbozAddKey("SoftCheck", tmp);
+    TabbozProfilo.set("SoftCheck", new_counter);
 
     TabbozProfilo.set("Version", VERSION);
 
-// #ifdef TABBOZ_DEBUG
-//     sprintf(tmp,"tabboz: (W) new_counter %lu", new_counter);
-//     writelog(tmp);
-// #endif
+#ifdef TABBOZ_DEBUG
+    sprintf(tmp,"tabboz: (W) new_counter %lu", new_counter);
+    writelog(tmp);
+#endif
 
 }
 
