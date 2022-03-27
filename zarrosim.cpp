@@ -33,7 +33,7 @@
 #include "lavoro.h"
 
 #include "tempo.h"
-
+#include "proteggi.h"
 
 #ifdef TABBOZ_WIN
 #ifndef NONETWORK
@@ -65,7 +65,6 @@ char              nome_del_file_su_cui_salvare[STR_MAX]="dummy.tbz";  // TAG2015
 /*verifica se valore è compreso in intervallo corretto*/
 extern int      vvc(int i);
 
-extern int      new_counter;
 //extern ATOM     RegisterBMPTipaClass(HANDLE hInst);
 //extern ATOM     RegisterBMPViewClass(HANDLE hInst);
 //extern void     OpenFileDlg(HWND hwnd);
@@ -425,71 +424,52 @@ static void CaricaTutto(void)
     new_reset_check();
 
     /* Cerca le informazioni registrate */
-    /* TAG2015 - Fl_prefs supporta i tipi, le conversioni da stringa non servono più */
+    /* Fl_prefs supporta i tipi, le conversioni da stringa non servono più */
 
-    //Soldi=new_check_l(atol(RRKey("Soldi")));
     TabbozProfilo.get("Soldi",buf_i,0);
     Soldi=new_check_i(buf_i);
 
-    //Paghetta=new_check_l(atol(RRKey("Paghetta")));
     TabbozProfilo.get("Paghetta",buf_i,0);
     Paghetta=new_check_i(buf_i);
     
-    //Reputazione=vvc(new_check_i(atoi (RRKey("Reputazione")) ));
     TabbozProfilo.get("Reputazione",buf_i,0);
     Reputazione=vvc(new_check_i(buf_i));
 
-    //Studio=vvc(new_check_i(atoi (RRKey("Studio")) ));
     TabbozProfilo.get("Studio",buf_i,0);
     Studio=vvc(new_check_i(buf_i));
     
-    //Fama=vvc(new_check_i(atoi (RRKey("Fama")) ));
     TabbozProfilo.get("Fama",buf_i,0);
     Fama=vvc(new_check_i(buf_i));
     
-    //Rapporti=vvc(new_check_i(atoi (RRKey("Rapporti")) ));
     TabbozProfilo.get("Rapporti",buf_i,0);
     Rapporti=vvc(new_check_i(buf_i));
     
-    //Stato=vvc(new_check_i(atoi (RRKey("Stato")) ));
     TabbozProfilo.get("Stato",buf_i,0);
     Stato=vvc(new_check_i(buf_i));
 
-    //DDP=new_check_l(atol(RRKey("DdP"))); // ATOL, visto che e' un LONG, non un semplice INT
     TabbozProfilo.get("DdP",buf_i,0);
     DDP=new_check_i(buf_i);
 
-    //FigTipa=vvc(new_check_i(atoi (RRKey("FigTipa"))));
     TabbozProfilo.get("FigTipa",buf_i,0);
     FigTipa=vvc(new_check_i(buf_i));
 
-    //if (TabbozReadKey("Nome",Nome)         == 0) Nome[0]='\0';
     TabbozProfilo.get("Nome",Nome,"",STR_MAX);
-
-    //if (TabbozReadKey("Cognome",Cognome)   == 0) Cognome[0]='\0';
     TabbozProfilo.get("Cognome",Cognome,"",STR_MAX);
-
-    //if (TabbozReadKey("Nometipa",Nometipa) == 0) Nometipa[0]='\0';
     TabbozProfilo.get("Nometipa",Nometipa,"",STR_MAX);
-
     TabbozProfilo.get("City",City,"",STR_MAX);
     //if(City[0] == '\0')
     //    firsttime=1;
-    //if (TabbozReadKey("City",City) == 0)
-    //  firsttime=1;
 
-    //TabbozReadKey("Residenza",Residenza);
     TabbozProfilo.get("Residenza",Residenza,"",STR_MAX);   //TAG2015 FIXME temporaneo usiamo residenza per controllo fistrun
     if(Residenza[0] == '\0')
         firsttime=1;
 
-    //TabbozReadKey("Street",Street);
     TabbozProfilo.get("Street",Street,"",STR_MAX);
 
     // la serie di 9 "A" messe nella riga sotto NON E' CASUALE
     // non sostituirla con altre lettere !
 
-    //if (TabbozReadKey("Materie",tmp) == 0) sprintf(tmp,"AAAAAAAAA");
+    //if (TabbozReadKey("Materie",tmp) == 0) sprintf(tmp,"AAAAAAAAA");  //TAG2015 ricontrollare
     TabbozProfilo.get("Materie",tmp,"",STR_MAX);
     if(tmp[0]=='\0')  sprintf(tmp,"AAAAAAAAA");
 
@@ -499,18 +479,12 @@ static void CaricaTutto(void)
     }
     CalcolaStudio();
 
-    //Fortuna=vvc(new_check_i(atoi(RRKey("Fortuna")) ));
     TabbozProfilo.get("Fortuna",buf_i,0);
     Fortuna=vvc(new_check_i(buf_i));
 
-    // Se non e' gia' settato,setta il compleanno (a caso)
-    //comp_mese=atoi (RRKey("CompMese"));
+    /* Se non e' gia' settato,setta il compleanno (a caso) */
     TabbozProfilo.get("CompMese",comp_mese,0);
     if (comp_mese < 1) comp_mese=rand() % 12 + 1;
-
-    //comp_giorno=atoi (RRKey("CompGiorno"));
-    //TAG2015 dovrebbero esistere metodi migliori anziche una struttura solo
-    //per il nro di giorni
     TabbozProfilo.get("CompGiorno",comp_giorno,0);
     if (comp_giorno < 1) comp_giorno=rand() % InfoMese[comp_mese-1].num_giorni + 1;
 
@@ -541,45 +515,35 @@ static void CaricaTutto(void)
     scad_pal_mese = vvc(buf_i);
 #endif
 
-//    numeroditta     = vvc(atoi (RRKey("NumeroDitta")) );
     TabbozProfilo.get("NumeroDitta",buf_i,0);
     numeroditta = vvc(buf_i);
 
-//    impegno          = vvc(new_check_i(atoi (RRKey("Impegno")) ));
     TabbozProfilo.get("Impegno",buf_i,0);
     impegno = vvc(new_check_i(buf_i));
 
-//  giorni_di_lavoro = vvc(new_check_i(atoi (RRKey("GiorniDiLavoro")) ));
     TabbozProfilo.get("GiorniDiLavoro",buf_i,0);
     giorni_di_lavoro = vvc(new_check_i(buf_i));
     
-//  stipendio        = new_check_i(atoi (RRKey("Stipendio")));
     TabbozProfilo.get("Stipendio",buf_i,0);
     stipendio = new_check_i(buf_i);
     if (stipendio < 0) stipendio=0;
 
-//    sizze = new_check_i(atoi (RRKey("Sigarette")));
     TabbozProfilo.get("Sigarette",buf_i,0);
     sizze = new_check_i(buf_i);
     if (sizze < 0) sizze=0;
 
-//    current_testa     = vvc(new_check_i(atoi (RRKey("Testa")) ));
     TabbozProfilo.get("Testa",buf_i,0);
     current_testa = vvc(new_check_i(buf_i));
 
-//    current_gibbotto  = vvc(new_check_i(atoi (RRKey("Giubbotto")) ));
     TabbozProfilo.get("Giubbotto",buf_i,0);
     current_gibbotto = vvc(new_check_i(buf_i));
 
-//    current_pantaloni = vvc(new_check_i(atoi (RRKey("Pantaloni")) ));
     TabbozProfilo.get("Pantaloni",buf_i,0);
     current_pantaloni = vvc(new_check_i(buf_i));
 
-//    current_scarpe = vvc(new_check_i(atoi (RRKey("Scarpe")) ));
     TabbozProfilo.get("Scarpe",buf_i,0);
     current_scarpe = vvc(new_check_i(buf_i));
 
-//    euro = atoi (RRKey("Euro"));
     TabbozProfilo.get("Euro",euro,0);
     if (euro < 0) euro=0;
     
@@ -593,15 +557,12 @@ static void CaricaTutto(void)
 
     CalcolaSesso();
 
- //   STARTcmdShow = atoi (RRKey("STARTcmdShow"));
     TabbozProfilo.get("STARTcmdShow",STARTcmdShow,-1);
     if (STARTcmdShow < 0) STARTcmdShow=1;
 
-//    timer_active = atoi (RRKey("TimerActive"));
     TabbozProfilo.get("TimerActive",timer_active,-1);
     if (timer_active < 0) timer_active=1;
 
-//    sound_active = atoi (RRKey("SoundActive"));
     TabbozProfilo.get("SoundActive",sound_active,-1);
     if (sound_active < 0) sound_active=1;
 
@@ -611,10 +572,11 @@ static void CaricaTutto(void)
         PortNumber   = atoi (RRKey("NetPort"));
         if (PortNumber < 1) PortNumber=79;
     #endif
-/*  TAG2015 scooter e cell x ora disabilitato xche mi sono rotto
+
+#ifndef TAG2015_NOSCOOTER
     ScooterData.speed = new_check_i(atoi (RRKey("Scooter\\Speed")));
     if (ScooterData.speed < 0) ScooterData.speed=0;
-    
+
     ScooterData.marmitta = new_check_i(atoi (RRKey("Scooter\\Marmitta")));
     if (ScooterData.marmitta < 0) ScooterData.marmitta=0;
     
@@ -641,8 +603,9 @@ static void CaricaTutto(void)
 //    antifurto = atoi (RRKey("Scooter\\Antifurto") );
 
     if (TabbozReadKey("Scooter\\Nome",ScooterData.nome) == 0) sprintf(ScooterData.nome,"nessuno");
-
-    //  Cellulare ----------------------
+#endif
+#ifndef TAG2015_NOCELL
+    /* Cellulare */
     AbbonamentData.dualonly    = new_check_i(atoi (RRKey("Cellular\\DualOnly")));
     AbbonamentData.creditorest = new_check_i(atoi (RRKey("Cellular\\CreditoRest")));
     if (TabbozReadKey("Cellular\\NomeAbb",AbbonamentData.nome) == 0) AbbonamentData.creditorest= -1;
@@ -651,7 +614,8 @@ static void CaricaTutto(void)
     CellularData.stato  = new_check_i(atoi (RRKey("Cellular\\Stato")));
     CellularData.prezzo = new_check_i(atoi (RRKey("Cellular\\Prezzo")));
     
-    if (TabbozReadKey("Cellular\\Nome",CellularData.nome) == 0) CellularData.stato = -1; */
+    if (TabbozReadKey("Cellular\\Nome",CellularData.nome) == 0) CellularData.stato = -1;
+#endif
 
     #ifdef TABBOZ_DEBUG
         sprintf(tmp,"tabboz: (R) new_counter %d", new_counter);
@@ -733,48 +697,28 @@ static void SalvaTutto(void) {
     
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
+    /* resetta checksum per ricalcolo */
     new_reset_check();
 
-    //  sprintf(tmp,"%lu",new_check_l(Soldi));
-    //  TabbozAddKey("Soldi", tmp);
+    /* salva parametri */
     TabbozProfilo.set("Soldi",new_check_i(Soldi));
-
-    // sprintf(tmp,"%lu",new_check_l(Paghetta));
-    // TabbozAddKey("Paghetta", tmp);
     TabbozProfilo.set("Paghetta",new_check_i(Paghetta));
-
-    // sprintf(tmp,"%d",new_check_i(Reputazione));
-    // TabbozAddKey("Reputazione", tmp);
     TabbozProfilo.set("Reputazione",new_check_i(Reputazione));
-    
-    // sprintf(tmp,"%d",new_check_i(Studio));
-    // TabbozAddKey("Studio", tmp);
     TabbozProfilo.set("Studio",new_check_i(Studio));
-
-    // sprintf(tmp,"%d",new_check_i(Fama));
-    // TabbozAddKey("Fama", tmp);
     TabbozProfilo.set("Fama",new_check_i(Fama));
-
-    // sprintf(tmp,"%d",new_check_i(Rapporti));
-    // TabbozAddKey("Rapporti", tmp);
     TabbozProfilo.set("Rapporti",new_check_i(Rapporti));
-
-    // sprintf(tmp,"%d",new_check_i(Stato));
-    // TabbozAddKey("Stato", tmp);
     TabbozProfilo.set("Stato",new_check_i(Stato));
-
-    // sprintf(tmp,"%lu",new_check_l(DDP));
-    // TabbozAddKey("DdP", tmp);
     TabbozProfilo.set("DdP",new_check_i(DDP));
-
-    // sprintf(tmp,"%d",new_check_i(FigTipa));
-    // TabbozAddKey("FigTipa", tmp);
     TabbozProfilo.set("FigTipa",new_check_i(FigTipa));
-
-    // sprintf(tmp,"%d",new_check_i(Fortuna));
-    // TabbozAddKey("Fortuna", tmp);
     TabbozProfilo.set("Fortuna",new_check_i(Fortuna));
 
+    /* salva voti materie */
+    sprintf(tmp,"123456789");    // 9 materie
+    for (int i=1;i<10;i++)
+        tmp[i-1]=(char)(65 + MaterieMem[i].voto);
+    TabbozProfilo.set("Materie", tmp);
+
+    /* salva dati anagrafici */
     TabbozProfilo.set("Nome", Nome);
     TabbozProfilo.set("Cognome", Cognome);
     TabbozProfilo.set("Nometipa", Nometipa);
@@ -783,11 +727,6 @@ static void SalvaTutto(void) {
     TabbozProfilo.set("Street", Street);
     TabbozProfilo.set("CompMese", comp_mese);
     TabbozProfilo.set("CompGiorno", comp_giorno);
-
-    sprintf(tmp,"123456789");    // 9 materie
-    for (int i=1;i<10;i++)
-        tmp[i-1]=(char)(65 + MaterieMem[i].voto);
-    TabbozProfilo.set("Materie", tmp);
 
 #ifndef TAG2015_NOTEMPO
     // sprintf(tmp,"%d",x_mese);
@@ -804,61 +743,27 @@ static void SalvaTutto(void) {
     TabbozProfilo.set("ScadPalMese", scad_pal_mese);
 #endif
 
-    // sprintf(tmp,"%d",numeroditta);
-    // TabbozAddKey("NumeroDitta", tmp);
+    /* salva dati lavoro */
     TabbozProfilo.set("NumeroDitta", numeroditta);
-
-    // sprintf(tmp,"%d",new_check_i(impegno));
-    // TabbozAddKey("Impegno", tmp);
     TabbozProfilo.set("Impegno", new_check_i(impegno));
-
-    // sprintf(tmp,"%d",new_check_i(giorni_di_lavoro));
-    // TabbozAddKey("GiorniDiLavoro", tmp);
     TabbozProfilo.set("GiorniDiLavoro", new_check_i(giorni_di_lavoro));
-
-    // sprintf(tmp,"%d",new_check_i(stipendio));
-    // TabbozAddKey("Stipendio", tmp);
     TabbozProfilo.set("Stipendio", new_check_i(stipendio));
 
-    // sprintf(tmp,"%d",new_check_i(sizze));
-    // TabbozAddKey("Sigarette", tmp);
+    /* salva dati accessori */
     TabbozProfilo.set("Sigarette", new_check_i(sizze));
-
-    // sprintf(tmp,"%d",new_check_i(current_testa));
-    // TabbozAddKey("Testa", tmp);
     TabbozProfilo.set("Testa", new_check_i(current_testa));
-
-    // sprintf(tmp,"%d",new_check_i(current_gibbotto));
-    // TabbozAddKey("Giubbotto", tmp);
     TabbozProfilo.set("Giubbotto", new_check_i(current_gibbotto));
-
-    // sprintf(tmp,"%d",new_check_i(current_pantaloni));
-    // TabbozAddKey("Pantaloni", tmp);
     TabbozProfilo.set("Pantaloni", new_check_i(current_pantaloni));
-
-    // sprintf(tmp,"%d",new_check_i(current_scarpe));
-    // TabbozAddKey("Scarpe", tmp);
     TabbozProfilo.set("Scarpe", new_check_i(current_scarpe));
 
-    // sprintf(tmp,"%d",euro);
-    // TabbozAddKey("Euro", tmp);
+    /* salva opzioni */
     TabbozProfilo.set("Euro", euro);
-
-    // sprintf(tmp,"%d",STARTcmdShow);
-    // TabbozAddKey("STARTcmdShow", tmp);
     TabbozProfilo.set("STARTcmdShow", STARTcmdShow);
-
-    // sprintf(tmp,"%d",timer_active);
-    // TabbozAddKey("TimerActive", tmp);
     TabbozProfilo.set("TimerActive", timer_active);
-
-    // sprintf(tmp,"%d",sound_active);
-    // TabbozAddKey("SoundActive", tmp);
     TabbozProfilo.set("SoundActive", sound_active);
 
 #ifndef NOTABBOZZA
-    sprintf(tmp,"%c",sesso);
-    TabbozAddKey("Sesso", tmp);
+    TabbozProfilo.set("Sesso", sesso);
 #endif
 
 #ifndef NONETWORK
@@ -869,57 +774,58 @@ static void SalvaTutto(void) {
 #endif
 
 #ifdef TABBOZ_DEBUG
-    // sprintf(tmp,"%d",debug_active);
-    // TabbozAddKey("Debug", tmp);
-    // TabbozProfilo.set("Debug", debug_active);  //TAG2015 lasciamo perdere questo
+    // TabbozProfilo.set("Debug", debug_active);  //TAG2015 debug si può abilitare solo in compilazione
 #endif
-//TAG2015 commentiamo tutto scooter e cell
-//     sprintf(tmp,"%d",new_check_i(ScooterData.speed));
-//     TabbozAddKey("Scooter\\Speed", tmp);
-//     sprintf(tmp,"%d",new_check_i(ScooterData.marmitta));
-//     TabbozAddKey("Scooter\\Marmitta", tmp);
-//     sprintf(tmp,"%d",new_check_i(ScooterData.carburatore));
-//     TabbozAddKey("Scooter\\Carburatore", tmp);
-//     sprintf(tmp,"%d",new_check_i(ScooterData.cc));
-//     TabbozAddKey("Scooter\\CC", tmp);
-//     sprintf(tmp,"%d",new_check_i(ScooterData.filtro));
-//     TabbozAddKey("Scooter\\Filtro", tmp);
-//     sprintf(tmp,"%d",new_check_i(ScooterData.prezzo));
-//     TabbozAddKey("Scooter\\Prezzo", tmp);
-//     sprintf(tmp,"%d",new_check_i(ScooterData.attivita));
-//     TabbozAddKey("Scooter\\Attivita", tmp);
 
-//     sprintf(tmp,"%d",new_check_i(ScooterData.stato));
-//     TabbozAddKey("Scooter\\Stato", tmp);
+#ifndef TAG2015_NOSCOOTER
+    /* salva dati scooter */
+    sprintf(tmp,"%d",new_check_i(ScooterData.speed));
+    TabbozAddKey("Scooter\\Speed", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.marmitta));
+    TabbozAddKey("Scooter\\Marmitta", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.carburatore));
+    TabbozAddKey("Scooter\\Carburatore", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.cc));
+    TabbozAddKey("Scooter\\CC", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.filtro));
+    TabbozAddKey("Scooter\\Filtro", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.prezzo));
+    TabbozAddKey("Scooter\\Prezzo", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.attivita));
+    TabbozAddKey("Scooter\\Attivita", tmp);
 
-//     sprintf(tmp,"%d",new_check_i(benzina));
-//     TabbozAddKey("Scooter\\Benzina", tmp);
+    sprintf(tmp,"%d",new_check_i(ScooterData.stato));
+    TabbozAddKey("Scooter\\Stato", tmp);
 
-// //    sprintf(tmp,"%d",antifurto);
-// //    TabbozAddKey("Scooter\\Antifurto", tmp);
+    sprintf(tmp,"%d",new_check_i(benzina));
+    TabbozAddKey("Scooter\\Benzina", tmp);
 
-//     TabbozAddKey("Scooter\\Nome", ScooterData.nome);
+//    sprintf(tmp,"%d",antifurto);
+//    TabbozAddKey("Scooter\\Antifurto", tmp);
 
-//     sprintf(tmp,"%d",new_check_i(AbbonamentData.dualonly));
-//     TabbozAddKey("Cellular\\DualOnly",tmp);
-//     sprintf(tmp,"%d",new_check_i(AbbonamentData.creditorest));
-//     TabbozAddKey("Cellular\\CreditoRest",tmp);
+    TabbozAddKey("Scooter\\Nome", ScooterData.nome);
+#endif
 
-//     TabbozAddKey("Cellular\\NomeAbb",AbbonamentData.nome);
+#ifndef TAG2015_NOCELL
+    /* salva dati cellulare */
+    sprintf(tmp,"%d",new_check_i(AbbonamentData.dualonly));
+    TabbozAddKey("Cellular\\DualOnly",tmp);
+    sprintf(tmp,"%d",new_check_i(AbbonamentData.creditorest));
+    TabbozAddKey("Cellular\\CreditoRest",tmp);
 
-//     sprintf(tmp,"%d",new_check_i(CellularData.dual));
-//     TabbozAddKey("Cellular\\DualBand",tmp);
-//     sprintf(tmp,"%d",new_check_i(CellularData.stato));
-//     TabbozAddKey("Cellular\\Stato",tmp);
-//     sprintf(tmp,"%d",new_check_i(CellularData.prezzo));
-//     TabbozAddKey("Cellular\\Prezzo",tmp);
+    TabbozAddKey("Cellular\\NomeAbb",AbbonamentData.nome);
 
-//     TabbozAddKey("Cellular\\Nome",CellularData.nome);
+    sprintf(tmp,"%d",new_check_i(CellularData.dual));
+    TabbozAddKey("Cellular\\DualBand",tmp);
+    sprintf(tmp,"%d",new_check_i(CellularData.stato));
+    TabbozAddKey("Cellular\\Stato",tmp);
+    sprintf(tmp,"%d",new_check_i(CellularData.prezzo));
+    TabbozAddKey("Cellular\\Prezzo",tmp);
 
-//     sprintf(tmp,"%lu",new_counter);
-//     TabbozAddKey("SoftCheck", tmp);
+    TabbozAddKey("Cellular\\Nome",CellularData.nome);
+#endif
+
     TabbozProfilo.set("SoftCheck", new_counter);
-
     TabbozProfilo.set("Version", VERSION);
 
 #ifdef TABBOZ_DEBUG
@@ -1360,7 +1266,7 @@ static void SalvaTutto(void) {
 /* 12 Maggio 1998 - Questa funzione non e' piu' usata da anni...    */
 /********************************************************************/
 
-#ifdef VECCHIO_RICORDO
+#ifdef DEADCODE
 # pragma argsused
 
 /*    PortTool v2.2     4/8/1999    14:40          */

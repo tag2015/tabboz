@@ -340,10 +340,6 @@ extern  void  FineProgramma(char *caller);
 extern  void  CalcolaStudio(void);
 extern  char  *MostraSoldi(int i);
 
-/* TAG2015 Routine controllo checksum */
-extern  int     new_check_i(int i);
-//extern  u_long  new_check_l(u_long i);
-extern  void    new_reset_check(void);
 
 /* TAG2015 Routine per file di log */
 extern  void   openlog(void);
@@ -362,13 +358,12 @@ extern  void   CalcolaStudio(void);
 //extern  void RunTabacchi(HWND hDlg);
 //extern  void RunVestiti(HWND hDlg,int numero);
 
-
-/* TAG2015 Vecchie routine per scrivere nel registro di configurazione */
-// extern  void  TabbozAddKey(char *key,char *v);
-// extern  char  *TabbozReadKey(char *key,char *buf);
-// extern  char  *RRKey(char *xKey);
-
 /* TAG2015 define temporanei per escludere parti non ancora implementate */
 
 //per disabilitare la gestione di calendario/date
 #define TAG2015_NOTEMPO
+#define TAG2015_NOSCOOTER
+#define TAG2015_NOCELL
+
+//abilita parti non più necessarie (e non compilabili)
+//#define DEADCODE
