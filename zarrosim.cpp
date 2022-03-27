@@ -42,10 +42,12 @@
 #endif
 
 /* Header per toolkit FLTK */
-#include <FL/Fl.h>
-#include <FL/Fl_Window.h>
-#include <FL/Fl_Box.h>
+#include <FL/Fl.H>
+#include <FL/Fl_Window.H>
+#include <FL/Fl_Box.H>
 #include <FL/Fl_Preferences.H>
+#include <FL/fl_ask.H>
+
 
 /* Header finestre GUI */
 #include "gui/GUITabboz.h"
@@ -59,7 +61,10 @@ char              nome_del_file_su_cui_salvare[STR_MAX]="dummy.tbz";  // TAG2015
 
 
 //extern void     Atinom(HANDLE hInstance);  //visualizza messaggio extra in about
+
+/*verifica se valore è compreso in intervallo corretto*/
 extern int      vvc(int i);
+
 extern int      new_counter;
 //extern ATOM     RegisterBMPTipaClass(HANDLE hInst);
 //extern ATOM     RegisterBMPViewClass(HANDLE hInst);
@@ -128,7 +133,7 @@ int     sound_active;
 // Questo serve se e' attivo il debug...
 #ifdef TABBOZ_DEBUG
     FILE    *debugfile;
-    int     debug_active;
+    int     debug_active = 1;  //TAG2015 non ha molto senso salvare l'opzione nel file di config
 #endif
 
 #ifndef NONETWORK
@@ -347,7 +352,7 @@ static void InitTabboz(void)
 
     #ifdef TABBOZ_DEBUG
         //debug_active=atoi (RRKey("Debug"));
-        TabbozProfilo.get("Debug",debug_active,0);
+        //TabbozProfilo.get("Debug",debug_active,0);    //TAG2015 lasciamo perdere questo
         if (debug_active < 0) debug_active=0;
         if (debug_active == 1) {
             openlog();
@@ -411,7 +416,7 @@ static void CaricaTutto(void)
     int  i;
 
     int    buf_i;            //buffer int
-    char   buf_s[STR_MAX];  //buffer *char
+    char   buf_s[STR_MAX];   //buffer *char
 
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
@@ -422,7 +427,7 @@ static void CaricaTutto(void)
     /* Cerca le informazioni registrate */
     /* TAG2015 - Fl_prefs supporta i tipi, le conversioni da stringa non servono più */
 
-    //Soldi=new_check_l(atol(RRKey("Soldi")));    // ATOL, visto che Soldi e' un LONG, non un semplice INT
+    //Soldi=new_check_l(atol(RRKey("Soldi")));
     TabbozProfilo.get("Soldi",buf_i,0);
     Soldi=new_check_i(buf_i);
 
@@ -432,23 +437,23 @@ static void CaricaTutto(void)
     
     //Reputazione=vvc(new_check_i(atoi (RRKey("Reputazione")) ));
     TabbozProfilo.get("Reputazione",buf_i,0);
-    Reputazione=vvc(buf_i);
+    Reputazione=vvc(new_check_i(buf_i));
 
     //Studio=vvc(new_check_i(atoi (RRKey("Studio")) ));
     TabbozProfilo.get("Studio",buf_i,0);
-    Studio=vvc(buf_i);
+    Studio=vvc(new_check_i(buf_i));
     
     //Fama=vvc(new_check_i(atoi (RRKey("Fama")) ));
     TabbozProfilo.get("Fama",buf_i,0);
-    Fama=vvc(buf_i);
+    Fama=vvc(new_check_i(buf_i));
     
     //Rapporti=vvc(new_check_i(atoi (RRKey("Rapporti")) ));
     TabbozProfilo.get("Rapporti",buf_i,0);
-    Rapporti=vvc(buf_i);
+    Rapporti=vvc(new_check_i(buf_i));
     
     //Stato=vvc(new_check_i(atoi (RRKey("Stato")) ));
     TabbozProfilo.get("Stato",buf_i,0);
-    Stato=vvc(buf_i);
+    Stato=vvc(new_check_i(buf_i));
 
     //DDP=new_check_l(atol(RRKey("DdP"))); // ATOL, visto che e' un LONG, non un semplice INT
     TabbozProfilo.get("DdP",buf_i,0);
@@ -456,7 +461,7 @@ static void CaricaTutto(void)
 
     //FigTipa=vvc(new_check_i(atoi (RRKey("FigTipa"))));
     TabbozProfilo.get("FigTipa",buf_i,0);
-    FigTipa=vvc(buf_i);
+    FigTipa=vvc(new_check_i(buf_i));
 
     //if (TabbozReadKey("Nome",Nome)         == 0) Nome[0]='\0';
     TabbozProfilo.get("Nome",Nome,"",STR_MAX);
@@ -468,13 +473,15 @@ static void CaricaTutto(void)
     TabbozProfilo.get("Nometipa",Nometipa,"",STR_MAX);
 
     TabbozProfilo.get("City",City,"",STR_MAX);
-    if(City[0] == '\0')
-        firsttime=1;
+    //if(City[0] == '\0')
+    //    firsttime=1;
     //if (TabbozReadKey("City",City) == 0)
     //  firsttime=1;
 
     //TabbozReadKey("Residenza",Residenza);
-    TabbozProfilo.get("Residenza",Residenza,"",STR_MAX);
+    TabbozProfilo.get("Residenza",Residenza,"",STR_MAX);   //TAG2015 FIXME temporaneo usiamo residenza per controllo fistrun
+    if(Residenza[0] == '\0')
+        firsttime=1;
 
     //TabbozReadKey("Street",Street);
     TabbozProfilo.get("Street",Street,"",STR_MAX);
@@ -494,7 +501,7 @@ static void CaricaTutto(void)
 
     //Fortuna=vvc(new_check_i(atoi(RRKey("Fortuna")) ));
     TabbozProfilo.get("Fortuna",buf_i,0);
-    Fortuna=vvc(buf_i);
+    Fortuna=vvc(new_check_i(buf_i));
 
     // Se non e' gia' settato,setta il compleanno (a caso)
     //comp_mese=atoi (RRKey("CompMese"));
@@ -540,7 +547,7 @@ static void CaricaTutto(void)
 
 //    impegno          = vvc(new_check_i(atoi (RRKey("Impegno")) ));
     TabbozProfilo.get("Impegno",buf_i,0);
-    impegno = vvc(buf_i);
+    impegno = vvc(new_check_i(buf_i));
 
 //  giorni_di_lavoro = vvc(new_check_i(atoi (RRKey("GiorniDiLavoro")) ));
     TabbozProfilo.get("GiorniDiLavoro",buf_i,0);
@@ -646,6 +653,16 @@ static void CaricaTutto(void)
     
     if (TabbozReadKey("Cellular\\Nome",CellularData.nome) == 0) CellularData.stato = -1; */
 
+    #ifdef TABBOZ_DEBUG
+        sprintf(tmp,"tabboz: (R) new_counter %d", new_counter);
+        writelog(tmp);
+        TabbozProfilo.get("SoftCheck",buf_i,0);
+        sprintf(tmp,"tabboz: (R) read_counter %d", buf_i );
+        writelog(tmp);
+        if(firsttime)
+            writelog("firsttime=1, first run or empty savefile");
+    #endif
+
     if (firsttime)
         ResetMe(1);
 
@@ -663,19 +680,13 @@ static void CaricaTutto(void)
 //    Giorno(hInst);  TAG2015 controllare
 #endif
 
-    #ifdef TABBOZ_DEBUG
-        // Non si possono mettere le infomazioni del counter nel file di log
-        // perche' sarebbe facilissimo hackerale...
-        //sprintf(tmp,"tabboz: (R) new_counter %lu", new_counter);
-        //writelog(tmp);
-        //sprintf(tmp,"tabboz: (R) read_counter %lu", atoi(RRKey("SoftCheck")) );
-        //writelog(tmp);
-    #endif
-
     // Guarda se qualche "bastardino" ha modificato dei valori nel registro...
-    // if (new_counter - atoi(RRKey("SoftCheck")))  TAG2015 meglio disattivarlo x ora
-    //     ResetMe(0);
-
+    TabbozProfilo.get("SoftCheck",buf_i,0);
+    if ((new_counter - buf_i) != 0) {
+        if(!firsttime)
+            fl_alert("Visto che ti sei divertito a pasticciare con il salvataggio,\ni parametri verranno resettati!");
+        ResetMe(0);
+    }
 }
 
 
@@ -860,7 +871,7 @@ static void SalvaTutto(void) {
 #ifdef TABBOZ_DEBUG
     // sprintf(tmp,"%d",debug_active);
     // TabbozAddKey("Debug", tmp);
-    TabbozProfilo.set("Debug", debug_active);
+    // TabbozProfilo.set("Debug", debug_active);  //TAG2015 lasciamo perdere questo
 #endif
 //TAG2015 commentiamo tutto scooter e cell
 //     sprintf(tmp,"%d",new_check_i(ScooterData.speed));

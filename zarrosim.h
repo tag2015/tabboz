@@ -363,7 +363,6 @@ extern  void   CalcolaStudio(void);
 //extern  void RunVestiti(HWND hDlg,int numero);
 
 
-
 /* TAG2015 Vecchie routine per scrivere nel registro di configurazione */
 // extern  void  TabbozAddKey(char *key,char *v);
 // extern  char  *TabbozReadKey(char *key,char *buf);
