@@ -1,0 +1,57 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cpp}
+decl {\#include "GUITabboz.h"} {private global
+}
+
+decl {\#include "../zarrosim.h"} {private global
+}
+
+decl {\#include "../famiglia.h"} {private global
+}
+
+Function {GUITabbozFamiglia()} {open
+} {
+  Fl_Window win_famiglia {
+    label Famiglia open
+    xywh {399 539 550 330} type Double color 54 size_range {550 330 550 330} visible
+  } {
+    Fl_Return_Button {} {
+      label OK
+      callback {win_principale->show();
+win_famiglia->hide();}
+      xywh {480 260 60 60}
+    }
+    Fl_Button {} {
+      label {Chiedi aumento paghetta}
+      callback {ChiediAumentoPaghetta();}
+      xywh {10 100 530 35} color 51 selection_color 51
+    }
+    Fl_Button {} {
+      label {Chiedi soldi extra}
+      callback {ChiediSoldiExtra();}
+      xywh {10 140 530 35} color 51 selection_color 51
+    }
+    Fl_Button {} {
+      label {Papà, mi dai 100.000 lire?}
+      callback {ChiediSoldiPapa();}
+      xywh {10 180 530 35} color 51 selection_color 51
+      code0 {if(euro) o->label("Papà, mi dai 50€ ?");}
+    }
+    Fl_Group {} {open selected
+      xywh {10 265 405 45} box ENGRAVED_FRAME labelsize 10 align 5
+    } {
+      Fl_Value_Output fam_val_soldi {
+        label Soldi
+        xywh {50 275 100 25} color 7 labelsize 12
+        code0 {o->value(Soldi);}
+      }
+      Fl_Value_Output fam_val_paghetta {
+        label Paghetta
+        xywh {245 275 100 25} color 7 labelsize 12
+        code0 {o->value(Paghetta);}
+      }
+    }
+  }
+}
