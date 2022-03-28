@@ -15,7 +15,7 @@ Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
     label {Tabboz Simulator Next Generation!} open
-    xywh {510 401 475 450} type Double color 54 align 5 size_range {475 450 475 450} visible
+    xywh {439 455 475 450} type Double color 54 align 5 size_range {475 450 475 450} visible
   } {
     Fl_Menu_Bar {} {open
       xywh {0 0 475 20}
@@ -34,7 +34,9 @@ win_principale->hide();}
       Fl_Button {} {
         label Lavoro
         callback {fl_alert("Lavora, negro!");
-Soldi+=100;}
+Soldi+=100;
+valbox_soldi->value(Soldi);
+valbox_studio->value(Studio);} selected
         xywh {20 375 110 20} color 51 selection_color 51 labelfont 2
       }
     }
@@ -74,7 +76,7 @@ Soldi+=100;}
       }
       Fl_Button {} {
         label Disco
-        callback {fl_alert("Non ancora implementato!");} selected
+        callback {fl_alert("Non ancora implementato!");}
         xywh {300 405 110 20} color 51 selection_color 51 labelfont 2
       }
     }

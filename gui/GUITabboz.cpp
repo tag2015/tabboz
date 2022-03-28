@@ -65,6 +65,8 @@ static Fl_Image *image_b_scuola() {
 static void cb_Lavoro(Fl_Button*, void*) {
   fl_alert("Lavora, negro!");
 Soldi+=100;
+valbox_soldi->value(Soldi);
+valbox_studio->value(Studio);
 }
 
 static void cb_Tipa(Fl_Button*, void*) {

@@ -18,17 +18,13 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-STMATERIE MaterieMem[] =
-	{   {"---",                   0},
-		{"Agraria",               0},
-		{"Fisica",                0},
-		{"Attivita' culturali",   0},   /* fine alla 0.6.3 era "culurali..." */
-		{"Attivita' matematiche", 0},
-		{"Scienze industriali",   0},
-		{"Elettrochimica",        0},
-		{"Petrolchimica",         0},
-		{"Filosofia aziendale",   0},  /* fino alla 0.5.3 "aziendale" aveva due zeta... */
-		{"Metallurgia",           0} 
-	};
-		                   /*     |   */
-                           /*     \ voto in una materia */
+/* Numero di materie nella struttura */
+#define N_MATERIE  10
+
+extern   STMATERIE    MaterieMem[];
+
+void AggiornaScuola();
+
+void StudiaMateria(int scelta);
+void CorrompiProf(int scelta);
+void MinacciaSeduciProf(int scelta);

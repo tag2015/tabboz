@@ -3,12 +3,26 @@
 #include "GUIScuola.h"
 int materia_selezionata; 
 #include "GUITabboz.h"
+#include "../zarrosim.h"
+#include "../scuola.h"
 
 Fl_Double_Window *win_scuola=(Fl_Double_Window *)0;
 
 static void cb_OK(Fl_Return_Button*, void*) {
   win_principale->show();
 win_scuola->hide();
+}
+
+static void cb_Studia(Fl_Button*, void*) {
+  StudiaMateria(materia_selezionata);
+}
+
+static void cb_Corrompi(Fl_Button*, void*) {
+  CorrompiProf(materia_selezionata);
+}
+
+static void cb_Minaccia(Fl_Button*, void*) {
+  MinacciaSeduciProf(materia_selezionata);
 }
 
 static void cb_Agraria(Fl_Round_Button*, void*) {
@@ -47,139 +61,186 @@ static void cb_Metallurgia(Fl_Round_Button*, void*) {
   materia_selezionata=9;
 }
 
-Fl_Output *tbz_voto1=(Fl_Output *)0;
+Fl_Group *grp_voti=(Fl_Group *)0;
 
-Fl_Output *tbz_voto2=(Fl_Output *)0;
+Fl_Value_Output *val_voto1=(Fl_Value_Output *)0;
 
-Fl_Output *tbz_voto3=(Fl_Output *)0;
+Fl_Value_Output *val_voto2=(Fl_Value_Output *)0;
 
-Fl_Output *tbz_voto4=(Fl_Output *)0;
+Fl_Value_Output *val_voto3=(Fl_Value_Output *)0;
 
-Fl_Output *tbz_voto5=(Fl_Output *)0;
+Fl_Value_Output *val_voto4=(Fl_Value_Output *)0;
 
-Fl_Output *tbz_voto6=(Fl_Output *)0;
+Fl_Value_Output *val_voto5=(Fl_Value_Output *)0;
 
-Fl_Output *tbz_voto7=(Fl_Output *)0;
+Fl_Value_Output *val_voto6=(Fl_Value_Output *)0;
 
-Fl_Output *tbz_voto8=(Fl_Output *)0;
+Fl_Value_Output *val_voto7=(Fl_Value_Output *)0;
 
-Fl_Output *tbz_voto9=(Fl_Output *)0;
+Fl_Value_Output *val_voto8=(Fl_Value_Output *)0;
+
+Fl_Value_Output *val_voto9=(Fl_Value_Output *)0;
+
+Fl_Group *grp_barrastato=(Fl_Group *)0;
+
+Fl_Value_Output *val_soldi=(Fl_Value_Output *)0;
+
+Fl_Value_Output *val_rep=(Fl_Value_Output *)0;
+
+Fl_Value_Output *val_studio=(Fl_Value_Output *)0;
 
 Fl_Double_Window* GUITabbozScuola() {
   { win_scuola = new Fl_Double_Window(550, 330, "Scuola");
-    { Fl_Return_Button* o = new Fl_Return_Button(485, 265, 60, 60, "OK");
+    win_scuola->color(FL_LIGHT3);
+    { Fl_Return_Button* o = new Fl_Return_Button(480, 260, 60, 60, "OK");
       o->callback((Fl_Callback*)cb_OK);
     } // Fl_Return_Button* o
-    { new Fl_Button(240, 170, 300, 20, "Studia");
+    { Fl_Button* o = new Fl_Button(270, 170, 270, 20, "Studia");
+      o->color((Fl_Color)51);
+      o->selection_color((Fl_Color)51);
+      o->callback((Fl_Callback*)cb_Studia);
     } // Fl_Button* o
-    { new Fl_Button(240, 195, 300, 20, "Corrompi il prof di Attivit\303\240 Matematiche");
+    { Fl_Button* o = new Fl_Button(270, 195, 270, 20, "Corrompi");
+      o->color((Fl_Color)51);
+      o->selection_color((Fl_Color)51);
+      o->callback((Fl_Callback*)cb_Corrompi);
     } // Fl_Button* o
-    { new Fl_Button(240, 220, 300, 20, "Minaccia");
+    { Fl_Button* o = new Fl_Button(270, 220, 270, 20, "Minaccia");
+      o->color((Fl_Color)51);
+      o->selection_color((Fl_Color)51);
+      o->callback((Fl_Callback*)cb_Minaccia);
     } // Fl_Button* o
-    { Fl_Group* o = new Fl_Group(10, 10, 275, 225);
-      { Fl_Round_Button* o = new Fl_Round_Button(12, 20, 200, 15, "Agraria...............");
+    { Fl_Group* o = new Fl_Group(10, 10, 245, 240);
+      o->box(FL_SHADOW_BOX);
+      o->color(FL_BACKGROUND2_COLOR);
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 20, 215, 15, "Agraria.................");
         o->type(102);
         o->down_box(FL_ROUND_DOWN_BOX);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Agraria);
         o->set();
       } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(12, 43, 200, 15, "Fisica................");
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 44, 215, 15, "Fisica..................");
         o->type(102);
         o->down_box(FL_ROUND_DOWN_BOX);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Fisica);
       } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(12, 67, 200, 15, "Attivit\303\240 Culturali....");
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 68, 215, 15, "Attivit\303\240 Culturali......");
         o->type(102);
         o->down_box(FL_ROUND_DOWN_BOX);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Attivit);
       } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(12, 91, 200, 15, "Attivit\303\240 Matematiche..");
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 93, 215, 15, "Attivit\303\240 Matematiche....");
         o->type(102);
         o->down_box(FL_ROUND_DOWN_BOX);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Attivit1);
       } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(12, 115, 200, 15, "Scienze Industriali...");
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 117, 215, 15, "Scienze Industriali.....");
         o->type(102);
         o->down_box(FL_ROUND_DOWN_BOX);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Scienze);
       } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(12, 138, 200, 15, "Elettrochimica........");
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 141, 215, 15, "Elettrochimica..........");
         o->type(102);
         o->down_box(FL_ROUND_DOWN_BOX);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Elettrochimica);
       } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(12, 162, 200, 15, "Petrolchimica.........");
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 166, 215, 15, "Petrolchimica...........");
         o->type(102);
         o->down_box(FL_ROUND_DOWN_BOX);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Petrolchimica);
       } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(12, 186, 200, 15, "Filosofia Aziendale...");
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 190, 215, 15, "Filosofia Aziendale.....");
         o->type(102);
         o->down_box(FL_ROUND_DOWN_BOX);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Filosofia);
       } // Fl_Round_Button* o
-      { Fl_Round_Button* o = new Fl_Round_Button(12, 210, 200, 15, "Metallurgia...........");
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 215, 215, 15, "Metallurgia.............");
         o->type(102);
         o->down_box(FL_ROUND_DOWN_BOX);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Metallurgia);
       } // Fl_Round_Button* o
-      { tbz_voto1 = new Fl_Output(210, 15, 15, 24, "output:");
-        tbz_voto1->box(FL_NO_BOX);
-        tbz_voto1->labeltype(FL_NO_LABEL);
-        tbz_voto1->textfont(6);
-      } // Fl_Output* tbz_voto1
-      { tbz_voto2 = new Fl_Output(210, 38, 15, 24, "output:");
-        tbz_voto2->box(FL_NO_BOX);
-        tbz_voto2->labeltype(FL_NO_LABEL);
-        tbz_voto2->textfont(6);
-      } // Fl_Output* tbz_voto2
-      { tbz_voto3 = new Fl_Output(210, 62, 15, 24, "output:");
-        tbz_voto3->box(FL_NO_BOX);
-        tbz_voto3->labeltype(FL_NO_LABEL);
-        tbz_voto3->textfont(6);
-      } // Fl_Output* tbz_voto3
-      { tbz_voto4 = new Fl_Output(210, 86, 15, 24, "output:");
-        tbz_voto4->box(FL_NO_BOX);
-        tbz_voto4->labeltype(FL_NO_LABEL);
-        tbz_voto4->textfont(6);
-      } // Fl_Output* tbz_voto4
-      { tbz_voto5 = new Fl_Output(210, 110, 15, 24, "output:");
-        tbz_voto5->box(FL_NO_BOX);
-        tbz_voto5->labeltype(FL_NO_LABEL);
-        tbz_voto5->textfont(6);
-      } // Fl_Output* tbz_voto5
-      { tbz_voto6 = new Fl_Output(210, 133, 15, 24, "output:");
-        tbz_voto6->box(FL_NO_BOX);
-        tbz_voto6->labeltype(FL_NO_LABEL);
-        tbz_voto6->textfont(6);
-      } // Fl_Output* tbz_voto6
-      { tbz_voto7 = new Fl_Output(210, 157, 15, 24, "output:");
-        tbz_voto7->box(FL_NO_BOX);
-        tbz_voto7->labeltype(FL_NO_LABEL);
-        tbz_voto7->textfont(6);
-      } // Fl_Output* tbz_voto7
-      { tbz_voto8 = new Fl_Output(210, 181, 15, 24, "output:");
-        tbz_voto8->box(FL_NO_BOX);
-        tbz_voto8->labeltype(FL_NO_LABEL);
-        tbz_voto8->textfont(6);
-      } // Fl_Output* tbz_voto8
-      { tbz_voto9 = new Fl_Output(210, 205, 15, 24, "output:");
-        tbz_voto9->box(FL_NO_BOX);
-        tbz_voto9->labeltype(FL_NO_LABEL);
-        tbz_voto9->textfont(6);
-      } // Fl_Output* tbz_voto9
+      { grp_voti = new Fl_Group(185, 15, 55, 215);
+        { val_voto1 = new Fl_Value_Output(225, 20, 15, 15);
+          val_voto1->box(FL_FLAT_BOX);
+          val_voto1->color(FL_BACKGROUND2_COLOR);
+          val_voto1->textfont(5);
+        } // Fl_Value_Output* val_voto1
+        { val_voto2 = new Fl_Value_Output(225, 44, 15, 15);
+          val_voto2->box(FL_FLAT_BOX);
+          val_voto2->color(FL_BACKGROUND2_COLOR);
+          val_voto2->textfont(5);
+        } // Fl_Value_Output* val_voto2
+        { val_voto3 = new Fl_Value_Output(225, 68, 15, 15);
+          val_voto3->box(FL_FLAT_BOX);
+          val_voto3->color(FL_BACKGROUND2_COLOR);
+          val_voto3->textfont(5);
+        } // Fl_Value_Output* val_voto3
+        { val_voto4 = new Fl_Value_Output(225, 93, 15, 15);
+          val_voto4->box(FL_FLAT_BOX);
+          val_voto4->color(FL_BACKGROUND2_COLOR);
+          val_voto4->textfont(5);
+        } // Fl_Value_Output* val_voto4
+        { val_voto5 = new Fl_Value_Output(225, 117, 15, 15);
+          val_voto5->box(FL_FLAT_BOX);
+          val_voto5->color(FL_BACKGROUND2_COLOR);
+          val_voto5->textfont(5);
+        } // Fl_Value_Output* val_voto5
+        { val_voto6 = new Fl_Value_Output(225, 141, 15, 15);
+          val_voto6->box(FL_FLAT_BOX);
+          val_voto6->color(FL_BACKGROUND2_COLOR);
+          val_voto6->textfont(5);
+        } // Fl_Value_Output* val_voto6
+        { val_voto7 = new Fl_Value_Output(225, 166, 15, 15);
+          val_voto7->box(FL_FLAT_BOX);
+          val_voto7->color(FL_BACKGROUND2_COLOR);
+          val_voto7->textfont(5);
+        } // Fl_Value_Output* val_voto7
+        { val_voto8 = new Fl_Value_Output(225, 190, 15, 15);
+          val_voto8->box(FL_FLAT_BOX);
+          val_voto8->color(FL_BACKGROUND2_COLOR);
+          val_voto8->textfont(5);
+        } // Fl_Value_Output* val_voto8
+        { val_voto9 = new Fl_Value_Output(225, 215, 15, 15);
+          val_voto9->box(FL_FLAT_BOX);
+          val_voto9->color(FL_BACKGROUND2_COLOR);
+          val_voto9->textfont(5);
+        } // Fl_Value_Output* val_voto9
+        grp_voti->end();
+      } // Fl_Group* grp_voti
       o->end();
     } // Fl_Group* o
+    { grp_barrastato = new Fl_Group(10, 265, 405, 45);
+      grp_barrastato->box(FL_ENGRAVED_FRAME);
+      grp_barrastato->labelsize(10);
+      grp_barrastato->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+      { val_soldi = new Fl_Value_Output(50, 275, 90, 25, "Soldi");
+        val_soldi->color(FL_BACKGROUND2_COLOR);
+        val_soldi->labelsize(12);
+      } // Fl_Value_Output* val_soldi
+      { val_rep = new Fl_Value_Output(245, 275, 35, 25, "Reputazione");
+        val_rep->color(FL_BACKGROUND2_COLOR);
+        val_rep->labelsize(12);
+      } // Fl_Value_Output* val_rep
+      { val_studio = new Fl_Value_Output(370, 275, 35, 25, "Studio");
+        val_studio->color(FL_BACKGROUND2_COLOR);
+        val_studio->labelsize(12);
+      } // Fl_Value_Output* val_studio
+      grp_barrastato->end();
+    } // Fl_Group* grp_barrastato
+    { Fl_Box* o = new Fl_Box(270, 10, 270, 150, "Immagine inutile");
+      o->box(FL_EMBOSSED_FRAME);
+    } // Fl_Box* o
     materia_selezionata=1;
+    AggiornaScuola();
     win_scuola->set_modal();
     win_scuola->size_range(550, 330, 550, 330);
     win_scuola->end();
