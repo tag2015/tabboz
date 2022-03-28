@@ -4,13 +4,13 @@
 #include <FL/fl_ask.H>
 #include "../zarrosim.h"
 #include "GUIScuola.h"
+#include "GUIFamiglia.h"
 
 Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
 
-Fl_Button *btn_scuola=(Fl_Button *)0;
-
-static void cb_btn_scuola(Fl_Button*, void*) {
+static void cb_Scuola(Fl_Button*, void*) {
   GUITabbozScuola();
+win_scuola->position(400,400);
 win_scuola->show();
 win_principale->hide();
 }
@@ -168,7 +168,10 @@ static Fl_Image *image_b_compagnia() {
 }
 
 static void cb_Famiglia(Fl_Button*, void*) {
-  fl_alert("Non ancora implementato!");
+  GUITabbozFamiglia();
+win_famiglia->position(400,400);
+win_famiglia->show();
+win_principale->hide();
 }
 
 static const unsigned char idata_b_famiglia[] =
@@ -258,14 +261,14 @@ Fl_Double_Window* GUITabboz() {
     { Fl_Group* o = new Fl_Group(10, 335, 130, 100, "Sbatti...");
       o->box(FL_EMBOSSED_FRAME);
       o->labelsize(12);
-      { btn_scuola = new Fl_Button(20, 345, 110, 20, "Scuola");
-        btn_scuola->color((Fl_Color)51);
-        btn_scuola->selection_color((Fl_Color)51);
-        btn_scuola->image( image_b_scuola() );
-        btn_scuola->labelfont(2);
-        btn_scuola->callback((Fl_Callback*)cb_btn_scuola);
-        btn_scuola->align(Fl_Align(256|FL_ALIGN_INSIDE));
-      } // Fl_Button* btn_scuola
+      { Fl_Button* o = new Fl_Button(20, 345, 110, 20, "Scuola");
+        o->color((Fl_Color)51);
+        o->selection_color((Fl_Color)51);
+        o->image( image_b_scuola() );
+        o->labelfont(2);
+        o->callback((Fl_Callback*)cb_Scuola);
+        o->align(Fl_Align(256|FL_ALIGN_INSIDE));
+      } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(20, 375, 110, 20, "Lavoro");
         o->color((Fl_Color)51);
         o->selection_color((Fl_Color)51);

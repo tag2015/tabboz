@@ -11,6 +11,9 @@ decl {\#include "../zarrosim.h"} {private global
 decl {\#include "GUIScuola.h"} {private global
 }
 
+decl {\#include "GUIFamiglia.h"} {private global
+}
+
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
@@ -24,9 +27,10 @@ Function {GUITabboz()} {open
       label {Sbatti...} open
       xywh {10 335 130 100} box EMBOSSED_FRAME labelsize 12
     } {
-      Fl_Button btn_scuola {
+      Fl_Button {} {
         label Scuola
         callback {GUITabbozScuola();
+win_scuola->position(400,400);
 win_scuola->show();
 win_principale->hide();}
         image {icons/b_scuola.png} xywh {20 345 110 20} color 51 selection_color 51 labelfont 2 align 272
@@ -36,7 +40,7 @@ win_principale->hide();}
         callback {fl_alert("Lavora, negro!");
 Soldi+=100;
 valbox_soldi->value(Soldi);
-valbox_studio->value(Studio);} selected
+valbox_studio->value(Studio);}
         xywh {20 375 110 20} color 51 selection_color 51 labelfont 2
       }
     }
@@ -56,7 +60,10 @@ valbox_studio->value(Studio);} selected
       }
       Fl_Button {} {
         label Famiglia
-        callback {fl_alert("Non ancora implementato!");}
+        callback {GUITabbozFamiglia();
+win_famiglia->position(400,400);
+win_famiglia->show();
+win_principale->hide();} selected
         image {icons/b_famiglia.png} xywh {160 405 110 20} color 51 selection_color 51 labelfont 2 align 256
       }
     }
