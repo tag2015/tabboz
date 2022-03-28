@@ -131,11 +131,6 @@ int     sound_active;
 #define WIN_PICCOLO SW_HIDE
 #define WIN_GRANDE  SW_SHOWNORMAL
 
-// Questo serve se e' attivo il debug...
-#ifdef TABBOZ_DEBUG
-    FILE    *debugfile;
-    int     debug_active = 1;  //TAG2015 non ha molto senso salvare l'opzione nel file di config
-#endif
 
 #ifndef NONETWORK
     extern  WSADATA      Data;
@@ -351,16 +346,12 @@ static void InitTabboz(void)
         Data.wVersion=0;
     #endif
 
-    #ifdef TABBOZ_DEBUG
-        //debug_active=atoi (RRKey("Debug"));
-        //TabbozProfilo.get("Debug",debug_active,0);    //TAG2015 lasciamo perdere questo
-        if (debug_active < 0) debug_active=0;
-        if (debug_active == 1) {
-            openlog();
-            sprintf(tmp,"tabboz: Starting Tabboz Simulator %s %s",VERSION,__DATE__);
-            writelog(tmp);
-        }
-    #endif
+    if (LOGGING) {
+        openlog();
+        sprintf(tmp,"tabboz: Starting Tabboz Simulator %s %s",VERSION,__DATE__);
+        writelog(tmp);
+    }
+    
 
     #ifdef TABBOZ_WIN
         // Ottieni i nomi dei creatori di sto coso...
@@ -664,10 +655,10 @@ void FineProgramma(char *caller)
     char tmp[128];
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
-    #ifdef TABBOZ_DEBUG
+    if(LOGGING) {
         sprintf(tmp,"tabboz: FineProgramma chiamato da <%s>",caller);
         writelog(tmp);
-    #endif
+    }
 
     #ifndef NONETWORK
         if (net_enable == 1) {
@@ -773,10 +764,6 @@ static void SalvaTutto(void) {
     TabbozAddKey("NetEnable", tmp);
     sprintf(tmp,"%d",PortNumber);
     TabbozAddKey("NetPort", tmp);
-#endif
-
-#ifdef TABBOZ_DEBUG
-    // TabbozProfilo.set("Debug", debug_active);  //TAG2015 debug si può abilitare solo in compilazione
 #endif
 
 #ifndef TAG2015_NOSCOOTER
@@ -1907,16 +1894,18 @@ void CalcolaStudio()
     Studio=x.quot;
 }
 
-char *MostraSoldi(u_long i)
+/* Converte la variabile soldi (in "millini") in stringa aggiungendo zeri
+*  se è abilitato l'euro, semplicemente divide per 2 */
+char *MostraSoldi(int i)
 {
     static char tmp[128];
 
     if (euro)
-        sprintf(tmp, "%lue", (i / 2) );
-    else if ( i == 0)
+        sprintf(tmp, "%d €", (i / 2) );
+    else if (i == 0)
             sprintf(tmp, "0 L.");
         else
-            sprintf(tmp, "%lu000 L.", i);
+            sprintf(tmp, "%d000 L.", i);
 
     return tmp;
 }
@@ -1997,13 +1986,10 @@ int main(void)
     // }
 
     FineProgramma("main"); // Salvataggio partita...
-        #ifdef TABBOZ_DEBUG
-            if (debug_active) {
-                writelog("tabboz: end (standard exit)");
-                closelog();
-            }
-        #endif
-
+    if (LOGGING) {
+        writelog("tabboz: end (standard exit)");
+        closelog();
+    }
     return 0;
 }
 #endif

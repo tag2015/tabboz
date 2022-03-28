@@ -24,6 +24,9 @@
 /* Per attivare il Debug... */
 #define TABBOZ_DEBUG
 
+/* Per attivare il logging */
+#define LOGGING 1
+
 /* Per disattivare la possibilita' di giocare con la tabbozza */
 #define NOTABBOZZA
 
@@ -34,7 +37,7 @@
 // #define PROMPT_ACTIVE
 
 /* Abilita parti non più necessarie (e non compilabili) */
-#define DEADCODE
+// #define DEADCODE
 
 #ifndef lint
 static char copyright[] =
@@ -197,8 +200,6 @@ typedef struct tagABB {
 
 extern   NEWSTSCOOTER ScooterData;
 extern   NEWSTSCOOTER ScooterMem[];
-
-extern   STMATERIE    MaterieMem[];
 
 extern   STCEL        CellularData;
 extern   STCEL        CellularMem[];

@@ -5,6 +5,8 @@
 
 #include "debug.h"
 
+FILE *debugfile;
+
 void openlog()
 {
     debugfile = fopen("zarrosim.log", "w");
