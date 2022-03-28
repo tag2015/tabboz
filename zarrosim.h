@@ -47,7 +47,6 @@ static char copyright[] =
 
 
 #ifdef NOT_WINDOWS
-
 #define IDOK        1
 #define IDCANCEL    2
 #define IDABORT     3
@@ -56,6 +55,8 @@ static char copyright[] =
 #endif
 
 
+/* Define per la gui originale */
+#ifdef DEADCODE
 
 #define QX_NOME         102
 #define QX_SOLDI        105
@@ -136,6 +137,7 @@ static char copyright[] =
 #define COMPRACELLULAR  121
 #define VENDICELLULAR   122
 #define CELLULRABBONAM  123
+#endif
 
 // Attesa per soldi dai genitori
 #define ATTESAMAX         5
@@ -274,6 +276,7 @@ extern  int       current_pantaloni;
 extern  int       current_scarpe;
 extern  int       current_tipa;
 extern  int       sound_active;
+extern  int       euro;
 extern  char      sesso;              // M/F
 extern  char      ao;                 // lettera in funzione del sesso (tabbozza/tabbozzo)
 extern  char      un_una[];
@@ -289,46 +292,46 @@ extern  char      *n_attivita[];      // situazione scooter
     extern   void    TabbozStartNet(HANDLE hDlg);
 #endif
 
-/* TAG2015 commentati tutti prototipi per la gui */
+/*Altri define e prototipi per la vecchia gui */
+#ifdef DEADCODE
+/* POI LE STRONZATE PER LE FINESTRELLE... */
 
-// /* POI LE STRONZATE PER LE FINESTRELLE... */
+#ifdef TABBOZ_WIN
+extern  HANDLE    hInst;
+extern  HWND      hWndMain;
+extern  HANDLE    hdlgr;
+#endif
 
-// #ifdef TABBOZ_WIN
-// extern  HANDLE    hInst;
-// extern  HWND      hWndMain;
-// extern  HANDLE    hdlgr;
-// #endif
+/* ED I PROTOTIPI FUNZIONI... */
 
-// /* ED I PROTOTIPI FUNZIONI... */
+#ifdef TABBOZ_WIN
+extern  int   PASCAL       WinMain(HANDLE hInstance, HANDLE hPrevInstance,
+               LPSTR lpszCmdLine, int cmdShow);
+extern  BOOL FAR PASCAL MainDlgBoxProc(HWND hDlg, WORD message,
+               WORD wParam, LONG lParam);
+#endif
 
-// #ifdef TABBOZ_WIN
-// extern  int   PASCAL       WinMain(HANDLE hInstance, HANDLE hPrevInstance,
-//                LPSTR lpszCmdLine, int cmdShow);
-// extern  BOOL FAR PASCAL MainDlgBoxProc(HWND hDlg, WORD message,
-//                WORD wParam, LONG lParam);
-// #endif
-
-// extern  BOOL FAR PASCAL    About(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Disco(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Famiglia(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Lavoro(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Scuola(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Vestiti(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Configuration(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    PersonalInfo(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Logo(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Tabaccaio(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Palestra(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Setup(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Spegnimi(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Network(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    MostraSalutieBaci(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// extern  BOOL FAR PASCAL    Cellular(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-
+extern  BOOL FAR PASCAL    About(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Disco(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Famiglia(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Lavoro(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Scuola(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Vestiti(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Configuration(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    PersonalInfo(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Logo(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Tabaccaio(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Palestra(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Setup(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Spegnimi(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Network(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    MostraSalutieBaci(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+extern  BOOL FAR PASCAL    Cellular(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+#endif
 
 #ifdef PROMPT_ACTIVE
     extern  BOOL FAR PASCAL    Prompt(HWND hDlg, WORD message, WORD wParam, LONG lParam);
