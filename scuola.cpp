@@ -85,9 +85,9 @@ void AggiornaScuola()
     char tmp[128];
     CalcolaStudio();
     ScriviVoti();
-    val_soldi->value(Soldi);
-    val_rep->value(Reputazione);
-    val_studio->value(Studio);
+    scuola_val_soldi->value(Soldi);
+    scuola_val_rep->value(Reputazione);
+    scuola_val_studio->value(Studio);
 
 //     if (ScuolaRedraw == 1) ScriviVoti(parent);
 //     SetDlgItemText(parent, 104, MostraSoldi(Soldi));
