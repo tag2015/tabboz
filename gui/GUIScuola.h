@@ -21,9 +21,9 @@ extern Fl_Value_Output *val_voto7;
 extern Fl_Value_Output *val_voto8;
 extern Fl_Value_Output *val_voto9;
 extern Fl_Group *grp_barrastato;
-extern Fl_Value_Output *val_soldi;
-extern Fl_Value_Output *val_rep;
-extern Fl_Value_Output *val_studio;
+extern Fl_Value_Output *scuola_val_soldi;
+extern Fl_Value_Output *scuola_val_rep;
+extern Fl_Value_Output *scuola_val_studio;
 #include <FL/Fl_Box.H>
 Fl_Double_Window* GUITabbozScuola();
 #endif

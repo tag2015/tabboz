@@ -43,7 +43,7 @@ win_scuola->hide();}
       callback {MinacciaSeduciProf(materia_selezionata);}
       xywh {270 220 270 20} color 51 selection_color 51
     }
-    Fl_Group {} {open
+    Fl_Group {} {
       xywh {10 10 245 240} box SHADOW_BOX color 7
     } {
       Fl_Round_Button {} {
@@ -127,21 +127,21 @@ win_scuola->hide();}
     Fl_Group grp_barrastato {open
       xywh {10 265 405 45} box ENGRAVED_FRAME labelsize 10 align 5
     } {
-      Fl_Value_Output val_soldi {
+      Fl_Value_Output scuola_val_soldi {
         label Soldi
         xywh {50 275 90 25} color 7 labelsize 12
       }
-      Fl_Value_Output val_rep {
+      Fl_Value_Output scuola_val_rep {
         label Reputazione
         xywh {245 275 35 25} color 7 labelsize 12
       }
-      Fl_Value_Output val_studio {
-        label Studio
+      Fl_Value_Output scuola_val_studio {
+        label Studio selected
         xywh {370 275 35 25} color 7 labelsize 12
       }
     }
     Fl_Box {} {
-      label {Immagine inutile} selected
+      label {Immagine inutile}
       xywh {270 10 270 150} box EMBOSSED_FRAME
     }
   }

@@ -83,11 +83,11 @@ Fl_Value_Output *val_voto9=(Fl_Value_Output *)0;
 
 Fl_Group *grp_barrastato=(Fl_Group *)0;
 
-Fl_Value_Output *val_soldi=(Fl_Value_Output *)0;
+Fl_Value_Output *scuola_val_soldi=(Fl_Value_Output *)0;
 
-Fl_Value_Output *val_rep=(Fl_Value_Output *)0;
+Fl_Value_Output *scuola_val_rep=(Fl_Value_Output *)0;
 
-Fl_Value_Output *val_studio=(Fl_Value_Output *)0;
+Fl_Value_Output *scuola_val_studio=(Fl_Value_Output *)0;
 
 Fl_Double_Window* GUITabbozScuola() {
   { win_scuola = new Fl_Double_Window(550, 330, "Scuola");
@@ -222,18 +222,18 @@ Fl_Double_Window* GUITabbozScuola() {
       grp_barrastato->box(FL_ENGRAVED_FRAME);
       grp_barrastato->labelsize(10);
       grp_barrastato->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { val_soldi = new Fl_Value_Output(50, 275, 90, 25, "Soldi");
-        val_soldi->color(FL_BACKGROUND2_COLOR);
-        val_soldi->labelsize(12);
-      } // Fl_Value_Output* val_soldi
-      { val_rep = new Fl_Value_Output(245, 275, 35, 25, "Reputazione");
-        val_rep->color(FL_BACKGROUND2_COLOR);
-        val_rep->labelsize(12);
-      } // Fl_Value_Output* val_rep
-      { val_studio = new Fl_Value_Output(370, 275, 35, 25, "Studio");
-        val_studio->color(FL_BACKGROUND2_COLOR);
-        val_studio->labelsize(12);
-      } // Fl_Value_Output* val_studio
+      { scuola_val_soldi = new Fl_Value_Output(50, 275, 90, 25, "Soldi");
+        scuola_val_soldi->color(FL_BACKGROUND2_COLOR);
+        scuola_val_soldi->labelsize(12);
+      } // Fl_Value_Output* scuola_val_soldi
+      { scuola_val_rep = new Fl_Value_Output(245, 275, 35, 25, "Reputazione");
+        scuola_val_rep->color(FL_BACKGROUND2_COLOR);
+        scuola_val_rep->labelsize(12);
+      } // Fl_Value_Output* scuola_val_rep
+      { scuola_val_studio = new Fl_Value_Output(370, 275, 35, 25, "Studio");
+        scuola_val_studio->color(FL_BACKGROUND2_COLOR);
+        scuola_val_studio->labelsize(12);
+      } // Fl_Value_Output* scuola_val_studio
       grp_barrastato->end();
     } // Fl_Group* grp_barrastato
     { Fl_Box* o = new Fl_Box(270, 10, 270, 150, "Immagine inutile");
