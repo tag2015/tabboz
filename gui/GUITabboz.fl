@@ -17,7 +17,7 @@ decl {\#include "GUIFamiglia.h"} {private global
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
-    label {Tabboz Simulator Next Generation!} open
+    label {Tabboz Simulator Next Generation!} open selected
     xywh {439 455 475 450} type Double color 54 align 5 size_range {475 450 475 450} visible
   } {
     Fl_Menu_Bar {} {open
@@ -63,7 +63,7 @@ valbox_studio->value(Studio);}
         callback {GUITabbozFamiglia();
 win_famiglia->position(400,400);
 win_famiglia->show();
-win_principale->hide();} selected
+win_principale->hide();}
         image {icons/b_famiglia.png} xywh {160 405 110 20} color 51 selection_color 51 labelfont 2 align 256
       }
     }
@@ -125,17 +125,17 @@ win_principale->hide();} selected
     } {
       Fl_Value_Output valbox_soldi {
         xywh {180 215 120 25} box ENGRAVED_BOX color 7 labeltype NO_LABEL labelsize 12 textfont 5
-        code0 {valbox_soldi->value(Soldi);}
+        code0 {valbox_soldi->value(CALCSOLDI(Soldi));}
       }
       Fl_Value_Output valbox_paghetta {
         label Paghetta
         tooltip {Paghetta settimanale} xywh {370 200 75 25} box ENGRAVED_BOX color 7 labelsize 12 textfont 5
-        code0 {valbox_paghetta->value(Paghetta);}
+        code0 {valbox_paghetta->value(CALCSOLDI(Paghetta));}
       }
       Fl_Value_Output valbox_stipendio {
         label Stipendio
         tooltip {Se non sei disoccupato...} xywh {370 230 75 25} box ENGRAVED_BOX color 7 labelsize 12 textfont 5
-        code0 {valbox_stipendio->value(stipendio);}
+        code0 {valbox_stipendio->value(CALCSOLDI(stipendio));}
       }
     }
     Fl_Value_Output valbox_rep {

@@ -81,6 +81,8 @@ Fl_Value_Output *val_voto8=(Fl_Value_Output *)0;
 
 Fl_Value_Output *val_voto9=(Fl_Value_Output *)0;
 
+Fl_Value_Output *scuola_val_media=(Fl_Value_Output *)0;
+
 Fl_Group *grp_barrastato=(Fl_Group *)0;
 
 Fl_Value_Output *scuola_val_soldi=(Fl_Value_Output *)0;
@@ -90,9 +92,9 @@ Fl_Value_Output *scuola_val_rep=(Fl_Value_Output *)0;
 Fl_Value_Output *scuola_val_studio=(Fl_Value_Output *)0;
 
 Fl_Double_Window* GUITabbozScuola() {
-  { win_scuola = new Fl_Double_Window(550, 330, "Scuola");
+  { win_scuola = new Fl_Double_Window(550, 345, "Scuola");
     win_scuola->color(FL_LIGHT3);
-    { Fl_Return_Button* o = new Fl_Return_Button(480, 260, 60, 60, "OK");
+    { Fl_Return_Button* o = new Fl_Return_Button(480, 275, 60, 60, "OK");
       o->callback((Fl_Callback*)cb_OK);
     } // Fl_Return_Button* o
     { Fl_Button* o = new Fl_Button(270, 170, 270, 20, "Studia");
@@ -110,7 +112,7 @@ Fl_Double_Window* GUITabbozScuola() {
       o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Minaccia);
     } // Fl_Button* o
-    { Fl_Group* o = new Fl_Group(10, 10, 245, 240);
+    { Fl_Group* o = new Fl_Group(10, 10, 245, 270);
       o->box(FL_SHADOW_BOX);
       o->color(FL_BACKGROUND2_COLOR);
       { Fl_Round_Button* o = new Fl_Round_Button(12, 20, 215, 15, "Agraria.................");
@@ -216,23 +218,36 @@ Fl_Double_Window* GUITabbozScuola() {
         } // Fl_Value_Output* val_voto9
         grp_voti->end();
       } // Fl_Group* grp_voti
+      { scuola_val_media = new Fl_Value_Output(195, 250, 35, 25, " MEDIA SCOLASTICA ");
+        scuola_val_media->box(FL_FLAT_BOX);
+        scuola_val_media->color(FL_BACKGROUND2_COLOR);
+        scuola_val_media->labelfont(5);
+        scuola_val_media->textfont(5);
+        scuola_val_media->textsize(15);
+      } // Fl_Value_Output* scuola_val_media
+      { Fl_Box* o = new Fl_Box(75, 240, 105, 5);
+        o->box(FL_FLAT_BOX);
+        o->color((Fl_Color)48);
+      } // Fl_Box* o
       o->end();
     } // Fl_Group* o
-    { grp_barrastato = new Fl_Group(10, 265, 405, 45);
+    { grp_barrastato = new Fl_Group(10, 290, 405, 45);
       grp_barrastato->box(FL_ENGRAVED_FRAME);
       grp_barrastato->labelsize(10);
       grp_barrastato->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { scuola_val_soldi = new Fl_Value_Output(50, 275, 90, 25, "Soldi");
+      { Fl_Value_Output* o = scuola_val_soldi = new Fl_Value_Output(65, 300, 125, 25, "Soldi  L.");
         scuola_val_soldi->color(FL_BACKGROUND2_COLOR);
         scuola_val_soldi->labelsize(12);
+        if (euro) o->label("Soldi  €");
       } // Fl_Value_Output* scuola_val_soldi
-      { scuola_val_rep = new Fl_Value_Output(245, 275, 35, 25, "Reputazione");
+      { scuola_val_rep = new Fl_Value_Output(370, 300, 35, 25, "Reputazione");
         scuola_val_rep->color(FL_BACKGROUND2_COLOR);
         scuola_val_rep->labelsize(12);
       } // Fl_Value_Output* scuola_val_rep
-      { scuola_val_studio = new Fl_Value_Output(370, 275, 35, 25, "Studio");
+      { scuola_val_studio = new Fl_Value_Output(370, 300, 35, 25, "Studio");
         scuola_val_studio->color(FL_BACKGROUND2_COLOR);
         scuola_val_studio->labelsize(12);
+        scuola_val_studio->hide();
       } // Fl_Value_Output* scuola_val_studio
       grp_barrastato->end();
     } // Fl_Group* grp_barrastato

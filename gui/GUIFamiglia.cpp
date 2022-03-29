@@ -54,15 +54,17 @@ Fl_Double_Window* GUITabbozFamiglia() {
       o->box(FL_ENGRAVED_FRAME);
       o->labelsize(10);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { Fl_Value_Output* o = fam_val_soldi = new Fl_Value_Output(50, 275, 100, 25, "Soldi");
+      { Fl_Value_Output* o = fam_val_soldi = new Fl_Value_Output(65, 275, 120, 25, "Soldi  L.");
         fam_val_soldi->color(FL_BACKGROUND2_COLOR);
         fam_val_soldi->labelsize(12);
-        o->value(Soldi);
+        o->value(CALCSOLDI(Soldi));
+        if(euro) o->label("Soldi  €");
       } // Fl_Value_Output* fam_val_soldi
-      { Fl_Value_Output* o = fam_val_paghetta = new Fl_Value_Output(245, 275, 100, 25, "Paghetta");
+      { Fl_Value_Output* o = fam_val_paghetta = new Fl_Value_Output(305, 275, 100, 25, "Paghetta  L.");
         fam_val_paghetta->color(FL_BACKGROUND2_COLOR);
         fam_val_paghetta->labelsize(12);
-        o->value(Paghetta);
+        o->value(CALCSOLDI(Paghetta));
+        if(euro) o->label("Paghetta  €");
       } // Fl_Value_Output* fam_val_paghetta
       o->end();
     } // Fl_Group* o

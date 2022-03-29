@@ -375,7 +375,7 @@ Fl_Double_Window* GUITabboz() {
         valbox_soldi->labeltype(FL_NO_LABEL);
         valbox_soldi->labelsize(12);
         valbox_soldi->textfont(5);
-        valbox_soldi->value(Soldi);
+        valbox_soldi->value(CALCSOLDI(Soldi));
       } // Fl_Value_Output* valbox_soldi
       { valbox_paghetta = new Fl_Value_Output(370, 200, 75, 25, "Paghetta");
         valbox_paghetta->tooltip("Paghetta settimanale");
@@ -383,7 +383,7 @@ Fl_Double_Window* GUITabboz() {
         valbox_paghetta->color(FL_BACKGROUND2_COLOR);
         valbox_paghetta->labelsize(12);
         valbox_paghetta->textfont(5);
-        valbox_paghetta->value(Paghetta);
+        valbox_paghetta->value(CALCSOLDI(Paghetta));
       } // Fl_Value_Output* valbox_paghetta
       { valbox_stipendio = new Fl_Value_Output(370, 230, 75, 25, "Stipendio");
         valbox_stipendio->tooltip("Se non sei disoccupato...");
@@ -391,7 +391,7 @@ Fl_Double_Window* GUITabboz() {
         valbox_stipendio->color(FL_BACKGROUND2_COLOR);
         valbox_stipendio->labelsize(12);
         valbox_stipendio->textfont(5);
-        valbox_stipendio->value(stipendio);
+        valbox_stipendio->value(CALCSOLDI(stipendio));
       } // Fl_Value_Output* valbox_stipendio
       o->end();
     } // Fl_Group* o
