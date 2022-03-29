@@ -85,10 +85,17 @@ void AggiornaScuola()
     char tmp[128];
     CalcolaStudio();
     ScriviVoti();
-    scuola_val_soldi->value(Soldi);
+    scuola_val_soldi->value(CALCSOLDI(Soldi));
     scuola_val_rep->value(Reputazione);
     scuola_val_studio->value(Studio);
-
+    scuola_val_media->precision(1);  //TAG2015 aggiunta della media vera
+    scuola_val_media->value((float) Studio / N_MATERIE);
+    if(scuola_val_media->value() < 5)              // aggiunge colore ai voti
+        scuola_val_media->textcolor(FL_RED);
+    else if (scuola_val_media->value() > 7)
+        scuola_val_media->textcolor(FL_DARK_GREEN);
+    else
+        scuola_val_media->textcolor(FL_BLACK);
 //     if (ScuolaRedraw == 1) ScriviVoti(parent);
 //     SetDlgItemText(parent, 104, MostraSoldi(Soldi));
 //     sprintf(tmp, "%d/100", Reputazione);

@@ -57,7 +57,7 @@ void ChiediAumentoPaghetta(void)
         fl_message_title("Errore irrecuperabile");
         fl_alert("Quando andrai meglio a scuola, forse...");
     }
-    fam_val_paghetta->value(Paghetta);
+    fam_val_paghetta->value(CALCSOLDI(Paghetta));
 }
 
 
@@ -85,7 +85,7 @@ void ChiediSoldiExtra(void)
         fl_message_title("Errore irrecuperabile");
         fl_alert(tmp);
     }
-    fam_val_soldi->value(Soldi);
+    fam_val_soldi->value(CALCSOLDI(Soldi));
 }
 
 

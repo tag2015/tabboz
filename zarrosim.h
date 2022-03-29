@@ -361,3 +361,6 @@ extern  void   CalcolaStudio(void);
 #define TAG2015_NOTEMPO
 #define TAG2015_NOSCOOTER
 #define TAG2015_NOCELL
+
+/*Se euro disabilitato, calcola le lire moltiplicando x*1000. Altrimenti divide per 2 */
+#define CALCSOLDI(x) (!euro) ? x*1000 : x/2
