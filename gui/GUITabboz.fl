@@ -14,11 +14,14 @@ decl {\#include "GUIScuola.h"} {private global
 decl {\#include "GUIFamiglia.h"} {private global
 }
 
+decl {\#include "GUICompagnia.h"} {private global
+}
+
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
     label {Tabboz Simulator Next Generation!} open
-    xywh {611 489 475 450} type Double color 54 align 5
+    xywh {437 454 475 450} type Double color 54 align 5
     code0 {AggiornaPrincipale();} size_range {475 450 475 450} visible
   } {
     Fl_Menu_Bar {} {open
@@ -41,16 +44,14 @@ Function {GUITabboz()} {open
       Fl_Button {} {
         label Scuola
         callback {GUITabbozScuola();
-win_scuola->position(400,400);
 win_scuola->show();
-win_principale->hide();}
+win_principale->deactivate();}
         image {icons/b_scuola.png} xywh {20 345 110 20} color 51 selection_color 51 labelfont 2 align 272
       }
       Fl_Button {} {
         label Lavoro
-        callback {fl_alert("Lavora, negro!");
-Soldi+=100;
-//main_valbox_soldi->value(Soldi);}
+        callback {Soldi+=100;
+main_valbox_soldi->value(CALCSOLDI(Soldi));}
         xywh {20 375 110 20} color 51 selection_color 51 labelfont 2
       }
     }
@@ -65,15 +66,17 @@ Soldi+=100;
       }
       Fl_Button {} {
         label Compagnia
-        callback {fl_alert("Non ancora implementato!");}
+        callback {GUITabbozCompagnia();
+compa_val_rep->value(Reputazione);
+win_compagnia->show();
+win_principale->deactivate();}
         image {icons/b_compagnia.png} xywh {160 375 110 20} color 51 selection_color 51 labelfont 2 align 256
       }
       Fl_Button {} {
         label Famiglia
         callback {GUITabbozFamiglia();
-win_famiglia->position(400,400);
 win_famiglia->show();
-win_principale->hide();} selected
+win_principale->deactivate();} selected
         image {icons/b_famiglia.png} xywh {160 405 110 20} color 51 selection_color 51 labelfont 2 align 256
       }
     }
@@ -134,15 +137,15 @@ win_principale->hide();} selected
     } {
       Fl_Value_Output main_valbox_soldi {
         label {L.}
-        xywh {180 215 120 25} box ENGRAVED_BOX color 7 labelsize 12 textfont 5
+        xywh {180 215 120 25} box ENGRAVED_BOX color 7 labelsize 12 step 1 textfont 5
       }
       Fl_Value_Output main_valbox_paghetta {
         label {Paghetta L.}
-        tooltip {Paghetta settimanale} xywh {380 200 75 25} box ENGRAVED_BOX color 7 labelsize 12 textfont 5
+        tooltip {Paghetta settimanale} xywh {380 200 75 25} box ENGRAVED_BOX color 7 labelsize 12 step 1 textfont 5
       }
       Fl_Value_Output main_valbox_stipendio {
         label {Stipendio L.}
-        tooltip {Se non sei disoccupato...} xywh {380 230 75 25} box ENGRAVED_BOX color 7 labelsize 12 textfont 5
+        tooltip {Se non sei disoccupato...} xywh {380 230 75 25} box ENGRAVED_BOX color 7 labelsize 12 step 1 textfont 5
       }
     }
     Fl_Value_Output main_valbox_rep {

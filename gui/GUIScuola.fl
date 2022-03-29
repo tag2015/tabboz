@@ -18,34 +18,12 @@ Function {GUITabbozScuola()} {open
 } {
   Fl_Window win_scuola {
     label Scuola open
-    xywh {284 468 550 345} type Double color 54
+    xywh {223 541 540 355} type Double color 54 hotspot
     code0 {materia_selezionata=1;}
-    code1 {AggiornaScuola();} size_range {550 330 550 330} visible
+    code1 {AggiornaScuola();} modal size_range {540 355 540 355} visible
   } {
-    Fl_Return_Button {} {
-      label OK
-      callback {win_principale->show();
-AggiornaPrincipale();
-win_scuola->hide();} selected
-      xywh {480 275 60 60}
-    }
-    Fl_Button {} {
-      label Studia
-      callback {StudiaMateria(materia_selezionata);}
-      xywh {270 170 270 20} color 51 selection_color 51
-    }
-    Fl_Button {} {
-      label Corrompi
-      callback {CorrompiProf(materia_selezionata);}
-      xywh {270 195 270 20} color 51 selection_color 51
-    }
-    Fl_Button {} {
-      label Minaccia
-      callback {MinacciaSeduciProf(materia_selezionata);}
-      xywh {270 220 270 20} color 51 selection_color 51
-    }
     Fl_Group {} {
-      xywh {10 10 245 270} box SHADOW_BOX color 7
+      xywh {10 10 245 275} box SHADOW_BOX color 7
     } {
       Fl_Round_Button {} {
         label {Agraria.................}
@@ -132,26 +110,47 @@ win_scuola->hide();} selected
         xywh {75 240 105 5} box FLAT_BOX color 48
       }
     }
+    Fl_Box {} {
+      image {pic/scuola.png} xywh {260 10 270 170} box EMBOSSED_FRAME
+    }
+    Fl_Button {} {
+      label Studia
+      callback {StudiaMateria(materia_selezionata);}
+      xywh {260 185 270 30} color 51 selection_color 51
+    }
+    Fl_Button {} {
+      label Corrompi
+      callback {CorrompiProf(materia_selezionata);}
+      xywh {260 220 270 30} color 51 selection_color 51
+    }
+    Fl_Button {} {
+      label Minaccia
+      callback {MinacciaSeduciProf(materia_selezionata);}
+      xywh {260 255 270 30} color 51 selection_color 51
+    }
     Fl_Group grp_barrastato {open
-      xywh {10 290 405 45} box ENGRAVED_FRAME labelsize 10 align 5
+      xywh {10 295 405 50} box ENGRAVED_FRAME labelsize 10 align 5
     } {
       Fl_Value_Output scuola_val_soldi {
-        label {Soldi  L.}
-        xywh {65 300 125 25} color 7 labelsize 12
+        label {Soldi  L.} selected
+        xywh {65 307 125 25} color 7 labelsize 12 step 1
         code0 {if (euro) o->label("Soldi  €");}
       }
       Fl_Value_Output scuola_val_rep {
         label Reputazione
-        xywh {370 300 35 25} color 7 labelsize 12
+        xywh {340 307 35 25} color 7 labelsize 12
       }
       Fl_Value_Output scuola_val_studio {
         label Studio
-        xywh {370 300 35 25} color 7 labelsize 12 hide
+        xywh {370 305 35 25} color 7 labelsize 12 hide
       }
     }
-    Fl_Box {} {
-      label {Immagine inutile}
-      xywh {270 10 270 150} box EMBOSSED_FRAME
+    Fl_Return_Button {} {
+      label OK
+      callback {win_principale->activate();
+AggiornaPrincipale();
+win_scuola->hide();}
+      xywh {470 295 60 50}
     }
   }
 }

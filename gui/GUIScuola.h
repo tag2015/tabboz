@@ -5,8 +5,6 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
 extern Fl_Double_Window *win_scuola;
-#include <FL/Fl_Return_Button.H>
-#include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Round_Button.H>
 extern Fl_Group *grp_voti;
@@ -22,9 +20,11 @@ extern Fl_Value_Output *val_voto8;
 extern Fl_Value_Output *val_voto9;
 extern Fl_Value_Output *scuola_val_media;
 #include <FL/Fl_Box.H>
+#include <FL/Fl_Button.H>
 extern Fl_Group *grp_barrastato;
 extern Fl_Value_Output *scuola_val_soldi;
 extern Fl_Value_Output *scuola_val_rep;
 extern Fl_Value_Output *scuola_val_studio;
+#include <FL/Fl_Return_Button.H>
 Fl_Double_Window* GUITabbozScuola();
 #endif

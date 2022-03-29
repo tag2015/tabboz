@@ -5,11 +5,12 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
 extern Fl_Double_Window *win_famiglia;
-#include <FL/Fl_Return_Button.H>
+#include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Value_Output.H>
 extern Fl_Value_Output *fam_val_soldi;
 extern Fl_Value_Output *fam_val_paghetta;
+#include <FL/Fl_Return_Button.H>
 Fl_Double_Window* GUITabbozFamiglia();
 #endif

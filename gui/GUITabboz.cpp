@@ -5,6 +5,7 @@
 #include "../zarrosim.h"
 #include "GUIScuola.h"
 #include "GUIFamiglia.h"
+#include "GUICompagnia.h"
 
 Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
 
@@ -17,9 +18,8 @@ Fl_Menu_Item menu_[] = {
 
 static void cb_Scuola(Fl_Button*, void*) {
   GUITabbozScuola();
-win_scuola->position(400,400);
 win_scuola->show();
-win_principale->hide();
+win_principale->deactivate();
 }
 
 #include <FL/Fl_Image.H>
@@ -70,9 +70,8 @@ static Fl_Image *image_b_scuola() {
 }
 
 static void cb_Lavoro(Fl_Button*, void*) {
-  fl_alert("Lavora, negro!");
-Soldi+=100;
-//main_valbox_soldi->value(Soldi);
+  Soldi+=100;
+main_valbox_soldi->value(CALCSOLDI(Soldi));
 }
 
 static void cb_Tipa(Fl_Button*, void*) {
@@ -122,7 +121,10 @@ static Fl_Image *image_b_tipa() {
 }
 
 static void cb_Compagnia(Fl_Button*, void*) {
-  fl_alert("Non ancora implementato!");
+  GUITabbozCompagnia();
+compa_val_rep->value(Reputazione);
+win_compagnia->show();
+win_principale->deactivate();
 }
 
 static const unsigned char idata_b_compagnia[] =
@@ -175,9 +177,8 @@ static Fl_Image *image_b_compagnia() {
 
 static void cb_Famiglia(Fl_Button*, void*) {
   GUITabbozFamiglia();
-win_famiglia->position(400,400);
 win_famiglia->show();
-win_principale->hide();
+win_principale->deactivate();
 }
 
 static const unsigned char idata_b_famiglia[] =
@@ -382,6 +383,7 @@ Fl_Double_Window* GUITabboz() {
         main_valbox_soldi->box(FL_ENGRAVED_BOX);
         main_valbox_soldi->color(FL_BACKGROUND2_COLOR);
         main_valbox_soldi->labelsize(12);
+        main_valbox_soldi->step(1);
         main_valbox_soldi->textfont(5);
       } // Fl_Value_Output* main_valbox_soldi
       { main_valbox_paghetta = new Fl_Value_Output(380, 200, 75, 25, "Paghetta L.");
@@ -389,6 +391,7 @@ Fl_Double_Window* GUITabboz() {
         main_valbox_paghetta->box(FL_ENGRAVED_BOX);
         main_valbox_paghetta->color(FL_BACKGROUND2_COLOR);
         main_valbox_paghetta->labelsize(12);
+        main_valbox_paghetta->step(1);
         main_valbox_paghetta->textfont(5);
       } // Fl_Value_Output* main_valbox_paghetta
       { main_valbox_stipendio = new Fl_Value_Output(380, 230, 75, 25, "Stipendio L.");
@@ -396,6 +399,7 @@ Fl_Double_Window* GUITabboz() {
         main_valbox_stipendio->box(FL_ENGRAVED_BOX);
         main_valbox_stipendio->color(FL_BACKGROUND2_COLOR);
         main_valbox_stipendio->labelsize(12);
+        main_valbox_stipendio->step(1);
         main_valbox_stipendio->textfont(5);
       } // Fl_Value_Output* main_valbox_stipendio
       o->end();
