@@ -9,18 +9,19 @@ extern Fl_Double_Window *win_principale;
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Box.H>
-extern Fl_Box *box_figurino;
+extern Fl_Box *main_box_figurino;
 #include <FL/Fl_Output.H>
-extern Fl_Output *txtbox_nome;
-extern Fl_Output *txtbox_cognome;
-extern Fl_Output *txtbox_tipa;
+extern Fl_Output *main_txtbox_nome;
+extern Fl_Output *main_txtbox_cognome;
+extern Fl_Output *main_txtbox_tipa;
 #include <FL/Fl_Value_Output.H>
-extern Fl_Value_Output *valbox_rapporti;
-extern Fl_Value_Output *valbox_soldi;
-extern Fl_Value_Output *valbox_paghetta;
-extern Fl_Value_Output *valbox_stipendio;
-extern Fl_Value_Output *valbox_rep;
-extern Fl_Value_Output *valbox_fama;
-extern Fl_Value_Output *valbox_studio;
+extern Fl_Value_Output *main_valbox_rapporti;
+extern Fl_Value_Output *main_valbox_soldi;
+extern Fl_Value_Output *main_valbox_paghetta;
+extern Fl_Value_Output *main_valbox_stipendio;
+extern Fl_Value_Output *main_valbox_rep;
+extern Fl_Value_Output *main_valbox_fama;
+extern Fl_Value_Output *main_valbox_studio;
 Fl_Double_Window* GUITabboz();
+extern Fl_Menu_Item menu_[];
 #endif

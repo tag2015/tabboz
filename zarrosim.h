@@ -363,4 +363,7 @@ extern  void   CalcolaStudio(void);
 #define TAG2015_NOCELL
 
 /*Se euro disabilitato, calcola le lire moltiplicando x*1000. Altrimenti divide per 2 */
-#define CALCSOLDI(x) (!euro) ? x*1000 : x/2
+#define CALCSOLDI(x) ( (!euro) ? x*1000 : x/2 )
+
+/*Calcola media voti passando totale e n.ro materie*/
+#define MEDIAVOTI(tot,n) ( (float) tot / (n+1) )

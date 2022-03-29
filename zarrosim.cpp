@@ -201,7 +201,7 @@ void ResetMe(int primavolta)
 //    sprintf(Street,"%s n. %d",tmp,(1 + random(150)));
 
     for (i=1;i<10;i++)
-        MaterieMem[i].voto=0;
+        MaterieMem[i].voto=2;   //BUGFIX partiamo dalla media del 2
 
     CalcolaStudio();
 
@@ -459,16 +459,14 @@ static void CaricaTutto(void)
 
     TabbozProfilo.get("Street",Street,"",STR_MAX);
 
-    // la serie di 9 "A" messe nella riga sotto NON E' CASUALE
+    // la serie di 9 "C" messe nella riga sotto NON E' CASUALE
     // non sostituirla con altre lettere !
 
-    //if (TabbozReadKey("Materie",tmp) == 0) sprintf(tmp,"AAAAAAAAA");  //TAG2015 ricontrollare
     TabbozProfilo.get("Materie",tmp,"",STR_MAX);
-    if(tmp[0]=='\0')  sprintf(tmp,"AAAAAAAAA");
-
+    if(tmp[0]=='\0')  sprintf(tmp,"CCCCCCCCC");      //BUGFIX partiamo dalla media del 2... 0 è esagerato
     for (i=1;i<10;i++) {
         MaterieMem[i].voto=tmp[i-1] - 65;
-        if ((MaterieMem[i].voto < 0) || (MaterieMem[i].voto > 10)) MaterieMem[i].voto=0;
+        if ((MaterieMem[i].voto < 2) || (MaterieMem[i].voto > 10)) MaterieMem[i].voto=2;
     }
     CalcolaStudio();
 
@@ -1377,9 +1375,6 @@ BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 //*******************************************************************
 // Aggiorna la finestra principale
 //*******************************************************************
-//TAG2015 routine che aggiorna i parametri visualizzati in finestra
-//principale, questa va reimplementata
-
 // void AggiornaPrincipale(HWND parent)
 // {
 // char tmp[128];
@@ -1440,7 +1435,34 @@ BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 // }
 
+/* Aggiorna Finestra Principale*/
+void AggiornaPrincipale()
+{
+    char tmp[128];
 
+//FIXME Nome e cognome
+    main_valbox_rep->value(Reputazione);
+    main_valbox_fama->value(Fama);
+    main_valbox_studio->precision(1);
+    main_valbox_studio->value(MEDIAVOTI(Studio,N_MATERIE));
+    if(Rapporti) {
+        main_txtbox_tipa->value(Nometipa);
+        main_valbox_rapporti->value(Rapporti);
+        main_valbox_rapporti->activate();
+    }
+    else {
+        main_txtbox_tipa->value("Nessuna...");
+        main_valbox_rapporti->deactivate();
+    }
+    main_valbox_soldi->value(CALCSOLDI(Soldi));
+    main_valbox_paghetta->value(CALCSOLDI(Paghetta));
+    main_valbox_stipendio->value(CALCSOLDI(stipendio));
+    if(stipendio)
+        main_valbox_stipendio->activate();
+    else
+        main_valbox_stipendio->deactivate();
+
+}
 
 
 //*******************************************************************

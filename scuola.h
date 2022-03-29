@@ -19,7 +19,7 @@
 */
 
 /* Numero di materie nella struttura */
-#define N_MATERIE  10
+#define N_MATERIE  9
 
 extern   STMATERIE    MaterieMem[];
 

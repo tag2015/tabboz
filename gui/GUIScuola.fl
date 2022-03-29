@@ -17,15 +17,16 @@ decl {\#include "../scuola.h"} {private global
 Function {GUITabbozScuola()} {open
 } {
   Fl_Window win_scuola {
-    label Scuola open selected
-    xywh {283 473 550 345} type Double color 54
+    label Scuola open
+    xywh {284 468 550 345} type Double color 54
     code0 {materia_selezionata=1;}
-    code1 {AggiornaScuola();} modal size_range {550 330 550 330} visible
+    code1 {AggiornaScuola();} size_range {550 330 550 330} visible
   } {
     Fl_Return_Button {} {
       label OK
       callback {win_principale->show();
-win_scuola->hide();}
+AggiornaPrincipale();
+win_scuola->hide();} selected
       xywh {480 275 60 60}
     }
     Fl_Button {} {
@@ -43,54 +44,54 @@ win_scuola->hide();}
       callback {MinacciaSeduciProf(materia_selezionata);}
       xywh {270 220 270 20} color 51 selection_color 51
     }
-    Fl_Group {} {open
+    Fl_Group {} {
       xywh {10 10 245 270} box SHADOW_BOX color 7
     } {
       Fl_Round_Button {} {
         label {Agraria.................}
         callback {materia_selezionata=1;}
-        xywh {12 20 215 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+        xywh {12 20 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
         code0 {o->set();}
       }
       Fl_Round_Button {} {
         label {Fisica..................}
         callback {materia_selezionata=2;}
-        xywh {12 44 215 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+        xywh {12 44 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Attività Culturali......}
         callback {materia_selezionata=3;}
-        xywh {12 68 215 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+        xywh {12 68 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Attività Matematiche....}
         callback {materia_selezionata=4;}
-        xywh {12 93 215 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+        xywh {12 93 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Scienze Industriali.....}
         callback {materia_selezionata=5;}
-        xywh {12 117 215 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+        xywh {12 117 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Elettrochimica..........}
         callback {materia_selezionata=6;}
-        xywh {12 141 215 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+        xywh {12 141 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Petrolchimica...........}
         callback {materia_selezionata=7;}
-        xywh {12 166 215 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+        xywh {12 166 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Filosofia Aziendale.....}
         callback {materia_selezionata=8;}
-        xywh {12 190 215 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+        xywh {12 190 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Metallurgia.............}
         callback {materia_selezionata=9;}
-        xywh {12 215 215 15} type Radio down_box ROUND_DOWN_BOX labelfont 5
+        xywh {12 215 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Group grp_voti {
         xywh {185 15 55 215}

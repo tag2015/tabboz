@@ -8,6 +8,13 @@
 
 Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
 
+Fl_Menu_Item menu_[] = {
+ {"Menu", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Esci", 0,  0, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {0,0,0,0,0,0,0,0,0},
+ {0,0,0,0,0,0,0,0,0}
+};
+
 static void cb_Scuola(Fl_Button*, void*) {
   GUITabbozScuola();
 win_scuola->position(400,400);
@@ -65,8 +72,7 @@ static Fl_Image *image_b_scuola() {
 static void cb_Lavoro(Fl_Button*, void*) {
   fl_alert("Lavora, negro!");
 Soldi+=100;
-valbox_soldi->value(Soldi);
-valbox_studio->value(Studio);
+//main_valbox_soldi->value(Soldi);
 }
 
 static void cb_Tipa(Fl_Button*, void*) {
@@ -230,33 +236,37 @@ static void cb_Disco(Fl_Button*, void*) {
   fl_alert("Non ancora implementato!");
 }
 
-Fl_Box *box_figurino=(Fl_Box *)0;
+Fl_Box *main_box_figurino=(Fl_Box *)0;
 
-Fl_Output *txtbox_nome=(Fl_Output *)0;
+Fl_Output *main_txtbox_nome=(Fl_Output *)0;
 
-Fl_Output *txtbox_cognome=(Fl_Output *)0;
+Fl_Output *main_txtbox_cognome=(Fl_Output *)0;
 
-Fl_Output *txtbox_tipa=(Fl_Output *)0;
+Fl_Output *main_txtbox_tipa=(Fl_Output *)0;
 
-Fl_Value_Output *valbox_rapporti=(Fl_Value_Output *)0;
+Fl_Value_Output *main_valbox_rapporti=(Fl_Value_Output *)0;
 
-Fl_Value_Output *valbox_soldi=(Fl_Value_Output *)0;
+Fl_Value_Output *main_valbox_soldi=(Fl_Value_Output *)0;
 
-Fl_Value_Output *valbox_paghetta=(Fl_Value_Output *)0;
+Fl_Value_Output *main_valbox_paghetta=(Fl_Value_Output *)0;
 
-Fl_Value_Output *valbox_stipendio=(Fl_Value_Output *)0;
+Fl_Value_Output *main_valbox_stipendio=(Fl_Value_Output *)0;
 
-Fl_Value_Output *valbox_rep=(Fl_Value_Output *)0;
+Fl_Value_Output *main_valbox_rep=(Fl_Value_Output *)0;
 
-Fl_Value_Output *valbox_fama=(Fl_Value_Output *)0;
+Fl_Value_Output *main_valbox_fama=(Fl_Value_Output *)0;
 
-Fl_Value_Output *valbox_studio=(Fl_Value_Output *)0;
+Fl_Value_Output *main_valbox_studio=(Fl_Value_Output *)0;
 
 Fl_Double_Window* GUITabboz() {
   { win_principale = new Fl_Double_Window(475, 450, "Tabboz Simulator Next Generation!");
     win_principale->color(FL_LIGHT3);
     win_principale->align(Fl_Align(FL_ALIGN_TOP_LEFT));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 475, 20);
+      o->labeltype(FL_NO_LABEL);
+      o->hide();
+      o->deactivate();
+      o->menu(menu_);
     } // Fl_Menu_Bar* o
     { Fl_Group* o = new Fl_Group(10, 335, 130, 100, "Sbatti...");
       o->box(FL_EMBOSSED_FRAME);
@@ -329,92 +339,85 @@ Fl_Double_Window* GUITabboz() {
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
-    { box_figurino = new Fl_Box(10, 30, 140, 280, "Immagine Tabboz");
-      box_figurino->box(FL_SHADOW_BOX);
-    } // Fl_Box* box_figurino
+    { main_box_figurino = new Fl_Box(10, 30, 140, 280, "Immagine Tabboz");
+      main_box_figurino->box(FL_SHADOW_BOX);
+    } // Fl_Box* main_box_figurino
     { new Fl_Button(440, 410, 20, 20, "?");
     } // Fl_Button* o
-    { txtbox_nome = new Fl_Output(200, 35, 120, 25, "Nome");
-      txtbox_nome->box(FL_NO_BOX);
-      txtbox_nome->labelfont(1);
-      txtbox_nome->value(Nome);
-    } // Fl_Output* txtbox_nome
-    { txtbox_cognome = new Fl_Output(325, 35, 135, 25);
-      txtbox_cognome->box(FL_NO_BOX);
-      txtbox_cognome->labeltype(FL_NO_LABEL);
-      txtbox_cognome->value(Cognome);
-    } // Fl_Output* txtbox_cognome
+    { Fl_Output* o = main_txtbox_nome = new Fl_Output(200, 35, 120, 25, "Nome");
+      main_txtbox_nome->box(FL_NO_BOX);
+      main_txtbox_nome->labelfont(1);
+      o->value(Nome);
+    } // Fl_Output* main_txtbox_nome
+    { Fl_Output* o = main_txtbox_cognome = new Fl_Output(325, 35, 135, 25);
+      main_txtbox_cognome->box(FL_NO_BOX);
+      main_txtbox_cognome->labeltype(FL_NO_LABEL);
+      o->value(Cognome);
+    } // Fl_Output* main_txtbox_cognome
     { Fl_Group* o = new Fl_Group(160, 85, 135, 85, "Tipa");
       o->box(FL_EMBOSSED_FRAME);
       o->labelfont(1);
       o->labelsize(12);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { txtbox_tipa = new Fl_Output(167, 95, 120, 25, "Tipa");
-        txtbox_tipa->box(FL_NO_BOX);
-        txtbox_tipa->labeltype(FL_NO_LABEL);
-        txtbox_tipa->labelfont(1);
-        txtbox_tipa->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-        txtbox_tipa->value(Nometipa);
-      } // Fl_Output* txtbox_tipa
-      { valbox_rapporti = new Fl_Value_Output(240, 130, 35, 25, "Rapporto ");
-        valbox_rapporti->box(FL_SHADOW_BOX);
-        valbox_rapporti->color(FL_BACKGROUND2_COLOR);
-        valbox_rapporti->labelsize(12);
-        valbox_rapporti->value(Rapporti);
-      } // Fl_Value_Output* valbox_rapporti
+      { Fl_Output* o = main_txtbox_tipa = new Fl_Output(167, 95, 120, 25, "Tipa");
+        main_txtbox_tipa->box(FL_NO_BOX);
+        main_txtbox_tipa->labeltype(FL_NO_LABEL);
+        main_txtbox_tipa->labelfont(1);
+        main_txtbox_tipa->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+        o->value(Nometipa);
+      } // Fl_Output* main_txtbox_tipa
+      { main_valbox_rapporti = new Fl_Value_Output(240, 130, 35, 25, "Rapporto ");
+        main_valbox_rapporti->box(FL_SHADOW_BOX);
+        main_valbox_rapporti->color(FL_BACKGROUND2_COLOR);
+        main_valbox_rapporti->labelsize(12);
+      } // Fl_Value_Output* main_valbox_rapporti
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(160, 190, 295, 75, "Soldi");
+    { Fl_Group* o = new Fl_Group(160, 190, 305, 75, "Soldi");
       o->box(FL_EMBOSSED_FRAME);
       o->labelfont(1);
       o->labelsize(12);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { valbox_soldi = new Fl_Value_Output(180, 215, 120, 25);
-        valbox_soldi->box(FL_ENGRAVED_BOX);
-        valbox_soldi->color(FL_BACKGROUND2_COLOR);
-        valbox_soldi->labeltype(FL_NO_LABEL);
-        valbox_soldi->labelsize(12);
-        valbox_soldi->textfont(5);
-        valbox_soldi->value(CALCSOLDI(Soldi));
-      } // Fl_Value_Output* valbox_soldi
-      { valbox_paghetta = new Fl_Value_Output(370, 200, 75, 25, "Paghetta");
-        valbox_paghetta->tooltip("Paghetta settimanale");
-        valbox_paghetta->box(FL_ENGRAVED_BOX);
-        valbox_paghetta->color(FL_BACKGROUND2_COLOR);
-        valbox_paghetta->labelsize(12);
-        valbox_paghetta->textfont(5);
-        valbox_paghetta->value(CALCSOLDI(Paghetta));
-      } // Fl_Value_Output* valbox_paghetta
-      { valbox_stipendio = new Fl_Value_Output(370, 230, 75, 25, "Stipendio");
-        valbox_stipendio->tooltip("Se non sei disoccupato...");
-        valbox_stipendio->box(FL_ENGRAVED_BOX);
-        valbox_stipendio->color(FL_BACKGROUND2_COLOR);
-        valbox_stipendio->labelsize(12);
-        valbox_stipendio->textfont(5);
-        valbox_stipendio->value(CALCSOLDI(stipendio));
-      } // Fl_Value_Output* valbox_stipendio
+      { main_valbox_soldi = new Fl_Value_Output(180, 215, 120, 25, "L.");
+        main_valbox_soldi->box(FL_ENGRAVED_BOX);
+        main_valbox_soldi->color(FL_BACKGROUND2_COLOR);
+        main_valbox_soldi->labelsize(12);
+        main_valbox_soldi->textfont(5);
+      } // Fl_Value_Output* main_valbox_soldi
+      { main_valbox_paghetta = new Fl_Value_Output(380, 200, 75, 25, "Paghetta L.");
+        main_valbox_paghetta->tooltip("Paghetta settimanale");
+        main_valbox_paghetta->box(FL_ENGRAVED_BOX);
+        main_valbox_paghetta->color(FL_BACKGROUND2_COLOR);
+        main_valbox_paghetta->labelsize(12);
+        main_valbox_paghetta->textfont(5);
+      } // Fl_Value_Output* main_valbox_paghetta
+      { main_valbox_stipendio = new Fl_Value_Output(380, 230, 75, 25, "Stipendio L.");
+        main_valbox_stipendio->tooltip("Se non sei disoccupato...");
+        main_valbox_stipendio->box(FL_ENGRAVED_BOX);
+        main_valbox_stipendio->color(FL_BACKGROUND2_COLOR);
+        main_valbox_stipendio->labelsize(12);
+        main_valbox_stipendio->textfont(5);
+      } // Fl_Value_Output* main_valbox_stipendio
       o->end();
     } // Fl_Group* o
-    { valbox_rep = new Fl_Value_Output(405, 80, 35, 25, "Reputazione ");
-      valbox_rep->box(FL_SHADOW_BOX);
-      valbox_rep->color(FL_BACKGROUND2_COLOR);
-      valbox_rep->labelsize(12);
-      valbox_rep->value(Reputazione);
-    } // Fl_Value_Output* valbox_rep
-    { valbox_fama = new Fl_Value_Output(405, 110, 35, 25, "Figosit\303\240 ");
-      valbox_fama->tooltip("L\'innato carisma del tabbozzo");
-      valbox_fama->box(FL_SHADOW_BOX);
-      valbox_fama->color(FL_BACKGROUND2_COLOR);
-      valbox_fama->labelsize(12);
-      valbox_fama->value(Fama);
-    } // Fl_Value_Output* valbox_fama
-    { valbox_studio = new Fl_Value_Output(405, 140, 35, 25, "Media Voti ");
-      valbox_studio->tooltip("Media scolastica");
-      valbox_studio->box(FL_SHADOW_BOX);
-      valbox_studio->color(FL_BACKGROUND2_COLOR);
-      valbox_studio->labelsize(12);
-      valbox_studio->value(Studio);
-    } // Fl_Value_Output* valbox_studio
+    { main_valbox_rep = new Fl_Value_Output(405, 80, 35, 25, "Reputazione ");
+      main_valbox_rep->box(FL_SHADOW_BOX);
+      main_valbox_rep->color(FL_BACKGROUND2_COLOR);
+      main_valbox_rep->labelsize(12);
+    } // Fl_Value_Output* main_valbox_rep
+    { main_valbox_fama = new Fl_Value_Output(405, 110, 35, 25, "Figosit\303\240 ");
+      main_valbox_fama->tooltip("L\'innato carisma del tabbozzo");
+      main_valbox_fama->box(FL_SHADOW_BOX);
+      main_valbox_fama->color(FL_BACKGROUND2_COLOR);
+      main_valbox_fama->labelsize(12);
+    } // Fl_Value_Output* main_valbox_fama
+    { main_valbox_studio = new Fl_Value_Output(405, 140, 35, 25, "Media Voti ");
+      main_valbox_studio->tooltip("Media scolastica");
+      main_valbox_studio->box(FL_SHADOW_BOX);
+      main_valbox_studio->color(FL_BACKGROUND2_COLOR);
+      main_valbox_studio->labelsize(12);
+    } // Fl_Value_Output* main_valbox_studio
+    AggiornaPrincipale();
     win_principale->size_range(475, 450, 475, 450);
     win_principale->end();
   } // Fl_Double_Window* win_principale

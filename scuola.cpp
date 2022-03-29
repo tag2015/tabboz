@@ -66,7 +66,7 @@ void ScriviVoti()
     int i;
     char tmp[128];
 
-    for (i=0;i<N_MATERIE-1;i++) {
+    for (i=0;i<N_MATERIE;i++) {
         Fl_Value_Output *casella = (Fl_Value_Output *) grp_voti->child(i);    // grp_voti è il gruppo contenente le ValueBox per i voti
         casella->value(MaterieMem[i+1].voto);
         if(casella->value() < 5)              // aggiunge colore ai voti
@@ -88,8 +88,8 @@ void AggiornaScuola()
     scuola_val_soldi->value(CALCSOLDI(Soldi));
     scuola_val_rep->value(Reputazione);
     scuola_val_studio->value(Studio);
-    scuola_val_media->precision(1);  //TAG2015 aggiunta della media vera
-    scuola_val_media->value((float) Studio / N_MATERIE);
+    scuola_val_media->precision(1);  //TAG2015 mostra media decimale
+    scuola_val_media->value(MEDIAVOTI(Studio,N_MATERIE));
     if(scuola_val_media->value() < 5)              // aggiunge colore ai voti
         scuola_val_media->textcolor(FL_RED);
     else if (scuola_val_media->value() > 7)
@@ -159,8 +159,10 @@ void CorrompiProf(int scelta)
                     if (MaterieMem[scelta].voto > 10 )
                         MaterieMem[scelta].voto=10;
                 } else {
-                    if (MaterieMem[scelta].voto > 2 )   //BUGFIX qui era <2 ???
+                    if (MaterieMem[scelta].voto >= 4 )   //BUGFIX qui era <2 ??? Se >=4 abbassa di 2
                         MaterieMem[scelta].voto-=2;
+                    else
+                        MaterieMem[scelta].voto=2;       // BUGFIX negli altri casi limita a 2
                     fl_message_title("Errore Critico");
                     fl_alert("Cosa ??? Prima cerchi di corrompermi, poi si scopre che non hai abbastanza soldi !!!");
  				}
@@ -180,14 +182,14 @@ void MinacciaSeduciProf(int scelta)
 {
     if (!CheckVacanza()) {
         if (sesso == 'M') { // Maschietto - minaccia prof.
-            if ((Reputazione >= 30) || (rand() % 10 < 1)) {
+            if ((Reputazione >= 30) || (rand() % 10 < 1)) {    //TAG2015 rep>30 è sufficiente per minacciare?
                 MaterieMem[scelta].voto+=2;
                 if (MaterieMem[scelta].voto > 10) MaterieMem[scelta].voto=10;
             } else {
                 if (sound_active) //TabbozPlaySound(402);
                 fl_message_title("Bella figura...");
                 fl_alert("Cosa ??? Credi di farmi paura piccolo pezzettino di letame vestito da zarro...\nDeve ancora nascere chi può minacciarmi...");
-                if (Reputazione > 3 )
+                if (Reputazione > 3 )    //FIXME questi andrebbero ripensati
                     Reputazione-=2;
                 if (MaterieMem[scelta].voto > 2 )
                     MaterieMem[scelta].voto-=1;

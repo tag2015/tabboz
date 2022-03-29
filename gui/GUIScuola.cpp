@@ -10,6 +10,7 @@ Fl_Double_Window *win_scuola=(Fl_Double_Window *)0;
 
 static void cb_OK(Fl_Return_Button*, void*) {
   win_principale->show();
+AggiornaPrincipale();
 win_scuola->hide();
 }
 
@@ -117,56 +118,65 @@ Fl_Double_Window* GUITabbozScuola() {
       o->color(FL_BACKGROUND2_COLOR);
       { Fl_Round_Button* o = new Fl_Round_Button(12, 20, 215, 15, "Agraria.................");
         o->type(102);
-        o->down_box(FL_ROUND_DOWN_BOX);
+        o->down_box(FL_DIAMOND_UP_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Agraria);
         o->set();
       } // Fl_Round_Button* o
       { Fl_Round_Button* o = new Fl_Round_Button(12, 44, 215, 15, "Fisica..................");
         o->type(102);
-        o->down_box(FL_ROUND_DOWN_BOX);
+        o->down_box(FL_DIAMOND_UP_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Fisica);
       } // Fl_Round_Button* o
       { Fl_Round_Button* o = new Fl_Round_Button(12, 68, 215, 15, "Attivit\303\240 Culturali......");
         o->type(102);
-        o->down_box(FL_ROUND_DOWN_BOX);
+        o->down_box(FL_DIAMOND_UP_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Attivit);
       } // Fl_Round_Button* o
       { Fl_Round_Button* o = new Fl_Round_Button(12, 93, 215, 15, "Attivit\303\240 Matematiche....");
         o->type(102);
-        o->down_box(FL_ROUND_DOWN_BOX);
+        o->down_box(FL_DIAMOND_UP_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Attivit1);
       } // Fl_Round_Button* o
       { Fl_Round_Button* o = new Fl_Round_Button(12, 117, 215, 15, "Scienze Industriali.....");
         o->type(102);
-        o->down_box(FL_ROUND_DOWN_BOX);
+        o->down_box(FL_DIAMOND_UP_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Scienze);
       } // Fl_Round_Button* o
       { Fl_Round_Button* o = new Fl_Round_Button(12, 141, 215, 15, "Elettrochimica..........");
         o->type(102);
-        o->down_box(FL_ROUND_DOWN_BOX);
+        o->down_box(FL_DIAMOND_UP_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Elettrochimica);
       } // Fl_Round_Button* o
       { Fl_Round_Button* o = new Fl_Round_Button(12, 166, 215, 15, "Petrolchimica...........");
         o->type(102);
-        o->down_box(FL_ROUND_DOWN_BOX);
+        o->down_box(FL_DIAMOND_UP_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Petrolchimica);
       } // Fl_Round_Button* o
       { Fl_Round_Button* o = new Fl_Round_Button(12, 190, 215, 15, "Filosofia Aziendale.....");
         o->type(102);
-        o->down_box(FL_ROUND_DOWN_BOX);
+        o->down_box(FL_DIAMOND_UP_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Filosofia);
       } // Fl_Round_Button* o
       { Fl_Round_Button* o = new Fl_Round_Button(12, 215, 215, 15, "Metallurgia.............");
         o->type(102);
-        o->down_box(FL_ROUND_DOWN_BOX);
+        o->down_box(FL_DIAMOND_UP_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
         o->labelfont(5);
         o->callback((Fl_Callback*)cb_Metallurgia);
       } // Fl_Round_Button* o
@@ -256,7 +266,6 @@ Fl_Double_Window* GUITabbozScuola() {
     } // Fl_Box* o
     materia_selezionata=1;
     AggiornaScuola();
-    win_scuola->set_modal();
     win_scuola->size_range(550, 330, 550, 330);
     win_scuola->end();
   } // Fl_Double_Window* win_scuola

@@ -9,6 +9,7 @@ Fl_Double_Window *win_famiglia=(Fl_Double_Window *)0;
 
 static void cb_OK(Fl_Return_Button*, void*) {
   win_principale->show();
+AggiornaPrincipale();
 win_famiglia->hide();
 }
 

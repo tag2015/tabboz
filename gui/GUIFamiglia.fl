@@ -20,7 +20,8 @@ Function {GUITabbozFamiglia()} {open
     Fl_Return_Button {} {
       label OK
       callback {win_principale->show();
-win_famiglia->hide();}
+AggiornaPrincipale();
+win_famiglia->hide();} selected
       xywh {480 260 60 60}
     }
     Fl_Button {} {
@@ -49,7 +50,7 @@ win_famiglia->hide();}
         code1 {if(euro) o->label("Soldi  €");}
       }
       Fl_Value_Output fam_val_paghetta {
-        label {Paghetta  L.} selected
+        label {Paghetta  L.}
         xywh {305 275 100 25} color 7 labelsize 12
         code0 {o->value(CALCSOLDI(Paghetta));}
         code1 {if(euro) o->label("Paghetta  €");}
