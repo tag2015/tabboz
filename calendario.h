@@ -18,27 +18,24 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-STMESI InfoMese[] =
-	{ {"Gennaio",   31},
-	  {"Febbraio",  28},
-	  {"Marzo",		 31},
-	  {"Aprile",	 30},
-	  {"Maggio",	 31},
-	  {"Giugno",	 30},
-	  {"Luglio",	 31},
-	  {"Agosto",	 31},
-	  {"Settembre", 30},
-	  {"Ottobre",	 31},
-	  {"Novembre",	 30},
-	  {"Dicembre",	 31}
-	  };
+typedef struct tagMESI {
+    char        nome[20];       // nome del mese o giorno
+    int         num_giorni;     // giorni del mese o festivo si/no
+  } STMESI, STGIORNI;
 
-STMESI InfoSettimana[] =
-	{ {"Lunedi'",    0},
-	  {"Martedi'",   0},
-	  {"Mercoledi'", 0},
-	  {"Giovedi'",   0},
-	  {"Venerdi'",   0},
-	  {"Sabato",     0},
-	  {"Domenica",   1}
-	  };
+extern STMESI InfoMese[];
+extern STGIORNI InfoSettimana[];
+
+
+extern   int  x_giorno;
+extern   int  x_giornoset;
+extern   int  x_mese;
+extern   int  x_anno_bisesto;
+
+extern   int  x_vacanza;
+
+extern   int  scad_pal_giorno;
+extern   int  scad_pal_mese;
+
+
+void  Giorno(void);
