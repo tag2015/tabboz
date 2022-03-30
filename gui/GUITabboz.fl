@@ -20,8 +20,8 @@ decl {\#include "GUICompagnia.h"} {private global
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
-    label {Tabboz Simulator Next Generation!} open
-    xywh {437 454 475 450} type Double color 54 align 5
+    label {Tabboz Simulator Next Generation!} open selected
+    xywh {367 409 475 450} type Double color 54 align 5
     code0 {AggiornaPrincipale();} size_range {475 450 475 450} visible
   } {
     Fl_Menu_Bar {} {open
@@ -76,7 +76,7 @@ win_principale->deactivate();}
         label Famiglia
         callback {GUITabbozFamiglia();
 win_famiglia->show();
-win_principale->deactivate();} selected
+win_principale->deactivate();}
         image {icons/b_famiglia.png} xywh {160 405 110 20} color 51 selection_color 51 labelfont 2 align 256
       }
     }
@@ -104,18 +104,16 @@ win_principale->deactivate();} selected
       label {Immagine Tabboz}
       xywh {10 30 140 280} box SHADOW_BOX
     }
+    Fl_Box main_box_nome {
+      label {Nome Tabbozzo}
+      xywh {11 10 135 20} box FLAT_BOX color 7 labelfont 1
+      code0 {o->label(Nome);}
+    }
     Fl_Button {} {
-      label {?}
-      xywh {440 410 20 20}
-    }
-    Fl_Output main_txtbox_nome {
-      label Nome
-      xywh {200 35 120 25} box NO_BOX labelfont 1
-      code0 {o->value(Nome);}
-    }
-    Fl_Output main_txtbox_cognome {
-      xywh {325 35 135 25} box NO_BOX labeltype NO_LABEL
-      code0 {o->value(Cognome);}
+      label {>>}
+      callback {Giorno();
+AggiornaPrincipale();}
+      xywh {440 35 20 20}
     }
     Fl_Group {} {
       label Tipa open
@@ -159,6 +157,10 @@ win_principale->deactivate();} selected
     Fl_Value_Output main_valbox_studio {
       label {Media Voti }
       tooltip {Media scolastica} xywh {405 140 35 25} box SHADOW_BOX color 7 labelsize 12
+    }
+    Fl_Box main_box_giorno {
+      label {  Lunedì 31 Gennaio}
+      image {icons/calendario.png} xywh {160 30 305 30} box EMBOSSED_FRAME labelfont 3 align 276
     }
   }
 }
