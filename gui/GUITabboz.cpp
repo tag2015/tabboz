@@ -3,6 +3,7 @@
 #include "GUITabboz.h"
 #include <FL/fl_ask.H>
 #include "../zarrosim.h"
+#include "../calendario.h"
 #include "GUIScuola.h"
 #include "GUIFamiglia.h"
 #include "GUICompagnia.h"
@@ -241,27 +242,6 @@ Fl_Box *main_box_figurino=(Fl_Box *)0;
 
 Fl_Box *main_box_nome=(Fl_Box *)0;
 
-static void cb_(Fl_Button*, void*) {
-  Giorno();
-AggiornaPrincipale();
-}
-
-Fl_Output *main_txtbox_tipa=(Fl_Output *)0;
-
-Fl_Value_Output *main_valbox_rapporti=(Fl_Value_Output *)0;
-
-Fl_Value_Output *main_valbox_soldi=(Fl_Value_Output *)0;
-
-Fl_Value_Output *main_valbox_paghetta=(Fl_Value_Output *)0;
-
-Fl_Value_Output *main_valbox_stipendio=(Fl_Value_Output *)0;
-
-Fl_Value_Output *main_valbox_rep=(Fl_Value_Output *)0;
-
-Fl_Value_Output *main_valbox_fama=(Fl_Value_Output *)0;
-
-Fl_Value_Output *main_valbox_studio=(Fl_Value_Output *)0;
-
 Fl_Box *main_box_giorno=(Fl_Box *)0;
 
 static const unsigned char idata_calendario[] =
@@ -315,6 +295,29 @@ static Fl_Image *image_calendario() {
   static Fl_Image *image = new Fl_RGB_Image(idata_calendario, 16, 16, 4, 0);
   return image;
 }
+
+Fl_Button *btn_fastfw=(Fl_Button *)0;
+
+static void cb_btn_fastfw(Fl_Button*, void*) {
+  Giorno();
+AggiornaPrincipale();
+}
+
+Fl_Output *main_txtbox_tipa=(Fl_Output *)0;
+
+Fl_Value_Output *main_valbox_rapporti=(Fl_Value_Output *)0;
+
+Fl_Value_Output *main_valbox_soldi=(Fl_Value_Output *)0;
+
+Fl_Value_Output *main_valbox_paghetta=(Fl_Value_Output *)0;
+
+Fl_Value_Output *main_valbox_stipendio=(Fl_Value_Output *)0;
+
+Fl_Value_Output *main_valbox_rep=(Fl_Value_Output *)0;
+
+Fl_Value_Output *main_valbox_fama=(Fl_Value_Output *)0;
+
+Fl_Value_Output *main_valbox_studio=(Fl_Value_Output *)0;
 
 Fl_Double_Window* GUITabboz() {
   { win_principale = new Fl_Double_Window(475, 450, "Tabboz Simulator Next Generation!");
@@ -406,9 +409,15 @@ Fl_Double_Window* GUITabboz() {
       main_box_nome->labelfont(1);
       o->label(Nome);
     } // Fl_Box* main_box_nome
-    { Fl_Button* o = new Fl_Button(440, 35, 20, 20, ">>");
-      o->callback((Fl_Callback*)cb_);
-    } // Fl_Button* o
+    { main_box_giorno = new Fl_Box(160, 30, 305, 30, "  Luned\303\254 31 Gennaio");
+      main_box_giorno->box(FL_EMBOSSED_FRAME);
+      main_box_giorno->image( image_calendario() );
+      main_box_giorno->labelfont(3);
+      main_box_giorno->align(Fl_Align(260|FL_ALIGN_INSIDE));
+    } // Fl_Box* main_box_giorno
+    { btn_fastfw = new Fl_Button(440, 35, 20, 20, ">>");
+      btn_fastfw->callback((Fl_Callback*)cb_btn_fastfw);
+    } // Fl_Button* btn_fastfw
     { Fl_Group* o = new Fl_Group(160, 85, 135, 85, "Tipa");
       o->box(FL_EMBOSSED_FRAME);
       o->labelfont(1);
@@ -475,12 +484,6 @@ Fl_Double_Window* GUITabboz() {
       main_valbox_studio->color(FL_BACKGROUND2_COLOR);
       main_valbox_studio->labelsize(12);
     } // Fl_Value_Output* main_valbox_studio
-    { main_box_giorno = new Fl_Box(160, 30, 305, 30, "  Luned\303\254 31 Gennaio");
-      main_box_giorno->box(FL_EMBOSSED_FRAME);
-      main_box_giorno->image( image_calendario() );
-      main_box_giorno->labelfont(3);
-      main_box_giorno->align(Fl_Align(260|FL_ALIGN_INSIDE));
-    } // Fl_Box* main_box_giorno
     AggiornaPrincipale();
     win_principale->size_range(475, 450, 475, 450);
     win_principale->end();

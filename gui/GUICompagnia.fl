@@ -24,7 +24,7 @@ Function {GUITabbozCompagnia()} {open
       label OK
       callback {win_principale->activate();
 AggiornaPrincipale();
-win_compagnia->hide();} selected
+win_compagnia->hide();}
       xywh {240 305 60 50}
     }
     Fl_Button {} {
@@ -34,9 +34,9 @@ win_compagnia->hide();} selected
     Fl_Button {} {
       label {Esci con la compagnia}
       callback {EsciCompagnia();
-win_principale->show();
+win_principale->activate();
 AggiornaPrincipale();
-win_compagnia->hide();}
+win_compagnia->hide();} selected
       xywh {10 230 290 30} color 51 selection_color 51
     }
     Fl_Button {} {

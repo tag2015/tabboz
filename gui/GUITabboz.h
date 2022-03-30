@@ -11,6 +11,8 @@ extern Fl_Double_Window *win_principale;
 #include <FL/Fl_Box.H>
 extern Fl_Box *main_box_figurino;
 extern Fl_Box *main_box_nome;
+extern Fl_Box *main_box_giorno;
+extern Fl_Button *btn_fastfw;
 #include <FL/Fl_Output.H>
 extern Fl_Output *main_txtbox_tipa;
 #include <FL/Fl_Value_Output.H>
@@ -21,7 +23,6 @@ extern Fl_Value_Output *main_valbox_stipendio;
 extern Fl_Value_Output *main_valbox_rep;
 extern Fl_Value_Output *main_valbox_fama;
 extern Fl_Value_Output *main_valbox_studio;
-extern Fl_Box *main_box_giorno;
 Fl_Double_Window* GUITabboz();
 extern Fl_Menu_Item menu_[];
 #endif

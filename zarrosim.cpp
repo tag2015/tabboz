@@ -1424,11 +1424,11 @@ BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 void AggiornaPrincipale()
 {
     char tmp[128];
-
+     
 //FIXME Nome e cognome, le variazioni per M o F, scooter
 
-    sprintf(tmp, "%s %d %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome);  // Calendario
-    main_box_giorno->value(tmp);
+    sprintf(tmp, "  %s %d %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome);  // Calendario
+    main_box_giorno->copy_label(tmp);
     main_valbox_rep->value(Reputazione);
     main_valbox_fama->value(Fama);
     main_valbox_studio->precision(1);
@@ -1449,7 +1449,7 @@ void AggiornaPrincipale()
         main_valbox_stipendio->activate();
     else
         main_valbox_stipendio->deactivate();
-
+    win_principale->redraw();
 }
 
 

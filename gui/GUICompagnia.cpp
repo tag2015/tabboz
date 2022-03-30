@@ -6094,7 +6094,7 @@ win_compagnia->hide();
 
 static void cb_Esci(Fl_Button*, void*) {
   EsciCompagnia();
-win_principale->show();
+win_principale->activate();
 AggiornaPrincipale();
 win_compagnia->hide();
 }

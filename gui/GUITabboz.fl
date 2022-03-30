@@ -8,6 +8,9 @@ decl {\#include <FL/fl_ask.H>} {private global
 decl {\#include "../zarrosim.h"} {private global
 }
 
+decl {\#include "../calendario.h"} {private global
+}
+
 decl {\#include "GUIScuola.h"} {private global
 }
 
@@ -20,8 +23,8 @@ decl {\#include "GUICompagnia.h"} {private global
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
-    label {Tabboz Simulator Next Generation!} open selected
-    xywh {367 409 475 450} type Double color 54 align 5
+    label {Tabboz Simulator Next Generation!} open
+    xywh {328 436 475 450} type Double color 54 align 5
     code0 {AggiornaPrincipale();} size_range {475 450 475 450} visible
   } {
     Fl_Menu_Bar {} {open
@@ -109,14 +112,18 @@ win_principale->deactivate();}
       xywh {11 10 135 20} box FLAT_BOX color 7 labelfont 1
       code0 {o->label(Nome);}
     }
-    Fl_Button {} {
+    Fl_Box main_box_giorno {
+      label {  Lunedì 31 Gennaio} selected
+      image {icons/calendario.png} xywh {160 30 305 30} box EMBOSSED_FRAME labelfont 3 align 276
+    }
+    Fl_Button btn_fastfw {
       label {>>}
       callback {Giorno();
 AggiornaPrincipale();}
       xywh {440 35 20 20}
     }
     Fl_Group {} {
-      label Tipa open
+      label Tipa
       xywh {160 85 135 85} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
     } {
       Fl_Output main_txtbox_tipa {
@@ -130,7 +137,7 @@ AggiornaPrincipale();}
       }
     }
     Fl_Group {} {
-      label Soldi open
+      label Soldi
       xywh {160 190 305 75} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
     } {
       Fl_Value_Output main_valbox_soldi {
@@ -157,10 +164,6 @@ AggiornaPrincipale();}
     Fl_Value_Output main_valbox_studio {
       label {Media Voti }
       tooltip {Media scolastica} xywh {405 140 35 25} box SHADOW_BOX color 7 labelsize 12
-    }
-    Fl_Box main_box_giorno {
-      label {  Lunedì 31 Gennaio}
-      image {icons/calendario.png} xywh {160 30 305 30} box EMBOSSED_FRAME labelfont 3 align 276
     }
   }
 }
