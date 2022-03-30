@@ -60,11 +60,11 @@ STMESI InfoMese[] = {
 
 
 STGIORNI InfoSettimana[] = {
-    {"Lunedi'",    0},
-    {"Martedi'",   0},
-    {"Mercoledi'", 0},
-    {"Giovedi'",   0},
-    {"Venerdi'",   0},
+    {"Lunedì",     0},
+    {"Martedì",    0},
+    {"Mercoledì",  0},
+    {"Giovedì",    0},
+    {"Venerdì",    0},
     {"Sabato",     0},
     {"Domenica",   1}
 };
@@ -87,7 +87,7 @@ STVACANZE InfoVacanze[] =
 int  x_giorno;         // giorno corrente (1-31)
 int  x_giornoset;      // giorno settimana corrente (1-7)
 int  x_mese;           // mese corrente (1-12)
-int  x_anno_bisesto;   // anno bisestile (bool)
+int  x_anno_bisesto;   // anno bisestile (contatore 0-3)
 
 int  x_vacanza;        // 0: giorno lavorativo | 1: vacanza tipo 1 (negozi aperti) | 2: vacanza tipo 2 (negozi chiusi)
 

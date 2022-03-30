@@ -26,7 +26,6 @@ typedef struct tagMESI {
 extern STMESI InfoMese[];
 extern STGIORNI InfoSettimana[];
 
-
 extern   int  x_giorno;
 extern   int  x_giornoset;
 extern   int  x_mese;
