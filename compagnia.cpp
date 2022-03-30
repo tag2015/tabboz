@@ -29,7 +29,6 @@
 #include "debug.h"
 
 #include "compagnia.h"
-//#include "gui/GUICompagnia.h"
 
 /* Header per toolkit FLTK */
 #include <FL/Fl.H>
@@ -101,7 +100,6 @@ void EsciCompagnia(void)
         Reputazione+=1;
 
 //    Evento(hDlg);  FIXME Evento
-//    EndDialog(hDlg, TRUE); Chiudefinestra
 }
 
 /* Chiama la compagnia...*/
