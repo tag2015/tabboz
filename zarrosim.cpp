@@ -32,7 +32,7 @@
 #include "scuola.h"
 #include "lavoro.h"
 
-#include "tempo.h"
+#include "calendario.h"
 #include "proteggi.h"
 
 #include "debug.h"
@@ -98,7 +98,7 @@ int     Attesa;         // Tempo prima che ti diano altri soldi...
 int     Fama;
 int     Reputazione;
 int     Studio;         // Quanto vai bene a scuola (1 - 100)
-int     Soldi;          // Long...per forza! lo zarro ha tanti soldi...
+int     Soldi;
 int     Paghetta;       // Paghetta Settimanale...
 char    Nome[30];       // Nome del Tabbozzo
 char    Cognome[30];    // Cognome del Tabbozzo
@@ -119,18 +119,21 @@ int     current_pantaloni;
 int     current_scarpe;
 int     current_tipa;
 
-int     comp_giorno;    // giorno & mese del compleanno
+int     comp_giorno;
 int     comp_mese;
 
 int     timer_active;
 int     fase_di_avvio;
 int     sound_active;
 
-// #define WIN_PICCOLO SW_MINIMIZE
-// #define WIN_PICCOLO SW_SHOWMINIMIZED
-#define WIN_PICCOLO SW_HIDE
-#define WIN_GRANDE  SW_SHOWNORMAL
-
+#ifdef DEADCODE
+    HANDLE    hInst;                    // hInstance dell'applicazione
+    HWND      hWndMain;                 // hWnd della finestra principale
+    // #define WIN_PICCOLO SW_MINIMIZE
+    // #define WIN_PICCOLO SW_SHOWMINIMIZED
+    #define WIN_PICCOLO SW_HIDE
+    #define WIN_GRANDE  SW_SHOWNORMAL
+#endif
 
 #ifndef NONETWORK
     extern  WSADATA      Data;
@@ -141,9 +144,6 @@ int     sound_active;
     extern  int          PortNumber;
     HANDLE  hModule;
 #endif
-
-//HANDLE    hInst;                    // hInstance dell'applicazione
-//HWND      hWndMain;                 // hWnd della finestra principale
 
 int     euro;
 char    sesso;
@@ -194,9 +194,8 @@ void ResetMe(int primavolta)
     strcpy(Residenza,"Milano");
     Nometipa[0]=0;
 
-//TAG2015 abilitare questo
- //   LoadString(hInst, (400 + random(22) ), City, (sizeof(City)-1));
-
+//FIXME come funziona?
+//   LoadString(hInst, (400 + random(22) ), City, (sizeof(City)-1));
 //    LoadString(hInst, (450 + random(50) ), tmp, (sizeof(tmp)-1));
 //    sprintf(Street,"%s n. %d",tmp,(1 + random(150)));
 
@@ -205,14 +204,13 @@ void ResetMe(int primavolta)
 
     CalcolaStudio();
 
-#ifndef TAG2015_NOTEMPO
+    #ifndef TAG2015_NOTEMPO
     x_mese         =  9;
     x_giorno       = 30;
     x_giornoset    =  1;
     x_anno_bisesto =  0;
-#endif
-    // comp_mese      = random(12)+1;
-    // comp_giorno    = random(InfoMese[comp_mese-1].num_giorni)+1;
+    #endif
+    
     comp_mese      = rand() % 12 + 1;
     comp_giorno    = rand() % InfoMese[comp_mese-1].num_giorni + 1;
 
@@ -244,12 +242,13 @@ void ResetMe(int primavolta)
         PortNumber = 79;
     #endif
 
-// TAG2015 commentati temporaneamente
-    // ScooterData.stato    = -1;  
-
-    // AbbonamentData.creditorest = -1;
-    // CellularData.stato         = -1;
-
+    #ifndef TAG2015_NOSCOOTER
+        ScooterData.stato    = -1;  
+    #endif
+    #ifndef TAG2015_NOCELL
+        AbbonamentData.creditorest = -1;
+        CellularData.stato         = -1;
+    #endif
 }
 
 //*******************************************************************
@@ -306,10 +305,11 @@ void ResetMe(int primavolta)
 //*******************************************************************
 // InitTabboz
 //*******************************************************************
-//#pragma argsused
+
 static void InitTabboz(void)
 {
     char tmp[128];
+    
     // #ifdef TABBOZ_WIN
     //     FARPROC        lpproc;
 
@@ -481,27 +481,21 @@ static void CaricaTutto(void)
 
 #ifndef TAG2015_NOTEMPO
     // Se e' la prima volta che parte il Tabboz Simulator, la data e' impostata al 30 Settembre
-    //x_mese         = atoi (RRKey("Mese"));
     TabbozProfilo.get("Mese",x_mese,0);
     if (x_mese < 1) x_mese=9;
     
-    //x_giorno       = atoi (RRKey("Giorno"));
     TabbozProfilo.get("Giorno",x_giorno,0);
     if (x_giorno < 1) x_giorno=30;
 
-    //x_giornoset    = atoi (RRKey("GiornoSet"));
     TabbozProfilo.get("GiornoSet",x_giornoset,0);
     if (x_giornoset < 1) x_giornoset=1;
     
-    //x_anno_bisesto = atoi (RRKey("AnnoBisestile"));
-    TabbozProfilo.get("AnnoBisestile",x_anno_bisesto,0);
-    if (x_anno_bisesto > 3) x_anno_bisesto=3;
+    TabbozProfilo.get("AnnoBisestile",x_anno_bisesto,4);
+    if ( (x_anno_bisesto > 3) || (x_anno_bisesto < 0) ) x_anno_bisesto=3;
 
-//    scad_pal_giorno = vvc(atoi (RRKey("ScadPalGiorno")) );
     TabbozProfilo.get("ScadPalGiorno",buf_i,0);
     scad_pal_giorno = vvc(buf_i);
 
-//    scad_pal_mese   = vvc(atoi (RRKey("ScadPalMese")) );
     TabbozProfilo.get("ScadPalMese",buf_i,0);
     scad_pal_mese = vvc(buf_i);
 #endif
@@ -622,17 +616,15 @@ static void CaricaTutto(void)
         ResetMe(1);
 
 #ifndef TAG2015_NOTEMPO
-    // Controllo eventuali errori nella data (o data non settata...)
-    if (x_giorno < 1)     x_giorno=1;
-    if (x_giorno > 31)    x_giorno=1;
-    if (x_mese < 1)       x_mese=1;
-    if (x_mese > 12)      x_mese=1;
-    if (x_giornoset < 1)  x_giornoset=1;
-    if (x_giornoset > 7)  x_giornoset=1;
+    /* Controllo eventuali errori nella data (o data non settata...) */
+    /* FIXME si potrebbe implementare in vvc, magari overloadato */
+    if ( (x_giorno < 1) || (x_giorno > 31) )  x_giorno=1;
+    if ( (x_mese < 1) || (x_mese > 12) )  x_mese=1;
+    if ( (x_giornoset < 1) || (x_giornoset > 7) )  x_giornoset=1;
 
     x_giorno--;  //Per evitare che avanzi di giorno ogni volta che si apre il programma
     x_giornoset--;
-//    Giorno(hInst);  TAG2015 controllare
+    Giorno();
 #endif
 
     // Guarda se qualche "bastardino" ha modificato dei valori nel registro...
@@ -671,7 +663,7 @@ void FineProgramma(char *caller)
         /* Salva lo stato del tabbozzo */
         /* 0.8.1pr 29 Novembre 1998 Ora non salva piu' nel WIN.INI con WriteProfileString,
         ma salva nel registro di configurazione... */
-        //TabbozProfilo.set("Exe", _argv[0]);  a che serve?
+        //TabbozProfilo.set("Exe", _argv[0]);  FIXME a che serve salvare la commandline?
 
     }
 
@@ -720,17 +712,11 @@ static void SalvaTutto(void) {
     TabbozProfilo.set("CompGiorno", comp_giorno);
 
 #ifndef TAG2015_NOTEMPO
-    // sprintf(tmp,"%d",x_mese);
     TabbozProfilo.set("Mese", x_mese);
-    // sprintf(tmp,"%d",x_giorno);
     TabbozProfilo.set("Giorno", x_giorno);
-    // sprintf(tmp,"%d",x_giornoset);
     TabbozProfilo.set("GiornoSet", x_giornoset);
-    // sprintf(tmp,"%d",x_anno_bisesto);
     TabbozProfilo.set("AnnoBisestile",x_anno_bisesto);
-    // sprintf(tmp,"%d", scad_pal_giorno);
     TabbozProfilo.set("ScadPalGiorno", scad_pal_giorno);
-    // sprintf(tmp,"%d",scad_pal_mese);
     TabbozProfilo.set("ScadPalMese", scad_pal_mese);
 #endif
 
@@ -1418,7 +1404,6 @@ BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 //         SetDlgItemText(parent, 156, tmp);    // Stato scooter
 //      }
 
-//      sprintf(tmp, "%s %d %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome);  // Calendario
 //      SetDlgItemText(parent, 157, tmp);
 
 //      if ( sesso == 'M' )    {// Non usare la variabile "ao" xche' qui e' necessario
@@ -1440,7 +1425,10 @@ void AggiornaPrincipale()
 {
     char tmp[128];
 
-//FIXME Nome e cognome
+//FIXME Nome e cognome, le variazioni per M o F, scooter
+
+    sprintf(tmp, "%s %d %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome);  // Calendario
+    main_box_giorno->value(tmp);
     main_valbox_rep->value(Reputazione);
     main_valbox_fama->value(Fama);
     main_valbox_studio->precision(1);

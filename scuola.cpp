@@ -26,6 +26,8 @@
 #include <time.h>
 
 #include "zarrosim.h"
+#include "calendario.h"
+
 #include "debug.h"
 
 #include "scuola.h"
@@ -38,7 +40,7 @@
 
 static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
-int x_vacanza = 0;  //FIXME: Vacanze
+//int x_vacanza = 0;  //FIXME: Vacanze
 
 
 STMATERIE MaterieMem[] =

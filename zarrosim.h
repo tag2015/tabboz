@@ -209,24 +209,6 @@ extern   STCEL        CellularMem[];
 extern   STABB        AbbonamentData;
 extern   STABB        AbbonamentMem[];
 
-typedef struct tagMESI {
-    char        nome[20];       // nome del mese
-    int         num_giorni;     // giorni del mese
-  } STMESI;
-
-extern   STMESI InfoMese[];
-extern   STMESI InfoSettimana[];
-
-extern   int  x_giorno;
-extern   int  x_mese;
-extern   int  x_giornoset;
-extern   int  x_vacanza;
-extern   int  x_anno_bisesto;
-extern   int  scad_pal_giorno;    // Giorno e mese in cui scadra' l' abbonamento alla palestra.
-extern   int  scad_pal_mese;
-
-extern   int  comp_giorno;        // giorno & mese del compleanno
-extern   int  comp_mese;
 
 #ifdef PROMPT_ACTIVE
 extern   int  prompt_mode;
@@ -255,6 +237,8 @@ extern  int       Soldi;            // Long...per forza! lo zarro ha tanti soldi
 extern  int       Paghetta;         // Paghetta Settimanale... | vedi sopra
 extern  char      Nome[30];
 extern  char      Cognome[30];
+extern  int       comp_giorno;      // giorno del compleanno
+extern  int       comp_mese;        // mese del compleanno
 extern  char      Nometipa[30];
 extern  int       FigTipa;          // Figosità tipa/o
 extern  int       Rapporti;         // Stabilità relazione con tipa/o
@@ -337,18 +321,16 @@ extern  BOOL FAR PASCAL    Cellular(HWND hDlg, WORD message, WORD wParam, LONG l
     extern  BOOL FAR PASCAL    Prompt(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 #endif
 
+extern  void  AggiornaPrincipale();
 extern  void  FineProgramma(char *caller);
+
 extern  void  CalcolaStudio(void);
 extern  char  *MostraSoldi(int i);
 
 
 //TAG2015 quelle sotto x ora commentate ma servono
-
 // extern  void  TabbozPlaySound(int number);
 //extern  void   nomoney(HWND parent,int tipo);
-extern  void   AggiornaPrincipale();
-//extern  void   Giorno(HANDLE hInstance);
-extern  void   CalcolaStudio(void);
 //extern  void   CalcolaVelocita(HANDLE hDlg);
 //extern  void Evento(HWND hWnd);
 //extern  void RunPalestra(HWND hDlg);
@@ -358,7 +340,7 @@ extern  void   CalcolaStudio(void);
 /* TAG2015 define temporanei per escludere parti non ancora implementate */
 
 //per disabilitare la gestione di calendario/date
-#define TAG2015_NOTEMPO
+//#define TAG2015_NOTEMPO
 #define TAG2015_NOSCOOTER
 #define TAG2015_NOCELL
 
