@@ -17,7 +17,7 @@ void closelog()
     fclose(debugfile);
 }
 
-void writelog(char *s)
+void writelog(char const *s)
 {
     time_t t;
 

@@ -71,7 +71,7 @@ static Fl_Image *image_b_scuola() {
 }
 
 static void cb_Lavoro(Fl_Button*, void*) {
-  Soldi+=100;
+  Soldi+=1000;
 main_valbox_soldi->value(CALCSOLDI(Soldi));
 }
 
@@ -434,6 +434,7 @@ Fl_Double_Window* GUITabboz() {
         main_valbox_rapporti->box(FL_SHADOW_BOX);
         main_valbox_rapporti->color(FL_BACKGROUND2_COLOR);
         main_valbox_rapporti->labelsize(12);
+        main_valbox_rapporti->maximum(0);
       } // Fl_Value_Output* main_valbox_rapporti
       o->end();
     } // Fl_Group* o
@@ -442,18 +443,21 @@ Fl_Double_Window* GUITabboz() {
       o->labelfont(1);
       o->labelsize(12);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { main_valbox_soldi = new Fl_Value_Output(180, 215, 120, 25, "L.");
+      { Fl_Value_Output* o = main_valbox_soldi = new Fl_Value_Output(180, 215, 120, 25, "L.");
         main_valbox_soldi->box(FL_ENGRAVED_BOX);
         main_valbox_soldi->color(FL_BACKGROUND2_COLOR);
         main_valbox_soldi->labelsize(12);
+        main_valbox_soldi->maximum(0);
         main_valbox_soldi->step(1);
         main_valbox_soldi->textfont(5);
+        o->soft(0);
       } // Fl_Value_Output* main_valbox_soldi
       { main_valbox_paghetta = new Fl_Value_Output(380, 200, 75, 25, "Paghetta L.");
         main_valbox_paghetta->tooltip("Paghetta settimanale");
         main_valbox_paghetta->box(FL_ENGRAVED_BOX);
         main_valbox_paghetta->color(FL_BACKGROUND2_COLOR);
         main_valbox_paghetta->labelsize(12);
+        main_valbox_paghetta->maximum(0);
         main_valbox_paghetta->step(1);
         main_valbox_paghetta->textfont(5);
       } // Fl_Value_Output* main_valbox_paghetta
@@ -462,6 +466,7 @@ Fl_Double_Window* GUITabboz() {
         main_valbox_stipendio->box(FL_ENGRAVED_BOX);
         main_valbox_stipendio->color(FL_BACKGROUND2_COLOR);
         main_valbox_stipendio->labelsize(12);
+        main_valbox_stipendio->maximum(0);
         main_valbox_stipendio->step(1);
         main_valbox_stipendio->textfont(5);
       } // Fl_Value_Output* main_valbox_stipendio
@@ -471,18 +476,21 @@ Fl_Double_Window* GUITabboz() {
       main_valbox_rep->box(FL_SHADOW_BOX);
       main_valbox_rep->color(FL_BACKGROUND2_COLOR);
       main_valbox_rep->labelsize(12);
+      main_valbox_rep->maximum(0);
     } // Fl_Value_Output* main_valbox_rep
     { main_valbox_fama = new Fl_Value_Output(405, 110, 35, 25, "Figosit\303\240 ");
       main_valbox_fama->tooltip("L\'innato carisma del tabbozzo");
       main_valbox_fama->box(FL_SHADOW_BOX);
       main_valbox_fama->color(FL_BACKGROUND2_COLOR);
       main_valbox_fama->labelsize(12);
+      main_valbox_fama->maximum(0);
     } // Fl_Value_Output* main_valbox_fama
     { main_valbox_studio = new Fl_Value_Output(405, 140, 35, 25, "Media Voti ");
       main_valbox_studio->tooltip("Media scolastica");
       main_valbox_studio->box(FL_SHADOW_BOX);
       main_valbox_studio->color(FL_BACKGROUND2_COLOR);
       main_valbox_studio->labelsize(12);
+      main_valbox_studio->maximum(0);
     } // Fl_Value_Output* main_valbox_studio
     AggiornaPrincipale();
     win_principale->size_range(475, 450, 475, 450);

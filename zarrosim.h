@@ -39,11 +39,7 @@
 /* Abilita parti non più necessarie (e non compilabili) */
 // #define DEADCODE
 
-#ifndef lint
-static char copyright[] =
-"@(#) Copyright (c) 1997-2001 Andrea Bonomi, Emanuele Caccialanza, Daniele Gazzarri.\n\
- All rights reserved.\n";
-#endif /* not lint */
+// static char copyright[] ="@(#) Copyright (c) 1997-2001 Andrea Bonomi, Emanuele Caccialanza, Daniele Gazzarri.\nAll rights reserved.\n";
 
 
 #ifdef NOT_WINDOWS
@@ -322,7 +318,7 @@ extern  BOOL FAR PASCAL    Cellular(HWND hDlg, WORD message, WORD wParam, LONG l
 #endif
 
 extern  void  AggiornaPrincipale();
-extern  void  FineProgramma(char *caller);
+extern  void  FineProgramma(char const *caller);
 
 extern  void  CalcolaStudio(void);
 extern  char  *MostraSoldi(int i);

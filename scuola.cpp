@@ -38,9 +38,7 @@
 #include <FL/fl_ask.H>
 #include <FL/Fl_Value_Output.H>
 
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
-
-//int x_vacanza = 0;  //FIXME: Vacanze
+//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 
 STMATERIE MaterieMem[] =
@@ -66,7 +64,6 @@ bool CheckVacanza();
 void ScriviVoti()
 {
     int i;
-    char tmp[128];
 
     for (i=0;i<N_MATERIE;i++) {
         Fl_Value_Output *casella = (Fl_Value_Output *) grp_voti->child(i);    // grp_voti è il gruppo contenente le ValueBox per i voti
@@ -84,7 +81,6 @@ void ScriviVoti()
 /* Aggiorna Finestra Scuola*/
 void AggiornaScuola()
 {
-    char tmp[128];
     CalcolaStudio();
     ScriviVoti();
     scuola_val_soldi->value(CALCSOLDI(Soldi));

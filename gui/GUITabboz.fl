@@ -24,7 +24,7 @@ Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
     label {Tabboz Simulator Next Generation!} open
-    xywh {328 436 475 450} type Double color 54 align 5
+    xywh {572 390 475 450} type Double color 54 align 5
     code0 {AggiornaPrincipale();} size_range {475 450 475 450} visible
   } {
     Fl_Menu_Bar {} {open
@@ -53,7 +53,7 @@ win_principale->deactivate();}
       }
       Fl_Button {} {
         label Lavoro
-        callback {Soldi+=100;
+        callback {Soldi+=1000;
 main_valbox_soldi->value(CALCSOLDI(Soldi));}
         xywh {20 375 110 20} color 51 selection_color 51 labelfont 2
       }
@@ -113,7 +113,7 @@ win_principale->deactivate();}
       code0 {o->label(Nome);}
     }
     Fl_Box main_box_giorno {
-      label {  Lunedì 31 Gennaio} selected
+      label {  Lunedì 31 Gennaio}
       image {icons/calendario.png} xywh {160 30 305 30} box EMBOSSED_FRAME labelfont 3 align 276
     }
     Fl_Button btn_fastfw {
@@ -123,7 +123,7 @@ AggiornaPrincipale();}
       xywh {440 35 20 20}
     }
     Fl_Group {} {
-      label Tipa
+      label Tipa open
       xywh {160 85 135 85} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
     } {
       Fl_Output main_txtbox_tipa {
@@ -133,37 +133,38 @@ AggiornaPrincipale();}
       }
       Fl_Value_Output main_valbox_rapporti {
         label {Rapporto }
-        xywh {240 130 35 25} box SHADOW_BOX color 7 labelsize 12
+        xywh {240 130 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0
       }
     }
     Fl_Group {} {
-      label Soldi
+      label Soldi open
       xywh {160 190 305 75} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
     } {
       Fl_Value_Output main_valbox_soldi {
-        label {L.}
-        xywh {180 215 120 25} box ENGRAVED_BOX color 7 labelsize 12 step 1 textfont 5
+        label {L.} selected
+        xywh {180 215 120 25} box ENGRAVED_BOX color 7 labelsize 12 maximum 0 step 1 textfont 5
+        code0 {o->soft(0);}
       }
       Fl_Value_Output main_valbox_paghetta {
         label {Paghetta L.}
-        tooltip {Paghetta settimanale} xywh {380 200 75 25} box ENGRAVED_BOX color 7 labelsize 12 step 1 textfont 5
+        tooltip {Paghetta settimanale} xywh {380 200 75 25} box ENGRAVED_BOX color 7 labelsize 12 maximum 0 step 1 textfont 5
       }
       Fl_Value_Output main_valbox_stipendio {
         label {Stipendio L.}
-        tooltip {Se non sei disoccupato...} xywh {380 230 75 25} box ENGRAVED_BOX color 7 labelsize 12 step 1 textfont 5
+        tooltip {Se non sei disoccupato...} xywh {380 230 75 25} box ENGRAVED_BOX color 7 labelsize 12 maximum 0 step 1 textfont 5
       }
     }
     Fl_Value_Output main_valbox_rep {
       label {Reputazione }
-      xywh {405 80 35 25} box SHADOW_BOX color 7 labelsize 12
+      xywh {405 80 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0
     }
     Fl_Value_Output main_valbox_fama {
       label {Figosità }
-      tooltip {L'innato carisma del tabbozzo} xywh {405 110 35 25} box SHADOW_BOX color 7 labelsize 12
+      tooltip {L'innato carisma del tabbozzo} xywh {405 110 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0
     }
     Fl_Value_Output main_valbox_studio {
       label {Media Voti }
-      tooltip {Media scolastica} xywh {405 140 35 25} box SHADOW_BOX color 7 labelsize 12
+      tooltip {Media scolastica} xywh {405 140 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0
     }
   }
 }

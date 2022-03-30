@@ -55,7 +55,7 @@
 #include "gui/GUITabboz.h"
 
 
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 static const char *dir_profilo = "TabbozNG";
 static const char *file_profilo = "TabbozNG";
@@ -156,10 +156,7 @@ static  int  STARTcmdShow;
 static  char boolean_shutdown;
 
 
-/*******************************************************************
-/* Calcola Sesso - Maschietto o Femminuccia
-/*******************************************************************/
-
+/* Calcola Sesso - Maschietto o Femminuccia */
 static void CalcolaSesso(void)
 {
     if ( sesso == 'M' ) {
@@ -171,10 +168,8 @@ static void CalcolaSesso(void)
         }
 }
 
-//*******************************************************************
-// ResetMe - Reset del Tabboz Simulator
-//*******************************************************************
 
+/* ResetMe - Reset del Tabboz Simulator */
 void ResetMe(int primavolta)
 {
     int   i;
@@ -404,7 +399,6 @@ static void InitTabboz(void)
 
 static void CaricaTutto(void)
 {
-    char tmp[STR_MAX];
     int  i;
 
     int    buf_i;            //buffer int
@@ -462,10 +456,10 @@ static void CaricaTutto(void)
     // la serie di 9 "C" messe nella riga sotto NON E' CASUALE
     // non sostituirla con altre lettere !
 
-    TabbozProfilo.get("Materie",tmp,"",STR_MAX);
-    if(tmp[0]=='\0')  sprintf(tmp,"CCCCCCCCC");      //BUGFIX partiamo dalla media del 2... 0 è esagerato
+    TabbozProfilo.get("Materie",buf_s,"",STR_MAX);
+    if(buf_s[0]=='\0')  sprintf(buf_s,"CCCCCCCCC");      //BUGFIX partiamo dalla media del 2... 0 è esagerato
     for (i=1;i<10;i++) {
-        MaterieMem[i].voto=tmp[i-1] - 65;
+        MaterieMem[i].voto=buf_s[i-1] - 65;
         if ((MaterieMem[i].voto < 2) || (MaterieMem[i].voto > 10)) MaterieMem[i].voto=2;
     }
     CalcolaStudio();
@@ -603,11 +597,11 @@ static void CaricaTutto(void)
 #endif
 
     #ifdef TABBOZ_DEBUG
-        sprintf(tmp,"tabboz: (R) new_counter %d", new_counter);
-        writelog(tmp);
+        sprintf(buf_s,"tabboz: (R) new_counter %d", new_counter);
+        writelog(buf_s);
         TabbozProfilo.get("SoftCheck",buf_i,0);
-        sprintf(tmp,"tabboz: (R) read_counter %d", buf_i );
-        writelog(tmp);
+        sprintf(buf_s,"tabboz: (R) read_counter %d", buf_i );
+        writelog(buf_s);
         if(firsttime)
             writelog("firsttime=1, first run or empty savefile");
     #endif
@@ -640,7 +634,7 @@ static void CaricaTutto(void)
 //*******************************************************************
 //      Fine Programma
 //*******************************************************************
-void FineProgramma(char *caller)
+void FineProgramma(char const *caller)
 {
     char tmp[128];
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
@@ -802,7 +796,7 @@ static void SalvaTutto(void) {
     TabbozProfilo.set("Version", VERSION);
 
 #ifdef TABBOZ_DEBUG
-    sprintf(tmp,"tabboz: (W) new_counter %lu", new_counter);
+    sprintf(tmp,"tabboz: (W) new_counter %d", new_counter);
     writelog(tmp);
 #endif
 

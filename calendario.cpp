@@ -33,17 +33,17 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 
 typedef struct tagVACANZE {
-    char   *nome;          // nome del giorno di vacanza
-    int    giorno;         // giorno
-    int    mese;           // mese
-    char   *descrizione;   // descrizione giorno di vacanza
+    char   const *nome;          // nome del giorno di vacanza
+    int    giorno;               // giorno
+    int    mese;                 // mese
+    char   const *descrizione;   // descrizione giorno di vacanza
 } STVACANZE;
 
-STMESI InfoMese[] = {
+const STMESI InfoMese[] = {
     {"Gennaio",   31},
     {"Febbraio",  28},
     {"Marzo",     31},
@@ -59,7 +59,7 @@ STMESI InfoMese[] = {
 };
 
 
-STGIORNI InfoSettimana[] = {
+const STGIORNI InfoSettimana[] = {
     {"Lunedì",     0},
     {"Martedì",    0},
     {"Mercoledì",  0},
@@ -70,7 +70,7 @@ STGIORNI InfoSettimana[] = {
 };
 
 
-STVACANZE InfoVacanze[] =
+const STVACANZE InfoVacanze[] =
     { {"Capodanno",                 1,   1, "Oggi è Capodanno !"},
       {"Epifania",                  6,   1, "Epifania..."},
       {"Anniversario Liberazione", 25,   4, "Oggi mi sento liberato"},

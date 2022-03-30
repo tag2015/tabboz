@@ -23,8 +23,8 @@ typedef struct tagMESI {
     int         num_giorni;     // giorni del mese o festivo si/no
   } STMESI, STGIORNI;
 
-extern STMESI InfoMese[];
-extern STGIORNI InfoSettimana[];
+extern const STMESI   InfoMese[];
+extern const STGIORNI InfoSettimana[];
 
 extern   int  x_giorno;
 extern   int  x_giornoset;
