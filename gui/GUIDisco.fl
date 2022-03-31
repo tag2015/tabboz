@@ -1,0 +1,132 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cpp}
+decl {\#include "GUITabboz.h"} {private global
+}
+
+decl {\#include "../zarrosim.h"} {private global
+}
+
+decl {\#include "../disco.h"} {private global
+}
+
+decl {int disco_scelta=0;} {private global
+}
+
+Function {GUITabbozDisco()} {open
+} {
+  Fl_Window win_disco {
+    label Disco open
+    xywh {525 429 485 290} type Double color 54 hotspot modal size_range {485 290 485 290} visible
+  } {
+    Fl_Group {} {open
+      xywh {5 5 160 225} box ENGRAVED_FRAME
+    } {
+      Fl_Round_Button {} {
+        label Splush
+        callback {disco_txtbox->load("res/txt/disco1.txt");
+if(!euro) disco_txtbox->add("Ingresso: 36000 L.",0);
+else disco_txtbox->add("Ingresso: 18 €",0);
+disco_scelta=1;
+disco_btn_ok->activate();}
+        xywh {10 10 150 20} type Radio down_box DIAMOND_UP_BOX color 7 when 1
+      }
+      Fl_Round_Button {} {
+        label QB
+        callback {disco_txtbox->load("res/txt/disco2.txt");
+if(!euro) disco_txtbox->add("Ingresso: 26000 L. con consumazione",0);
+else disco_txtbox->add("Ingresso: 13 € con consumazione",0);
+disco_scelta=2;
+disco_btn_ok->activate();}
+        xywh {10 37 150 20} type Radio down_box DIAMOND_UP_BOX color 7 when 1
+      }
+      Fl_Round_Button {} {
+        label Spoking
+        callback {disco_txtbox->load("res/txt/disco3.txt");
+if(!euro) disco_txtbox->add("Ingresso: 30000 L.",0);
+else disco_txtbox->add("Ingresso: 15 €",0);
+disco_scelta=3;
+disco_btn_ok->activate();}
+        xywh {10 65 150 20} type Radio down_box DIAMOND_UP_BOX color 7 when 1
+      }
+      Fl_Round_Button {} {
+        label {Madame Close}
+        callback {disco_txtbox->load("res/txt/disco4.txt");
+if(!euro) disco_txtbox->add("Ingresso: 36000 L.",0);
+else disco_txtbox->add("Ingresso: 18 €",0);
+disco_scelta=4;
+disco_btn_ok->activate();}
+        xywh {10 93 150 20} type Radio down_box DIAMOND_UP_BOX color 7 when 1
+      }
+      Fl_Round_Button {} {
+        label {Number 0}
+        callback {disco_txtbox->load("res/txt/disco5.txt");
+if(!euro) disco_txtbox->add("Ingresso: 26000 L.",0);
+else disco_txtbox->add("Ingresso: 13 €",0);
+disco_scelta=5;
+disco_btn_ok->activate();}
+        xywh {10 121 150 20} type Radio down_box DIAMOND_UP_BOX color 7 when 1
+      }
+      Fl_Round_Button {} {
+        label Spuce
+        callback {disco_txtbox->load("res/txt/disco6.txt");
+if(!euro) disco_txtbox->add("Ingresso: 22000 L.",0);
+else disco_txtbox->add("Ingresso: 11 €",0);
+disco_scelta=6;
+disco_btn_ok->activate();}
+        xywh {10 149 150 20} type Radio down_box DIAMOND_UP_BOX color 7 when 1
+      }
+      Fl_Round_Button {} {
+        label Honeywood
+        callback {disco_txtbox->load("res/txt/disco7.txt");
+if(!euro) disco_txtbox->add("Ingresso: 30000 L.",0);
+else disco_txtbox->add("Ingresso: 15 €",0);
+disco_scelta=7;
+disco_btn_ok->activate();}
+        xywh {10 177 150 20} type Radio down_box DIAMOND_UP_BOX color 7 when 1
+      }
+      Fl_Round_Button {} {
+        label {Strap Line}
+        callback {disco_txtbox->load("res/txt/disco8.txt");
+if(!euro) disco_txtbox->add("Ingresso: 36000 L.",0);
+else disco_txtbox->add("Ingresso: 18 €",0);
+disco_scelta=8;
+disco_btn_ok->activate();}
+        xywh {10 205 150 20} type Radio down_box DIAMOND_UP_BOX color 7 when 1
+      }
+    }
+    Fl_Browser disco_txtbox {
+      xywh {165 5 315 225} box ENGRAVED_FRAME
+      code0 {o->add("\\n\\n\\n\\n\\n    A che disco andiamo?",0);}
+    }
+    Fl_Group {} {
+      xywh {5 235 220 50} box ENGRAVED_FRAME labelsize 10 align 5
+    } {
+      Fl_Value_Output disco_val_soldi {
+        label Soldi
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {45 246 165 25} color 7 labelsize 12 maximum 0 step 1
+        code0 {o->value(CALCSOLDI(Soldi));}
+      }
+    }
+    Fl_Button disco_btn_ok {
+      label {OK!}
+      callback {PagaDisco(disco_scelta);
+win_principale->activate();
+AggiornaPrincipale();
+win_disco->hide();
+disco_scelta=0;}
+      xywh {350 235 60 50}
+      code0 {if(!disco_scelta) o->deactivate();}
+    }
+    Fl_Return_Button {} {
+      label {Nah...}
+      callback {win_principale->activate();
+AggiornaPrincipale();
+win_disco->hide();
+disco_scelta=0;} selected
+      xywh {420 235 60 50}
+    }
+  }
+}
