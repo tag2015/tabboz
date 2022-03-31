@@ -109,7 +109,8 @@ void AggiornaScuola()
 bool CheckVacanza()
 {
     if ( x_vacanza != 0 ) {
-        fl_alert("Non puoi andare a scuola in un giorno di vacanza!");
+        fl_message_title("Scuola chiusa...");
+		fl_alert("Non puoi andare a scuola in un giorno di vacanza!");
         return(true);
     }
  	else
