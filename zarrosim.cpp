@@ -77,6 +77,7 @@ static void     CaricaTutto(void);
 // void TabbozPlaySound(int number)
 // void SpegniISuoni()
 
+/* FIXME spostare al posto giusto dopo implementazione scooter */
 NEWSTSCOOTER ScooterData;
 
 /* PRIMA LE VARIABILI GENERIKE... */
@@ -205,7 +206,7 @@ void ResetMe(int primavolta)
     x_giornoset    =  1;
     x_anno_bisesto =  0;
     #endif
-    
+
     comp_mese      = rand() % 12 + 1;
     comp_giorno    = rand() % InfoMese[comp_mese-1].num_giorni + 1;
 
@@ -324,7 +325,9 @@ static void InitTabboz(void)
     boolean_shutdown=0;               /* 0=resta dentro, 1=uscita, 2=shutdown */
 
     Fortuna=0;                        /* Uguale a me...               */
-//    ScooterData=ScooterMem[0];        /* nessuno scooter              */
+    #ifndef TAG2015_NOSCOOTER
+        ScooterData=ScooterMem[0];        /* nessuno scooter              */
+    #endif
     Attesa=ATTESAMAX;                 /* attesa per avere soldi...    */
     ImgSelector=0;                    /* W l' arte di arrangiarsi...  */
     timer_active=1;
@@ -1275,82 +1278,78 @@ BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
 
 
-//*******************************************************************
-// Nomoney...
-//*******************************************************************
-//TAG2015 Questa visualizza un semplice messaggio se i soldi non sono abbastanza, si può tenere
-//uguale al 90% e basta cambiare le chiamate ai messagebox. Per ora tutta commentata perchè
-//disco, negozi etc non sono ancora implementati
-// void nomoney(HWND parent,int tipo)
-// {
-//  char tmp[256];
-//  switch (tipo) {
-//     case DISCO:
-//         sprintf(tmp,"Appena entrat%c ti accorgi di non avere abbastanza soldi per pagare il biglietto.\n Un energumeno buttafuori ti deposita gentilmente in un cassonetto della spazzatura poco distante dalla discoteca.",ao);
-//         MessageBox( parent, tmp,
-//           "Bella figura", MB_OK | MB_ICONSTOP);
-//         if (Reputazione > 3 )
-//             Reputazione-=1;
-//         break;;
-//     case VESTITI:
-//         sprintf(tmp,"Con cosa avresti intenzione di pagare, stronzett%c ??? Caramelle ???",ao);
-//         MessageBox( parent, tmp,
-//           "Bella figura", MB_OK | MB_ICONSTOP);
-//         if (Fama > 12 )
-//            Fama-=3;
-//         if (Reputazione > 4 )
-//            Reputazione-=2;
-//         break;;
-//     case PALESTRA:
-//         if (sesso == 'M') {
-//             MessageBox( parent,
-//                 "L' enorme istruttore di bodybulding ultra-palestrato ti suona come una zampogna e ti scaraventa fuori dalla palestra.",
-//                   "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
-//         } else {
-//             MessageBox( parent,
-//                 "L' enorme istruttore di bodybulding ultra-palestrato ti scaraventa fuori dalla palestra.",
-//                   "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
-//         }
-//         if (Fama > 14 )
-//             Fama-=4;    /* Ah,ah ! fino al 10 Jan 1999 c'era scrittto Reputazione-=4... */
-//         if (Reputazione > 18 )
-//             Reputazione-=4;
-//         break;;
-//     case SCOOTER:
-//         if (sesso == 'M') {
-//             MessageBox( parent,
-//               "L' enorme meccanico ti affera con una sola mano, ti riempe di pugni, e non esita a scaraventare te ed il tuo motorino fuori dall' officina.",
-//               "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
-//             if (Reputazione > 7 )
-//                 Reputazione-=5;
-//             if (ScooterData.stato > 7 )
-//                 ScooterData.stato-=5;
-//         } else {
-//             MessageBox( parent,
-//               "Con un sonoro calcio nel culo, vieni buttata fuori dall' officina.",
-//               "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
-//             if (Reputazione > 6 )
-//                 Reputazione-=4;
-//             if (Fama > 3 )
-//                 Fama-=2;
-//         }
-//         break;;
-//     case TABACCAIO:
-//         sprintf(tmp,"Fai fuori dal mio locale, brut%c pezzente !, esclama il tabaccaio con un AK 47 in mano...",ao);
-//         MessageBox( parent, tmp,
-//           "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
-//         if (Fama > 2)
-//             Fama-=1;
-//         break;;
-//     case CELLULRABBONAM:
-//         sprintf(tmp,"Forse non ti sei accorto di non avere abbastanza soldi, stronzett%c...",ao);
-//         MessageBox( parent, tmp,
-//           "Non hai abbastanza soldi...", MB_OK | MB_ICONSTOP);
-//         if (Fama > 2)
-//             Fama-=1;
-//         break;
-//     }
-// }
+/* Routine che gestisce diverse situazioni quando i soldi sono < di quelli richiesti */
+void nomoney(int tipo)
+{
+    switch (tipo) {
+        
+        case DISCO:
+//        sprintf(tmp,"Appena entrat%c ti accorgi di non avere abbastanza soldi per pagare il biglietto.\nUn energumeno buttafuori ti deposita gentilmente in un cassonetto della spazzatura poco distante dalla discoteca.",ao);
+            fl_message_title("Bella figura");
+            fl_alert("Appena entrat%c ti accorgi di non avere abbastanza soldi per pagare il biglietto.\nUn energumeno buttafuori ti deposita gentilmente in un cassonetto della spazzatura poco distante dalla discoteca.",ao);
+            if (Reputazione > 3 )
+                Reputazione--;
+            break;;
+        
+        case VESTITI:
+            fl_message_title("Bella figura");
+            fl_alert("Con cosa avresti intenzione di pagare, stronzett%c ??? Caramelle ???",ao);
+            if (Fama > 12 )
+                Fama-=3;
+            if (Reputazione > 4 )
+                Reputazione-=2;
+            break;;
+
+        case PALESTRA:
+            if (sesso == 'M') {
+                fl_message_title("Non hai abbastanza soldi...");
+                fl_alert("L'enorme istruttore di bodybulding ultra-palestrato ti suona come una zampogna e ti scaraventa fuori dalla palestra.");
+            } else {
+                fl_message_title("Non hai abbastanza soldi...");
+                fl_alert("L'enorme istruttore di bodybulding ultra-palestrato ti scaraventa fuori dalla palestra.");
+            }
+            if (Fama > 14 )
+                Fama-=4;
+            if (Reputazione > 18 )
+                Reputazione-=4;
+            break;;
+        
+        case SCOOTER:
+            if (sesso == 'M') {
+                fl_message_title("Non hai abbastanza soldi...");
+                fl_alert("L'enorme meccanico ti affera con una sola mano, ti riempe di pugni, e non esita a scaraventare te ed il tuo motorino fuori dall'officina.");
+                if (Reputazione > 7 )
+                    Reputazione-=5;
+                #ifndef TAG2015_NOSCOOTER
+                if (ScooterData.stato > 7 )
+                    ScooterData.stato-=5;
+                #endif
+            } else {
+                fl_message_title("Non hai abbastanza soldi...");
+                fl_alert("Con un sonoro calcio nel culo, vieni buttata fuori dall'officina.");
+                if (Reputazione > 6 )
+                    Reputazione-=4;
+                if (Fama > 3 )
+                    Fama-=2;
+            }
+            break;;
+        
+        case TABACCAIO:
+            fl_message_title("Non hai abbastanza soldi...");
+            fl_alert("Fai fuori dal mio locale, brut%c pezzente! Esclama il tabaccaio con un AK 47 in mano...",ao);
+        //sprintf(tmp,"Fai fuori dal mio locale, brut%c pezzente !, esclama il tabaccaio con un AK 47 in mano...",ao);
+            if (Fama > 2)
+                Fama-=1;
+            break;;
+    
+        case CELLULRABBONAM:
+            fl_message_title("Non hai abbastanza soldi...");
+            fl_alert("Forse non ti sei accorto di non avere abbastanza soldi, stronzett%c...",ao);
+            if (Fama > 2)
+                Fama-=1;
+            break;
+    }
+}
 
 //*******************************************************************
 // Aggiorna la finestra principale

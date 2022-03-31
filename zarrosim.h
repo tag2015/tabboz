@@ -42,17 +42,13 @@
 // static char copyright[] ="@(#) Copyright (c) 1997-2001 Andrea Bonomi, Emanuele Caccialanza, Daniele Gazzarri.\nAll rights reserved.\n";
 
 
-#ifdef NOT_WINDOWS
-#define IDOK        1
-#define IDCANCEL    2
-#define IDABORT     3
-#define IDYES       6
-#define IDNO        7
-#endif
-
-
 /* Define per la gui originale */
 #ifdef DEADCODE
+#define IDOK            1
+#define IDCANCEL        2
+#define IDABORT         3
+#define IDYES           6
+#define IDNO            7
 
 #define QX_NOME         102
 #define QX_SOLDI        105
@@ -87,9 +83,9 @@
 #define QX_PROMPT       150
 #define QX_NETWORK      151
 #define QX_CELLULAR     155
+#endif
 
-
-/* DIALOG (finestre)      */
+/* DIALOG (identificativi finestre, molti non usati) */
 
 #define MAIN            1
 #define ABOUT           2
@@ -133,7 +129,7 @@
 #define COMPRACELLULAR  121
 #define VENDICELLULAR   122
 #define CELLULRABBONAM  123
-#endif
+
 
 // Attesa per soldi dai genitori
 #define ATTESAMAX         5
@@ -322,11 +318,11 @@ extern  void  FineProgramma(char const *caller);
 
 extern  void  CalcolaStudio(void);
 extern  char  *MostraSoldi(int i);
+extern  void  nomoney(int tipo);
 
 
 //TAG2015 quelle sotto x ora commentate ma servono
 // extern  void  TabbozPlaySound(int number);
-//extern  void   nomoney(HWND parent,int tipo);
 //extern  void   CalcolaVelocita(HANDLE hDlg);
 //extern  void Evento(HWND hWnd);
 //extern  void RunPalestra(HWND hDlg);
