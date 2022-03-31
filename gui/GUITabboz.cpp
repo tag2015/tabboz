@@ -7,6 +7,7 @@
 #include "GUIScuola.h"
 #include "GUIFamiglia.h"
 #include "GUICompagnia.h"
+#include "GUIDisco.h"
 
 Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
 
@@ -235,7 +236,9 @@ static void cb_Negozi(Fl_Button*, void*) {
 }
 
 static void cb_Disco(Fl_Button*, void*) {
-  fl_alert("Non ancora implementato!");
+  GUITabbozDisco();
+win_disco->show();
+win_principale->deactivate();
 }
 
 Fl_Box *main_box_figurino=(Fl_Box *)0;

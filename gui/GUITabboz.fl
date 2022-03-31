@@ -20,11 +20,14 @@ decl {\#include "GUIFamiglia.h"} {private global
 decl {\#include "GUICompagnia.h"} {private global
 }
 
+decl {\#include "GUIDisco.h"} {private global
+}
+
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
     label {Tabboz Simulator Next Generation!} open
-    xywh {572 390 475 450} type Double color 54 align 5
+    xywh {319 449 475 450} type Double color 54 align 5
     code0 {AggiornaPrincipale();} size_range {475 450 475 450} visible
   } {
     Fl_Menu_Bar {} {open
@@ -99,7 +102,9 @@ win_principale->deactivate();}
       }
       Fl_Button {} {
         label Disco
-        callback {fl_alert("Non ancora implementato!");}
+        callback {GUITabbozDisco();
+win_disco->show();
+win_principale->deactivate();} selected
         xywh {300 405 110 20} color 51 selection_color 51 labelfont 2
       }
     }
@@ -141,7 +146,7 @@ AggiornaPrincipale();}
       xywh {160 190 305 75} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
     } {
       Fl_Value_Output main_valbox_soldi {
-        label {L.} selected
+        label {L.}
         xywh {180 215 120 25} box ENGRAVED_BOX color 7 labelsize 12 maximum 0 step 1 textfont 5
         code0 {o->soft(0);}
       }
