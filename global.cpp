@@ -20,6 +20,8 @@
 
 #include "global.h"
 
+/* IMPORTANTE */
+/* Non è (ancora) possibile aggiungere altri eventi senza cambiare radicalmente la routine in eventi.cpp */
 
 const char *StrEventi[] = {
     "Cerchi la rissa con un metallaro e lui ti spacca le ossa...",  // id=1000
@@ -44,7 +46,7 @@ const char *StrEventi[] = {
     "Non ti metti di impegno a studiare "
     "Non ti impegni abbastanza delle ore di ",
     "Vai male in una interrogazione di ",
-    "Sei sempre il solito!\nChe bisogno c'è di gridare solo perchè sono andata a letto con un tuo amico!\nSei proprio un insensibile. Addio.",
+    "Sei sempre il solito!\nChe bisogno c'è di gridare solo perchè sono andata a letto con un tuo amico!\nSei proprio un insensibile. Addio.",  //id=1041
     "Ho trovato un ragazzo che vale 1000 volte te, quindi, visto che sono una ragazza emancipata, ora ti lascio e mi metto con lui.",
     "Non bestemmi, non dici parolacce e non picchi i bambini. Sei proprio noioso...",
     "Sei la persona più spregievole che io abbia mai incontrato sulla faccia della terra.\nSpero che resteremo amici.",
@@ -53,7 +55,17 @@ const char *StrEventi[] = {
     "Sono in un momento molto delicato della mia vita, in cui ho bisogno di tempo per fare delle scelte.\nAddio.",
     "Forse è meglio se non ci vediamo più per un po' di tempo...",
     "Capiscimi... devo prendere un po' di tempo per pensare al nostro futuro...",
-    "Ti amo troppo per poter restare ancora insieme a te.\nAddio."
+    "Ti amo troppo per poter restare ancora insieme a te.\nAddio.",
+    "Cioè, insomma, cioè io, ecco, insomma.... Addio...",   //id = 1341
+    "Credo che tu sia la mia migliore amica...",
+    "Hai presente quella tua amica, quella che mi hai fatto conoscere l'altro giorno...",
+    "Ohhh, tipa... Mi devi troppo mollaaaaaareee!",
+    "Basta, sono stufo di tutte le tue paranoie! Non ti sopporto più!",
+    "Cioè tipa, io sono uno spirito libero, cioè non posso... cioè dopo un po' io... ecco... cioè...",
+    "Spero che così tu la smetta di rompermi i coglioni...",
+    "Capiscimi... devo prendere un po' di tempo per pensare al nostro futuro...",
+    "Forse è meglio se non ci vediamo più per un po' di tempo...",
+    "Addio stronzetta...",
     "Guardi troppo a lungo la ragazza dell'istruttore di body-building e lui ti sacagna di botte.",     // id=1100
     "Mentre attraversi un corridoio della palestra vieni travolto da una Cyclette impazzita.",
     "Scopri di aver preso le pillole contro l'impotenza al posto degli anabolizzanti.",
@@ -144,6 +156,28 @@ const char *StrNomiTipe[] = {
     "Rosa",
 };
 
+const char *StrNomiTipi[] = {
+    "Salvatore",
+    "Rocco",
+    "Kasko",
+    "Svakko",
+    "Punto",
+    "Santo",
+    "Krukko",
+    "Fiskio",
+    "Krampo",
+    "Skianto",
+    "Gervasio",
+    "Pino",
+    "Marco",
+    "Antonio",
+    "Gianpaolo",
+    "Gianmaria",
+    "Gustavo",
+    "Riccardo",
+    "Gianni",
+    "Grankio",
+}
 
 const char *StrRisposteTipe[] = {
     "Non ti caga nemmeno di striscio...",  // id=300

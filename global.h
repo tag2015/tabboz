@@ -18,8 +18,20 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
+/* "Indici" per l'array di stringhe degli eventi */
+
+#define MSG_SFIGHE   2
+#define MSG_SCUOLA  12
+#define MSG_TIPA    22
+#define MSG_TIPO    32
+
 extern const char *StrEventi[];         // Stringhe usate nelle dialog degli eventi
+
+
 extern const char *StrNomiStrade[];     // Nomi strade milanesi usate negli eventi
 
 extern const char *StrNomiTipe[];       // Elenco nomi tipe
+extern const char *StrNomiTipi[];       // Elenco nomi tipi
+
 extern const char *StrRisposteTipe[];   // Stringhe due di picche (dalle tipe)
