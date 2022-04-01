@@ -99,7 +99,7 @@ void Evento()
         }
     }
 
-    if (CellularData.stato <= 0) { //BUGFIX: Perchè ==1? Il cell si rompe se lo stato è <=0 
+    if (CellularData.stato == 1) { //FIXME: sarebbe meglio mettere tutti gli stati "nulli" a -100, per evitare sti casini 
         CellularData.stato=-1;
         fl_message_title("Telefonino KO");
         fl_alert("Dopo una vita di duro lavoro, a furia di prendere botte,\nil tuo cellulare si spacca...");

@@ -209,6 +209,7 @@ void ResetMe(int primavolta)
     x_giorno       = 30;
     x_giornoset    =  1;
     x_anno_bisesto =  0;
+    x_vacanza      =  0;
     #endif
 
     comp_mese      = rand() % 12 + 1;
