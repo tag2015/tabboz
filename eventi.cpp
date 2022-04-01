@@ -85,6 +85,7 @@ void Evento()
         }
     }
 
+
 /* Cellulare ---------------------------------------------------- */
     if ((AbbonamentData.creditorest > 0) && (CellularData.stato > -1)) {
         AbbonamentData.creditorest-=1;
@@ -285,7 +286,7 @@ void Evento()
                         fl_alert("Quando ti rialzi ti accorgi che il tuo scooter è ormai ridotto ad un ammasso di rottami.");
                         ScooterData.stato=-1;
                         ScooterData.attivita=0;
-                        ScooterData=ScooterMem[0];
+//                        ScooterData=ScooterMem[0];  FIXME Scooter
                         #ifdef TABBOZ_DEBUG
                             writelog("eventi: Lo scooter si e' completamente distrutto...");
                         #endif
@@ -411,7 +412,7 @@ void Evento()
         case 43: // 43-44: Domande inutili...
         case 44:
 
-            if ((Rapporti > 0) && (sesso == 'M'))
+            if ((Rapporti > 0) && (sesso == 'M')) {
                 if (caso == 43) {
                     fl_message_title("Domande inutili della tipa...");
                     if ( fl_choice("Mi ami ???", "Sì", "No", 0) ) {
@@ -429,6 +430,7 @@ void Evento()
                         if (Rapporti < 5) Rapporti=5;
                     }
                 }
+            }
             #ifdef TABBOZ_DEBUG
                 writelog("eventi: Domande inutili della tipa...");
             #endif
