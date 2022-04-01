@@ -245,7 +245,7 @@ extern  int       stipendio;
 extern  int       benzina;
 extern  int       antifurto;        // NON IMPLEMENTATO
 extern  int       sizze;
-extern  int       Tempo_trascorso_dal_pestaggio;
+extern  int       tempo_pestaggio;    // Tempo trascorso da un pestaggio
 extern  int       current_testa;      // Grado di abbronzatura del tabbozzo
 extern  int       current_gibbotto;   // Vestiti attuali del tabbozzo...
 extern  int       current_pantaloni;

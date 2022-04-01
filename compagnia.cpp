@@ -111,7 +111,7 @@ void ChiamaCompagnia(void)
         //Evento(hDlg); FIXME Evento
         return;
     }
-    if (Tempo_trascorso_dal_pestaggio > 0) {
+    if (tempo_pestaggio > 0) {
         if ( (rand() % 2)== 1) {
             fl_message("Dopo aver visto i tuoi amici, chi ti ha picchiato non si farà più vedere in giro per un bel pezzo...");
             if (Reputazione < 80)

@@ -80,6 +80,8 @@ static void     CaricaTutto(void);
 
 /* FIXME spostare al posto giusto dopo implementazione scooter */
 NEWSTSCOOTER ScooterData;
+/* FIXME spostare al posto giusto dopo implementazione cell */
+STCEL CellularData;
 
 /* PRIMA LE VARIABILI GENERIKE... */
 
@@ -114,7 +116,7 @@ int     Stato;          // Quanto stai male ???
 int     DDP;            // Due di picche (log...) - long,sono ottimista...
 int     Fortuna;        // Fortuna del tabbozzo
 int     sizze;          // Numero di sigarette
-int     Tempo_trascorso_dal_pestaggio;
+int     tempo_pestaggio;
 int     current_testa;
 int     current_gibbotto;
 int     current_pantaloni;
@@ -333,7 +335,7 @@ static void InitTabboz(void)
     ImgSelector=0;                    /* W l' arte di arrangiarsi...  */
     timer_active=1;
     fase_di_avvio=1;
-    Tempo_trascorso_dal_pestaggio=0;
+    tempo_pestaggio=0;
     current_tipa=0;
 
     #ifdef PROMPT_ACTIVE
