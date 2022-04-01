@@ -177,7 +177,7 @@ const char *StrNomiTipi[] = {
     "Riccardo",
     "Gianni",
     "Grankio",
-}
+};
 
 const char *StrRisposteTipe[] = {
     "Non ti caga nemmeno di striscio...",  // id=300

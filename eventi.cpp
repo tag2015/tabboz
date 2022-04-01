@@ -27,6 +27,8 @@
 #include "zarrosim.h"
 #include "global.h"
 #include "scuola.h"
+#include "calendario.h"
+#include "debug.h"
 
 #include "eventi.h"
 
@@ -303,7 +305,8 @@ void Evento()
         case 28:            // \|/
         case 29:            //  - gravi
         case 30:
-            fl_message_title("Sei fortunat%c...",ao);
+            sprintf(tmp,"Sei fortunat%c...",ao);
+            fl_message_title(tmp);
             fl_alert(StrEventi[MSG_SFIGHE+(caso - 21)]);  // togliamo 21 da caso per renderlo 0-9
             Fama-=2;
             if (Fama < 0) Fama = 0;
