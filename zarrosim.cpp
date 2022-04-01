@@ -82,6 +82,7 @@ static void     CaricaTutto(void);
 NEWSTSCOOTER ScooterData;
 /* FIXME spostare al posto giusto dopo implementazione cell */
 STCEL CellularData;
+STABB AbbonamentData;
 
 /* PRIMA LE VARIABILI GENERIKE... */
 
