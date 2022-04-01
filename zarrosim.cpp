@@ -49,7 +49,8 @@
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Preferences.H>
 #include <FL/fl_ask.H>
-
+#include <FL/Fl_Shared_Image.H>
+#include <FL/Fl_PNG_Image.H>
 
 /* Header finestre GUI */
 #include "gui/GUITabboz.h"
@@ -1961,6 +1962,7 @@ int main(void)
 
     /* Finestra principale */
     //DialogBox(hInst,MAKEINTRESOURCE(1),NULL,TabbozWndProc);
+    fl_register_images();
     win_principale = GUITabboz();
     win_principale->show();
     Fl::run();
