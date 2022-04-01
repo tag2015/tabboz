@@ -29,14 +29,17 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
-/* L'opzione CDROM è stata tolta... verrà sostituita dalla possibilità di */
-/* riprodurre file audio personali (in futuro...)                         */
-
 #include "zarrosim.h"
 #include "debug.h"
 
-#include "disco.h"
 #include "calendario.h"
+#include "eventi.h"
+
+#include "disco.h"
+
+
+/* L'opzione CDROM è stata tolta... verrà sostituita dalla possibilità di */
+/* riprodurre file audio personali (in futuro...)                         */
 
 //static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
@@ -69,7 +72,7 @@ void PagaDisco(int scelta)
     if ( (DiscoMem[scelta].fuoriporta) && (ScooterData.stato == -1) ) {
         fl_message_title("Discoteca fuori porta");
         fl_alert("Senza lo scooter non puoi andare nelle discoteche fuori porta...");
-        //Evento(hInstance); FIXME Eventi
+        Evento();
         return;
     }
     
@@ -105,7 +108,7 @@ void PagaDisco(int scelta)
             if (Fama > 100) Fama=100;
             if (Reputazione > 100) Reputazione=100;
         }
-    //Evento(hInstance); FIXME Evento
+    Evento();
 }
 
 

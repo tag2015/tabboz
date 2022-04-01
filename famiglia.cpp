@@ -28,6 +28,8 @@
 #include "zarrosim.h"
 #include "debug.h"
 
+#include "eventi.h"
+
 #include "famiglia.h"
 #include "gui/GUIFamiglia.h"
 
@@ -47,11 +49,11 @@ void ChiediAumentoPaghetta(void)
             fl_message_title("Aumento paghetta !");
             fl_message(tmp);
             Paghetta+=5;
-            //Evento(hDlg);  FIXME Evento
+            Evento();
         } else {
             fl_message_title("Errore irrecuperabile");
             fl_alert("Vedi di scordartelo...\nDovrà passare molto tempo prima che ti venga aumentata la paghetta...");
-            //Evento(hDlg);  FIXME Evento
+            Evento();
         }
     } else {
         fl_message_title("Errore irrecuperabile");
@@ -74,11 +76,11 @@ void ChiediSoldiExtra(void)
                 sprintf(tmp,"famiglia: paghetta extra (%s)",MostraSoldi(10));
                 writelog(tmp);
             #endif
-            //Evento(hDlg);  FIXME Evento
+            Evento();
         } else {
             fl_message_title("Non te li diamo");
             fl_alert("Ma insomma! Non puoi continuamente chiedere soldi!\nAspetta ancora qualche giorno. Fai qualche cosa di economico nel frattempo...");
-            //Evento(hDlg); FIXME Evento
+            Evento();
         }
     } else {
         sprintf(tmp,"Quando andrai meglio a scuola potrai tornare a chiederci dei soldi, non ora.\nMa non lo sai che per la tua vita è importante studiare, e dovresti impegnarti\ndi più, perchè quando ti impegni i risultati si vedono, solo che sei svogliat%c\ne non fai mai nulla, mi ricordo che quando ero giovane io era tutta un'altra cosa...\nallora sì che i giovani studiavano...",ao);
@@ -95,7 +97,7 @@ void ChiediSoldiPapa(void)
     if (sound_active) //TabbozPlaySound(801);  FIXME Sound
     fl_message_title("Errore irrecuperabile");
     fl_alert("Non pensarci neanche lontanamente...");
-    //Evento(hDlg); FIXME Evento
+    Evento();
 }
 
 

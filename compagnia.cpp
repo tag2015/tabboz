@@ -29,6 +29,8 @@
 #include "debug.h"
 
 #include "compagnia.h"
+#include "eventi.h"
+
 
 /* Header per toolkit FLTK */
 #include <FL/Fl.H>
@@ -85,7 +87,7 @@ void GareggiaScooter(void)
     if (benzina < 1) benzina = 0;
 //    showscooter=0;   FIXME Scooter
 //    CalcolaVelocita(hDlg);
-//    Evento(hDlg);  FIXME Evento
+    Evento();
 }
 #endif
 
@@ -99,7 +101,7 @@ void EsciCompagnia(void)
     if (Reputazione < 12)
         Reputazione+=1;
 
-//    Evento(hDlg);  FIXME Evento
+    Evento();
 }
 
 /* Chiama la compagnia...*/
@@ -108,7 +110,7 @@ void ChiamaCompagnia(void)
     fl_message_title("Chiama la Compagnia");
     if (Reputazione < 16) {
         fl_message("Con la scarsa reputazione che hai, tutti trovano qualcosa di meglio da fare piuttosto che venire...");
-        //Evento(hDlg); FIXME Evento
+        Evento();
         return;
     }
     if (tempo_pestaggio > 0) {
@@ -121,7 +123,7 @@ void ChiamaCompagnia(void)
             if (Reputazione < 95)
                 Reputazione+=5;
             }
-        //Evento(hDlg); FIXME Evento
+        Evento();
     } else {
         fl_message_title("Chiama la Compagnia (perchè?)");
         fl_message("Visto che non c'è nessuno da minacciare, tutti se ne vanno avviliti...");

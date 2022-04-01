@@ -106,52 +106,6 @@ void Evento()
     }
 
 
-/* Rapporti Tipa ---------------------------------------------------- */
-    if (Rapporti > 3) {
-        i=rand() % 5 - 3;      // peggioramento random dei rapporti
-        if (i > 0) Rapporti--;
-    }
-
-    if (Rapporti > 0)
-        if (Rapporti < 98) {
-            i=rand() % (((Rapporti + Fortuna + Fama )* 3) + 1);
-            if (i < 10) {                    /* da 1 a 10, la donna ti molla... */
-                //if (sound_active) TabbozPlaySound(603); FIXME: Suono
-                Rapporti=0;
-                FigTipa=0;
-                if (sesso == 'M') {
-                    fl_message_title("La tipa ti molla...");
-                    fl_alert(StrEventi[MSG_TIPA+i]);  // 0<i<9, 10 possibili messaggi
-                
-                } else {
-                    fl_message_title("Vieni mollata...");
-                    fl_alert(StrEventi[MSG_TIPO+i]);  // 0<i<9, 10 possibili messaggi
-            }
-            Reputazione-=(10 - i);    // quelle con numero piu' basso, sono peggiori...
-            if (Reputazione < 0) Reputazione = 0;
-        }
-    }
-
-/* Lavoro ----------------------------------------------------------- */
-    if (impegno > 3) {
-        i=rand() % 7 - 3;       // peggioramento random dell'impegno
-        if (i > 0) impegno--;
-    }
-
-    if (numeroditta > 0) {
-        i = rand() % (impegno * 2 + Fortuna * 3);
-        if (i < 2) {           // perdi il lavoro
-            impegno=0;
-            giorni_di_lavoro=0;
-            stipendio=0;
-            numeroditta=0;
-            //if (sound_active) TabbozPlaySound(504); FIXME Sound
-            fl_message_title("Perdi il lavoro...");
-            fl_alert("Un bel giorno ti svegli e scopri di essere stat%c licenziat%c.",ao,ao);
-        }
-    }
-
-
 /* Paghetta --------------------------------------------------------- */
 
     if (x_giornoset == 6) {        // Il Sabato c'e' la paghetta...
@@ -186,10 +140,58 @@ void Evento()
     }
 
 
+#ifndef NORANDOM
+/* Rapporti Tipa ---------------------------------------------------- */
+    if (Rapporti > 3) {
+        i=rand() % 5 - 3;      // peggioramento random dei rapporti
+        if (i > 0) Rapporti--;
+    }
+
+    if (Rapporti > 0)
+        if (Rapporti < 98) {
+            i=rand() % (((Rapporti + Fortuna + Fama )* 3) + 1);
+            if (i < 10) {                    /* da 1 a 10, la donna ti molla... */
+                //if (sound_active) TabbozPlaySound(603); FIXME: Suono
+                Rapporti=0;
+                FigTipa=0;
+                if (sesso == 'M') {
+                    fl_message_title("La tipa ti molla...");
+                    fl_alert(StrEventi[MSG_TIPA+i]);  // 0<i<9, 10 possibili messaggi
+                
+                } else {
+                    fl_message_title("Vieni mollata...");
+                    fl_alert(StrEventi[MSG_TIPO+i]);  // 0<i<9, 10 possibili messaggi
+            }
+            Reputazione-=(10 - i);    // quelle con numero piu' basso, sono peggiori...
+            if (Reputazione < 0) Reputazione = 0;
+        }
+    }
+
+
+/* Lavoro ----------------------------------------------------------- */
+    if (impegno > 3) {
+        i=rand() % 7 - 3;       // peggioramento random dell'impegno
+        if (i > 0) impegno--;
+    }
+
+    if (numeroditta > 0) {
+        i = rand() % (impegno * 2 + Fortuna * 3);
+        if (i < 2) {           // perdi il lavoro
+            impegno=0;
+            giorni_di_lavoro=0;
+            stipendio=0;
+            numeroditta=0;
+            //if (sound_active) TabbozPlaySound(504); FIXME Sound
+            fl_message_title("Perdi il lavoro...");
+            fl_alert("Un bel giorno ti svegli e scopri di essere stat%c licenziat%c.",ao,ao);
+        }
+    }
+
+
 /* Eventi casuali --------------------------------------------------- */
     caso = rand() % (100+(Fortuna*2));
 
-//    caso = 21;    /* TEST - TEST - TEST - TEST - TEST - TEST - TEST */
+    //    caso = 21;    /* TEST - TEST - TEST - TEST - TEST - TEST - TEST */
 
     #ifdef TABBOZ_DEBUG
         sprintf(tmp,"eventi: Evento casuale n. %d",caso);
@@ -464,6 +466,7 @@ void Evento()
         ;;
         }
     }
+#endif
 }
 
 
