@@ -8,6 +8,7 @@
 #include "GUIFamiglia.h"
 #include "GUICompagnia.h"
 #include "GUIDisco.h"
+#include "GUITestbed.h"
 
 Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
 
@@ -322,6 +323,12 @@ Fl_Value_Output *main_valbox_fama=(Fl_Value_Output *)0;
 
 Fl_Value_Output *main_valbox_studio=(Fl_Value_Output *)0;
 
+static void cb_T(Fl_Button*, void*) {
+  GUITestbed();
+win_testbed->show();
+win_principale->deactivate();
+}
+
 Fl_Double_Window* GUITabboz() {
   { win_principale = new Fl_Double_Window(475, 450, "Tabboz Simulator Next Generation!");
     win_principale->color(FL_LIGHT3);
@@ -495,6 +502,9 @@ Fl_Double_Window* GUITabboz() {
       main_valbox_studio->labelsize(12);
       main_valbox_studio->maximum(0);
     } // Fl_Value_Output* main_valbox_studio
+    { Fl_Button* o = new Fl_Button(445, 410, 20, 25, "T");
+      o->callback((Fl_Callback*)cb_T);
+    } // Fl_Button* o
     AggiornaPrincipale();
     win_principale->size_range(475, 450, 475, 450);
     win_principale->end();

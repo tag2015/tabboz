@@ -23,6 +23,9 @@ decl {\#include "GUICompagnia.h"} {private global
 decl {\#include "GUIDisco.h"} {private global
 }
 
+decl {\#include "GUITestbed.h"} {private global
+}
+
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
@@ -104,7 +107,7 @@ win_principale->deactivate();}
         label Disco
         callback {GUITabbozDisco();
 win_disco->show();
-win_principale->deactivate();} selected
+win_principale->deactivate();}
         xywh {300 405 110 20} color 51 selection_color 51 labelfont 2
       }
     }
@@ -170,6 +173,13 @@ AggiornaPrincipale();}
     Fl_Value_Output main_valbox_studio {
       label {Media Voti }
       tooltip {Media scolastica} xywh {405 140 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0
+    }
+    Fl_Button {} {
+      label T
+      callback {GUITestbed();
+win_testbed->show();
+win_principale->deactivate();} selected
+      xywh {445 410 20 25}
     }
   }
 }
