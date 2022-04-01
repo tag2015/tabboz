@@ -64,7 +64,7 @@ const char *StrEventi[] = {
     "Una ragazza ti guarda e ride per le vistose chiazze di sudore sotto le tue ascelle...",
     "Dopo 5 minuti di corsa cadi al suolo stremato...",
     "Ti perdi per i meandri della tua palestra, solo l'intervento del guardiano notturno può salvarti.",
-}
+};
 
 
 const char *StrNomiStrade[] = {
@@ -118,7 +118,7 @@ const char *StrNomiStrade[] = {
     "Via Archimede",
     "Corso Venezia",
     "Via Karl Marx",
-}
+};
 
 
 const char *StrNomiTipe[] = {
@@ -142,7 +142,7 @@ const char *StrNomiTipe[] = {
     "Chiara",
     "Alessandra",
     "Rosa",
-}
+};
 
 
 const char *StrRisposteTipe[] = {
@@ -166,4 +166,4 @@ const char *StrRisposteTipe[] = {
     "Forse mi hai preso per la ragazza sbagliata...",
     "Vai a farti fottere...",
     "Oh scusa, mi sono dimenticata di dirti che sono impegnata..."
-}
+};
