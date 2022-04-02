@@ -195,6 +195,7 @@ void ResetMe(int primavolta)
     impegno           =    0;
     giorni_di_lavoro  =    0;
     numeroditta       =    0;
+    AttesaSoldi       =  ATTESAMAX;
 
     strcpy(Residenza,"Milano");
     Nometipa[0]=0;
@@ -475,6 +476,9 @@ static void CaricaTutto(void)
     TabbozProfilo.get("Fortuna",buf_i,0);
     Fortuna=vvc(new_check_i(buf_i));
 
+    TabbozProfilo.get("AttesaSoldi",buf_i,ATTESAMAX);
+    AttesaSoldi=vvc(new_check_i(buf_i));
+
     /* Se non e' gia' settato,setta il compleanno (a caso) */
     TabbozProfilo.get("CompMese",comp_mese,0);
     if (comp_mese < 1) comp_mese=rand() % 12 + 1;
@@ -626,6 +630,7 @@ static void CaricaTutto(void)
 
     x_giorno--;  //Per evitare che avanzi di giorno ogni volta che si apre il programma
     x_giornoset--;
+    AttesaSoldi++;  //Idem ma al contrario, per evitare che scenda ad ogni avvio
     Giorno();
 #endif
 
@@ -696,6 +701,8 @@ static void SalvaTutto(void) {
     TabbozProfilo.set("DdP",new_check_i(DDP));
     TabbozProfilo.set("FigTipa",new_check_i(FigTipa));
     TabbozProfilo.set("Fortuna",new_check_i(Fortuna));
+    TabbozProfilo.set("AttesaSoldi",new_check_i(AttesaSoldi));
+
 
     /* salva voti materie */
     sprintf(tmp,"123456789");    // 9 materie

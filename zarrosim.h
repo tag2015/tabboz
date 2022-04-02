@@ -131,8 +131,8 @@
 #define CELLULRABBONAM  123
 
 
-// Attesa per soldi dai genitori
-#define ATTESAMAX         5
+// Attesa per soldi dai genitori (1 settimana)
+#define ATTESAMAX         6
 
 // Lunghezza stringhe massima
 #define STR_MAX          80

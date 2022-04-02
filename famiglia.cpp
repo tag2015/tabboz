@@ -44,7 +44,7 @@ void ChiediAumentoPaghetta(void)
     char tmp[128];
 
     if (Studio > 40) {
-        if (((Studio - Paghetta +  Fortuna) > ( 75 + rand() % 50)) && (Paghetta < 96) ) {  //BUGFIX qui c'era & anzichè &&
+        if (((Studio - Paghetta +  Fortuna) > ( 75 + rand() % 50)) && (Paghetta < 96) ) {  //BUGFIX qui c'era & anzichè &&. Cmq la prob è irrisoria andrebbe modificato
             sprintf(tmp,"Va bene... ti daremo %s di paghetta in più...",MostraSoldi(5));
             fl_message_title("Aumento paghetta !");
             fl_message(tmp);
@@ -70,8 +70,13 @@ void ChiediSoldiExtra(void)
 
     if (Studio >= 40) {
         if (AttesaSoldi == 0) {
-            AttesaSoldi=ATTESAMAX;
+            AttesaSoldi=ATTESAMAX+1;
             Soldi+=10;
+            fl_message_title("Soldi extra!");
+            if (!euro)
+                fl_message("E va bene, possiamo darti %d L. ...",CALCSOLDI(10));
+            else
+                fl_message("E va bene, possiamo darti %d € ...",CALCSOLDI(10));
             #ifdef LOGGING
                 sprintf(tmp,"famiglia: paghetta extra (%s)",MostraSoldi(10));
                 writelog(tmp);

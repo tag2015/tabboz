@@ -130,6 +130,9 @@ void Giorno(void)
         }
     }
 
+    /* Decrementa contatore giorni per soldi aggiuntivi dalla famiglia */
+    if(AttesaSoldi>0)
+        AttesaSoldi--;
 
     /* ---------------> S T I P E N D I O <--------------- */
     if (impegno > 0)  {
