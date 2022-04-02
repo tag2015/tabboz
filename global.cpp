@@ -43,7 +43,7 @@ const char *StrEventi[] = {
     "Non riesci a dire una parola durante l'interrogazione di ",
     "Offendi la moralità della madre del prof di ",
     "Ti sei dimenticato del compito in classe di ",
-    "Non ti metti di impegno a studiare "
+    "Non ti metti di impegno a studiare ",
     "Non ti impegni abbastanza delle ore di ",
     "Vai male in una interrogazione di ",
     "Sei sempre il solito!\nChe bisogno c'è di gridare solo perchè sono andata a letto con un tuo amico!\nSei proprio un insensibile. Addio.",  //id=1041
