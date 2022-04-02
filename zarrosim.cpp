@@ -340,11 +340,6 @@ static void InitTabboz(void)
     tempo_pestaggio=0;
     current_tipa=0;
 
-    #ifdef PROMPT_ACTIVE
-        /* definitivamente rimosso */
-        prompt_mode=0;
-    #endif
-
     #ifndef NONETWORK
         Data.wVersion=0;
     #endif
@@ -1885,7 +1880,6 @@ void AggiornaPrincipale()
 //      return FALSE;
 // }
 
-//*******************************************************************
 
 /* Calcola Studio */
 void CalcolaStudio()

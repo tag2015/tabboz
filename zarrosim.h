@@ -30,11 +30,11 @@
 /* Per disattivare la possibilita' di giocare con la tabbozza */
 #define NOTABBOZZA
 
-/* Per disabilitare la rete... */
+/* Per disabilitare la rete... NON IMPLEMENTATA, NON ABILITARE*/
 #define NONETWORK
 
-/* Per attivare il Prompt ... */
-// #define PROMPT_ACTIVE
+/* Per disattivare gli eventi casuali (e gran parte del divertimento... da usare solo per debug) */
+//#define NORANDOM
 
 /* Abilita parti non più necessarie (e non compilabili) */
 // #define DEADCODE
@@ -202,10 +202,6 @@ extern   STABB        AbbonamentData;
 extern   STABB        AbbonamentMem[];
 
 
-#ifdef PROMPT_ACTIVE
-extern   int  prompt_mode;
-#endif
-
 /* PRIMA LE VARIABILI GENERIKE... */
 
 extern  int     cheat;
@@ -309,9 +305,6 @@ extern  BOOL FAR PASCAL    MostraSalutieBaci(HWND hDlg, WORD message, WORD wPara
 extern  BOOL FAR PASCAL    Cellular(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 #endif
 
-#ifdef PROMPT_ACTIVE
-    extern  BOOL FAR PASCAL    Prompt(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-#endif
 
 extern  void  AggiornaPrincipale();
 extern  void  FineProgramma(char const *caller);
