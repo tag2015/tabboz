@@ -343,7 +343,6 @@ void Evento()
                 #ifdef TABBOZ_DEBUG
                     writelog("eventi: Evento riguardante la scuola");
                 #endif
-                ScuolaRedraw=1;    /* E' necessario ridisegnare la finestra della scuola... FIXME ridondante*/
             }
             break;;
 

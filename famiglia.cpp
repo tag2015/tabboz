@@ -69,8 +69,8 @@ void ChiediSoldiExtra(void)
     char tmp[500];
 
     if (Studio >= 40) {
-        if (Attesa == 0) {
-            Attesa=ATTESAMAX;
+        if (AttesaSoldi == 0) {
+            AttesaSoldi=ATTESAMAX;
             Soldi+=10;
             #ifdef LOGGING
                 sprintf(tmp,"famiglia: paghetta extra (%s)",MostraSoldi(10));

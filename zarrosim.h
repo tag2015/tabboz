@@ -205,54 +205,67 @@ extern   STABB        AbbonamentMem[];
 /* PRIMA LE VARIABILI GENERIKE... */
 
 extern  int     cheat;
-extern  int     scelta;
 extern  char    Andrea[14];
 extern  char    Caccia[21];
 extern  char    Daniele[17];
+
 extern  int     ImgSelector;
 extern  int     TabbozRedraw;   // E' necessario ridisegnare il Tabbozzo ???
-extern  int     ScuolaRedraw;   // E' necessario ridisegnare la scuola ???
 extern  char    showscooter;
 
 
 /* DOPO LE CARATTERISTIKE... */
 
-extern  int       Attesa;           // Tempo prima che ti diano altri soldi...
-extern  int       Fama;             // Figosità
-extern  int       Reputazione;
+extern  int       Fama;             // Figosità (1-100)
+extern  int       Reputazione;      // Reputazione (1-100)
 extern  int       Studio;           // Quanto vai bene a scuola (1 - 100)
 extern  int       Soldi;            // Long...per forza! lo zarro ha tanti soldi... | Retrocesso a int, a 32bit è sufficiente
-extern  int       Paghetta;         // Paghetta Settimanale... | vedi sopra
-extern  char      Nome[30];
-extern  char      Cognome[30];
+extern  int       Paghetta;         // Paghetta Settimanale...
+extern  char      Nome[30];         // Nome del Tabbozzo
+extern  char      Cognome[30];      // Cognome del Tabbozzo
 extern  int       comp_giorno;      // giorno del compleanno
 extern  int       comp_mese;        // mese del compleanno
-extern  char      Nometipa[30];
-extern  int       FigTipa;          // Figosità tipa/o
-extern  int       Rapporti;         // Stabilità relazione con tipa/o
-extern  int       Stato;
-extern  int       DDP;              // DueDiPicche
-extern  int       AttPaghetta;
-extern  int       Fortuna;
-extern  int       numeroditta;
-extern  int       impegno;
-extern  int       giorni_di_lavoro; // Serve x calcolare lo stipendio SOLO per il primo mese...
-extern  int       stipendio;
-extern  int       benzina;
-extern  int       antifurto;        // NON IMPLEMENTATO
-extern  int       sizze;
-extern  int       tempo_pestaggio;    // Tempo trascorso da un pestaggio
+extern  char      Nometipa[30];     // Nome della tua tipa/o (se ce l'hai...)
+extern  int       FigTipa;          // Figosità tipa/o (1-100)
+extern  int       Rapporti;         // Stabilità relazione con tipa/o (1-100)
+extern  int       Stato;            // Quanto stai male ??? Salute (1-100)
+extern  int       DDP;              // DueDiPicche counter
+extern  int       Fortuna;          // Fortuna del tabbozzo (1-100)
+
+extern  int       tempo_pestaggio;  // Tempo trascorso da un pestaggio
+extern  int       AttesaSoldi;      // Tempo prima che la famiglia ti dia altri soldi...
+
+extern  char      sesso;            // M/F
+extern  char      ao;               // lettera in funzione del sesso (tabbozza/tabbozzo)
+extern  char      un_una[];         // articolo in funzione del sesso (un/una)
+
+
+/* Parametri Lavoro */
+extern  int       numeroditta;        // Ditta in cui sei impiegato (-1 se disoccupato)
+extern  int       impegno;            // Impegno sul lavoro (1-100)
+extern  int       giorni_di_lavoro;   // Serve x calcolare lo stipendio SOLO per il primo mese...
+extern  int       stipendio;          // Stipendio mensile
+
+
+/* Accessori */
 extern  int       current_testa;      // Grado di abbronzatura del tabbozzo
-extern  int       current_gibbotto;   // Vestiti attuali del tabbozzo...
-extern  int       current_pantaloni;
-extern  int       current_scarpe;
-extern  int       current_tipa;
-extern  int       sound_active;
-extern  int       euro;
-extern  char      sesso;              // M/F
-extern  char      ao;                 // lettera in funzione del sesso (tabbozza/tabbozzo)
-extern  char      un_una[];
+extern  int       current_gibbotto;   // Giubbotto attuale del tabbozzo
+extern  int       current_pantaloni;  // Pantaloni attuali del tabbozzo
+extern  int       current_scarpe;     // Scarpe attuali del tabbozzo
+extern  int       current_tipa;       // Abbigliamento della tipa (nella finestra tipa)
+extern  int       sizze;              // Numero di sigarette
+
+
+/* Parametri Scooter */
+extern  int       benzina;
 extern  char      *n_attivita[];      // situazione scooter 
+extern  int       antifurto;          // NON IMPLEMENTATO
+
+
+/* Opzioni */
+extern  int       sound_active;       // Abilita i suoni
+extern  int       euro;               // Usa euro anzichè lire
+
 
 /* Supporto Rete */
 #ifndef NONETWORK
@@ -317,7 +330,6 @@ extern  void  nomoney(int tipo);
 //TAG2015 quelle sotto x ora commentate ma servono
 // extern  void  TabbozPlaySound(int number);
 //extern  void   CalcolaVelocita(HANDLE hDlg);
-//extern  void Evento(HWND hWnd);
 //extern  void RunPalestra(HWND hDlg);
 //extern  void RunTabacchi(HWND hDlg);
 //extern  void RunVestiti(HWND hDlg,int numero);

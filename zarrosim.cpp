@@ -60,7 +60,7 @@
 
 static const char *dir_profilo = "TabbozNG";
 static const char *file_profilo = "TabbozNG";
-char              nome_del_file_su_cui_salvare[STR_MAX]="dummy.tbz";  // TAG2015 per ora non usato
+char              path_profilo[STR_MAX]="dummy.tbz";  // FIMXE Path e file dove salvare (per ora non usato)
 
 
 //extern void     Atinom(HANDLE hInstance);  //visualizza messaggio extra in about
@@ -87,49 +87,61 @@ STABB AbbonamentData;
 /* PRIMA LE VARIABILI GENERIKE... */
 
 int     cheat;
-int     scelta;
 char    Andrea[14];
 char    Caccia[21];
 char    Daniele[17];
 char    Obscured[29];
 int     firsttime;
+int     fase_di_avvio;
 int     ImgSelector;
 int     TabbozRedraw;
-int     ScuolaRedraw;
 
-/* DOPO LE CARATTERISTIKE */
+/* DOPO LE CARATTERISTIKE... */
 
-int     Attesa;         // Tempo prima che ti diano altri soldi...
 int     Fama;
 int     Reputazione;
-int     Studio;         // Quanto vai bene a scuola (1 - 100)
+int     Studio;
 int     Soldi;
-int     Paghetta;       // Paghetta Settimanale...
-char    Nome[30];       // Nome del Tabbozzo
-char    Cognome[30];    // Cognome del Tabbozzo
-char    Nometipa[30];   // Nome della tipa
+int     Paghetta;
+char    Nome[30];
+char    Cognome[30];
+int     comp_giorno;
+int     comp_mese;
+char    Nometipa[30];
 char    City[50];       // Citta' di nascita
 char    Residenza[50];  // Citta' dove vive
 char    Street[50];     // Dove sto' tipo abita
-int     FigTipa;        // Figosita' della tipa
-int     Rapporti;       // Rapporti Tipo <-> Tipa
-int     Stato;          // Quanto stai male ???
-int     DDP;            // Due di picche (log...) - long,sono ottimista...
-int     Fortuna;        // Fortuna del tabbozzo
-int     sizze;          // Numero di sigarette
+int     FigTipa;
+int     Rapporti;
+int     Stato;
+int     DDP;
+int     Fortuna;
+
 int     tempo_pestaggio;
+int     AttesaSoldi;
+
+char    sesso;
+char    ao;
+char    un_una[4];
+
+
+/* Accessori */
+
 int     current_testa;
 int     current_gibbotto;
 int     current_pantaloni;
 int     current_scarpe;
 int     current_tipa;
+int     sizze;
 
-int     comp_giorno;
-int     comp_mese;
 
-int     timer_active;
-int     fase_di_avvio;
+/* Opzioni */
+
+int     euro;
+int     timer_active;       // Abilita il timer
 int     sound_active;
+int     intro_active;       // Visualizza schermata introduttiva
+
 
 #ifdef DEADCODE
     HANDLE    hInst;                    // hInstance dell'applicazione
@@ -150,13 +162,7 @@ int     sound_active;
     HANDLE  hModule;
 #endif
 
-int     euro;
-char    sesso;
-char    ao;
-char    un_una[4];
-
 static  int  t_random;              // Attesa a random tra i vari eventi timer
-static  int  STARTcmdShow;
 
 static  char boolean_shutdown;
 
@@ -178,7 +184,6 @@ static void CalcolaSesso(void)
 void ResetMe(int primavolta)
 {
     int   i;
-    char  tmp[128];
 
     TabbozRedraw      =    1;
     Soldi             =   10;
@@ -194,7 +199,7 @@ void ResetMe(int primavolta)
     strcpy(Residenza,"Milano");
     Nometipa[0]=0;
 
-//FIXME come funziona?
+//FIXME Carica random di città/via dalla lista stringhe
 //   LoadString(hInst, (400 + random(22) ), City, (sizeof(City)-1));
 //    LoadString(hInst, (450 + random(50) ), tmp, (sizeof(tmp)-1));
 //    sprintf(Street,"%s n. %d",tmp,(1 + random(150)));
@@ -217,7 +222,7 @@ void ResetMe(int primavolta)
 
 
     if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
-        STARTcmdShow        =  1;
+        intro_active        =  1;
         timer_active        =  1;
         sound_active        =  1;
         euro                =  0;
@@ -320,7 +325,7 @@ static void InitTabboz(void)
 
     // #endif
 
-    nome_del_file_su_cui_salvare[0]=0;
+    path_profilo[0]=0;
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
     // Inizializzazione dei numeri casuali...
@@ -333,7 +338,7 @@ static void InitTabboz(void)
     #ifndef TAG2015_NOSCOOTER
         ScooterData=ScooterMem[0];        /* nessuno scooter              */
     #endif
-    Attesa=ATTESAMAX;                 /* attesa per avere soldi...    */
+    AttesaSoldi=ATTESAMAX;                 /* attesa per avere soldi...    */
     ImgSelector=0;                    /* W l' arte di arrangiarsi...  */
     timer_active=1;
     fase_di_avvio=1;
@@ -383,7 +388,7 @@ static void InitTabboz(void)
         //         FineProgramma("config");
         //         exit(0);
         //     }
-        // if (STARTcmdShow)
+        // if (intro_active)
         //     DialogBox(hInst,MAKEINTRESOURCE(LOGO),NULL,Logo);
         
         // /* Formattazione iniziale Tabbozzo */
@@ -539,8 +544,8 @@ static void CaricaTutto(void)
 
     CalcolaSesso();
 
-    TabbozProfilo.get("STARTcmdShow",STARTcmdShow,-1);
-    if (STARTcmdShow < 0) STARTcmdShow=1;
+    TabbozProfilo.get("IntroActive",intro_active,-1);
+    if (intro_active < 0) intro_active=1;
 
     TabbozProfilo.get("TimerActive",timer_active,-1);
     if (timer_active < 0) timer_active=1;
@@ -656,7 +661,7 @@ void FineProgramma(char const *caller)
             }
     #endif
 
-    if (nome_del_file_su_cui_salvare[0] == 0) {
+    if (path_profilo[0] == 0) {
         /* Salva lo stato del tabbozzo */
         /* 0.8.1pr 29 Novembre 1998 Ora non salva piu' nel WIN.INI con WriteProfileString,
         ma salva nel registro di configurazione... */
@@ -732,7 +737,7 @@ static void SalvaTutto(void) {
 
     /* salva opzioni */
     TabbozProfilo.set("Euro", euro);
-    TabbozProfilo.set("STARTcmdShow", STARTcmdShow);
+    TabbozProfilo.set("IntroActive", intro_active);
     TabbozProfilo.set("TimerActive", timer_active);
     TabbozProfilo.set("SoundActive", sound_active);
 
@@ -1054,7 +1059,7 @@ static void SalvaTutto(void) {
 //         temp_debug=debug_active;
 // #endif
 
-//         if (STARTcmdShow)
+//         if (intro_active)
 //             SendMessage(GetDlgItem(hDlg, 106), BM_SETCHECK, TRUE, 0L);
 //         if (euro)
 //             SendMessage(GetDlgItem(hDlg, 107), BM_SETCHECK, TRUE, 0L);
@@ -1088,7 +1093,7 @@ static void SalvaTutto(void) {
 //         case 104: Fortuna= 5; return(TRUE);
 //         case 105: Fortuna= 0; return(TRUE);
 //         case 106:
-//             STARTcmdShow=!STARTcmdShow;
+//             intro_active=!intro_active;
 //             return(TRUE);
 //         case 107:
 //             euro=!euro;
@@ -1896,6 +1901,7 @@ void CalcolaStudio()
     Studio=x.quot;
 }
 
+
 /* Converte la variabile soldi (in "millini") in stringa aggiungendo zeri
 *  se è abilitato l'euro, semplicemente divide per 2 */
 char *MostraSoldi(int i)
@@ -1912,23 +1918,23 @@ char *MostraSoldi(int i)
     return tmp;
 }
 
-/*********************************************************************/
-//TAG2015 questa verrà implementata direttamente nella gui
-// void Atinom(HANDLE hInstance)
-// {
 
-//     MessageBox( hInstance,
-// "Il biglietto e' valido solo dopo la convalida.Il biglietto deve essere conservato per tutta la durata \
-// del viaggio. Il diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto. \
-// Il passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile, \
-// o comunque non valido, verra' abbattuto. La notifica del decesso verra' inviata ai parenti solo previo pagamento \
-// delle spese postali.", "Norme di utilizzo", MB_OK | MB_ICONINFORMATION);
+/* FIXME questa verrà implementata direttamente nella gui
+void Atinom(HANDLE hInstance)
+ {
 
-// }
+     MessageBox( hInstance, "Il biglietto e' valido solo dopo la convalida.Il biglietto deve essere conservato per tutta la durata \
+ del viaggio. Il diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto. \
+ Il passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile, \
+ o comunque non valido, verra' abbattuto. La notifica del decesso verra' inviata ai parenti solo previo pagamento \
+ delle spese postali.", "Norme di utilizzo", MB_OK | MB_ICONINFORMATION);
 
-/*********************************************************************/
+}
+*/
 
-int vvc(int i)  //Verifica Valori Chiave (se tra min e max)
+
+/* Verifica Valori Chiave (se tra min e max) */
+int vvc(int i)
 {
     if ( i < 0)
         return 0;
@@ -2039,63 +2045,63 @@ int main (int argc, char **argv)
 
 #endif
 
-/* TAG2015 dialog salva/carica sono già presenti in fltk */
 
+#ifdef DEADCODE
 //*******************************************************************
 // Dialog x la scelta del file da aprire...
 //*******************************************************************
 
-// void OpenFileDlg(HWND hwnd)
-// {
-// #define OFN_LONGNAMES      0x00200000L
+void OpenFileDlg(HWND hwnd)
+{
+#define OFN_LONGNAMES      0x00200000L
 
-//   static char szFileName[MAX_PATH];
-//   static OPENFILENAME ofn;
-//   memset(&(ofn), 0, sizeof(OPENFILENAME));
+  static char szFileName[MAX_PATH];
+  static OPENFILENAME ofn;
+  memset(&(ofn), 0, sizeof(OPENFILENAME));
 
-//   ofn.lStructSize = sizeof(OPENFILENAME);
-//   ofn.hwndOwner = hwnd;
-//   ofn.hInstance = hInst;
-//   ofn.lpstrFile = szFileName;
-//   ofn.nMaxFile = MAX_PATH;
-//   ofn.lpstrDefExt = "tbz";
-//   ofn.lpstrFilter = "Tabboz Files (*.tbz)\000*.tbz\000";
-//   ofn.Flags = OFN_HIDEREADONLY | OFN_LONGNAMES | OFN_FILEMUSTEXIST;
+  ofn.lStructSize = sizeof(OPENFILENAME);
+  ofn.hwndOwner = hwnd;
+  ofn.hInstance = hInst;
+  ofn.lpstrFile = szFileName;
+  ofn.nMaxFile = MAX_PATH;
+  ofn.lpstrDefExt = "tbz";
+  ofn.lpstrFilter = "Tabboz Files (*.tbz)\000*.tbz\000";
+  ofn.Flags = OFN_HIDEREADONLY | OFN_LONGNAMES | OFN_FILEMUSTEXIST;
 
-//   if(GetOpenFileName(&ofn)) {
-//         strcpy(nome_del_file_su_cui_salvare,szFileName);
-//         CaricaTutto();
-//         nome_del_file_su_cui_salvare[0]='\0';
-//   }
-// }
+  if(GetOpenFileName(&ofn)) {
+        strcpy(nome_del_file_su_cui_salvare,szFileName);
+        CaricaTutto();
+        nome_del_file_su_cui_salvare[0]='\0';
+  }
+}
 
-//*******************************************************************
-// Dialog x la scelta del file da salvare...
-//*******************************************************************
+/*******************************************************************
+Dialog x la scelta del file da salvare...
+*******************************************************************/
 
-// void SaveFileDlg(HWND hwnd)
-// {
-// #define OFN_LONGNAMES      0x00200000L
-//   static char szFileName[256];
-//   static    OPENFILENAME ofn;
-//   memset(&(ofn), 0, sizeof(OPENFILENAME));
+void SaveFileDlg(HWND hwnd)
+{
+#define OFN_LONGNAMES      0x00200000L
+  static char szFileName[256];
+  static    OPENFILENAME ofn;
+  memset(&(ofn), 0, sizeof(OPENFILENAME));
 
-//   ofn.lStructSize = sizeof(OPENFILENAME);
-//   ofn.hwndOwner = hwnd;
-//   ofn.hInstance = hInst;
-//   ofn.lpstrFile = szFileName;
-//   ofn.nMaxFile = sizeof(szFileName);
-//   ofn.lpstrDefExt = "tbz";
-//   ofn.lpstrFilter = "Tabboz Files (*.tbz)\000*.tbz\000";
-//   ofn.Flags = OFN_HIDEREADONLY | OFN_LONGNAMES | OFN_OVERWRITEPROMPT | OFN_NOTESTFILECREATE;
+  ofn.lStructSize = sizeof(OPENFILENAME);
+  ofn.hwndOwner = hwnd;
+  ofn.hInstance = hInst;
+  ofn.lpstrFile = szFileName;
+  ofn.nMaxFile = sizeof(szFileName);
+  ofn.lpstrDefExt = "tbz";
+  ofn.lpstrFilter = "Tabboz Files (*.tbz)\000*.tbz\000";
+  ofn.Flags = OFN_HIDEREADONLY | OFN_LONGNAMES | OFN_OVERWRITEPROMPT | OFN_NOTESTFILECREATE;
 
-//   if(GetSaveFileName(&ofn)) {
-//         strcpy(nome_del_file_su_cui_salvare,szFileName);
-//         SalvaTutto();
-//         nome_del_file_su_cui_salvare[0]='\0';
-//   }
-// }
-
+  if(GetSaveFileName(&ofn)) {
+        strcpy(nome_del_file_su_cui_salvare,szFileName);
+        SalvaTutto();
+        nome_del_file_su_cui_salvare[0]='\0';
+  }
+}
+#endif
 
 // // Inizia la riproduzione di un suono
 // void TabbozPlaySound(int number)
