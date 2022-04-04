@@ -1243,60 +1243,12 @@ static void SalvaTutto(void) {
 // }
 
 
-/********************************************************************/
-/* Warning...                                                       */
-/* 12 Maggio 1998 - Questa funzione non e' piu' usata da anni...    */
-/********************************************************************/
-
-#ifdef DEADCODE
-# pragma argsused
-
-/*    PortTool v2.2     4/8/1999    14:40          */
-/*      Found   : FAR          */
-/*      Issue   : Win32 is non-segmented, thus FAR == NEAR == nothing!          */
-BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-    char          buf[128];
-
-
-    if (message == WM_INITDIALOG)
-    return(TRUE);
-
-
-/*    PortTool v2.2     4/8/1999    14:40          */
-/*      Found   : WM_COMMAND          */
-/*      Issue   : wParam/lParam repacking, refer to tech. ref. for details          */
-     else if (message == WM_COMMAND)
-     {
-
-/*    PortTool v2.2     4/8/1999    14:40          */
-/*      Found   : LOWORD          */
-/*      Issue   : Check if LOWORD target is 16- or 32-bit          */
-    switch (LOWORD(wParam))
-    {
-        case IDOK:
-        EndDialog(hDlg, TRUE);
-        return(TRUE);
-
-         default:
-        return(TRUE);
-    }
-    }
-
-     return(FALSE);
-}
-#endif
-
-
-
-
 /* Routine che gestisce diverse situazioni quando i soldi sono < di quelli richiesti */
 void nomoney(int tipo)
 {
     switch (tipo) {
         
         case DISCO:
-//        sprintf(tmp,"Appena entrat%c ti accorgi di non avere abbastanza soldi per pagare il biglietto.\nUn energumeno buttafuori ti deposita gentilmente in un cassonetto della spazzatura poco distante dalla discoteca.",ao);
             fl_message_title("Bella figura");
             fl_alert("Appena entrat%c ti accorgi di non avere abbastanza soldi per pagare il biglietto.\nUn energumeno buttafuori ti deposita gentilmente in un cassonetto della spazzatura poco distante dalla discoteca.",ao);
             if (Reputazione > 3 )
@@ -1349,7 +1301,6 @@ void nomoney(int tipo)
         case TABACCAIO:
             fl_message_title("Non hai abbastanza soldi...");
             fl_alert("Fai fuori dal mio locale, brut%c pezzente! Esclama il tabaccaio con un AK 47 in mano...",ao);
-        //sprintf(tmp,"Fai fuori dal mio locale, brut%c pezzente !, esclama il tabaccaio con un AK 47 in mano...",ao);
             if (Fama > 2)
                 Fama-=1;
             break;;
@@ -1893,7 +1844,8 @@ void AggiornaPrincipale()
 // }
 
 
-/* Calcola Studio */
+/* Calcola parametro "Studio" sommando i voti di tutte le materie
+* moltiplicando x 10 e dividendo per n.ro materie */
 void CalcolaStudio()
 {
     int i,i2;
@@ -1926,20 +1878,6 @@ char *MostraSoldi(int i)
 }
 
 
-/* FIXME questa verrà implementata direttamente nella gui
-void Atinom(HANDLE hInstance)
- {
-
-     MessageBox( hInstance, "Il biglietto e' valido solo dopo la convalida.Il biglietto deve essere conservato per tutta la durata \
- del viaggio. Il diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto. \
- Il passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile, \
- o comunque non valido, verra' abbattuto. La notifica del decesso verra' inviata ai parenti solo previo pagamento \
- delle spese postali.", "Norme di utilizzo", MB_OK | MB_ICONINFORMATION);
-
-}
-*/
-
-
 /* Verifica Valori Chiave (se tra min e max) */
 int vvc(int i)
 {
@@ -1966,14 +1904,13 @@ int vvc(int i)
 //int PASCAL WinMain(HANDLE hInstance, HANDLE hPrevInstance, LPSTR lpszCmdLine, int cmdShow)
 int main(void)
 {
-    //hInst = hInstance;
 
     /* Inizializza il programma */
     InitTabboz();
 
-    /* Finestra principale */
-    //DialogBox(hInst,MAKEINTRESOURCE(1),NULL,TabbozWndProc);
     fl_register_images();
+
+    /* Finestra principale */
     win_principale = GUITabboz();
     win_principale->show();
     Fl::run();
@@ -2110,6 +2047,37 @@ void SaveFileDlg(HWND hwnd)
 }
 #endif
 
+#ifdef DEADCODE
+# pragma argsused
+/* Warning... - Questa funzione non e' piu' usata da anni...    */
+BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+{
+    char          buf[128];
+
+
+    if (message == WM_INITDIALOG)
+    return(TRUE);
+
+
+     else if (message == WM_COMMAND)
+     {
+
+    switch (LOWORD(wParam))
+    {
+        case IDOK:
+        EndDialog(hDlg, TRUE);
+        return(TRUE);
+
+         default:
+        return(TRUE);
+    }
+    }
+
+     return(FALSE);
+}
+#endif
+
+
 // // Inizia la riproduzione di un suono
 // void TabbozPlaySound(int number)
 // {
@@ -2127,6 +2095,18 @@ void SaveFileDlg(HWND hwnd)
 // }
 
 
+/* FIXME questa verrà implementata direttamente nella gui
+void Atinom(HANDLE hInstance)
+ {
+
+     MessageBox( hInstance, "Il biglietto e' valido solo dopo la convalida.Il biglietto deve essere conservato per tutta la durata \
+ del viaggio. Il diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto. \
+ Il passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile, \
+ o comunque non valido, verra' abbattuto. La notifica del decesso verra' inviata ai parenti solo previo pagamento \
+ delle spese postali.", "Norme di utilizzo", MB_OK | MB_ICONINFORMATION);
+
+}
+*/
 
 //*******************************************************************
 // Copyright (c) 1997-2000 Andrea Bonomi
