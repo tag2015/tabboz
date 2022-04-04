@@ -315,15 +315,6 @@ static void InitTabboz(void)
 {
     char tmp[128];
     
-    // #ifdef TABBOZ_WIN
-    //     FARPROC        lpproc;
-
-    // // Init della liberia grafica...
-    // BWCCRegister(hInst); // Fanculo ! Mi sono magiato il fegato prima di trovare
-    // // questa funzione ! non c'e' nessuno documento fottuto che mi abbia aiutato !
-
-    // #endif
-
     path_profilo[0]=0;
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
@@ -1374,6 +1365,7 @@ void nomoney(int tipo)
 
 // }
 
+
 /* Aggiorna Finestra Principale*/
 void AggiornaPrincipale()
 {
@@ -1888,18 +1880,8 @@ int vvc(int i)
             return (i);
 }
 
-/*********************************************************************/
 
-
-
-//*******************************************************************
-// PROCEDURA PRINCIPALE per la versione Windows.
-// TAG2015 adesso è portabile, define andrebbero editati
-
-#ifdef TABBOZ_WIN
-
-//#pragma argsused
-//int PASCAL WinMain(HANDLE hInstance, HANDLE hPrevInstance, LPSTR lpszCmdLine, int cmdShow)
+/* PROCEDURA PRINCIPALE */
 int main(void)
 {
 
@@ -1946,49 +1928,6 @@ int main(void)
     }
     return 0;
 }
-#endif
-
-
-//*******************************************************************
-// 'Possibile' main per Linux usando le GTK+
-
-/* TAG2015 visto che abbiamo optato per fltk queste non servono ma la
-* ifdef per linux tanto vale tenerla per ora
-*/
-
-#ifdef LINUX
-
-int main (int argc, char **argv)
- {
-    /* Initialize i18n support */
-    gtk_set_locale();
-
-    /* Initialize the widget set */
-    gtk_init (&argc, &argv);
-
-    /* Inizializza il programma */
-    InitTabboz();
-
-    /* Create the main window */
-    mainwin = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-
-    /* Set up our GUI elements */
-    ...
-
-    /* Show the application window */
-    gtk_widget_showall (mainwin);
-
-    /* Let the user interact with our application */
-    gtk_main();
-
-    /* Chiusura */
-
-   // salvataggio partita...
-
-    gtk_exit (0);
- }
-
-#endif
 
 
 #ifdef DEADCODE
@@ -2077,7 +2016,6 @@ BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
      return(FALSE);
 }
 #endif
-
 
 
 /* FIXME questa verrà implementata direttamente nella gui
