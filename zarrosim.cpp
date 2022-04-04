@@ -25,7 +25,6 @@
 #include <string.h>
 #include <time.h>
 
-//#include <mmsystem.h> // Per sndPlaySound
 
 #include "zarrosim.h"
 
@@ -75,8 +74,6 @@ extern int      vvc(int i);
 static void     SalvaTutto(void);
 static void     CaricaTutto(void);
 
-// void TabbozPlaySound(int number)
-// void SpegniISuoni()
 
 /* FIXME spostare al posto giusto dopo implementazione scooter */
 NEWSTSCOOTER ScooterData;
@@ -2077,22 +2074,6 @@ BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 }
 #endif
 
-
-// // Inizia la riproduzione di un suono
-// void TabbozPlaySound(int number)
-// {
-//     char filename[20];
-//     sprintf(filename,"Tabs%04d.Wav",number);
-//     sndPlaySound(filename, SND_ASYNC | SND_NODEFAULT);
-// };
-
-
-
-// void SpegniISuoni()
-// {
-//     PlaySound(NULL,NULL,0x0040);
-// //    PlaySound(NULL,NULL,SND_PURGE);
-// }
 
 
 /* FIXME questa verrà implementata direttamente nella gui

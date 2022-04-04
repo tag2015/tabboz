@@ -328,7 +328,6 @@ extern  void  nomoney(int tipo);
 
 
 //TAG2015 quelle sotto x ora commentate ma servono
-// extern  void  TabbozPlaySound(int number);
 //extern  void   CalcolaVelocita(HANDLE hDlg);
 //extern  void RunPalestra(HWND hDlg);
 //extern  void RunTabacchi(HWND hDlg);
