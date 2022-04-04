@@ -19,21 +19,21 @@
 */
 
 #include "os.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
 #include "zarrosim.h"
-static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+
+#include "negozi.h"
+
+//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 
-extern void EventiPalestra(HANDLE hInstance);
-BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-void PagaQualcosa(HWND parent);
 
 /* Per una questione di svogliatezza del programmatore, viene usata STSCOOTER anche x i vestiti. */
-
 STSCOOTER VestitiMem[] =
     {   {0,  0, 0, 0, 0, 0,   0,  0,"---"},
          {0,  0, 0, 8, 0, 0, 348,  0,""},// -- Giubbotto "Fatiscenza"
@@ -57,42 +57,33 @@ STSCOOTER VestitiMem[] =
          {0,  0, 0, 6, 0, 0, 230,  0,""}}; //    Nuove Buffalo
 
 
-/* Abbonamenti Palestra ---------------------------------------------------------------------------- */
-
-STSCOOTER PalestraMem[] =
-    {   {0,  0, 0, 0, 0, 0,  50,  0,""},        // Un mese    21 Apr 1998
-         {0,  0, 0, 8, 0, 0, 270,  0,""},        // Sei mesi
-         {0,  0, 0, 9, 0, 0, 500,  0,""},        // Un anno
-         {0,  0, 0, 9, 0, 0,  14,  0,""} };        // Una lampada
-
 /* Sigarette --------------------------------------------------------------------------------------- */
-
-STSCOOTER SizeMem[] =
-    {  { 5,  5, 0, 2, 0, 0,   6,  0,"Barclay"},
-        { 8,  7, 0, 1, 0, 0,   6,  0,"Camel"},
-        { 7,  6, 0, 2, 0, 0,   6,  0,"Davidoff Superior Lights"},
-        { 7,  6, 0, 2, 0, 0,   6,  0,"Davidoff Mildnes"},
-        {13,  9, 0, 2, 0, 0,   6,  0,"Davidoff Classic"},
-        { 9,  7, 0, 1, 0, 0,   5,  0,"Diana Blu"},
-        {12,  9, 0, 1, 0, 0,   5,  0,"Diana Rosse"},
-        { 8,  7, 0, 0, 0, 0,   6,  0,"Dunhill Lights"},
-        { 7,  5, 0, 0, 0, 0,   6,  0,"Merit"},
-        {14, 10, 0, 0, 0, 0,   6,  0,"Gauloises Blu"},
-        { 7,  6, 0, 0, 0, 0,   6,  0,"Gauloises Rosse"},
-        {13, 10, 0, 1, 0, 0,   6,  0,"Unlucky Strike"},
-        { 9,  7, 0, 1, 0, 0,   6,  0,"Unlucky Strike Lights"},
-        { 8,  6, 0, 2, 0, 0,   6,  0,"Malborro Medium"},    // dovrebbero essere come le lights 4 Marzo 1999
-        {12,  9, 0, 2, 0, 0,   6,  0,"Malborro Rosse"},
-        { 8,  6, 0, 2, 0, 0,   6,  0,"Malborro Lights"},
-        {11, 10, 0, 0, 0, 0,   5,  0,"NS Rosse"},
-        { 9,  8, 0, 0, 0, 0,   5,  0,"NS Mild"},
-        { 9,  7, 0, 1, 0, 0,   5,  0,"Poll Mon Blu"},
-        {12,  9, 0, 1, 0, 0,   5,  0,"Poll Mon Rosse"},
-        {12, 10, 0, 2, 0, 0,   6,  0,"Philip Morris"},
-        { 4,  4, 0, 2, 0, 0,   6,  0,"Philip Morris Super Light"},
-        {10,  9, 0, 1, 0, 0,   5,  0,"Armadis"},
-        {11,  9, 0, 0, 0, 0,   5,  0,"Winston"} };
-/*                                    */
+STSCOOTER SizeMem[] = {
+    { 5,  5, 0, 2, 0, 0,   6,  0,"Barclay"},
+    { 8,  7, 0, 1, 0, 0,   6,  0,"Camel"},
+    { 7,  6, 0, 2, 0, 0,   6,  0,"Davidoff Superior Lights"},
+    { 7,  6, 0, 2, 0, 0,   6,  0,"Davidoff Mildnes"},
+    {13,  9, 0, 2, 0, 0,   6,  0,"Davidoff Classic"},
+    { 9,  7, 0, 1, 0, 0,   5,  0,"Diana Blu"},
+    {12,  9, 0, 1, 0, 0,   5,  0,"Diana Rosse"},
+    { 8,  7, 0, 0, 0, 0,   6,  0,"Dunhill Lights"},
+    { 7,  5, 0, 0, 0, 0,   6,  0,"Merit"},
+    {14, 10, 0, 0, 0, 0,   6,  0,"Gauloises Blu"},
+    { 7,  6, 0, 0, 0, 0,   6,  0,"Gauloises Rosse"},
+    {13, 10, 0, 1, 0, 0,   6,  0,"Unlucky Strike"},
+    { 9,  7, 0, 1, 0, 0,   6,  0,"Unlucky Strike Lights"},
+    { 8,  6, 0, 2, 0, 0,   6,  0,"Malborro Medium"},    // dovrebbero essere come le lights
+    {12,  9, 0, 2, 0, 0,   6,  0,"Malborro Rosse"},
+    { 8,  6, 0, 2, 0, 0,   6,  0,"Malborro Lights"},
+    {11, 10, 0, 0, 0, 0,   5,  0,"NS Rosse"},
+    { 9,  8, 0, 0, 0, 0,   5,  0,"NS Mild"},
+    { 9,  7, 0, 1, 0, 0,   5,  0,"Poll Mon Blu"},
+    {12,  9, 0, 1, 0, 0,   5,  0,"Poll Mon Rosse"},
+    {12, 10, 0, 2, 0, 0,   6,  0,"Philip Morris"},
+    { 4,  4, 0, 2, 0, 0,   6,  0,"Philip Morris Super Light"},
+    {10,  9, 0, 1, 0, 0,   5,  0,"Armadis"},
+    {11,  9, 0, 0, 0, 0,   5,  0,"Winston"}
+};
 /*        |   |                            */
 /*        |   \nicotina * 10 ( 7 = nicotina 0.7, 10 = nicotina 1 )    */
 /*          \condensato                            */
@@ -402,179 +393,6 @@ BOOL FAR PASCAL Tabaccaio(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 }
 
 
-
-//*******************************************************************
-// Palestra ! (che centra tra i vestiti ??? Come procedura e' simile...)
-//*******************************************************************
-
-static void AggiornaPalestra(HWND parent)
-{
-char tmp[128];
-
-    SetDlgItemText(parent, 104, MostraSoldi(Soldi));
-    sprintf(tmp, "%d/100", Fama);
-    SetDlgItemText(parent, 105, tmp);
-
-    if (scad_pal_giorno < 1) {
-        sprintf(tmp, "Nessun Abbonamento");
-        SetDlgItemText(parent, 106, tmp);
-    } else {
-         sprintf(tmp, "Scadenza abbonamento: %d %s",scad_pal_giorno,InfoMese[scad_pal_mese-1].nome);
-         SetDlgItemText(parent, 106, tmp);
-    }
-
-    // Scrive il grado di abbronzatura... 4 Marzo 1999
-    switch (current_testa) {
-    case  1: sprintf(tmp,"Abbronzatura Lieve");      break;
-    case  2: sprintf(tmp,"Abbronzatura Media");    break;
-    case  3: sprintf(tmp,"Abbronzatura Pesante");  break;
-    case    4: sprintf(tmp,"Carbonizzat%c...",ao);   break;
-    default: sprintf(tmp,"Non abbronzat%c",ao);
-    }
-    SetDlgItemText(parent, 107, tmp);
-}
-
-//*******************************************************************
-
-# pragma argsused
-BOOL FAR PASCAL Palestra(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-// Costi... (migliaia di lire)
-#define UN_MESE        50
-#define SEI_MESI    270
-#define UN_ANNO        500
-
-     char          tmp[128];
-     int          i;
-
-     if (message == WM_INITDIALOG) {
-    AggiornaPalestra(hDlg);
-    for (i=0; i<4; i++)
-        SetDlgItemText(hDlg, 120 + i , MostraSoldi(PalestraMem[i].prezzo));
-
-    return(TRUE);
-    }
-
-     else if (message == WM_COMMAND)
-     {
-    switch (wParam)
-    {
-
-         case 110:    // Vai in palestra
-        if (scad_pal_giorno < 1) {
-              MessageBox( hDlg,
-                    "Prima di poter venire in palestra devi fare un abbonamento !",
-                    "Palestra", MB_OK | MB_ICONINFORMATION);
-        } else {
-              if (sound_active) TabbozPlaySound(201);
-              if (Fama < 82) Fama++;
-              EventiPalestra(hDlg);
-              AggiornaPalestra(hDlg);
-              /* Evento(hDlg); */
-
-        }
-        return(TRUE);
-
-         case 111:    // Lampada
-            if (PalestraMem[3].prezzo > Soldi) {
-                nomoney(hDlg,PALESTRA);
-            } else {
-                if (current_testa < 3) {
-                    current_testa++; // Grado di abbronzatura
-                    if (Fama < 20) Fama++;    // Da 0 a 3 punti in piu' di fama
-                    if (Fama < 45) Fama++;    // ( secondo quanta se ne ha gia')
-                    if (Fama < 96) Fama++;
-                } else {
-                    current_testa=4; // Carbonizzato...
-                    if (Fama > 8) Fama-=8;
-                    if (Reputazione > 5) Reputazione-=5;
-                    MessageBox( hDlg, "L' eccessiva esposizione del tuo corpo ai raggi ultravioletti,\
- provoca un avanzato grado di carbonizzazione e pure qualche piccola mutazione genetica...", "Lampada", MB_OK  | MB_ICONSTOP);
-                }
-                TabbozRedraw = 1;    // E' necessario ridisegnare l' immagine del Tabbozzo...
-
-                if (sound_active) TabbozPlaySound(202);
-                Soldi-=PalestraMem[3].prezzo;
-                #ifdef TABBOZ_DEBUG
-                sprintf(tmp,"lampada: Paga %s",MostraSoldi(PalestraMem[3].prezzo));
-                writelog(tmp);
-                #endif
-            }
-            i=random(5 + Fortuna);
-            if (i==0) Evento(hDlg);
-            AggiornaPalestra(hDlg);
-            return(TRUE);
-
-         case 115:    // Abbonamenti
-         case 116:
-         case 117:
-        if (scad_pal_giorno > 0 ) {
-                  MessageBox( hDlg,
-                    "Hai gia' un abbonamento, perche' te ne serve un altro ???",
-                    "Palestra", MB_OK | MB_ICONINFORMATION);
-                  return(TRUE);
-            }
-
-        if (PalestraMem[wParam-115].prezzo > Soldi) {
-            nomoney(hDlg,PALESTRA);
-            return(TRUE);
-        } else {
-            Soldi-= PalestraMem[wParam-115].prezzo;
-            #ifdef TABBOZ_DEBUG
-            sprintf(tmp,"palestra: Paga %s",MostraSoldi(PalestraMem[wParam-115].prezzo));
-            writelog(tmp);
-            #endif
-        }
-
-        switch (wParam)
-        {
-        case 115: scad_pal_mese = x_mese + 1;      // UN MESE
-              scad_pal_giorno = x_giorno;
-              if (scad_pal_mese > 12) scad_pal_mese-=12;
-              // Quello che segue evita che la palestra scada un giorno tipo il 31 Febbraio
-              if (scad_pal_giorno > InfoMese[scad_pal_mese-1].num_giorni) scad_pal_giorno = InfoMese[scad_pal_mese-1].num_giorni;
-            break;;
-
-        case 116: scad_pal_mese = x_mese + 6;      // SEI MESI
-              scad_pal_giorno = x_giorno;
-              if (scad_pal_mese > 12) scad_pal_mese-=12;
-              // Quello che segue evita che la palestra scada un giorno tipo il 31 Febbraio
-              if (scad_pal_giorno > InfoMese[scad_pal_mese-1].num_giorni) scad_pal_giorno = InfoMese[scad_pal_mese-1].num_giorni;
-            break;;
-
-        case 117: scad_pal_mese = x_mese;          // UN ANNO ( meno un giorno...)
-              scad_pal_giorno = x_giorno - 1;
-              if ( scad_pal_giorno < 1) {
-                scad_pal_mese--;
-                if ( scad_pal_mese < 1) scad_pal_mese+=12;
-                scad_pal_giorno=InfoMese[scad_pal_mese-1].num_giorni;
-              }
-            break;;
-        }
-
-        Evento(hDlg);
-        AggiornaPalestra(hDlg);
-        return(TRUE);
-
-
-         case IDCANCEL:
-        EndDialog(hDlg, TRUE);
-        return(TRUE);
-
-         case IDOK:
-        EndDialog(hDlg, TRUE);
-        return(TRUE);
-
-         default:
-        return(TRUE);
-    }
-     }
-
-     return(FALSE);
-}
-
-
-
 void RunTabacchi(HWND hDlg)
 {
      FARPROC       lpproc;
@@ -593,6 +411,7 @@ void RunTabacchi(HWND hDlg)
      }
 }
 
+
 void RunPalestra(HWND hDlg)
 {
      FARPROC       lpproc;
@@ -610,6 +429,7 @@ void RunPalestra(HWND hDlg)
                 "Palestra", MB_OK | MB_ICONINFORMATION);
      }
 }
+
 
 void RunVestiti(HWND hDlg,int numero)
 {
@@ -639,37 +459,3 @@ void RunVestiti(HWND hDlg,int numero)
                 "Vestiti", MB_OK | MB_ICONINFORMATION);
     }
 }
-
-
-
-/********************************************************************/
-/* EVENTI PALESTRA - 14 Luglio 1998                                 */
-/********************************************************************/
-
-void EventiPalestra(HANDLE hInstance)
-{
-int i;
-char messaggio[128];
-
-    i=random(29 + (Fortuna / 2));
-
-    if (i > 9) return;    /* eventi: 0 - 10) */
-
-    LoadString(hInst, (1100 + i), (LPSTR)messaggio, 255);
-
-    MessageBox( hInstance,
-    (LPSTR)messaggio,
-        "Palestra...", MB_OK | MB_ICONSTOP);
-
-    if (Reputazione > 10)
-        Reputazione-=4;
-
-
-#ifdef TABBOZ_DEBUG
-    writelog("eventi: Evento riguardante la palestra");
-#endif
-
-}
-
-
-
