@@ -34,6 +34,7 @@
 
 #include "calendario.h"
 #include "eventi.h"
+#include "sound.h"
 
 #include "disco.h"
 
@@ -91,13 +92,13 @@ void PagaDisco(int scelta)
         nomoney(DISCO);
     else
         if ((DiscoMem[scelta].fama > Fama) && (sesso == 'M')) {    // check selezione all'ingresso
-            if (sound_active) //TabbozPlaySound(302); FIXME Suoni
+            if (sound_active) TabbozPlaySound(302);
             fl_message_title("Selezione all'ingresso");
             fl_alert("Mi dispiace signore, conciato così, qui non può entrare...\nVenga vestito meglio la prossima volta, signore.");
             if (Reputazione > 2) Reputazione--;
             if (Fama > 2) Fama--;
         } else {
-            if (sound_active) // TabbozPlaySound(303 + random(3));  // suoni: 0303 -> 0305 FIXME SUONI
+            if (sound_active) TabbozPlaySound(303 + rand() % 3);  // suoni: 0303 -> 0305
             Soldi-= prezzo;
             #ifdef LOGGING
                 sprintf(tmp,"discoteca: Paga %s",MostraSoldi(DiscoMem[scelta].costo));

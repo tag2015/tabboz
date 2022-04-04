@@ -29,6 +29,7 @@
 #include "debug.h"
 
 #include "eventi.h"
+#include "sound.h"
 
 #include "famiglia.h"
 #include "gui/GUIFamiglia.h"
@@ -99,7 +100,7 @@ void ChiediSoldiExtra(void)
 /* Chiedi 100k a papà */
 void ChiediSoldiPapa(void)
 {
-    if (sound_active) //TabbozPlaySound(801);  FIXME Sound
+    if (sound_active) TabbozPlaySound(801);
     fl_message_title("Errore irrecuperabile");
     fl_alert("Non pensarci neanche lontanamente...");
     Evento();

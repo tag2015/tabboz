@@ -1890,8 +1890,8 @@ int main(void)
 
     fl_register_images();
 
-    /* FIMXE suono di prova */
-    TabbozPlaySound(1500);
+    /* FIXME suono di prova */
+    TabbozPlaySound(0000);
 
     /* Finestra principale */
     win_principale = GUITabboz();

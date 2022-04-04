@@ -28,6 +28,7 @@
 #include "global.h"
 #include "scuola.h"
 #include "calendario.h"
+#include "sound.h"
 #include "debug.h"
 
 #include "eventi.h"
@@ -118,7 +119,7 @@ void Evento()
             #endif
 
             if (Studio >= 80) {
-                // if (sound_active) TabbozPlaySound(1100);  FIXME Suono
+                if (sound_active) TabbozPlaySound(1100);
                 Soldi+=Paghetta;
                 #ifdef TABBOZ_DEBUG
                     writelog("eventi: Paghetta doppia !!!");
@@ -128,7 +129,7 @@ void Evento()
             }
         
         } else {  // Studio < 45
-            //if (sound_active) TabbozPlaySound(1200); FIXME Suono
+            if (sound_active) TabbozPlaySound(1200);
             Soldi+=(Paghetta / 2);
             #ifdef TABBOZ_DEBUG
                 sprintf(tmp,"eventi: Meta' paghetta (%s)...",MostraSoldi(Paghetta));
@@ -151,7 +152,7 @@ void Evento()
         if (Rapporti < 98) {
             i=rand() % (((Rapporti + Fortuna + Fama )* 3) + 1);
             if (i < 10) {                    /* da 1 a 10, la donna ti molla... */
-                //if (sound_active) TabbozPlaySound(603); FIXME: Suono
+                if (sound_active) TabbozPlaySound(603);
                 Rapporti=0;
                 FigTipa=0;
                 if (sesso == 'M') {
@@ -181,7 +182,7 @@ void Evento()
             giorni_di_lavoro=0;
             stipendio=0;
             numeroditta=0;
-            //if (sound_active) TabbozPlaySound(504); FIXME Sound
+            if (sound_active) TabbozPlaySound(504);
             fl_message_title("Perdi il lavoro...");
             fl_alert("Un bel giorno ti svegli e scopri di essere stat%c licenziat%c.",ao,ao);
         }

@@ -28,6 +28,7 @@
 #include "zarrosim.h"
 #include "calendario.h"
 #include "eventi.h"
+#include "sound.h"
 
 #include "debug.h"
 
@@ -185,7 +186,7 @@ void MinacciaSeduciProf(int scelta)
                 MaterieMem[scelta].voto+=2;
                 if (MaterieMem[scelta].voto > 10) MaterieMem[scelta].voto=10;
             } else {
-                if (sound_active) //TabbozPlaySound(402);
+                if (sound_active) TabbozPlaySound(402);
                 fl_message_title("Bella figura...");
                 fl_alert("Cosa ??? Credi di farmi paura piccolo pezzettino di letame vestito da zarro...\nDeve ancora nascere chi può minacciarmi...");
                 if (Reputazione > 3 )    //FIXME questi andrebbero ripensati
@@ -198,7 +199,6 @@ void MinacciaSeduciProf(int scelta)
                 MaterieMem[scelta].voto+=2;
                 if (MaterieMem[scelta].voto > 10) MaterieMem[scelta].voto=10;
             } else {
-                if (sound_active) //TabbozPlaySound(402);
                 fl_message_title("Bella figura...");
                 fl_alert("Infastidito dalla tua presenza, il prof ti manda via a calci.");
                 if (Reputazione > 3 )
