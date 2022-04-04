@@ -1,29 +1,27 @@
+/*             Tabboz Simulator             */
+/* (C) Copyright 1997-2000 by Andrea Bonomi */
+
 /*
-     This file is part of Tabboz Simulator.
+    This file is part of Tabboz Simulator.
 
     Tabboz Simulator is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    Nome-Programma is distributed in the hope that it will be useful,
+    Tabboz Simulator is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Nome-Programma.  If not, see <http://www.gnu.org/licenses/>.
+    along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "os.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-
-#ifdef TABBOZ_WIN
-    #include <windows.h>
-    #include <mmsystem.h>
-#endif
 
 #include "sound.h"
 
@@ -32,14 +30,18 @@
 void TabbozPlaySound(int number)
 {
     char filename[20];
-    sprintf(filename,"Tabs%04d.Wav",number);
-    PlaySound(TEXT(filename), SND_ASYNC | SND_NODEFAULT);
+
+    sprintf_s(filename, (sizeof(filename)/sizeof(char)), "tabs%04d.wav", number);
+    #ifdef TABBOZ_WIN
+        PlaySoundA(filename, NULL, SND_FILENAME | SND_ASYNC);
+    #endif
 };
 
 
-/* Chiude il subsystem audio */
+/* Interrompe suoni in riproduzione */
 void SpegniISuoni()
 {
-    PlaySound(NULL,NULL,0x0040);
-    PlaySound(NULL,NULL,SND_PURGE);
+    #ifdef TABBOZ_WIN
+        PlaySoundA(NULL,NULL,SND_ASYNC);
+    #endif
 }

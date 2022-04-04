@@ -33,6 +33,7 @@
 
 #include "calendario.h"
 #include "proteggi.h"
+#include "sound.h"
 
 #include "debug.h"
 
@@ -1906,6 +1907,9 @@ int main(void)
     InitTabboz();
 
     fl_register_images();
+
+    /* FIMXE suono di prova */
+    TabbozPlaySound(1500);
 
     /* Finestra principale */
     win_principale = GUITabboz();
