@@ -1,0 +1,71 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cpp}
+decl {\#include "GUITabboz.h"} {private global
+}
+
+decl {\#include "GUINegozioVestiti1.h"} {private global
+}
+
+Function {GUINegoziLauncher()} {open
+} {
+  Fl_Window win_negozi {
+    label Negozi open selected
+    xywh {457 458 395 215} type Double color 54 labelfont 1 labelsize 12 hotspot modal size_range {395 215 395 215} visible
+  } {
+    Fl_Return_Button {} {
+      label Back
+      callback {win_principale->activate();
+win_negozi->hide();}
+      xywh {325 155 60 50}
+    }
+    Fl_Group {} {
+      label Abbigliamento open
+      xywh {10 25 180 180} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+    } {
+      Fl_Button {} {
+        label {Bau House}
+        callback {if(!win_vestiti_1)
+  GUINegozioVestiti_1();
+win_vestiti_1->show();
+win_negozi->hide();
+//win_vestiti_1->activate();}
+        xywh {15 30 170 30}
+      }
+      Fl_Button {} {
+        label {Blue Rider}
+        xywh {15 65 170 30} deactivate
+      }
+      Fl_Button {} {
+        label Zoccolaro
+        xywh {15 100 170 30}
+      }
+      Fl_Button {} {
+        label Footsmocker
+        xywh {15 135 170 30}
+      }
+      Fl_Button {} {
+        label {Footsmocker II}
+        xywh {15 170 170 30}
+      }
+      Fl_Button {} {
+        label Footsmocker
+        xywh {15 135 170 30}
+      }
+    }
+    Fl_Group {} {
+      label {Altri Negozi} open
+      xywh {205 25 180 75} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+    } {
+      Fl_Button {} {
+        label Tabaccaio
+        xywh {210 30 170 30}
+      }
+      Fl_Button {} {
+        label Telefonia
+        xywh {210 65 170 30}
+      }
+    }
+  }
+}
