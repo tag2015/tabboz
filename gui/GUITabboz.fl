@@ -14,13 +14,19 @@ decl {\#include "../calendario.h"} {private global
 decl {\#include "GUIScuola.h"} {private global
 }
 
-decl {\#include "GUIFamiglia.h"} {private global
-}
-
 decl {\#include "GUICompagnia.h"} {private global
 }
 
+decl {\#include "GUIFamiglia.h"} {private global
+}
+
+decl {\#include "GUINegoziLauncher.h"} {private global
+}
+
 decl {\#include "GUIDisco.h"} {private global
+}
+
+decl {\#include "GUIPalestra.h"} {private global
 }
 
 decl {\#include "GUITestbed.h"} {private global
@@ -63,6 +69,14 @@ win_principale->deactivate();}
 main_valbox_soldi->value(CALCSOLDI(Soldi));}
         xywh {20 375 110 20} color 51 selection_color 51 labelfont 2
       }
+      Fl_Button {} {
+        label Palestra
+        callback {//if(!win_palestra)
+  GUITabbozPalestra();
+win_palestra->show();
+win_principale->deactivate();} selected
+        xywh {20 405 110 20} color 51 selection_color 51 labelfont 2
+      }
     }
     Fl_Group {} {
       label {Social!} open
@@ -100,7 +114,9 @@ win_principale->deactivate();}
       }
       Fl_Button {} {
         label Negozi
-        callback {fl_alert("Non ancora implementato!");}
+        callback {GUINegoziLauncher();
+win_principale->deactivate();
+win_negozi->show();}
         xywh {300 375 110 20} color 51 selection_color 51 labelfont 2
       }
       Fl_Button {} {
@@ -178,7 +194,7 @@ AggiornaPrincipale();}
       label T
       callback {GUITestbed();
 win_testbed->show();
-win_principale->deactivate();} selected
+win_principale->deactivate();}
       xywh {445 410 20 25}
     }
   }

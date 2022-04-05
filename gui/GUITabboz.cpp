@@ -5,9 +5,11 @@
 #include "../zarrosim.h"
 #include "../calendario.h"
 #include "GUIScuola.h"
-#include "GUIFamiglia.h"
 #include "GUICompagnia.h"
+#include "GUIFamiglia.h"
+#include "GUINegoziLauncher.h"
 #include "GUIDisco.h"
+#include "GUIPalestra.h"
 #include "GUITestbed.h"
 
 Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
@@ -75,6 +77,13 @@ static Fl_Image *image_b_scuola() {
 static void cb_Lavoro(Fl_Button*, void*) {
   Soldi+=1000;
 main_valbox_soldi->value(CALCSOLDI(Soldi));
+}
+
+static void cb_Palestra(Fl_Button*, void*) {
+  //if(!win_palestra)
+  GUITabbozPalestra();
+win_palestra->show();
+win_principale->deactivate();
 }
 
 static void cb_Tipa(Fl_Button*, void*) {
@@ -233,7 +242,9 @@ static void cb_Scooter(Fl_Button*, void*) {
 }
 
 static void cb_Negozi(Fl_Button*, void*) {
-  fl_alert("Non ancora implementato!");
+  GUINegoziLauncher();
+win_principale->deactivate();
+win_negozi->show();
 }
 
 static void cb_Disco(Fl_Button*, void*) {
@@ -355,6 +366,12 @@ Fl_Double_Window* GUITabboz() {
         o->selection_color((Fl_Color)51);
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Lavoro);
+      } // Fl_Button* o
+      { Fl_Button* o = new Fl_Button(20, 405, 110, 20, "Palestra");
+        o->color((Fl_Color)51);
+        o->selection_color((Fl_Color)51);
+        o->labelfont(2);
+        o->callback((Fl_Callback*)cb_Palestra);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
