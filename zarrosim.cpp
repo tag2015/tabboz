@@ -193,6 +193,8 @@ void ResetMe(int primavolta)
     giorni_di_lavoro  =    0;
     numeroditta       =    0;
     AttesaSoldi       =  ATTESAMAX;
+    scad_pal_giorno   =    0;
+    scad_pal_mese     =    0;
 
     strcpy(Residenza,"Milano");
     Nometipa[0]=0;
@@ -482,10 +484,10 @@ static void CaricaTutto(void)
     if ( (x_anno_bisesto > 3) || (x_anno_bisesto < 0) ) x_anno_bisesto=0;
 
     TabbozProfilo.get("ScadPalGiorno",buf_i,0);
-    scad_pal_giorno = vvc(buf_i);
+    scad_pal_giorno = vvc(new_check_i(buf_i));
 
     TabbozProfilo.get("ScadPalMese",buf_i,0);
-    scad_pal_mese = vvc(buf_i);
+    scad_pal_mese = vvc(new_check_i(buf_i));
 
     TabbozProfilo.get("NumeroDitta",buf_i,0);
     numeroditta = vvc(buf_i);
@@ -699,9 +701,9 @@ static void SalvaTutto(void) {
     TabbozProfilo.set("Mese", x_mese);
     TabbozProfilo.set("Giorno", x_giorno);
     TabbozProfilo.set("GiornoSet", x_giornoset);
-    TabbozProfilo.set("AnnoBisestile",x_anno_bisesto);
-    TabbozProfilo.set("ScadPalGiorno", scad_pal_giorno);
-    TabbozProfilo.set("ScadPalMese", scad_pal_mese);
+    TabbozProfilo.set("AnnoBisestile", x_anno_bisesto);
+    TabbozProfilo.set("ScadPalGiorno", new_check_i(scad_pal_giorno));
+    TabbozProfilo.set("ScadPalMese", new_check_i(scad_pal_mese));
 
     /* salva dati lavoro */
     TabbozProfilo.set("NumeroDitta", numeroditta);
