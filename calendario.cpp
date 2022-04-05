@@ -87,7 +87,7 @@ const STVACANZE InfoVacanze[] =
 int  x_giorno;         // giorno corrente (1-31)
 int  x_giornoset;      // giorno settimana corrente (1-7)
 int  x_mese;           // mese corrente (1-12)
-int  x_anno_bisesto;   // anno bisestile (contatore 0-3)
+int  x_anno_bisesto;   // anno bisestile (contatore 0-3, 0 è anno bisesto)
 
 int  x_vacanza;        // 0: giorno lavorativo | 1: vacanza tipo 1 (negozi aperti) | 2: vacanza tipo 2 (negozi chiusi)
 
@@ -105,7 +105,7 @@ void Giorno(void)
 
     x_giorno++;
     if (x_giorno > InfoMese[x_mese-1].num_giorni) {
-        if ((x_mese == 2) && (x_anno_bisesto == 1) && (x_giorno == 29)) {
+        if ((x_mese == 2) && (x_anno_bisesto == 0) && (x_giorno == 29)) {
             fl_message_title("Anno Bisestile");
             fl_message("Anno bisesto, anno funesto...");
         } else {

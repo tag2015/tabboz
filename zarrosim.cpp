@@ -478,8 +478,8 @@ static void CaricaTutto(void)
     TabbozProfilo.get("GiornoSet",x_giornoset,0);
     if (x_giornoset < 1) x_giornoset=1;
     
-    TabbozProfilo.get("AnnoBisestile",x_anno_bisesto,4);
-    if ( (x_anno_bisesto > 3) || (x_anno_bisesto < 0) ) x_anno_bisesto=3;
+    TabbozProfilo.get("AnnoBisestile",x_anno_bisesto,0);
+    if ( (x_anno_bisesto > 3) || (x_anno_bisesto < 0) ) x_anno_bisesto=0;
 
     TabbozProfilo.get("ScadPalGiorno",buf_i,0);
     scad_pal_giorno = vvc(buf_i);
