@@ -18,6 +18,9 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#define COSTO_VESTITO_NATALIZIO 58
 
-BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-void PagaQualcosa(HWND parent);
+//BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+
+void PagaQualcosa(int scelta);
+bool OfferteDiNatale(void);
