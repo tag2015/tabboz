@@ -29,4 +29,3 @@ void VaiInPalestra(void);
 void FaiLampada(void);
 void CompraAbbonamento(int scelta);
 void AggiornaPalestra(void);
-void EventiPalestra(void);
