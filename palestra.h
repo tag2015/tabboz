@@ -23,14 +23,10 @@
 #define SEI_MESI    270
 #define UN_ANNO     500
 
-/* Abbonamenti Palestra ---------------------------------------------------------------------------- */
-STSCOOTER PalestraMem[] = {
-    {0,   0,   0,   0,   0,   0,  50,   0, ""},       // Un mese
-    {0,   0,   0,   8,   0,   0, 270,   0, ""},       // Sei mesi
-    {0,   0,   0,   9,   0,   0, 500,   0, ""},       // Un anno
-    {0,   0,   0,   9,   0,   0,  14,   0, ""}        // Una lampada
-};
+extern STSCOOTER PalestraMem[];
 
-
+void VaiInPalestra(void);
+void FaiLampada(void);
+void CompraAbbonamento(int scelta);
 void AggiornaPalestra(void);
 void EventiPalestra(void);

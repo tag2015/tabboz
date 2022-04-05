@@ -21,10 +21,12 @@
 
 /* "Indici" per l'array di stringhe degli eventi */
 
-#define MSG_SFIGHE   2
-#define MSG_SCUOLA  12
-#define MSG_TIPA    22
-#define MSG_TIPO    32
+#define MSG_SFIGHE    2
+#define MSG_SCUOLA    12
+#define MSG_TIPA      22
+#define MSG_TIPO      32
+#define MSG_PALESTRA  42
+
 
 extern const char *StrEventi[];         // Stringhe usate nelle dialog degli eventi
 
