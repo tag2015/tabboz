@@ -70,8 +70,7 @@ extern int      vvc(int i);
 
 //extern ATOM     RegisterBMPTipaClass(HANDLE hInst);
 //extern ATOM     RegisterBMPViewClass(HANDLE hInst);
-//extern void     OpenFileDlg(HWND hwnd);
-//extern void     SaveFileDlg(HWND hwnd);
+
 static void     SalvaTutto(void);
 static void     CaricaTutto(void);
 
@@ -208,13 +207,11 @@ void ResetMe(int primavolta)
 
     CalcolaStudio();
 
-    #ifndef TAG2015_NOTEMPO
     x_mese         =  9;
     x_giorno       = 30;
     x_giornoset    =  1;
     x_anno_bisesto =  0;
     x_vacanza      =  0;
-    #endif
 
     comp_mese      = rand() % 12 + 1;
     comp_giorno    = rand() % InfoMese[comp_mese-1].num_giorni + 1;
@@ -391,10 +388,7 @@ static void InitTabboz(void)
 }
 
 
-//*******************************************************************
-//  Carica le caratteristiche dal registro o da un file...
-//*******************************************************************
-
+/* Carica parametri da file profilo */
 static void CaricaTutto(void)
 {
     int  i;
@@ -474,8 +468,7 @@ static void CaricaTutto(void)
     TabbozProfilo.get("CompGiorno",comp_giorno,0);
     if (comp_giorno < 1) comp_giorno=rand() % InfoMese[comp_mese-1].num_giorni + 1;
 
-#ifndef TAG2015_NOTEMPO
-    // Se e' la prima volta che parte il Tabboz Simulator, la data e' impostata al 30 Settembre
+    /* Se e' la prima volta che parte il Tabboz Simulator, la data e' impostata al 30 Settembre */
     TabbozProfilo.get("Mese",x_mese,0);
     if (x_mese < 1) x_mese=9;
     
@@ -493,7 +486,6 @@ static void CaricaTutto(void)
 
     TabbozProfilo.get("ScadPalMese",buf_i,0);
     scad_pal_mese = vvc(buf_i);
-#endif
 
     TabbozProfilo.get("NumeroDitta",buf_i,0);
     numeroditta = vvc(buf_i);
@@ -610,7 +602,6 @@ static void CaricaTutto(void)
     if (firsttime)
         ResetMe(1);
 
-#ifndef TAG2015_NOTEMPO
     /* Controllo eventuali errori nella data (o data non settata...) */
     /* FIXME si potrebbe implementare in vvc, magari overloadato */
     if ( (x_giorno < 1) || (x_giorno > 31) )  x_giorno=1;
@@ -621,7 +612,6 @@ static void CaricaTutto(void)
     x_giornoset--;
     AttesaSoldi++;  //Idem ma al contrario, per evitare che scenda ad ogni avvio
     Giorno();
-#endif
 
     // Guarda se qualche "bastardino" ha modificato dei valori nel registro...
     TabbozProfilo.get("SoftCheck",buf_i,0);
@@ -666,10 +656,7 @@ void FineProgramma(char const *caller)
     SalvaTutto();
 }
 
-//*******************************************************************
-//      Salva le caratteristiche nel registro o su di un file
-//*******************************************************************
-
+/* Salva i parametri nel profilo utente o in file specificato*/
 static void SalvaTutto(void) {
     
     char tmp[STR_MAX];
@@ -692,7 +679,6 @@ static void SalvaTutto(void) {
     TabbozProfilo.set("Fortuna",new_check_i(Fortuna));
     TabbozProfilo.set("AttesaSoldi",new_check_i(AttesaSoldi));
 
-
     /* salva voti materie */
     sprintf(tmp,"123456789");    // 9 materie
     for (int i=1;i<10;i++)
@@ -709,14 +695,13 @@ static void SalvaTutto(void) {
     TabbozProfilo.set("CompMese", comp_mese);
     TabbozProfilo.set("CompGiorno", comp_giorno);
 
-#ifndef TAG2015_NOTEMPO
+    /* salva dati calendario */
     TabbozProfilo.set("Mese", x_mese);
     TabbozProfilo.set("Giorno", x_giorno);
     TabbozProfilo.set("GiornoSet", x_giornoset);
     TabbozProfilo.set("AnnoBisestile",x_anno_bisesto);
     TabbozProfilo.set("ScadPalGiorno", scad_pal_giorno);
     TabbozProfilo.set("ScadPalMese", scad_pal_mese);
-#endif
 
     /* salva dati lavoro */
     TabbozProfilo.set("NumeroDitta", numeroditta);

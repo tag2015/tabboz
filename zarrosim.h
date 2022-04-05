@@ -335,8 +335,6 @@ extern  void  nomoney(int tipo);
 
 /* TAG2015 define temporanei per escludere parti non ancora implementate */
 
-//per disabilitare la gestione di calendario/date
-//#define TAG2015_NOTEMPO
 #define TAG2015_NOSCOOTER
 #define TAG2015_NOCELL
 
