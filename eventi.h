@@ -18,4 +18,5 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-void Evento(void);      // Generatore Eventi (Casuali e Non)
+void Evento(void);          // Generatore Eventi (Casuali e Non)
+void EventiPalestra(void);  // Generatore Eventi Casuali Per Palestra

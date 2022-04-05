@@ -470,6 +470,27 @@ void Evento()
 }
 
 
+/* Eventi casuali legati alla palestra */
+void EventiPalestra(void)
+{
+    int i;
+    char messaggio[128];
+
+    i=rand() % (29 + (Fortuna / 2));
+
+    if (i > 9) return;    /* eventi: 0 - 10) */
+
+    fl_message_title("Palestra...");
+    fl_alert(StrEventi[MSG_PALESTRA+i]);
+    if (Reputazione > 10)
+        Reputazione-=4;
+    
+    #ifdef TABBOZ_DEBUG
+        writelog("eventi: Evento riguardante la palestra");
+    #endif
+}
+
+
 //
 //    MOSTRA METALLONE, non e' solo per i metalloni, e' molto utile anche per mostrare
 //    tutte quelle finestre in cui non c'e' altro di particolare se non il pulsante di
