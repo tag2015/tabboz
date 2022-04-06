@@ -11,6 +11,9 @@ decl {\#include "../zarrosim.h"} {private global
 decl {\#include "../calendario.h"} {private global
 }
 
+decl {\#include "../negozi.h"} {private global
+}
+
 decl {\#include "GUIScuola.h"} {private global
 }
 
@@ -36,7 +39,7 @@ Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
     label {Tabboz Simulator Next Generation!} open
-    xywh {319 449 475 450} type Double color 54 align 5
+    xywh {1162 102 475 450} type Double color 54 align 5
     code0 {AggiornaPrincipale();} size_range {475 450 475 450} visible
   } {
     Fl_Menu_Bar {} {open
@@ -71,10 +74,14 @@ main_valbox_soldi->value(CALCSOLDI(Soldi));}
       }
       Fl_Button {} {
         label Palestra
-        callback {//if(!win_palestra)
+        callback {if (x_vacanza != 2) {
   GUITabbozPalestra();
-win_palestra->show();
-win_principale->deactivate();} selected
+  win_palestra->show();
+  win_principale->deactivate();
+}else {
+  fl_message_title("Palestra chiusa");
+  fl_alert("Il tuo fisico da atleta dovrà aspettare...\\nvisto che oggi la palestra è chiusa...");
+}} selected
         xywh {20 405 110 20} color 51 selection_color 51 labelfont 2
       }
     }
@@ -114,9 +121,12 @@ win_principale->deactivate();}
       }
       Fl_Button {} {
         label Negozi
-        callback {GUINegoziLauncher();
-win_principale->deactivate();
-win_negozi->show();}
+        callback {if(!OfferteDiNatale()){  //Costume non acq
+  GUINegoziLauncher();
+  win_principale->deactivate();
+  win_negozi->show();
+} else
+  AggiornaPrincipale();}
         xywh {300 375 110 20} color 51 selection_color 51 labelfont 2
       }
       Fl_Button {} {
