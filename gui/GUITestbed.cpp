@@ -3,8 +3,10 @@
 #include "GUITestbed.h"
 #include "GUITabboz.h"
 #include "../zarrosim.h"
+#include "../sound.h"
 #include <FL/Fl_Shared_Image.H>
 #include <FL/Fl_PNG_Image.H>
+static int num_file; 
 
 Fl_Double_Window *win_testbed=(Fl_Double_Window *)0;
 
@@ -31,7 +33,22 @@ box_1->image(sh_img);
 
 box_1->label(NULL);
 box_1->redraw();
+but_essenza->image(sh_img);
 win_testbed->redraw();
+}
+
+Fl_Button *but_essenza=(Fl_Button *)0;
+
+Fl_Button *but_essenza2=(Fl_Button *)0;
+
+Fl_Button *but_essenza3=(Fl_Button *)0;
+
+static void cb_nro(Fl_Value_Input* o, void*) {
+  num_file=o->value();
+}
+
+static void cb_Play(Fl_Button*, void*) {
+  TabbozPlaySound(num_file);
 }
 
 Fl_Double_Window* GUITestbed() {
@@ -59,6 +76,34 @@ Fl_Double_Window* GUITestbed() {
     { Fl_Button* o = new Fl_Button(10, 595, 100, 30, "caricapics");
       o->callback((Fl_Callback*)cb_caricapics);
     } // Fl_Button* o
+    { Fl_Group* o = new Fl_Group(85, 100, 620, 125);
+      { but_essenza = new Fl_Button(85, 100, 190, 125);
+        but_essenza->type(102);
+        but_essenza->down_box(FL_DOWN_BOX);
+        but_essenza->color(FL_BACKGROUND2_COLOR);
+        but_essenza->selection_color((Fl_Color)3);
+      } // Fl_Button* but_essenza
+      { but_essenza2 = new Fl_Button(315, 100, 190, 125);
+        but_essenza2->type(102);
+        but_essenza2->down_box(FL_DOWN_BOX);
+        but_essenza2->color(FL_BACKGROUND2_COLOR);
+      } // Fl_Button* but_essenza2
+      { but_essenza3 = new Fl_Button(515, 100, 190, 125);
+        but_essenza3->type(102);
+        but_essenza3->down_box(FL_DOWN_BOX);
+        but_essenza3->color(FL_BACKGROUND2_COLOR);
+      } // Fl_Button* but_essenza3
+      o->end();
+    } // Fl_Group* o
+    { new Fl_Button(25, 25, 64, 20, "button");
+    } // Fl_Button* o
+    { Fl_Value_Input* o = new Fl_Value_Input(280, 590, 70, 25, "nro file suono");
+      o->callback((Fl_Callback*)cb_nro);
+    } // Fl_Value_Input* o
+    { Fl_Button* o = new Fl_Button(365, 595, 64, 20, "Play");
+      o->callback((Fl_Callback*)cb_Play);
+    } // Fl_Button* o
+    num_file=0;
     win_testbed->set_modal();
     win_testbed->size_range(836, 656, 836, 656);
     win_testbed->end();

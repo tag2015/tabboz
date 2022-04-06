@@ -8,17 +8,24 @@ decl {\#include "GUITabboz.h"} {private global
 decl {\#include "../zarrosim.h"} {private global
 }
 
+decl {\#include "../sound.h"} {private global
+}
+
 decl {\#include <FL/Fl_Shared_Image.H>} {private global
 }
 
 decl {\#include <FL/Fl_PNG_Image.H>} {private global
 }
 
+decl {int num_file;} {private local
+}
+
 Function {GUITestbed()} {open
 } {
   Fl_Window win_testbed {
     label TestBed open selected
-    xywh {84 140 836 656} type Double color 54 hotspot modal size_range {836 656 836 656} visible
+    xywh {127 241 836 656} type Double color 54 hotspot
+    code0 {num_file=0;} modal size_range {836 656 836 656} visible
   } {
     Fl_Return_Button {} {
       label Back
@@ -51,8 +58,36 @@ box_1->image(sh_img);
 
 box_1->label(NULL);
 box_1->redraw();
+but_essenza->image(sh_img);
 win_testbed->redraw();}
       xywh {10 595 100 30}
+    }
+    Fl_Group {} {open
+      xywh {85 100 620 125}
+    } {
+      Fl_Button but_essenza {
+        xywh {85 100 190 125} type Radio down_box DOWN_BOX color 7 selection_color 3
+      }
+      Fl_Button but_essenza2 {
+        xywh {315 100 190 125} type Radio down_box DOWN_BOX color 7
+      }
+      Fl_Button but_essenza3 {
+        xywh {515 100 190 125} type Radio down_box DOWN_BOX color 7
+      }
+    }
+    Fl_Button {} {
+      label button
+      xywh {25 25 64 20}
+    }
+    Fl_Value_Input {} {
+      label {nro file suono}
+      callback {num_file=o->value();}
+      xywh {280 590 70 25}
+    }
+    Fl_Button {} {
+      label Play
+      callback {TabbozPlaySound(num_file);}
+      xywh {365 595 64 20}
     }
   }
 }
