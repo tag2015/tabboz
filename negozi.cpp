@@ -45,11 +45,12 @@
 STSCOOTER VestitiMem[] =
     {   {0,  0, 0, 0, 0, 0,   0,  0,"---"},
         {0,  0, 0, 8, 0, 0, 348,  0,""},    // -- Giubbotto "Fatiscenza"
-        {0,  0, 0, 9, 0, 0, 378,  0,""},    //
-        {0,  0, 0, 7, 0, 0, 298,  0,""},    //
-        {0,  0, 0, 8, 0, 0, 248,  0,""},    //    Giacca di pelle
+        {0,  0, 0, 9, 0, 0, 378,  0,""},    //    Fatiscenza silver
         {0,  0, 0, 9, 0, 0, 378,  0,""},    //    Fatiscenza verde
         {0,  0, 0,10, 0, 0, 418,  0,""},    //    Fatiscenza bianco
+        {0,  0, 0, 8, 0, 0, 248,  0,""},    //    Giacca di pelle
+        {0,  0, 0, 7, 0, 0, 298,  0,""},    //    Cappotto fluo
+
 
         {0,  0, 0, 3, 0, 0,  90,  0,""},    // -- Pantaloni gessati
         {0,  0, 0, 5, 0, 0, 170,  0,""},    //    Pantaloni tuta

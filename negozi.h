@@ -22,5 +22,7 @@
 
 //BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
+extern STSCOOTER VestitiMem[];
+
 void PagaQualcosa(int scelta);
 bool OfferteDiNatale(void);
