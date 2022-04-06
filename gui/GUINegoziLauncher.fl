@@ -2,17 +2,35 @@
 version 1.0308
 header_name {.h}
 code_name {.cpp}
+decl {\#include <FL/Fl.H>} {private global
+}
+
+decl {\#include <FL/fl_ask.H>} {private global
+}
+
 decl {\#include "GUITabboz.h"} {private global
 }
 
 decl {\#include "GUINegozioVestiti1.h"} {private global
 }
 
+decl {\#include "../zarrosim.h"} {private global
+}
+
+decl {\#include "../calendario.h"} {private global
+}
+
+decl {\#include "../negozi.h"} {private global
+}
+
+decl {\#include "../sound.h"} {private global
+}
+
 Function {GUINegoziLauncher()} {open
 } {
   Fl_Window win_negozi {
-    label Negozi open selected
-    xywh {457 458 395 215} type Double color 54 labelfont 1 labelsize 12 hotspot modal size_range {395 215 395 215} visible
+    label Negozi open
+    xywh {672 664 395 215} type Double color 54 labelfont 1 labelsize 12 hotspot modal size_range {395 215 395 215} visible
   } {
     Fl_Return_Button {} {
       label Back
@@ -26,11 +44,16 @@ win_negozi->hide();}
     } {
       Fl_Button {} {
         label {Bau House}
-        callback {if(!win_vestiti_1)
-  GUINegozioVestiti_1();
-win_vestiti_1->show();
-win_negozi->hide();
-//win_vestiti_1->activate();}
+        callback {if (x_vacanza != 2) {
+  if(!win_vestiti_1)
+    GUINegozioVestiti_1();
+  win_vestiti_1->show();
+  win_negozi->hide();
+  if(sound_active) TabbozPlaySound(204);
+}else {
+  fl_message_title("Negozio chiuso");
+  fl_alert("Oh, tip%c... i negozi sono chiusi di festa...",ao);
+}}
         xywh {15 30 170 30}
       }
       Fl_Button {} {
@@ -60,6 +83,16 @@ win_negozi->hide();
     } {
       Fl_Button {} {
         label Tabaccaio
+        callback {if (x_vacanza != 2) {
+//  if(!win_vestiti_1)
+//    GUINegozioVestiti_1();
+//  win_vestiti_1->show();
+//  win_negozi->hide();
+  if(sound_active) TabbozPlaySound(204);
+}else {
+  fl_message_title("Tabaccaio chiuso");
+  fl_alert("Rimani fiss%c a guardare la saracinesca del tabaccaio irrimediabilmente chiusa...",ao);
+}} selected
         xywh {210 30 170 30}
       }
       Fl_Button {} {

@@ -99,91 +99,6 @@ STSCOOTER SizeMem[] = {
 
 
 
-/* Il check natalizio si può tenere qui */
-bool OfferteDiNatale(void)
-{
-    char tmp[128];
-    
-    if ((x_mese == 12) && (Soldi >= COSTO_VESTITO_NATALIZIO)) {
-        if ((x_giorno > 14) && ( x_giorno < 25) && ( current_gibbotto!=19) && (current_pantaloni!=19)) {
-            sprintf(tmp,"Vuoi comperare, per %s, un meraviglioso vestito da Babbo Natale ?",MostraSoldi(COSTO_VESTITO_NATALIZIO));
-            fl_message_title("Offerte Natalizie...");
-            if(fl_choice(tmp,"No","Si!",0)) {
-                current_gibbotto=19;
-                current_pantaloni=19;
-                TabbozRedraw = 1;    // E' necessario ridisegnare l' immagine del Tabbozzo...
-                Soldi-=COSTO_VESTITO_NATALIZIO;
-                return TRUE;  //se compriamo il vestito (per far chiudere il launcher negozi)
-            }
-        }
-    }
-    return FALSE;  //in tutti gli altri casi
-}
-
-
-/* FIXME La parte launcher si può implementare in gui */
-// # pragma argsused
-// BOOL FAR PASCAL Vestiti(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//      char          tmp[128];
-//      FARPROC       lpproc;
-
-//      if (message == WM_INITDIALOG) {
-//         SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
-
-
-
-//      }else if (message == WM_COMMAND) {
-
-//         switch (wParam) {
-
-//         case 101:        // MAKEINTRESOURCE 80
-//         case 102:        // MAKEINTRESOURCE 81
-//         case 103:        // MAKEINTRESOURCE 82
-//         case 104:        // MAKEINTRESOURCE 83
-//         case 105:        // MAKEINTRESOURCE 84
-//             RunVestiti(hDlg,(wParam-21));
-//             SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
-//             return(TRUE);
-
-//         case 110:        // Tabaccaio
-//             RunTabacchi(hDlg);
-//             SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
-//             return(TRUE);
-
-//         case 111:        // Palestra
-//             RunPalestra(hDlg);
-//             SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
-//             return(TRUE);
-
-//         case 112:       // Cellulare
-//             lpproc = MakeProcInstance(Cellular, hInst);
-//             DialogBox(hInst,
-//                 MAKEINTRESOURCE(CELLULAR),
-//                 hDlg,
-//                 lpproc);
-//             FreeProcInstance(lpproc);
-
-//             SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
-//             return(TRUE);
-
-//         case IDCANCEL:
-//             EndDialog(hDlg, TRUE);
-//             return(TRUE);
-
-//         case IDOK:
-//             EndDialog(hDlg, TRUE);
-//             return(TRUE);
-
-//         default:
-//             return(TRUE);
-//         }
-//      }
-
-//      return(FALSE);
-// }
-
-
 /* Routine per il pagamento di qualunque cosa... */
 void PagaQualcosa (int scelta)
 {
@@ -225,6 +140,28 @@ void PagaQualcosa (int scelta)
         }
         Evento();
     }
+}
+
+
+/* Proposta vestito rosso se in periodo natalizio */
+bool OfferteDiNatale(void)
+{
+    char tmp[128];
+
+    if ((x_mese == 12) && (Soldi >= COSTO_VESTITO_NATALIZIO)) {
+        if ((x_giorno > 14) && ( x_giorno < 25) && ( current_gibbotto!=19) && (current_pantaloni!=19)) {
+            sprintf(tmp,"Vuoi comperare, per %s, un meraviglioso vestito da Babbo Natale ?",MostraSoldi(COSTO_VESTITO_NATALIZIO));
+            fl_message_title("Offerte Natalizie...");
+            if(fl_choice(tmp,"No","Si!",0)) {
+                current_gibbotto=19;
+                current_pantaloni=19;
+                TabbozRedraw = 1;    // E' necessario ridisegnare l' immagine del Tabbozzo... FIXME inutile
+                Soldi-=COSTO_VESTITO_NATALIZIO;
+                return TRUE;  //se compriamo il vestito (per far chiudere il launcher negozi)
+            }
+        }
+    }
+    return FALSE;  //in tutti gli altri casi
 }
 
 
@@ -401,72 +338,138 @@ void PagaQualcosa (int scelta)
 // }
 
 
-/* FIXME Inutile, Implementare in gui */
-// void RunTabacchi(HWND hDlg)
-// {
-//      FARPROC       lpproc;
+#ifdef DEADCODE
+/* Implementato direttamente in gui */
+# pragma argsused
+BOOL FAR PASCAL Vestiti(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+{
+     char          tmp[128];
+     FARPROC       lpproc;
 
-//      if ( x_vacanza != 2 ) { // 19 Mar 98 - Tabaccaio
-//             lpproc = MakeProcInstance(Tabaccaio, hInst);
-//             DialogBox(hInst,
-//                 MAKEINTRESOURCE(TABACCAIO),
-//                 hDlg,
-//                 lpproc);
-//             FreeProcInstance(lpproc);
-//      } else {
-//     MessageBox( hDlg,
-//       "Rimani fisso a guardare la saracinesca del tabaccaio inrimediabilmente chiusa...",
-//                 "Bar Tabacchi", MB_OK | MB_ICONINFORMATION);
-//      }
-// }
+     if (message == WM_INITDIALOG) {
+        SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
 
 
-/* FIXME Inutile, Implementare in gui */
-// void RunPalestra(HWND hDlg)
-// {
-//      FARPROC       lpproc;
 
-//      if ( x_vacanza != 2 ) { // 20 Mar 98 - Palestra
-//     lpproc = MakeProcInstance(Palestra, hInst);
-//     DialogBox(hInst,
-//             MAKEINTRESOURCE(PALESTRA),
-//             hDlg,
-//             lpproc);
-//     FreeProcInstance(lpproc);
-//      } else {
-//     MessageBox( hDlg,
-//       "Il tuo fisico da atleta dovra' aspettare... visto che oggi la palestra e' chiusa...",
-//                 "Palestra", MB_OK | MB_ICONINFORMATION);
-//      }
-// }
+     }else if (message == WM_COMMAND) {
+
+        switch (wParam) {
+
+        case 101:        // MAKEINTRESOURCE 80
+        case 102:        // MAKEINTRESOURCE 81
+        case 103:        // MAKEINTRESOURCE 82
+        case 104:        // MAKEINTRESOURCE 83
+        case 105:        // MAKEINTRESOURCE 84
+            RunVestiti(hDlg,(wParam-21));
+            SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
+            return(TRUE);
+
+        case 110:        // Tabaccaio
+            RunTabacchi(hDlg);
+            SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
+            return(TRUE);
+
+        case 111:        // Palestra
+            RunPalestra(hDlg);
+            SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
+            return(TRUE);
+
+        case 112:       // Cellulare
+            lpproc = MakeProcInstance(Cellular, hInst);
+            DialogBox(hInst,
+                MAKEINTRESOURCE(CELLULAR),
+                hDlg,
+                lpproc);
+            FreeProcInstance(lpproc);
+
+            SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
+            return(TRUE);
+
+        case IDCANCEL:
+            EndDialog(hDlg, TRUE);
+            return(TRUE);
+
+        case IDOK:
+            EndDialog(hDlg, TRUE);
+            return(TRUE);
+
+        default:
+            return(TRUE);
+        }
+     }
+
+     return(FALSE);
+}
+#endif
 
 
-/* FIXME Inutile, Implementare in gui */
-// void RunVestiti(HWND hDlg,int numero)
-// {
-//     FARPROC       lpproc;
-//     char              tmp[128];
+#ifdef DEADCODE
+/* Implementata in gui */
+void RunTabacchi(HWND hDlg)
+{
+     FARPROC       lpproc;
 
-//     // Versione femminile di "Bau House" e "Blue Rider"
-//     if ((numero == 80) && (sesso == 'F')) numero=85;
-//     if ((numero == 84) && (sesso == 'F')) numero=86;
+     if ( x_vacanza != 2 ) { // 19 Mar 98 - Tabaccaio
+            lpproc = MakeProcInstance(Tabaccaio, hInst);
+            DialogBox(hInst,
+                MAKEINTRESOURCE(TABACCAIO),
+                hDlg,
+                lpproc);
+            FreeProcInstance(lpproc);
+     } else {
+    MessageBox( hDlg,
+      "Rimani fisso a guardare la saracinesca del tabaccaio inrimediabilmente chiusa...",
+                "Bar Tabacchi", MB_OK | MB_ICONINFORMATION);
+     }
+}
 
-//     if ( x_vacanza != 2 ) { // 26 Feb 98... finalmente i negozi sono chiusi durante le vacanze...
-//     if (sound_active) {
-//         if (numero < 82)
-//           TabbozPlaySound(204);
-//         else
-//           TabbozPlaySound(205);
-//     }
 
-//     lpproc = MakeProcInstance(CompraQualcosa, hInst); // La funzione e' uguale x tutti...
-//     DialogBox(hInst,
-//          MAKEINTRESOURCE(numero),
-//          hDlg, lpproc);
-//     FreeProcInstance(lpproc);
-//     } else {
-//             sprintf(tmp,"Oh, tip%c... i negozi sono chiusi di festa...",ao);
-//             MessageBox( hDlg, tmp,
-//                 "Vestiti", MB_OK | MB_ICONINFORMATION);
-//     }
-// }
+/* Implementata in gui */
+void RunPalestra(HWND hDlg)
+{
+     FARPROC       lpproc;
+
+     if ( x_vacanza != 2 ) { // 20 Mar 98 - Palestra
+    lpproc = MakeProcInstance(Palestra, hInst);
+    DialogBox(hInst,
+            MAKEINTRESOURCE(PALESTRA),
+            hDlg,
+            lpproc);
+    FreeProcInstance(lpproc);
+     } else {
+    MessageBox( hDlg,
+      "Il tuo fisico da atleta dovra' aspettare... visto che oggi la palestra e' chiusa...",
+                "Palestra", MB_OK | MB_ICONINFORMATION);
+     }
+}
+
+/* Implementata in gui */
+void RunVestiti(HWND hDlg,int numero)
+{
+    FARPROC       lpproc;
+    char              tmp[128];
+
+    // Versione femminile di "Bau House" e "Blue Rider"
+    if ((numero == 80) && (sesso == 'F')) numero=85;
+    if ((numero == 84) && (sesso == 'F')) numero=86;
+
+    if ( x_vacanza != 2 ) { // 26 Feb 98... finalmente i negozi sono chiusi durante le vacanze...
+    if (sound_active) {
+        if (numero < 82)
+          TabbozPlaySound(204);
+        else
+          TabbozPlaySound(205);
+    }
+
+    lpproc = MakeProcInstance(CompraQualcosa, hInst); // La funzione e' uguale x tutti...
+    DialogBox(hInst,
+         MAKEINTRESOURCE(numero),
+         hDlg, lpproc);
+    FreeProcInstance(lpproc);
+    } else {
+            sprintf(tmp,"Oh, tip%c... i negozi sono chiusi di festa...",ao);
+            MessageBox( hDlg, tmp,
+                "Vestiti", MB_OK | MB_ICONINFORMATION);
+    }
+}
+#endif

@@ -4,6 +4,7 @@
 #include <FL/fl_ask.H>
 #include "../zarrosim.h"
 #include "../calendario.h"
+#include "../negozi.h"
 #include "GUIScuola.h"
 #include "GUICompagnia.h"
 #include "GUIFamiglia.h"
@@ -80,10 +81,14 @@ main_valbox_soldi->value(CALCSOLDI(Soldi));
 }
 
 static void cb_Palestra(Fl_Button*, void*) {
-  //if(!win_palestra)
+  if (x_vacanza != 2) {
   GUITabbozPalestra();
-win_palestra->show();
-win_principale->deactivate();
+  win_palestra->show();
+  win_principale->deactivate();
+}else {
+  fl_message_title("Palestra chiusa");
+  fl_alert("Il tuo fisico da atleta dovrà aspettare...\nvisto che oggi la palestra è chiusa...");
+};
 }
 
 static void cb_Tipa(Fl_Button*, void*) {
@@ -242,9 +247,12 @@ static void cb_Scooter(Fl_Button*, void*) {
 }
 
 static void cb_Negozi(Fl_Button*, void*) {
+  if(!OfferteDiNatale()){  //Costume non acq
   GUINegoziLauncher();
-win_principale->deactivate();
-win_negozi->show();
+  win_principale->deactivate();
+  win_negozi->show();
+} else
+  AggiornaPrincipale();
 }
 
 static void cb_Disco(Fl_Button*, void*) {
