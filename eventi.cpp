@@ -28,6 +28,7 @@
 #include "global.h"
 #include "scuola.h"
 #include "calendario.h"
+#include "scooter.h"
 #include "sound.h"
 #include "debug.h"
 

@@ -30,6 +30,7 @@
 
 #include "scuola.h"
 #include "lavoro.h"
+#include "scooter.h"
 
 #include "calendario.h"
 #include "proteggi.h"
@@ -77,7 +78,7 @@ static void     CaricaTutto(void);
 
 
 /* FIXME spostare al posto giusto dopo implementazione scooter */
-NEWSTSCOOTER ScooterData;
+//NEWSTSCOOTER ScooterData;
 /* FIXME spostare al posto giusto dopo implementazione cell */
 STCEL CellularData;
 STABB AbbonamentData;
@@ -400,6 +401,7 @@ static void CaricaTutto(void)
     char   buf_s[STR_MAX];   //buffer *char
 
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
+    Fl_Preferences ScooterProfilo(TabbozProfilo, "Scooter");
 
     /* Prima che vengano caricate le informazioni... */
     /* azzera il checksum...                         */
@@ -549,35 +551,58 @@ static void CaricaTutto(void)
     #endif
 
 #ifndef TAG2015_NOSCOOTER
-    ScooterData.speed = new_check_i(atoi (RRKey("Scooter\\Speed")));
+
+    ScooterProfilo.get("Speed",buf_i,0);
+    ScooterData.speed = new_check_i(buf_i);
+ //   ScooterData.speed = new_check_i(atoi (RRKey("Scooter\\Speed")));
     if (ScooterData.speed < 0) ScooterData.speed=0;
 
-    ScooterData.marmitta = new_check_i(atoi (RRKey("Scooter\\Marmitta")));
+    ScooterProfilo.get("Marmitta",buf_i,0);
+    ScooterData.marmitta = new_check_i(buf_i);
+ //   ScooterData.marmitta = new_check_i(atoi (RRKey("Scooter\\Marmitta")));
     if (ScooterData.marmitta < 0) ScooterData.marmitta=0;
     
-    ScooterData.carburatore = new_check_i(atoi (RRKey("Scooter\\Carburatore")));
+    ScooterProfilo.get("Carburatore",buf_i,0);
+    ScooterData.carburatore = new_check_i(buf_i);
+//    ScooterData.carburatore = new_check_i(atoi (RRKey("Scooter\\Carburatore")));
     if (ScooterData.carburatore < 0) ScooterData.carburatore=0;
-    
-    ScooterData.cc = new_check_i(atoi (RRKey("Scooter\\CC")));
+
+    ScooterProfilo.get("CC",buf_i,0);
+    ScooterData.cc = new_check_i(buf_i);
+//    ScooterData.cc = new_check_i(atoi (RRKey("Scooter\\CC")));
     if (ScooterData.cc < 0) ScooterData.cc=0;
     
-    ScooterData.filtro = new_check_i(atoi (RRKey("Scooter\\Filtro")));
+    ScooterProfilo.get("Filtro",buf_i,0);
+    ScooterData.filtro = new_check_i(buf_i);
+ //   ScooterData.filtro = new_check_i(atoi (RRKey("Scooter\\Filtro")));
     if (ScooterData.filtro < 0) ScooterData.filtro=0;
-    
-    ScooterData.prezzo = new_check_i(atoi(RRKey("Scooter\\Prezzo")));
+
+    ScooterProfilo.get("Prezzo",buf_i,0);
+    ScooterData.prezzo = new_check_i(buf_i);
+//    ScooterData.prezzo = new_check_i(atoi(RRKey("Scooter\\Prezzo")));
     if (ScooterData.prezzo < 0) ScooterData.prezzo=0;
-    
-    ScooterData.attivita = new_check_i(atoi(RRKey("Scooter\\Attivita")));
+
+    ScooterProfilo.get("Attivita",buf_i,0);
+    ScooterData.attivita = new_check_i(buf_i);
+//    ScooterData.attivita = new_check_i(atoi(RRKey("Scooter\\Attivita")));
     if (ScooterData.attivita < 0) ScooterData.attivita=0;
 
-    ScooterData.stato = new_check_i(atoi(RRKey("Scooter\\Stato")));  // -1 = nessuno
+    ScooterProfilo.get("Stato",buf_i,0);
+    ScooterData.stato = new_check_i(buf_i);
+  //  ScooterData.stato = new_check_i(atoi(RRKey("Scooter\\Stato")));  // -100 = nessuno
 
-    benzina = new_check_i(atoi(RRKey("Scooter\\Benzina")));
+    ScooterProfilo.get("Benzina",buf_i,0);
+    benzina = new_check_i(buf_i);
+  //  benzina = new_check_i(atoi(RRKey("Scooter\\Benzina")));
     if (benzina < 0) benzina=0;
 
 //    antifurto = atoi (RRKey("Scooter\\Antifurto") );
+    //ScooterProfilo.get("Antifurto",buf_i,0);
+//    ScooterData.antifurto = new_check_i(buf_i);
 
-    if (TabbozReadKey("Scooter\\Nome",ScooterData.nome) == 0) sprintf(ScooterData.nome,"nessuno");
+//    if (TabbozReadKey("Scooter\\Nome",ScooterData.nome) == 0) sprintf(ScooterData.nome,"nessuno");
+    ScooterProfilo.get("Nome",ScooterData.nome,"Nessuno...",STR_MAX);
+
 #endif
 #ifndef TAG2015_NOCELL
     /* Cellulare */
@@ -665,6 +690,7 @@ static void SalvaTutto(void) {
     char tmp[STR_MAX];
     
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
+    Fl_Preferences ScooterProfilo(TabbozProfilo, "Scooter");
 
     /* resetta checksum per ricalcolo */
     new_reset_check();
@@ -738,31 +764,48 @@ static void SalvaTutto(void) {
 
 #ifndef TAG2015_NOSCOOTER
     /* salva dati scooter */
-    sprintf(tmp,"%d",new_check_i(ScooterData.speed));
-    TabbozAddKey("Scooter\\Speed", tmp);
-    sprintf(tmp,"%d",new_check_i(ScooterData.marmitta));
-    TabbozAddKey("Scooter\\Marmitta", tmp);
-    sprintf(tmp,"%d",new_check_i(ScooterData.carburatore));
-    TabbozAddKey("Scooter\\Carburatore", tmp);
-    sprintf(tmp,"%d",new_check_i(ScooterData.cc));
-    TabbozAddKey("Scooter\\CC", tmp);
-    sprintf(tmp,"%d",new_check_i(ScooterData.filtro));
-    TabbozAddKey("Scooter\\Filtro", tmp);
-    sprintf(tmp,"%d",new_check_i(ScooterData.prezzo));
-    TabbozAddKey("Scooter\\Prezzo", tmp);
-    sprintf(tmp,"%d",new_check_i(ScooterData.attivita));
-    TabbozAddKey("Scooter\\Attivita", tmp);
 
-    sprintf(tmp,"%d",new_check_i(ScooterData.stato));
-    TabbozAddKey("Scooter\\Stato", tmp);
+    ScooterProfilo.set("Speed",new_check_i(ScooterData.speed));
 
-    sprintf(tmp,"%d",new_check_i(benzina));
-    TabbozAddKey("Scooter\\Benzina", tmp);
+    // sprintf(tmp,"%d",new_check_i(ScooterData.marmitta));
+    // TabbozAddKey("Scooter\\Marmitta", tmp);
+    ScooterProfilo.set("Marmitta",new_check_i(ScooterData.marmitta));
+
+ //   sprintf(tmp,"%d",new_check_i(ScooterData.carburatore));
+ //   TabbozAddKey("Scooter\\Carburatore", tmp);
+    ScooterProfilo.set("Carburatore",new_check_i(ScooterData.carburatore));
+
+  //  sprintf(tmp,"%d",new_check_i(ScooterData.cc));
+  //  TabbozAddKey("Scooter\\CC", tmp);
+    ScooterProfilo.set("CC",new_check_i(ScooterData.cc));
+
+   // sprintf(tmp,"%d",new_check_i(ScooterData.filtro));
+//  TabbozAddKey("Scooter\\Filtro", tmp);
+    ScooterProfilo.set("Filtro",new_check_i(ScooterData.filtro));
+
+  //  sprintf(tmp,"%d",new_check_i(ScooterData.prezzo));
+//TabbozAddKey("Scooter\\Prezzo", tmp);
+    ScooterProfilo.set("Prezzo",new_check_i(ScooterData.prezzo));
+
+ //   sprintf(tmp,"%d",new_check_i(ScooterData.attivita));
+   // TabbozAddKey("Scooter\\Attivita", tmp);
+    ScooterProfilo.set("Attivita",new_check_i(ScooterData.attivita));
+
+  //  sprintf(tmp,"%d",new_check_i(ScooterData.stato));
+ //   TabbozAddKey("Scooter\\Stato", tmp);
+    ScooterProfilo.set("Stato",new_check_i(ScooterData.stato));
+
+  //  sprintf(tmp,"%d",new_check_i(benzina));
+  //  TabbozAddKey("Scooter\\Benzina", tmp);
+    ScooterProfilo.set("Benzina",new_check_i(benzina));
 
 //    sprintf(tmp,"%d",antifurto);
 //    TabbozAddKey("Scooter\\Antifurto", tmp);
+//    ScooterProfilo.set("Antifurto",new_check_i(antifurto));
 
-    TabbozAddKey("Scooter\\Nome", ScooterData.nome);
+//    TabbozAddKey("Scooter\\Nome", ScooterData.nome);
+    ScooterProfilo.set("Nome", ScooterData.nome);
+
 #endif
 
 #ifndef TAG2015_NOCELL

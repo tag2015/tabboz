@@ -33,6 +33,7 @@
 #include "debug.h"
 
 #include "calendario.h"
+#include "scooter.h"
 #include "eventi.h"
 #include "sound.h"
 

@@ -158,19 +158,7 @@ typedef struct tagSTSCOOTER {
     char        nome[30];       // nome dello scooter
   } STSCOOTER;
 
-/* NUOVE INFORMAZIONI SUGLI SCOOTER */
-typedef struct tagNEWSTSCOOTER {
-    int         speed;          // 01  Velocita'
-    int         marmitta;       // 02  Marmitta       ( +0, +7, +12, +15)
-    int         carburatore;    // 03  Carburatore    ( 0 - 4 )
-    int         cc;             // 04  Cilindrata     ( 0 - 4 )
-    int         filtro;         // 05  Filtro dell'aria    ( +0, +5, +10, +15)
-    int         prezzo;         // 06  Costo dello scooter (modifiche incluse)
-    int         attivita;       // 07  Attivita' scooter
-    int         stato;          // 08  Quanto e' intero (in percentuale); -1 nessuno scooter
-    char        nome[30];       // 09  Nome dello scooter
-    int         fama;           // 10  Figosita' scooter
-  } NEWSTSCOOTER;
+
 
 /* INFORMAZIONI SUI TELEFONINI */
 typedef struct tagCEL {
@@ -192,8 +180,6 @@ typedef struct tagABB {
   } STABB;
 
 
-extern   NEWSTSCOOTER ScooterData;
-extern   NEWSTSCOOTER ScooterMem[];
 
 extern   STCEL        CellularData;
 extern   STCEL        CellularMem[];
@@ -258,7 +244,7 @@ extern  int       sizze;              // Numero di sigarette
 
 /* Parametri Scooter */
 extern  int       benzina;
-extern  char      *n_attivita[];      // situazione scooter 
+//extern  char      *n_attivita[];      // situazione scooter 
 extern  int       antifurto;          // NON IMPLEMENTATO
 
 
@@ -335,7 +321,7 @@ extern  void  nomoney(int tipo);
 
 /* TAG2015 define temporanei per escludere parti non ancora implementate */
 
-#define TAG2015_NOSCOOTER
+//#define TAG2015_NOSCOOTER
 #define TAG2015_NOCELL
 
 /*Se euro disabilitato, calcola le lire moltiplicando x*1000. Altrimenti divide per 2 */

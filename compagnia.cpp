@@ -29,7 +29,9 @@
 #include "debug.h"
 
 #include "compagnia.h"
+#include "scooter.h"
 #include "eventi.h"
+
 
 
 /* Header per toolkit FLTK */
