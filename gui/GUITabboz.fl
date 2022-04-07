@@ -39,7 +39,7 @@ Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
     label {Tabboz Simulator Next Generation!} open
-    xywh {1162 102 475 450} type Double color 54 align 5
+    xywh {523 499 475 450} type Double color 54 align 5
     code0 {AggiornaPrincipale();} size_range {475 450 475 450} visible
   } {
     Fl_Menu_Bar {} {open
@@ -81,7 +81,7 @@ main_valbox_soldi->value(CALCSOLDI(Soldi));}
 }else {
   fl_message_title("Palestra chiusa");
   fl_alert("Il tuo fisico da atleta dovrà aspettare...\\nvisto che oggi la palestra è chiusa...");
-}} selected
+}}
         xywh {20 405 110 20} color 51 selection_color 51 labelfont 2
       }
     }
@@ -138,7 +138,6 @@ win_principale->deactivate();}
       }
     }
     Fl_Box main_box_figurino {
-      label {Immagine Tabboz}
       xywh {10 30 140 280} box SHADOW_BOX
     }
     Fl_Box main_box_nome {
@@ -206,6 +205,18 @@ AggiornaPrincipale();}
 win_testbed->show();
 win_principale->deactivate();}
       xywh {445 410 20 25}
+    }
+    Fl_Box main_fig_scarpe {
+      xywh {45 245 60 65}
+    }
+    Fl_Box main_fig_panta {
+      xywh {20 127 110 150}
+    }
+    Fl_Box main_fig_giub {
+      xywh {43 80 60 65}
+    }
+    Fl_Box main_fig_testa {selected
+      xywh {42 36 60 65}
     }
   }
 }

@@ -1383,6 +1383,10 @@ void AggiornaPrincipale()
         main_valbox_stipendio->activate();
     else
         main_valbox_stipendio->deactivate();
+    main_fig_scarpe->image(ImgScarpe[current_scarpe]);   // Disegna immagine del tabbozzo/a
+    main_fig_panta->image(ImgPantaloni[current_pantaloni]);
+    main_fig_giub->image(ImgGiubbotto[current_gibbotto]);
+    main_fig_testa->image(ImgTesta[current_testa]);
     win_principale->redraw();
 }
 

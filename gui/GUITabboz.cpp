@@ -348,6 +348,14 @@ win_testbed->show();
 win_principale->deactivate();
 }
 
+Fl_Box *main_fig_scarpe=(Fl_Box *)0;
+
+Fl_Box *main_fig_panta=(Fl_Box *)0;
+
+Fl_Box *main_fig_giub=(Fl_Box *)0;
+
+Fl_Box *main_fig_testa=(Fl_Box *)0;
+
 Fl_Double_Window* GUITabboz() {
   { win_principale = new Fl_Double_Window(475, 450, "Tabboz Simulator Next Generation!");
     win_principale->color(FL_LIGHT3);
@@ -435,7 +443,7 @@ Fl_Double_Window* GUITabboz() {
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
-    { main_box_figurino = new Fl_Box(10, 30, 140, 280, "Immagine Tabboz");
+    { main_box_figurino = new Fl_Box(10, 30, 140, 280);
       main_box_figurino->box(FL_SHADOW_BOX);
     } // Fl_Box* main_box_figurino
     { Fl_Box* o = main_box_nome = new Fl_Box(11, 10, 135, 20, "Nome Tabbozzo");
@@ -530,6 +538,14 @@ Fl_Double_Window* GUITabboz() {
     { Fl_Button* o = new Fl_Button(445, 410, 20, 25, "T");
       o->callback((Fl_Callback*)cb_T);
     } // Fl_Button* o
+    { main_fig_scarpe = new Fl_Box(45, 245, 60, 65);
+    } // Fl_Box* main_fig_scarpe
+    { main_fig_panta = new Fl_Box(20, 127, 110, 150);
+    } // Fl_Box* main_fig_panta
+    { main_fig_giub = new Fl_Box(43, 80, 60, 65);
+    } // Fl_Box* main_fig_giub
+    { main_fig_testa = new Fl_Box(42, 36, 60, 65);
+    } // Fl_Box* main_fig_testa
     AggiornaPrincipale();
     win_principale->size_range(475, 450, 475, 450);
     win_principale->end();

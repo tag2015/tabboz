@@ -23,6 +23,10 @@ extern Fl_Value_Output *main_valbox_stipendio;
 extern Fl_Value_Output *main_valbox_rep;
 extern Fl_Value_Output *main_valbox_fama;
 extern Fl_Value_Output *main_valbox_studio;
+extern Fl_Box *main_fig_scarpe;
+extern Fl_Box *main_fig_panta;
+extern Fl_Box *main_fig_giub;
+extern Fl_Box *main_fig_testa;
 Fl_Double_Window* GUITabboz();
 extern Fl_Menu_Item menu_[];
 #endif
