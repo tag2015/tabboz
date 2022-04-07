@@ -14,6 +14,9 @@ decl {\#include "../zarrosim.h"} {private global
 decl {\#include "../negozi.h"} {private global
 }
 
+decl {\#include "../sharedimg.h"} {private global
+}
+
 decl {int scelta=0;} {private global
 }
 
@@ -38,8 +41,9 @@ Function {GUINegozioVestiti_1()} {open
     Fl_Group {} {open
       xywh {10 10 560 150}
     } {
-      Fl_Button {} {
+      Fl_Button neg1_btn_1 {
         callback {scelta=1;
+o->image(ImgGiubbotto[scelta]);
 giub_colore->activate();
 giub_colore->value(0);
 boxtxt_vestiti->clear();
@@ -51,8 +55,9 @@ boxtxt_vestiti->add("dalle serate con gli amici alle feste più esclusive.");
 boxtxt_vestiti->add(NULL);
 add_prezzo(scelta);
 win_vestiti_1->redraw();
-neg1_btn_compra->activate();}
+neg1_btn_compra->activate();} selected
         xywh {10 10 180 120} type Radio color 7 selection_color 3
+        code0 {o->image(ImgGiubbotto[1]);}
       }
       Fl_Button {} {
         callback {scelta=5;
@@ -68,6 +73,7 @@ add_prezzo(scelta);
 win_vestiti_1->redraw();
 neg1_btn_compra->activate();}
         xywh {200 10 180 120} type Radio color 7 selection_color 3
+        code0 {o->image(ImgGiubbotto[5]);}
       }
       Fl_Button {} {
         callback {scelta=6;
@@ -82,8 +88,9 @@ giub_colore->deactivate();
 boxtxt_vestiti->add(NULL);
 add_prezzo(scelta);
 win_vestiti_1->redraw();
-neg1_btn_compra->activate();} selected
+neg1_btn_compra->activate();}
         xywh {390 10 180 120} type Radio color 7 selection_color 3
+        code0 {o->image(ImgGiubbotto[6]);}
       }
     }
     Fl_Choice giub_colore {open
@@ -93,6 +100,7 @@ neg1_btn_compra->activate();} selected
       MenuItem {} {
         label {Original Blue}
         callback {scelta=1;
+neg1_btn_1->image(ImgGiubbotto[scelta]);
 boxtxt_vestiti->clear();
 boxtxt_vestiti->add(NULL);
 boxtxt_vestiti->add("@bGiubbotto \\"Fatiscenza\\"");
@@ -107,6 +115,7 @@ win_vestiti_1->redraw();}
       MenuItem {} {
         label Silver
         callback {scelta=2;
+neg1_btn_1->image(ImgGiubbotto[scelta]);
 boxtxt_vestiti->clear();
 boxtxt_vestiti->add(NULL);
 boxtxt_vestiti->add("@bGiubbotto \\"Fatiscenza\\"");
@@ -121,6 +130,7 @@ win_vestiti_1->redraw();}
       MenuItem {} {
         label {Green Line}
         callback {scelta=3;
+neg1_btn_1->image(ImgGiubbotto[scelta]);
 boxtxt_vestiti->clear();
 boxtxt_vestiti->add(NULL);
 boxtxt_vestiti->add("@bGiubbotto \\"Fatiscenza\\"");
@@ -135,6 +145,7 @@ win_vestiti_1->redraw();}
       MenuItem {} {
         label White
         callback {scelta=4;
+neg1_btn_1->image(ImgGiubbotto[scelta]);
 boxtxt_vestiti->clear();
 boxtxt_vestiti->add(NULL);
 boxtxt_vestiti->add("@bGiubbotto \\"Fatiscenza\\"");
@@ -149,7 +160,6 @@ win_vestiti_1->redraw();}
     }
     Fl_Browser boxtxt_vestiti {
       xywh {10 175 380 140} box EMBOSSED_FRAME color 54 when 0
-      code0 {//o->add("\\n\\n\\n\\n\\n\\nabab caaaa",0);}
     }
     Fl_Button neg1_btn_compra {
       label {Compra!}

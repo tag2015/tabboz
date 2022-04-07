@@ -5,6 +5,7 @@
 #include "GUINegoziLauncher.h"
 #include "../zarrosim.h"
 #include "../negozi.h"
+#include "../sharedimg.h"
 int scelta=0; 
 char buf[80]; 
 
@@ -18,8 +19,11 @@ static void add_prezzo(int scelta) {
 
 Fl_Double_Window *win_vestiti_1=(Fl_Double_Window *)0;
 
-static void cb_(Fl_Button*, void*) {
+Fl_Button *neg1_btn_1=(Fl_Button *)0;
+
+static void cb_neg1_btn_1(Fl_Button* o, void*) {
   scelta=1;
+o->image(ImgGiubbotto[scelta]);
 giub_colore->activate();
 giub_colore->value(0);
 boxtxt_vestiti->clear();
@@ -34,7 +38,7 @@ win_vestiti_1->redraw();
 neg1_btn_compra->activate();
 }
 
-static void cb_1(Fl_Button*, void*) {
+static void cb_(Fl_Button*, void*) {
   scelta=5;
 boxtxt_vestiti->clear();
 boxtxt_vestiti->add(NULL);
@@ -49,7 +53,7 @@ win_vestiti_1->redraw();
 neg1_btn_compra->activate();
 }
 
-static void cb_2(Fl_Button*, void*) {
+static void cb_1(Fl_Button*, void*) {
   scelta=6;
 boxtxt_vestiti->clear();
 boxtxt_vestiti->add(NULL);
@@ -69,6 +73,7 @@ Fl_Choice *giub_colore=(Fl_Choice *)0;
 
 static void cb_Original(Fl_Menu_*, void*) {
   scelta=1;
+neg1_btn_1->image(ImgGiubbotto[scelta]);
 boxtxt_vestiti->clear();
 boxtxt_vestiti->add(NULL);
 boxtxt_vestiti->add("@bGiubbotto \"Fatiscenza\"");
@@ -82,6 +87,7 @@ win_vestiti_1->redraw();
 
 static void cb_Silver(Fl_Menu_*, void*) {
   scelta=2;
+neg1_btn_1->image(ImgGiubbotto[scelta]);
 boxtxt_vestiti->clear();
 boxtxt_vestiti->add(NULL);
 boxtxt_vestiti->add("@bGiubbotto \"Fatiscenza\"");
@@ -95,6 +101,7 @@ win_vestiti_1->redraw();
 
 static void cb_Green(Fl_Menu_*, void*) {
   scelta=3;
+neg1_btn_1->image(ImgGiubbotto[scelta]);
 boxtxt_vestiti->clear();
 boxtxt_vestiti->add(NULL);
 boxtxt_vestiti->add("@bGiubbotto \"Fatiscenza\"");
@@ -108,6 +115,7 @@ win_vestiti_1->redraw();
 
 static void cb_White(Fl_Menu_*, void*) {
   scelta=4;
+neg1_btn_1->image(ImgGiubbotto[scelta]);
 boxtxt_vestiti->clear();
 boxtxt_vestiti->add(NULL);
 boxtxt_vestiti->add("@bGiubbotto \"Fatiscenza\"");
@@ -158,23 +166,26 @@ Fl_Double_Window* GUINegozioVestiti_1() {
     win_vestiti_1->labelsize(12);
     win_vestiti_1->hotspot(win_vestiti_1);
     { Fl_Group* o = new Fl_Group(10, 10, 560, 150);
-      { Fl_Button* o = new Fl_Button(10, 10, 180, 120);
-        o->type(102);
-        o->color(FL_BACKGROUND2_COLOR);
-        o->selection_color((Fl_Color)3);
-        o->callback((Fl_Callback*)cb_);
-      } // Fl_Button* o
+      { Fl_Button* o = neg1_btn_1 = new Fl_Button(10, 10, 180, 120);
+        neg1_btn_1->type(102);
+        neg1_btn_1->color(FL_BACKGROUND2_COLOR);
+        neg1_btn_1->selection_color((Fl_Color)3);
+        neg1_btn_1->callback((Fl_Callback*)cb_neg1_btn_1);
+        o->image(ImgGiubbotto[1]);
+      } // Fl_Button* neg1_btn_1
       { Fl_Button* o = new Fl_Button(200, 10, 180, 120);
         o->type(102);
         o->color(FL_BACKGROUND2_COLOR);
         o->selection_color((Fl_Color)3);
-        o->callback((Fl_Callback*)cb_1);
+        o->callback((Fl_Callback*)cb_);
+        o->image(ImgGiubbotto[5]);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(390, 10, 180, 120);
         o->type(102);
         o->color(FL_BACKGROUND2_COLOR);
         o->selection_color((Fl_Color)3);
-        o->callback((Fl_Callback*)cb_2);
+        o->callback((Fl_Callback*)cb_1);
+        o->image(ImgGiubbotto[6]);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
@@ -183,11 +194,10 @@ Fl_Double_Window* GUINegozioVestiti_1() {
       giub_colore->menu(menu_giub_colore);
       o->deactivate();
     } // Fl_Choice* giub_colore
-    { Fl_Browser* o = boxtxt_vestiti = new Fl_Browser(10, 175, 380, 140);
+    { boxtxt_vestiti = new Fl_Browser(10, 175, 380, 140);
       boxtxt_vestiti->box(FL_EMBOSSED_FRAME);
       boxtxt_vestiti->color(FL_LIGHT3);
       boxtxt_vestiti->when(FL_WHEN_NEVER);
-      //o->add("\n\n\n\n\n\nabab caaaa",0);
     } // Fl_Browser* boxtxt_vestiti
     { Fl_Button* o = neg1_btn_compra = new Fl_Button(440, 265, 60, 50, "Compra!");
       neg1_btn_compra->callback((Fl_Callback*)cb_neg1_btn_compra);

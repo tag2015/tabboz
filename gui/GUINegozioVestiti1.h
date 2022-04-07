@@ -7,6 +7,7 @@
 extern Fl_Double_Window *win_vestiti_1;
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Button.H>
+extern Fl_Button *neg1_btn_1;
 #include <FL/Fl_Choice.H>
 extern Fl_Choice *giub_colore;
 #include <FL/Fl_Browser.H>

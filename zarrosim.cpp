@@ -34,6 +34,7 @@
 #include "calendario.h"
 #include "proteggi.h"
 #include "sound.h"
+#include "sharedimg.h"
 
 #include "debug.h"
 
@@ -1876,6 +1877,8 @@ int main(void)
     InitTabboz();
 
     fl_register_images();
+    CaricaSharedImgs();
+
 
     /* FIXME suono di prova */
     TabbozPlaySound(0000);
