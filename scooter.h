@@ -22,21 +22,22 @@
 
 /* NUOVE INFORMAZIONI SUGLI SCOOTER */
 typedef struct tagNEWSTSCOOTER {
-    int         speed;          // 01  Velocita'
-    int         marmitta;       // 02  Marmitta       ( +0, +7, +12, +15)
-    int         carburatore;    // 03  Carburatore    ( 0 - 4 )
-    int         cc;             // 04  Cilindrata     ( 0 - 4 )
-    int         filtro;         // 05  Filtro dell'aria    ( +0, +5, +10, +15)
+    int         speed;          // 01  Velocità (calcolata base + elaborazioni)
+    int         marmitta;       // 02  Marmitta ( +0, +7, +12, +15)
+    int         carburatore;    // 03  Carburatore ( 0 - 4 )
+    int         cc;             // 04  Cilindrata ( 0 - 4 )
+    int         filtro;         // 05  Filtro dell'aria ( +0, +5, +10, +15)
     int         prezzo;         // 06  Costo dello scooter (modifiche incluse)
-    int         attivita;       // 07  Attivita' scooter
-    int         stato;          // 08  Quanto e' intero (in percentuale); -1 nessuno scooter
+    int         attivita;       // 07  Attività scooter (vedere n_attivita)
+    int         stato;          // 08  Quanto è intero (in percentuale); -100 nessuno scooter
     char        nome[30];       // 09  Nome dello scooter
-    int         fama;           // 10  Figosita' scooter
+    int         fama;           // 10  Figosità scooter
 } NEWSTSCOOTER;
 
 
-extern NEWSTSCOOTER ScooterData;
-extern NEWSTSCOOTER ScooterMem[];
+extern NEWSTSCOOTER ScooterData;        // Dati scooter del tabbozzo
+extern NEWSTSCOOTER ScooterMem[];       // Array scooter disponibili in concessionario
 
-extern const char    *n_attivita[];
-extern int           benzina;
+extern const char    *n_attivita[];     // situazione scooter (ok, a secco, ingrippato...)
+extern int           benzina;           // Benzina nel serbatoioextern
+extern int           antifurto;         // NON USATO

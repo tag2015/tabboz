@@ -30,6 +30,14 @@
 
 #include "scooter.h"
 
+
+const char    *n_attivita[]= { "mancante", "funzionante", "ingrippato", "invasato" , "parcheggiato", "sequestrato", "a secco" };
+
+const char    *n_carburatore[]= { "12/10", "16/16", "19/19", "20/20", "24/24" , "custom" };
+const char    *n_cc[]=          { "50cc", "70cc", "90cc", "120cc", "150cc", "3969cc" };
+const char    *n_marmitta[]=    { "standard", "silenziosa", "rumorosa", "rumorosissima" };
+const char    *n_filtro[]=      { "standard", "P1", "P2", "P2+" , "Extreme" };
+
 // static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 // BOOL FAR PASCAL RiparaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
@@ -43,12 +51,8 @@
 // extern   void    CalcolaVeelocita(HWND hDlg);
 // extern    char    *MostraSpeed(void);
 
-// static char    *n_carburatore[]= { "12/10", "16/16", "19/19", "20/20", "24/24" , "custom" };
-// static char    *n_cc[]=          { "50cc", "70cc", "90cc", "120cc", "150cc", "3969cc" };
-// static char    *n_marmitta[]=    { "standard", "silenziosa", "rumorosa", "rumorosissima" };
-// static char    *n_filtro[]=      { "standard", "P1", "P2", "P2+" , "Extreme" };
 
-const char *n_attivita[]= { "mancante", "funzionante", "ingrippato", "invasato" , "parcheggiato", "sequestrato", "a secco" };
+
 
 static int tabella[]=
                   {  65,        70,   -100,   -100,   -100,   -100,

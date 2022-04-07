@@ -248,7 +248,7 @@ void Evento()
             case 18:
             case 19:
             case 20:
-                if ((ScooterData.stato > -1) && (ScooterData.attivita == 1)) {  //BUGFIX & mancante
+                if ((ScooterData.stato > -100) && (ScooterData.attivita == 1)) {  //BUGFIX & mancante
         
                     if (CellularData.stato > -1) {                    //incidente danneggia anche il cell
                         CellularData.stato-=rand() % 8;
@@ -288,7 +288,7 @@ void Evento()
                     if (ScooterData.stato <= 0) {
                         fl_message_title("Scooter Distrutto");
                         fl_alert("Quando ti rialzi ti accorgi che il tuo scooter è ormai ridotto ad un ammasso di rottami.");
-                        ScooterData.stato=-1;
+                        ScooterData.stato=-100;
                         ScooterData.attivita=0;
 //                        ScooterData=ScooterMem[0];  FIXME Scooter
                         #ifdef TABBOZ_DEBUG

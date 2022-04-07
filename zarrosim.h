@@ -242,12 +242,6 @@ extern  int       current_tipa;       // Abbigliamento della tipa (nella finestr
 extern  int       sizze;              // Numero di sigarette
 
 
-/* Parametri Scooter */
-extern  int       benzina;
-//extern  char      *n_attivita[];      // situazione scooter 
-extern  int       antifurto;          // NON IMPLEMENTATO
-
-
 /* Opzioni */
 extern  int       sound_active;       // Abilita i suoni
 extern  int       euro;               // Usa euro anzichè lire

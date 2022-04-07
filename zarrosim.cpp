@@ -77,8 +77,6 @@ static void     SalvaTutto(void);
 static void     CaricaTutto(void);
 
 
-/* FIXME spostare al posto giusto dopo implementazione scooter */
-//NEWSTSCOOTER ScooterData;
 /* FIXME spostare al posto giusto dopo implementazione cell */
 STCEL CellularData;
 STABB AbbonamentData;
@@ -249,7 +247,7 @@ void ResetMe(int primavolta)
     #endif
 
     #ifndef TAG2015_NOSCOOTER
-        ScooterData.stato    = -1;  
+        ScooterData.stato    = -100;  
     #endif
     #ifndef TAG2015_NOCELL
         AbbonamentData.creditorest = -1;
@@ -587,7 +585,7 @@ static void CaricaTutto(void)
 //    ScooterData.attivita = new_check_i(atoi(RRKey("Scooter\\Attivita")));
     if (ScooterData.attivita < 0) ScooterData.attivita=0;
 
-    ScooterProfilo.get("Stato",buf_i,0);
+    ScooterProfilo.get("Stato",buf_i,-100);
     ScooterData.stato = new_check_i(buf_i);
   //  ScooterData.stato = new_check_i(atoi(RRKey("Scooter\\Stato")));  // -100 = nessuno
 

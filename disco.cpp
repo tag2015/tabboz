@@ -71,7 +71,7 @@ void PagaDisco(int scelta)
     char tmp[128];
     int prezzo;
 
-    if ( (DiscoMem[scelta].fuoriporta) && (ScooterData.stato == -1) ) {
+    if ( (DiscoMem[scelta].fuoriporta) && (ScooterData.stato == -100) ) {
         fl_message_title("Discoteca fuori porta");
         fl_alert("Senza lo scooter non puoi andare nelle discoteche fuori porta...");
         Evento();
