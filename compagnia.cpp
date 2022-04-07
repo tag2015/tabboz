@@ -26,6 +26,7 @@
 #include <time.h>
 
 #include "zarrosim.h"
+#include "sound.h"
 #include "debug.h"
 
 #include "compagnia.h"
@@ -43,8 +44,7 @@
 void GareggiaScooter(void)
 {
     int i, si_no;
-    char buf[128];
-    
+
     fl_message_title("Gareggia con lo scooter");
     if (ScooterData.stato <= 0) {
         fl_message("Con quale scooter vorresti gareggiare, visto che non lo possiedi?");
@@ -54,7 +54,7 @@ void GareggiaScooter(void)
         fl_message("Purtroppo non puoi gareggiare visto che il tuo scooter è %s.",n_attivita[ScooterData.attivita]);
         return;
     }
-    if (sound_active) //TabbozPlaySound(701);  FIXME Suono
+    if (sound_active) TabbozPlaySound(701);
     i= 1 + rand() % 6;    // estrae tipo di scooter sfidante
     si_no=fl_choice("Accetti la sfida con un tabbozzo che ha un %s?", "Lo spakko!", "Ho paura...", 0, ScooterMem[i].nome);
     if (ScooterData.stato > 30) ScooterData.stato-=rand() % 2;  // BUG? perchè danneggia lo scooter anche se rifiuto la gara?
@@ -88,7 +88,7 @@ void GareggiaScooter(void)
     benzina-=5;
     if (benzina < 1) benzina = 0;
 //    showscooter=0;   FIXME Scooter
-//    CalcolaVelocita(hDlg);
+//    CalcolaVelocita(); FIXME Scooter
     Evento();
 }
 #endif
