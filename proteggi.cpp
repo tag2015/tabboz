@@ -30,8 +30,8 @@
 
 
 int         new_counter;
-static char	p_ruota1;
-static char	p_ruota2;
+static int	p_ruota1;
+static int	p_ruota2;
 static int  ruota1[8] = { 0xed0f,0xff0d,0x3392,0xabcd,0xc79c,0x23df,0x0706,0xc39c };
 static int  ruota2[5] = { 0xb47f,0xc37b,0x1070,0x1999, 0xfb1e };
 
