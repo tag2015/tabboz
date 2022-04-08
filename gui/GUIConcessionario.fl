@@ -1,0 +1,135 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cpp}
+decl {\#include "GUITabboz.h"} {private local
+}
+
+decl {\#include "GUIScooter.h"} {private global
+}
+
+decl {\#include "../zarrosim.h"} {private global
+}
+
+decl {\#include "../scooter.h"} {private global
+}
+
+decl {\#include "../sharedimg.h"} {private global
+}
+
+Function {RiempiScheda(int scelta)} {open private C
+} {
+  code {char buf[80];
+sprintf(buf,"%d Km/h",ScooterMem[scelta_gui].speed);
+conce_txt_speed->value(buf);
+conce_txt_cc->value(n_cc[ScooterMem[scelta_gui].cc]);
+conce_txt_carb->value(n_carburatore[ScooterMem[scelta_gui].carburatore]);
+conce_txt_filtro->value(n_filtro[ScooterMem[scelta_gui].filtro]);
+conce_txt_marmitta->value(n_marmitta[ScooterMem[scelta_gui].marmitta]);
+
+if(!euro)
+  sprintf(buf, "L. %d",CALCSOLDI(ScooterMem[scelta_gui].prezzo));
+else
+  sprintf(buf, "€ %d",CALCSOLDI(ScooterMem[scelta_gui].prezzo));
+conce_txt_prezzo->value(buf);} {}
+}
+
+Function {GUIConcessionario()} {open
+} {
+  Fl_Window win_conce {open
+    xywh {909 403 600 507} type Double color 54 hotspot modal size_range {600 507 600 507} visible
+  } {
+    Fl_Tabs {} {open
+      xywh {5 5 560 420} color 54
+    } {
+      Fl_Group {} {
+        label Malagutty open
+        xywh {10 40 555 365} color 54
+      } {
+        Fl_Group {} {
+          label tasti open
+          xywh {15 50 550 150} labeltype NO_LABEL
+        } {
+          Fl_Button {} {
+            callback {scelta_gui=1;
+RiempiScheda(scelta_gui);
+conce_btn_compra->activate();}
+            image {../res/pic/scooter_1.png} xywh {15 50 175 125} type Radio color 7 selection_color 3
+          }
+          Fl_Button {} {
+            callback {scelta_gui=4;
+RiempiScheda(scelta_gui);
+conce_btn_compra->activate();}
+            image {../res/pic/scooter_2.png} xywh {200 50 175 125} type Radio color 7 selection_color 3
+          }
+          Fl_Button {} {
+            callback {scelta_gui=5;
+RiempiScheda(scelta_gui);
+conce_btn_compra->activate();}
+            image {../res/pic/scooter_3.png} xywh {385 50 175 125} type Radio color 7 selection_color 3
+          }
+        }
+        Fl_Group {} {open
+          xywh {15 190 315 175}
+        } {
+          Fl_Output conce_txt_speed {
+            label {Velocità}
+            xywh {100 200 150 20}
+          }
+          Fl_Output conce_txt_marmitta {
+            label Marmitta
+            xywh {100 300 150 20}
+          }
+          Fl_Output conce_txt_carb {
+            label Carburatore
+            xywh {100 250 150 20}
+          }
+          Fl_Output conce_txt_cc {
+            label Cilindrata
+            xywh {100 225 150 20}
+          }
+          Fl_Output conce_txt_filtro {
+            label {Filtro aria}
+            xywh {100 275 150 20}
+          }
+          Fl_Output conce_txt_prezzo {
+            label Prezzo
+            xywh {100 335 150 20}
+          }
+        }
+      }
+      Fl_Group {} {
+        label {Altre marche} open
+        xywh {15 40 550 385} color 54 hide
+      } {}
+    }
+    Fl_Button conce_btn_compra {
+      label {Compra!}
+      callback {AcquistaScooter(scelta_gui);
+win_scooter->activate();
+//AggiornaScooter();
+win_conce->hide();} selected
+      xywh {450 445 60 50}
+      code0 {o->deactivate();}
+    }
+    Fl_Return_Button {} {
+      label Back
+      callback {win_scooter->activate();
+win_conce->hide();}
+      xywh {515 445 60 50}
+    }
+    Fl_Value_Output {} {
+      label {Soldi L.}
+      callback {o->value(CALCSOLDI(Soldi));}
+      xywh {270 440 115 25} step 1 textfont 5
+      code0 {o->value(CALCSOLDI(Soldi));}
+      code1 {if(euro) o->label("Soldi  €");}
+    }
+    Fl_Value_Output {} {
+      label {Figosità}
+      callback {o->value(Fama);}
+      xywh {355 470 30 25} textfont 5
+      code0 {o->value(Fama);}
+    }
+  }
+}

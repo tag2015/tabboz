@@ -18,7 +18,6 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <stdio.h>
 
 /* NUOVE INFORMAZIONI SUGLI SCOOTER */
 typedef struct tagNEWSTSCOOTER {
@@ -34,10 +33,18 @@ typedef struct tagNEWSTSCOOTER {
     int         fama;           // 10  Figosità scooter
 } NEWSTSCOOTER;
 
-
 extern NEWSTSCOOTER ScooterData;        // Dati scooter del tabbozzo
 extern NEWSTSCOOTER ScooterMem[];       // Array scooter disponibili in concessionario
 
+extern const char    *n_carburatore[];  // Descrizioni carburatori
+extern const char    *n_cc[];           // Cilindrate
+extern const char    *n_marmitta[];     // Descrizioni marmitte
+extern const char    *n_filtro[];       // Descrizioni filtri aria
+
 extern const char    *n_attivita[];     // situazione scooter (ok, a secco, ingrippato...)
-extern int           benzina;           // Benzina nel serbatoioextern
+extern int           benzina;           // Benzina nel serbatoio
 extern int           antifurto;         // NON USATO
+
+void    AcquistaScooter(int scelta);
+void    CalcolaVelocita(bool scooter_nuovo);
+char    *MostraSpeed(void);

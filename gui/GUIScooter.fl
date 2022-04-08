@@ -1,0 +1,90 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cpp}
+decl {\#include <FL/Fl.H>} {private global
+}
+
+decl {\#include <FL/fl_ask.H>} {private global
+}
+
+decl {\#include "GUITabboz.h"} {private global
+}
+
+decl {\#include "GUIConcessionario.h"} {private global
+}
+
+decl {\#include "../zarrosim.h"} {private global
+}
+
+decl {\#include "../calendario.h"} {private global
+}
+
+decl {\#include "../sound.h"} {private global
+}
+
+Function {GUIScooter()} {open
+} {
+  Fl_Window win_scooter {
+    label Scooter open
+    xywh {297 545 510 250} type Double color 54 labelfont 1 labelsize 12 hotspot modal size_range {510 250 510 250} visible
+  } {
+    Fl_Button {} {
+      label Concessionario
+      callback {if (x_vacanza != 2) {
+  GUIConcessionario();
+  win_conce->show();
+  win_scooter->deactivate();
+}else {
+  fl_message_title("Concessionario chiuso");
+  fl_alert("Oh, tip%c... oggi il concessionario è chiuso...",ao);
+}} selected
+      xywh {10 20 240 35}
+    }
+    Fl_Return_Button {} {
+      label Back
+      callback {win_principale->activate();
+win_scooter->hide();}
+      xywh {190 190 60 50}
+    }
+    Fl_Button {} {
+      label {Parcheggia/Usa scooter}
+      xywh {10 95 240 35}
+    }
+    Fl_Button {} {
+      label {Fai benza}
+      xywh {10 135 240 35}
+    }
+    Fl_Group {} {
+      label {Parametri Scooter} open
+      xywh {260 20 240 150} box EMBOSSED_FRAME labelfont 1 labelsize 12
+    } {}
+    Fl_Button {} {
+      label {Elabora Scooter}
+      xywh {260 175 240 30}
+    }
+    Fl_Button {} {
+      label {Ripara Scooter}
+      xywh {260 210 240 30}
+    }
+    Fl_Output {} {
+      label {Velocità   }
+      xywh {340 65 150 25}
+    }
+    Fl_Output {} {
+      label {Cilindrata }
+      xywh {340 90 150 25}
+    }
+    Fl_Output {} {
+      label {Efficienza }
+      xywh {340 115 150 25}
+    }
+    Fl_Output {} {
+      label {Benzina   }
+      xywh {340 140 150 25}
+    }
+    Fl_Output sco_txtnome {
+      xywh {270 30 220 25} box NO_BOX
+    }
+  }
+}
