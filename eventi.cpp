@@ -475,7 +475,6 @@ void Evento()
 void EventiPalestra(void)
 {
     int i;
-    char messaggio[128];
 
     i=rand() % (29 + (Fortuna / 2));
 
