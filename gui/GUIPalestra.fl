@@ -15,7 +15,7 @@ Function {GUITabbozPalestra()} {open
 } {
   Fl_Window win_palestra {
     label Palestra open
-    xywh {385 524 490 255} type Double color 54 labelfont 1 labelsize 12 hotspot
+    xywh {710 540 490 255} type Double color 54 labelfont 1 labelsize 12 hotspot
     code0 {AggiornaPalestra();} modal size_range {490 255 490 255} visible
   } {
     Fl_Return_Button {} {
@@ -30,7 +30,10 @@ win_palestra->hide();}
     }
     Fl_Button {} {
       label {Vai in palestra}
-      callback {VaiInPalestra();}
+      callback {VaiInPalestra();
+AggiornaPrincipale();
+win_principale->activate();
+win_palestra->hide();} selected
       xywh {260 110 220 25}
     }
     Fl_Group {} {open
@@ -81,7 +84,7 @@ win_palestra->hide();}
     }
     Fl_Value_Output pal_soldi {
       label {Soldi L.}
-      callback {o->value(CALCSOLDI(Soldi));} selected
+      callback {o->value(CALCSOLDI(Soldi));}
       xywh {70 211 130 24} step 1 value 1e+07 textfont 5
       code0 {o->value(CALCSOLDI(Soldi));}
       code1 {if(euro) o->label("Soldi €");}

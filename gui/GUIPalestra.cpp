@@ -5190,6 +5190,9 @@ static Fl_Image *image_palestra() {
 
 static void cb_Vai(Fl_Button*, void*) {
   VaiInPalestra();
+AggiornaPrincipale();
+win_principale->activate();
+win_palestra->hide();
 }
 
 static void cb_1(Fl_Button*, void*) {
