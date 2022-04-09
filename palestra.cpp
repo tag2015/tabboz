@@ -57,7 +57,7 @@ void VaiInPalestra(void)
         fl_message("Prima di poter venire in palestra devi fare un abbonamento!");
     } else {
         if (sound_active) TabbozPlaySound(201);
-        if (Fama < 82) Fama++;
+        if (Fama < 82) Fama+=2;  //BUGFIX solo 1 volta al giorno, ma incrementa +2 anzichè +1
         if(rand() % 2)  //BUGFIX Solo il 50% di probabilità, per compensare l'evento obbligatorio
             EventiPalestra();
         Evento();    //BUGFIX Bisogna chiamare Evento se no il calendario non avanza
