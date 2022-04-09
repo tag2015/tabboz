@@ -196,8 +196,7 @@ extern  char    Caccia[21];
 extern  char    Daniele[17];
 
 extern  int     ImgSelector;
-extern  int     TabbozRedraw;   // E' necessario ridisegnare il Tabbozzo ???
-extern  char    showscooter;
+extern  int     TabbozRedraw;   // E' necessario ridisegnare il Tabbozzo ??? FIXME inutile?
 
 
 /* DOPO LE CARATTERISTIKE... */
@@ -307,15 +306,7 @@ extern  char  *MostraSoldi(int i);
 extern  void  nomoney(int tipo);
 
 
-//TAG2015 quelle sotto x ora commentate ma servono
-//extern  void   CalcolaVelocita(HANDLE hDlg);
-//extern  void RunPalestra(HWND hDlg);
-//extern  void RunTabacchi(HWND hDlg);
-//extern  void RunVestiti(HWND hDlg,int numero);
-
 /* TAG2015 define temporanei per escludere parti non ancora implementate */
-
-//#define TAG2015_NOSCOOTER
 #define TAG2015_NOCELL
 
 /*Se euro disabilitato, calcola le lire moltiplicando x*1000. Altrimenti divide per 2 */

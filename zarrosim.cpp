@@ -241,17 +241,16 @@ void ResetMe(int primavolta)
     current_pantaloni =  0;
     current_scarpe    =  0;
 
-    #ifndef NONETWORK
-        net_enable =  1;
-        PortNumber = 79;
-    #endif
+    ScooterData.stato    = -1000;
 
-    #ifndef TAG2015_NOSCOOTER
-        ScooterData.stato    = -1000;
-    #endif
     #ifndef TAG2015_NOCELL
         AbbonamentData.creditorest = -1;
         CellularData.stato         = -1;
+    #endif
+
+    #ifndef NONETWORK
+        net_enable =  1;
+        PortNumber = 79;
     #endif
 }
 
@@ -324,10 +323,8 @@ static void InitTabboz(void)
     boolean_shutdown=0;               /* 0=resta dentro, 1=uscita, 2=shutdown */
 
     Fortuna=0;                        /* Uguale a me...               */
-    #ifndef TAG2015_NOSCOOTER
-        ScooterData=ScooterMem[0];        /* nessuno scooter              */
-    #endif
-    AttesaSoldi=ATTESAMAX;                 /* attesa per avere soldi...    */
+    ScooterData=ScooterMem[0];        /* nessuno scooter              */
+    AttesaSoldi=ATTESAMAX;            /* attesa per avere soldi...    */
     ImgSelector=0;                    /* W l' arte di arrangiarsi...  */
     timer_active=1;
     fase_di_avvio=1;
@@ -548,7 +545,9 @@ static void CaricaTutto(void)
         if (PortNumber < 1) PortNumber=79;
     #endif
 
-#ifndef TAG2015_NOSCOOTER
+    ScooterProfilo.get("ID",buf_i,0);
+    ScooterData.id = new_check_i(buf_i);
+    if (ScooterData.id < 0) ScooterData.id=0;
 
     ScooterProfilo.get("Speed",buf_i,0);
     ScooterData.speed = new_check_i(buf_i);
@@ -590,7 +589,6 @@ static void CaricaTutto(void)
 
     ScooterProfilo.get("Nome",ScooterData.nome,"Nessuno...",STR_MAX);
 
-#endif
 #ifndef TAG2015_NOCELL
     /* Cellulare */
     AbbonamentData.dualonly    = new_check_i(atoi (RRKey("Cellular\\DualOnly")));
@@ -752,9 +750,8 @@ static void SalvaTutto(void) {
     TabbozAddKey("NetPort", tmp);
 #endif
 
-#ifndef TAG2015_NOSCOOTER
     /* salva dati scooter */
-
+    ScooterProfilo.set("ID",new_check_i(ScooterData.id));
     ScooterProfilo.set("Speed",new_check_i(ScooterData.speed));
     ScooterProfilo.set("Marmitta",new_check_i(ScooterData.marmitta));
     ScooterProfilo.set("Carburatore",new_check_i(ScooterData.carburatore));
@@ -767,7 +764,6 @@ static void SalvaTutto(void) {
 //    ScooterProfilo.set("Antifurto",new_check_i(antifurto));
     ScooterProfilo.set("Nome", ScooterData.nome);
 
-#endif
 
 #ifndef TAG2015_NOCELL
     /* salva dati cellulare */
@@ -1265,10 +1261,8 @@ void nomoney(int tipo)
                 fl_alert("L'enorme meccanico ti affera con una sola mano, ti riempe di pugni, e non esita a scaraventare te ed il tuo motorino fuori dall'officina.");
                 if (Reputazione > 7 )
                     Reputazione-=5;
-                #ifndef TAG2015_NOSCOOTER
                 if (ScooterData.stato > 7 )
                     ScooterData.stato-=5;
-                #endif
             } else {
                 fl_message_title("Non hai abbastanza soldi...");
                 fl_alert("Con un sonoro calcio nel culo, vieni buttata fuori dall'officina.");
@@ -1889,7 +1883,7 @@ int main(void)
 
 
     /* FIXME suono di prova */
-    TabbozPlaySound(0000);
+    //TabbozPlaySound(0000);
 
     /* Finestra principale */
     win_principale = GUITabboz();
