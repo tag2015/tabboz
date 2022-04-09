@@ -6,12 +6,14 @@
 #include "../calendario.h"
 #include "../negozi.h"
 #include "GUIScuola.h"
+#include "GUIPalestra.h"
 #include "GUICompagnia.h"
 #include "GUIFamiglia.h"
+#include "GUIScooter.h"
 #include "GUINegoziLauncher.h"
 #include "GUIDisco.h"
-#include "GUIPalestra.h"
 #include "GUITestbed.h"
+int scelta_gui; 
 
 Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
 
@@ -243,7 +245,9 @@ static Fl_Image *image_b_famiglia() {
 }
 
 static void cb_Scooter(Fl_Button*, void*) {
-  fl_alert("Non ancora implementato!");
+  GUIScooter();
+win_scooter->show();
+win_principale->deactivate();
 }
 
 static void cb_Negozi(Fl_Button*, void*) {

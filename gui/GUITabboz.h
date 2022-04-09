@@ -3,6 +3,7 @@
 #ifndef GUITabboz_h
 #define GUITabboz_h
 #include <FL/Fl.H>
+extern int scelta_gui; 
 #include <FL/Fl_Double_Window.H>
 extern Fl_Double_Window *win_principale;
 #include <FL/Fl_Menu_Bar.H>

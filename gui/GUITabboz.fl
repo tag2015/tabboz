@@ -17,10 +17,16 @@ decl {\#include "../negozi.h"} {private global
 decl {\#include "GUIScuola.h"} {private global
 }
 
+decl {\#include "GUIPalestra.h"} {private global
+}
+
 decl {\#include "GUICompagnia.h"} {private global
 }
 
 decl {\#include "GUIFamiglia.h"} {private global
+}
+
+decl {\#include "GUIScooter.h"} {private global
 }
 
 decl {\#include "GUINegoziLauncher.h"} {private global
@@ -29,17 +35,17 @@ decl {\#include "GUINegoziLauncher.h"} {private global
 decl {\#include "GUIDisco.h"} {private global
 }
 
-decl {\#include "GUIPalestra.h"} {private global
+decl {\#include "GUITestbed.h"} {private global
 }
 
-decl {\#include "GUITestbed.h"} {private global
+decl {int scelta_gui;} {selected public local
 }
 
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
     label {Tabboz Simulator Next Generation!} open
-    xywh {523 499 475 450} type Double color 54 align 5
+    xywh {805 328 475 450} type Double color 54 align 5
     code0 {AggiornaPrincipale();} size_range {475 450 475 450} visible
   } {
     Fl_Menu_Bar {} {open
@@ -116,7 +122,9 @@ win_principale->deactivate();}
     } {
       Fl_Button {} {
         label Scooter
-        callback {fl_alert("Non ancora implementato!");}
+        callback {GUIScooter();
+win_scooter->show();
+win_principale->deactivate();}
         xywh {300 345 110 20} color 51 selection_color 51 labelfont 2
       }
       Fl_Button {} {
@@ -215,7 +223,7 @@ win_principale->deactivate();}
     Fl_Box main_fig_giub {
       xywh {43 80 60 65}
     }
-    Fl_Box main_fig_testa {selected
+    Fl_Box main_fig_testa {
       xywh {42 36 60 65}
     }
   }
