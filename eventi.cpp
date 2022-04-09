@@ -248,7 +248,7 @@ void Evento()
             case 18:
             case 19:
             case 20:
-                if ((ScooterData.stato > -100) && (ScooterData.attivita == 1)) {  //BUGFIX & mancante
+                if ((ScooterData.stato > -1000) && (ScooterData.attivita == 1)) {  //BUGFIX & mancante
         
                     if (CellularData.stato > -1) {                    //incidente danneggia anche il cell
                         CellularData.stato-=rand() % 8;
@@ -256,7 +256,7 @@ void Evento()
                         if (CellularData.stato < 0 ) CellularData.stato=0;  //FIXME rivedere condizioni 0 o -1
                     }
 
-                    if (caso < 17) {  // Camionista - ( caso 11-16) BUG? perchè è + frequente se danneggia di + dell'incidente?
+                    if (caso < 15) {  // Camionista - ( caso 11-14) BUGFIX visto che danneggia + del muro, abbasssato di 2 i possibili casi
                         ScooterData.stato-=35;
                         //lpproc = MakeProcInstance(MostraMetallone, hInst);
                         //DialogBox(hInst, MAKEINTRESOURCE(106), hInstance, lpproc);
@@ -269,7 +269,7 @@ void Evento()
                             writelog("eventi: Scooter - Camionista...");
                         #endif
                     
-                    } else {  // Muro ! ( caso 17 - 20) -------------------
+                    } else {  // Muro ! ( caso 15 - 20) -------------------
                         ScooterData.stato-=20;
                         //lpproc = MakeProcInstance(MostraMetallone, hInst);
                         //DialogBox(hInst, MAKEINTRESOURCE(107), hInstance, lpproc);
@@ -288,9 +288,8 @@ void Evento()
                     if (ScooterData.stato <= 0) {
                         fl_message_title("Scooter Distrutto");
                         fl_alert("Quando ti rialzi ti accorgi che il tuo scooter è ormai ridotto ad un ammasso di rottami.");
-                        ScooterData.stato=-100;
-                        ScooterData.attivita=0;
-//                        ScooterData=ScooterMem[0];  FIXME Scooter
+                        ScooterData.stato = 0;
+                        ScooterData.attivita=0;  //anziche azzerare lo scooter, lo incidentiamo
                         #ifdef TABBOZ_DEBUG
                             writelog("eventi: Lo scooter si e' completamente distrutto...");
                         #endif
@@ -340,7 +339,8 @@ void Evento()
                 fl_message_title("Scuola...");
                 fl_alert(messaggio);
            
-                if (MaterieMem[i].voto >= 2) MaterieMem[i].voto-=2;
+                MaterieMem[i].voto-=2;
+                if(MaterieMem[i].voto < 2) MaterieMem[i].voto=2;
                 CalcolaStudio();
                 #ifdef TABBOZ_DEBUG
                     writelog("eventi: Evento riguardante la scuola");
