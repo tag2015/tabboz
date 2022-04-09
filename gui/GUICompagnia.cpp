@@ -6092,6 +6092,13 @@ AggiornaPrincipale();
 win_compagnia->hide();
 }
 
+static void cb_Gareggia(Fl_Button*, void*) {
+  GareggiaScooter();
+win_principale->activate();
+AggiornaPrincipale();
+win_compagnia->hide();
+}
+
 static void cb_Esci(Fl_Button*, void*) {
   EsciCompagnia();
 win_principale->activate();
@@ -6101,7 +6108,9 @@ win_compagnia->hide();
 
 static void cb_Chiama(Fl_Button*, void*) {
   ChiamaCompagnia();
-compa_val_rep->value(Reputazione);
+win_principale->activate();
+AggiornaPrincipale();
+win_compagnia->hide();
 }
 
 Fl_Value_Output *compa_val_rep=(Fl_Value_Output *)0;
@@ -6120,6 +6129,7 @@ Fl_Double_Window* GUITabbozCompagnia() {
     { Fl_Button* o = new Fl_Button(10, 195, 290, 30, "Gareggia con lo scooter");
       o->color((Fl_Color)51);
       o->selection_color((Fl_Color)51);
+      o->callback((Fl_Callback*)cb_Gareggia);
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(10, 230, 290, 30, "Esci con la compagnia");
       o->color((Fl_Color)51);
