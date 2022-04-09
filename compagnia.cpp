@@ -39,14 +39,14 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
-#ifndef TAG2015_NOSCOOTER
+
 /* Gareggia con lo scooter... */
 void GareggiaScooter(void)
 {
     int i, si_no;
 
     fl_message_title("Gareggia con lo scooter");
-    if (ScooterData.stato <= 0) {
+    if (ScooterData.stato == -1000) {
         fl_message("Con quale scooter vorresti gareggiare, visto che non lo possiedi?");
         return;
     }
@@ -84,14 +84,13 @@ void GareggiaScooter(void)
             if (Reputazione > 10)
                 Reputazione-=2;
         }
-    }    
+    }
     benzina-=5;
     if (benzina < 1) benzina = 0;
-//    showscooter=0;   FIXME Scooter
-//    CalcolaVelocita(); FIXME Scooter
+    CalcolaVelocita(FALSE);
     Evento();
 }
-#endif
+
 
 /* Esci con la compagnia... */
 void EsciCompagnia(void)
@@ -105,6 +104,7 @@ void EsciCompagnia(void)
 
     Evento();
 }
+
 
 /* Chiama la compagnia...*/
 void ChiamaCompagnia(void)
@@ -125,6 +125,7 @@ void ChiamaCompagnia(void)
             if (Reputazione < 95)
                 Reputazione+=5;
             }
+        tempo_pestaggio=0;  // BUGFIX si può contrattaccare una sola volta x pestaggio
         Evento();
     } else {
         fl_message_title("Chiama la Compagnia (perchè?)");
