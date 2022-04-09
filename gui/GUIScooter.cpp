@@ -8,6 +8,7 @@
 #include "../zarrosim.h"
 #include "../calendario.h"
 #include "../sound.h"
+#include "../scooter.h"
 
 Fl_Double_Window *win_scooter=(Fl_Double_Window *)0;
 
@@ -24,10 +25,40 @@ static void cb_Concessionario(Fl_Button*, void*) {
 
 static void cb_Back(Fl_Return_Button*, void*) {
   win_principale->activate();
+AggiornaPrincipale();
 win_scooter->hide();
 }
 
-Fl_Output *sco_txtnome=(Fl_Output *)0;
+Fl_Button *scooter_btn_usa=(Fl_Button *)0;
+
+static void cb_scooter_btn_usa(Fl_Button* o, void*) {
+  if(ParcheggiaScooter())
+  o->label("Usa scooter");
+else
+  o->label("Parcheggia scooter");
+o->redraw();
+AggiornaScooter();
+}
+
+static void cb_Fai(Fl_Button*, void*) {
+  FaiBenza();
+}
+
+static void cb_Ripara(Fl_Button*, void*) {
+  RiparaScooter();
+}
+
+Fl_Output *sco_txt_nome=(Fl_Output *)0;
+
+Fl_Output *sco_txt_speed=(Fl_Output *)0;
+
+Fl_Output *sco_txt_cc=(Fl_Output *)0;
+
+Fl_Output *sco_txt_stato=(Fl_Output *)0;
+
+Fl_Output *sco_txt_benza=(Fl_Output *)0;
+
+Fl_Value_Output *sco_val_soldi=(Fl_Value_Output *)0;
 
 Fl_Double_Window* GUIScooter() {
   { win_scooter = new Fl_Double_Window(510, 250, "Scooter");
@@ -41,31 +72,45 @@ Fl_Double_Window* GUIScooter() {
     { Fl_Return_Button* o = new Fl_Return_Button(190, 190, 60, 50, "Back");
       o->callback((Fl_Callback*)cb_Back);
     } // Fl_Return_Button* o
-    { new Fl_Button(10, 95, 240, 35, "Parcheggia/Usa scooter");
+    { scooter_btn_usa = new Fl_Button(10, 95, 240, 35, "Parcheggia scooter");
+      scooter_btn_usa->callback((Fl_Callback*)cb_scooter_btn_usa);
+    } // Fl_Button* scooter_btn_usa
+    { Fl_Button* o = new Fl_Button(10, 135, 240, 35, "Fai benza");
+      o->callback((Fl_Callback*)cb_Fai);
     } // Fl_Button* o
-    { new Fl_Button(10, 135, 240, 35, "Fai benza");
+    { Fl_Button* o = new Fl_Button(260, 175, 240, 30, "Elabora Scooter");
+      o->deactivate();
+    } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(260, 210, 240, 30, "Ripara Scooter");
+      o->callback((Fl_Callback*)cb_Ripara);
     } // Fl_Button* o
     { Fl_Group* o = new Fl_Group(260, 20, 240, 150, "Parametri Scooter");
       o->box(FL_EMBOSSED_FRAME);
       o->labelfont(1);
       o->labelsize(12);
+      { sco_txt_nome = new Fl_Output(275, 30, 215, 25);
+        sco_txt_nome->box(FL_NO_BOX);
+      } // Fl_Output* sco_txt_nome
+      { sco_txt_speed = new Fl_Output(345, 65, 150, 25, "Velocit\303\240   ");
+        sco_txt_speed->box(FL_ENGRAVED_FRAME);
+      } // Fl_Output* sco_txt_speed
+      { sco_txt_cc = new Fl_Output(345, 90, 150, 25, "Cilindrata ");
+        sco_txt_cc->box(FL_ENGRAVED_FRAME);
+      } // Fl_Output* sco_txt_cc
+      { sco_txt_stato = new Fl_Output(345, 115, 150, 25, "Efficienza ");
+        sco_txt_stato->box(FL_ENGRAVED_FRAME);
+      } // Fl_Output* sco_txt_stato
+      { sco_txt_benza = new Fl_Output(345, 140, 150, 25, "Benzina   ");
+        sco_txt_benza->box(FL_ENGRAVED_FRAME);
+      } // Fl_Output* sco_txt_benza
       o->end();
     } // Fl_Group* o
-    { new Fl_Button(260, 175, 240, 30, "Elabora Scooter");
-    } // Fl_Button* o
-    { new Fl_Button(260, 210, 240, 30, "Ripara Scooter");
-    } // Fl_Button* o
-    { new Fl_Output(340, 65, 150, 25, "Velocit\303\240   ");
-    } // Fl_Output* o
-    { new Fl_Output(340, 90, 150, 25, "Cilindrata ");
-    } // Fl_Output* o
-    { new Fl_Output(340, 115, 150, 25, "Efficienza ");
-    } // Fl_Output* o
-    { new Fl_Output(340, 140, 150, 25, "Benzina   ");
-    } // Fl_Output* o
-    { sco_txtnome = new Fl_Output(270, 30, 220, 25);
-      sco_txtnome->box(FL_NO_BOX);
-    } // Fl_Output* sco_txtnome
+    { sco_val_soldi = new Fl_Value_Output(65, 201, 115, 24, "Soldi L.");
+      sco_val_soldi->step(1);
+      sco_val_soldi->textfont(5);
+    } // Fl_Value_Output* sco_val_soldi
+    AggiornaScooter();
+    if(ScooterData.attivita==4) { scooter_btn_usa->label("Usa scooter"); scooter_btn_usa->redraw(); }
     win_scooter->set_modal();
     win_scooter->size_range(510, 250, 510, 250);
     win_scooter->end();

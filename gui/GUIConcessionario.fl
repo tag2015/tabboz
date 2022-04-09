@@ -37,7 +37,7 @@ conce_txt_prezzo->value(buf);} {}
 Function {GUIConcessionario()} {open
 } {
   Fl_Window win_conce {open
-    xywh {909 403 600 507} type Double color 54 hotspot modal size_range {600 507 600 507} visible
+    xywh {1109 292 600 507} type Double color 54 hotspot modal size_range {600 507 600 507} visible
   } {
     Fl_Tabs {} {open
       xywh {5 5 560 420} color 54
@@ -103,12 +103,23 @@ conce_btn_compra->activate();}
         xywh {15 40 550 385} color 54 hide
       } {}
     }
+    Fl_Button conce_btn_vendi {
+      label Vendi
+      callback {if(VendiScooter()) {
+conce_soldi->value(CALCSOLDI(Soldi));
+AggiornaScooter();
+o->deactivate();
+}
+win_conce->redraw();} selected
+      xywh {75 445 60 50}
+      code0 {if(ScooterData.stato==-1000) o->deactivate();}
+    }
     Fl_Button conce_btn_compra {
       label {Compra!}
       callback {AcquistaScooter(scelta_gui);
 win_scooter->activate();
-//AggiornaScooter();
-win_conce->hide();} selected
+AggiornaScooter();
+win_conce->hide();}
       xywh {450 445 60 50}
       code0 {o->deactivate();}
     }
@@ -118,7 +129,7 @@ win_conce->hide();} selected
 win_conce->hide();}
       xywh {515 445 60 50}
     }
-    Fl_Value_Output {} {
+    Fl_Value_Output conce_soldi {
       label {Soldi L.}
       callback {o->value(CALCSOLDI(Soldi));}
       xywh {270 440 115 25} step 1 textfont 5

@@ -25,16 +25,20 @@
 #include <string.h>
 #include <time.h>
 
+
 /* Header per toolkit FLTK */
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
 #include "zarrosim.h"
+#include "calendario.h"
 #include "eventi.h"
+#include "sound.h"
 
 #include "debug.h"
 
 #include "scooter.h"
+#include "gui/GUIScooter.h"
 
 // static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
@@ -42,23 +46,24 @@
 NEWSTSCOOTER ScooterData;
 
 NEWSTSCOOTER ScooterMem[] = {
-    {  0,  0, 0, 0, 0,     0, 0,  -1, "Nessuno scooter",            0},
-    { 65,  0, 0, 0, 0,  2498, 1, 100, "Magutty Firecow",            5},
-    { 75,  0, 1, 1, 1,  4348, 1, 100, "Honda F98",                 10},
-    {105,  1, 1, 2, 1,  6498, 1, 100, "Mizzubisci R200 Millenium", 15},
+    {0,   0,  0, 0, 0, 0,     0, 0,  -1, "Nessuno scooter",             0},
+    {1,  65,  0, 0, 0, 0,  2498, 1, 100, "Malagutty Firecow",           5},
+    {2,  75,  0, 1, 1, 1,  4348, 1, 100, "Honda F98",                  10},
+    {3, 105,  1, 1, 2, 1,  6498, 1, 100, "Mizzubisci R200 Millenium",  15},
 
-    { 75,  0, 0, 1, 1,  4298, 1, 100, "Magutty Firecow+",           7},
-    {100,  0, 1, 2, 1,  5998, 1, 100, "Magutty Firecow II",        10},
-    {100,  0, 1, 2, 1,  6348, 1, 100, "Honda F98s",                13},
+    {4,  75,  0, 0, 1, 1,  4298, 1, 100, "Malagutty Firecow+",          7},
+    {5, 100,  0, 1, 2, 1,  5998, 1, 100, "Malagutty Firecow II",       10},
+    {6, 100,  0, 1, 2, 1,  6348, 1, 100, "Honda F98s",                 13},
 
-    {250,  0, 5, 5, 0,  1450, 1, 100, "Lexux LS400 ",              60}
+    {7, 250,  0, 5, 5, 0,  1450, 1, 100, "Lexux LS400 ",               60}
 };
 
 
-const char    *n_carburatore[]= { "12/10", "16/16", "19/19", "20/20", "24/24" , "custom" };
-const char    *n_cc[]=          { "50cc", "70cc", "90cc", "120cc", "150cc", "3969cc" };
-const char    *n_marmitta[]=    { "standard", "silenziosa", "rumorosa", "rumorosissima" };
-const char    *n_filtro[]=      { "standard", "P1", "P2", "P2+" , "Extreme" };
+const char  *n_carburatore[]= { "12/10", "16/16", "19/19", "20/20", "24/24" , "custom" };
+const char  *n_cc[]=          { "50cc", "70cc", "90cc", "120cc", "150cc", "3969cc" };
+const char  *n_marmitta[]=    { "standard", "silenziosa", "rumorosa", "rumorosissima" };
+const char  *n_filtro[]=      { "standard", "P1", "P2", "P2+" , "Extreme" };
+
 
 /* Questa tabella controlla che il carburatore selezionato sia adatto al cilindro/pistone montato e
 * viceversa. I valori sono bonus o malus (-) e possono rendere il motorino invasato o grippato */
@@ -80,24 +85,67 @@ int    PezziMem[] = {
 };
 
 
-// BOOL FAR PASCAL RiparaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 // BOOL FAR PASCAL VendiScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// BOOL FAR PASCAL AcquistaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 // BOOL FAR PASCAL TruccaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 // BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
-// extern    void  AggiornaScooter(HWND hDlg);
 
-
-
-// char showscooter;  // FIXME inutile?
-
-const char    *n_attivita[]= { "mancante", "funzionante", "ingrippato", "invasato" , "parcheggiato", "sequestrato", "a secco" };
+const char    *n_attivita[]= { "incidentato", "funzionante", "ingrippato", "invasato" , "parcheggiato", "sequestrato", "a secco" };
 int           benzina;
 int           antifurto;
 
 
+/* Aggiorna finestra */
+void AggiornaScooter(void)
+{
+    char tmp[128];
+    div_t      d;
+
+    sco_val_soldi->value(CALCSOLDI(Soldi));
+
+    if (ScooterData.stato != -1000) {
+
+        sco_txt_nome->value(ScooterData.nome);
+
+        if (ScooterData.attivita == 1) {
+            sprintf(tmp, "%d Km/h",ScooterData.speed);
+            sco_txt_speed->value(tmp);
+        } else {
+            sprintf(tmp, "%s!", n_attivita[ScooterData.attivita]);
+            sco_txt_speed->value(tmp);
+        }
+
+        sco_txt_cc->value(n_cc[ScooterData.cc]);
+
+        sprintf(tmp, "%d%%", ScooterData.stato);
+        if(ScooterData.stato<=35)
+            sco_txt_stato->textcolor(FL_RED);
+        else
+            sco_txt_stato->textcolor(FL_BLACK);
+        sco_txt_stato->value(tmp);
+
+
+        d = div(benzina,10);
+        sprintf(tmp, "%d.%dl", d.quot, d.rem);
+        sco_txt_benza->value(tmp);
+
+//        SetDlgItemText(hDlg, 111, n_marmitta[ScooterData.marmitta] );
+//        SetDlgItemText(hDlg, 112, n_carburatore[ScooterData.carburatore] );
+//        SetDlgItemText(hDlg, 113, n_cc[ScooterData.cc] );
+//        SetDlgItemText(hDlg, 114, n_filtro[ScooterData.filtro] );
+//        sprintf(tmp, "%d%", ScooterData.stato);       SetDlgItemText(hDlg, 115, tmp);
+
+//        SetDlgItemText(hDlg, 117, MostraSoldi(ScooterData.prezzo));
+
+    } else {
+        sco_txt_nome->value("Nessuno scooter");
+        sco_txt_speed->value("--");
+        sco_txt_cc->value("--");
+        sco_txt_stato->value("--");
+        sco_txt_benza->value("--");
+    }
+    win_scooter->redraw();
+}
 
 
 /* Calcola la velocita' massima dello scooter, secondo marmitta, carburatore, etc... */
@@ -127,6 +175,7 @@ void CalcolaVelocita(bool scooter_nuovo)
 }
 
 
+/* Routine controllo soldi e incentivi rottamazione */
 void AcquistaScooter(int scelta)
 {
     char tmp[80];
@@ -159,15 +208,212 @@ void AcquistaScooter(int scelta)
         fl_message("Fai un giro del quartiere per farti vedere con lo scooter nuovo...");
         Reputazione+=4;
         if (Reputazione > 100) Reputazione=100;
-//        showscooter=1;  //FIXME rincontrollare
         CalcolaVelocita(TRUE);    
-//        showscooter=0;
     }
     Evento();
 }
 
 
+/* Routine per parcheggiare/riprendere lo scooter */
+bool ParcheggiaScooter(void)
+{
 
+    fl_message_title("Parcheggia lo scooter");
+
+    if (ScooterData.stato == -1000) {
+        fl_alert("Mi spieghi come fai a parcheggiare lo scooter se non lo hai ???");
+        return FALSE;
+        }
+
+    switch (ScooterData.attivita) {
+        case 1: 
+            ScooterData.attivita = 4;
+            return TRUE;
+        case 4:
+            ScooterData.attivita = 1;
+            return FALSE;
+        default:
+            fl_alert("Mi spieghi come fai a parcheggiare lo scooter visto che è %s ???",n_attivita[ScooterData.attivita]);
+    };
+    return FALSE;
+}
+
+
+/* Routine per rifornire lo scooter */
+void FaiBenza(void)
+{
+    char tmp[128];
+
+    fl_message_title("Fai benza");
+    if (ScooterData.stato == -1000) {
+        fl_alert("Mi spieghi come fai a far benzina allo scooter se non lo hai ???");
+        return;
+    }
+
+    switch (ScooterData.attivita) {
+        case 1:
+        case 2:
+        case 3:
+        case 6:
+                if (Soldi < 10) {
+                    fl_alert("Al distributore automatico puoi fare un minimo di %s di benzina...",MostraSoldi(10));
+                    break;
+                }
+                if (benzina == 50) {
+                    fl_message_title("Un genio");
+                    fl_alert("Arrivato dal benzinaio,\nti accorgi che il serbatoio è già pieno...");
+                    break;
+                }
+                Soldi-=10;
+                #ifdef LOGGING
+                    sprintf(tmp,"scooter: Paga benzina (%s)",MostraSoldi(10));
+                    writelog(tmp);
+                #endif
+                benzina=50;    // 5 litri, il massimo che puo' contenere...
+                if (ScooterData.cc == 5) benzina = 850;  // 85 litri, x la macchinina un po' figa...
+                CalcolaVelocita(FALSE);
+                fl_message("Fai %s di benzina e riempi lo scooter...",MostraSoldi(10));
+                break;
+
+        default: fl_message("Mi spieghi come fai a far benzina allo scooter visto che è %s ???",n_attivita[ScooterData.attivita]);
+    };
+    AggiornaScooter();
+}
+
+
+/* Routine per riportare efficienza al 100% o risolvere altri problemi */
+void RiparaScooter(void)
+{
+
+    char tmp[128];
+    int costo;  // Importante lo static !!! FIXME e perché visto che lo ricalcola sempre?
+
+    fl_message_title("Ripara Scooter");    
+    if (ScooterData.stato != -1000) {
+        if (ScooterData.stato == 100)
+            fl_message("Che motivi hai per voler riparare il tuo scooter\nvisto che è al 100%% di efficienza ???");
+        else {
+            if ( x_vacanza != 2 ) {
+
+                switch(ScooterData.attivita) {
+
+                    case 0: // Scooter incidentato
+                        fl_message_title("Ripari lo scooter?");  // HACK fl_choice non va d'accordo con il %%
+                        sprintf(tmp,"Il tuo scooter è un rottame!\nSe proprio vuoi per %s posso riportarlo al 20%s di efficienza...", MostraSoldi(1000),"%%");
+                        if (! fl_choice(tmp,"OK!","Lascio perdere...",0)) {
+                            if(Soldi < 1000)
+                                nomoney(SCOOTER);
+                            else {
+                                if (sound_active) TabbozPlaySound(102);
+                                ScooterData.stato=20;
+                                Soldi-=1000;
+                                CalcolaVelocita(FALSE);
+                                #ifdef LOGGING
+                                    sprintf(tmp,"scooter: Paga riparazione emergenza (%s)",MostraSoldi(1000));
+                                    writelog(tmp);
+                                #endif
+                            }
+                            Evento();  //avanziamo il calendario solo se accettiamo
+                        }
+                        break;
+
+                    case 2:   // Scooter grippato/invasato
+                    case 3:
+                        fl_message_title("Ripari lo scooter?");
+                        sprintf(tmp,"Il tuo scooter è %s!\nPer %s posso rimetterti carburatore e cilindro originali...", n_attivita[ScooterData.attivita], MostraSoldi(500));
+                        if (! fl_choice(tmp,"OK!","Faccio da solo!",0)) {
+                            if(Soldi < 500)
+                                nomoney(SCOOTER);
+                            else {
+                                if (sound_active) TabbozPlaySound(102);
+                                ScooterData.carburatore = ScooterMem[ScooterData.id].carburatore;
+                                ScooterData.cc = ScooterMem[ScooterData.id].cc;
+                                Soldi-=500;
+                                CalcolaVelocita(FALSE);
+                                #ifdef LOGGING
+                                    sprintf(tmp,"scooter: Paga ripristino (%s)",MostraSoldi(500));
+                                    writelog(tmp);
+                                #endif
+                            }
+                            Evento();  //avanziamo il calendario solo se accettiamo
+                        }
+                        break;
+
+                    case 1:  //Scooter funzionante/parcheggiato/a secco
+                    case 4:
+                    case 6:
+                        /* BUGFIX Il costo delle riparazioni è stato ritoccato, ( prezzo/100->prezzo/120 ) perchè con gli incentivi veniva a costare meno nuovo... */
+                        costo = (ScooterData.prezzo / 120 * (100 - ScooterData.stato)) + 10;  //calcola il costo della riparazione dello scooter...
+                        fl_message_title("Ripari lo scooter?");  // HACK fl_choice non va d'accordo con il %%
+                        sprintf(tmp,"Per %s, posso riportare il tuo scooter al 100%s di efficienza...", MostraSoldi(costo),"%%");
+                        if (! fl_choice(tmp,"OK!","Lascio perdere...",0)) {
+                            if(Soldi < costo)
+                                nomoney(SCOOTER);
+                            else {
+                                if (sound_active) TabbozPlaySound(102);
+                                ScooterData.stato=100;
+                                Soldi-=costo;
+                                CalcolaVelocita(FALSE);
+                                #ifdef LOGGING
+                                    sprintf(tmp,"scooter: Paga riparazione (%s)",MostraSoldi(costo));
+                                    writelog(tmp);
+                                #endif
+                            }
+                            Evento();  //avanziamo il calendario solo se accettiamo
+                        }
+                        break;
+                }
+                AggiornaScooter();
+            } else
+                fl_alert("Oh, tip%c... oggi il meccanico è chiuso...",ao);
+        }
+    } else
+        fl_message("Mi spieghi come fai a farti riparare lo scooter se non lo hai ???");
+}
+
+
+
+/* Routine per vendere lo scooter attuale */
+bool VendiScooter(void)
+{
+    char        tmp[128];
+    static int  offerta;  /* importante lo static !!! */
+    div_t       lx;
+
+    
+    lx=div(ScooterData.prezzo, 100);
+
+    fl_message_title("Vendi scooter");
+
+    if (ScooterData.attivita == 0) { // Scooter incidentato
+        fl_alert("Non ritiriamo scooter incidentati!\nRiparalo, prima... oppure te lo supervalutiamo se ne compri uno nuovo");
+        return FALSE;
+    }
+
+    if ( (ScooterData.attivita == 1) || (ScooterData.attivita == 4) || (ScooterData.attivita == 6))
+        offerta=(lx.quot * (ScooterData.stato - 10 - (rand() % 10)));  // Scooter funzionante, parcheggiato o senza benza
+    else
+        offerta=(lx.quot * (ScooterData.stato - 50 - (rand() % 10)));  // Scooter grippato, invasato o altro
+
+    if (offerta < 50) offerta = 50;  //se vale meno di 50.000, viene pagato 50.000 (condizione che non serve a nulla)
+
+    sprintf(tmp,"Per il tuo scooter possiamo darti %s ... va bene?",MostraSoldi(offerta));
+    if(!fl_choice(tmp, "Ok", "No!", 0)) {
+        ScooterData = ScooterMem[0];  // nessuno scooter
+        benzina = 0;                  // serbatoio vuoto
+        ScooterData.stato = -1000;
+        Soldi += offerta;
+        #ifdef LOGGING
+            sprintf(tmp,"scooter: Vendi lo scooter per %s",MostraSoldi(offerta));
+            writelog(tmp);
+        #endif
+        return TRUE;
+    }
+return FALSE;
+}
+
+
+//FIXME manca la vendita scooter
 // -----------------------------------------------------------------------
 // Concessionario...  7 Maggio 1998
 // -----------------------------------------------------------------------
@@ -269,60 +515,6 @@ void AcquistaScooter(int scelta)
 //     return(FALSE);
 // }
 
-/********************************************************************/
-/* Acquista Scooter                                                 */
-/********************************************************************/
-
-// # pragma argsused
-// BOOL FAR PASCAL AcquistaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//          int           num_moto;
-// static  NEWSTSCOOTER  ScooterTemp;
-
-//     if (message == WM_INITDIALOG) {
-//         scelta=-1;
-//         ScooterTemp=ScooterData;
-//          SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-//         return(TRUE);
-//     } else if (message == WM_COMMAND) {
-//         switch (wParam) {
-//             case 121:
-//             case 122:
-//             case 123:
-//             case 124:
-//             case 125:
-//             case 126:
-//                 num_moto=wParam-120;
-//                 scelta=num_moto;
-//                 ScooterData=ScooterMem[num_moto];
-//                 showscooter=1;
-//                 CalcolaVelocita(hDlg);
-//                 showscooter=0;
-
-//                 AggiornaScooter(hDlg);
-//                 ScooterData=ScooterMem[0];
-//                 return(TRUE);
-
-//             case IDCANCEL:
-//                 scelta=-1;
-//                 ScooterData=ScooterTemp;
-//                 EndDialog(hDlg, TRUE);
-//                 return(TRUE);
-
-//             case IDOK:
-//                 ScooterData=ScooterTemp;
-//                 EndDialog(hDlg, TRUE);
-//                 return(TRUE);
-
-//             default:
-//                 return(TRUE);
-//             }
-//      }
-
-//      return(FALSE);
-// }
-
-
 
 
 /********************************************************************/
@@ -397,32 +589,7 @@ void AcquistaScooter(int scelta)
 //         Evento(hDlg);
 //         return(TRUE);
 
-//         case 103:                   /* Ripara */
-//             if (ScooterData.stato != -1) {
-//                 if (ScooterData.stato == 100)
-//                     MessageBox( hDlg,
-//                         "Che motivi hai per voleer riparare il tuo scooter\nvisto che e' al 100% di efficienza ???",
-//                         "Ripara lo scooter", MB_OK | MB_ICONQUESTION);
-//                 else {
-//                     if ( x_vacanza != 2 ) {
-//                         lpproc = MakeProcInstance(RiparaScooter, hInst);
-//                             DialogBox(hInst,
-//                             MAKEINTRESOURCE(RIPARASCOOTER),
-//                             hDlg,lpproc);
-//                         FreeProcInstance(lpproc);
-//                         AggiornaScooter(hDlg);
-//                     } else {
-//                         sprintf(tmp,"Oh, tip%c... oggi il meccanico e' chiuso...",ao);
-//                         MessageBox( hDlg, tmp,
-//                             "Ripara lo scooter", MB_OK | MB_ICONINFORMATION);
-//                         }
-//                     }
-//                 return(TRUE);
-//             } else MessageBox( hDlg,
-//                   "Mi spieghi come fai a farti riparare lo scooter se non lo hai ???",
-//                   "Ripara lo scooter", MB_OK | MB_ICONQUESTION);
-//             Evento(hDlg);
-//             return(TRUE);
+
 
 //          case 105:                   /* Parcheggia / Usa Scooter    7 Maggio 1998 */
 //         if (ScooterData.stato < 0) {
@@ -522,6 +689,7 @@ void AcquistaScooter(int scelta)
 //}
 
 
+#ifdef DEADCODE
 /********************************************************************/
 /* Scooter...                                                       */
 /********************************************************************/
@@ -730,7 +898,7 @@ void AcquistaScooter(int scelta)
 
 //     return(FALSE);
 // }
-
+#endif
 
 
 /********************************************************************/
@@ -950,40 +1118,40 @@ void AcquistaScooter(int scelta)
 // }
 
 
+#ifdef DEADCODE
+void AggiornaScooter(HWND hDlg)
+{
+char     tmp[128];
+div_t      d;
+    SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
 
-// void AggiornaScooter(HWND hDlg)
-// {
-// char     tmp[128];
-// div_t      d;
-//     SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+    if (ScooterData.stato != -1) {
+        sprintf(tmp, "%s",  ScooterData.nome);        SetDlgItemText(hDlg, 116, tmp);
+        d = div(benzina,10);
+        sprintf(tmp, "%d.%dl", d.quot, d.rem);        SetDlgItemText(hDlg, 107, tmp);
 
-//     if (ScooterData.stato != -1) {
-//         sprintf(tmp, "%s",  ScooterData.nome);        SetDlgItemText(hDlg, 116, tmp);
-//         d = div(benzina,10);
-//         sprintf(tmp, "%d.%dl", d.quot, d.rem);        SetDlgItemText(hDlg, 107, tmp);
+        SetDlgItemText(hDlg, 110, MostraSpeed());
+        SetDlgItemText(hDlg, 111, n_marmitta[ScooterData.marmitta] );
+        SetDlgItemText(hDlg, 112, n_carburatore[ScooterData.carburatore] );
+        SetDlgItemText(hDlg, 113, n_cc[ScooterData.cc] );
+        SetDlgItemText(hDlg, 114, n_filtro[ScooterData.filtro] );
+        sprintf(tmp, "%d%", ScooterData.stato);       SetDlgItemText(hDlg, 115, tmp);
 
-//         SetDlgItemText(hDlg, 110, MostraSpeed());
-//         SetDlgItemText(hDlg, 111, n_marmitta[ScooterData.marmitta] );
-//         SetDlgItemText(hDlg, 112, n_carburatore[ScooterData.carburatore] );
-//         SetDlgItemText(hDlg, 113, n_cc[ScooterData.cc] );
-//         SetDlgItemText(hDlg, 114, n_filtro[ScooterData.filtro] );
-//         sprintf(tmp, "%d%", ScooterData.stato);       SetDlgItemText(hDlg, 115, tmp);
+        SetDlgItemText(hDlg, 117, MostraSoldi(ScooterData.prezzo));
 
-//         SetDlgItemText(hDlg, 117, MostraSoldi(ScooterData.prezzo));
-
-//     } else {
-//         SetDlgItemText(hDlg, 107, "" );
-//         SetDlgItemText(hDlg, 110, "" );
-//         SetDlgItemText(hDlg, 111, "" );
-//         SetDlgItemText(hDlg, 112, "" );
-//         SetDlgItemText(hDlg, 113, "" );
-//         SetDlgItemText(hDlg, 114, "" );
-//         SetDlgItemText(hDlg, 115, "" );
-//         SetDlgItemText(hDlg, 116, "" );
-//         SetDlgItemText(hDlg, 117, "" );
-//     }
-
-// }
+    } else {
+        SetDlgItemText(hDlg, 107, "" );
+        SetDlgItemText(hDlg, 110, "" );
+        SetDlgItemText(hDlg, 111, "" );
+        SetDlgItemText(hDlg, 112, "" );
+        SetDlgItemText(hDlg, 113, "" );
+        SetDlgItemText(hDlg, 114, "" );
+        SetDlgItemText(hDlg, 115, "" );
+        SetDlgItemText(hDlg, 116, "" );
+        SetDlgItemText(hDlg, 117, "" );
+    }
+}
+#endif
 
 // -----------------------------------------------------------------------
 // Routine di acquisto generika di un pezzo di motorino
@@ -1110,7 +1278,7 @@ void AcquistaScooter(int scelta)
 //     return(FALSE);
 // }
 
-
+/* FIXME inutile
 char *MostraSpeed(void)
 {
     char tmp[128];
@@ -1128,7 +1296,7 @@ char *MostraSpeed(void)
     };
 
     return tmp;
-}
+}*/
 
 #ifdef DEADCODE
 // -----------------------------------------------------------------------

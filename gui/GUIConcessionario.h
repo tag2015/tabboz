@@ -15,8 +15,10 @@ extern Fl_Output *conce_txt_carb;
 extern Fl_Output *conce_txt_cc;
 extern Fl_Output *conce_txt_filtro;
 extern Fl_Output *conce_txt_prezzo;
+extern Fl_Button *conce_btn_vendi;
 extern Fl_Button *conce_btn_compra;
 #include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Value_Output.H>
+extern Fl_Value_Output *conce_soldi;
 Fl_Double_Window* GUIConcessionario();
 #endif

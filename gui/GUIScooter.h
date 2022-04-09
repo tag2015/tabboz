@@ -7,8 +7,15 @@
 extern Fl_Double_Window *win_scooter;
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Return_Button.H>
+extern Fl_Button *scooter_btn_usa;
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Output.H>
-extern Fl_Output *sco_txtnome;
+extern Fl_Output *sco_txt_nome;
+extern Fl_Output *sco_txt_speed;
+extern Fl_Output *sco_txt_cc;
+extern Fl_Output *sco_txt_stato;
+extern Fl_Output *sco_txt_benza;
+#include <FL/Fl_Value_Output.H>
+extern Fl_Value_Output *sco_val_soldi;
 Fl_Double_Window* GUIScooter();
 #endif

@@ -21,6 +21,7 @@
 
 /* NUOVE INFORMAZIONI SUGLI SCOOTER */
 typedef struct tagNEWSTSCOOTER {
+    int         id;             // 00  Identificativo numerico scooter
     int         speed;          // 01  Velocità (calcolata base + elaborazioni)
     int         marmitta;       // 02  Marmitta ( +0, +7, +12, +15)
     int         carburatore;    // 03  Carburatore ( 0 - 4 )
@@ -45,6 +46,16 @@ extern const char    *n_attivita[];     // situazione scooter (ok, a secco, ingr
 extern int           benzina;           // Benzina nel serbatoio
 extern int           antifurto;         // NON USATO
 
-void    AcquistaScooter(int scelta);
+
+void    AggiornaScooter(void);
 void    CalcolaVelocita(bool scooter_nuovo);
-char    *MostraSpeed(void);
+
+void    AcquistaScooter(int scelta);
+bool    VendiScooter(void);
+
+bool    ParcheggiaScooter(void);
+void    FaiBenza(void);
+void    RiparaScooter(void);
+
+
+//char    *MostraSpeed(void);

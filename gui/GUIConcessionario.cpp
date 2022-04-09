@@ -7443,12 +7443,23 @@ Fl_Output *conce_txt_filtro=(Fl_Output *)0;
 
 Fl_Output *conce_txt_prezzo=(Fl_Output *)0;
 
+Fl_Button *conce_btn_vendi=(Fl_Button *)0;
+
+static void cb_conce_btn_vendi(Fl_Button* o, void*) {
+  if(VendiScooter()) {
+conce_soldi->value(CALCSOLDI(Soldi));
+AggiornaScooter();
+o->deactivate();
+}
+win_conce->redraw();
+}
+
 Fl_Button *conce_btn_compra=(Fl_Button *)0;
 
 static void cb_conce_btn_compra(Fl_Button*, void*) {
   AcquistaScooter(scelta_gui);
 win_scooter->activate();
-//AggiornaScooter();
+AggiornaScooter();
 win_conce->hide();
 }
 
@@ -7457,7 +7468,9 @@ static void cb_Back(Fl_Return_Button*, void*) {
 win_conce->hide();
 }
 
-static void cb_Soldi(Fl_Value_Output* o, void*) {
+Fl_Value_Output *conce_soldi=(Fl_Value_Output *)0;
+
+static void cb_conce_soldi(Fl_Value_Output* o, void*) {
   o->value(CALCSOLDI(Soldi));
 }
 
@@ -7522,6 +7535,10 @@ Fl_Double_Window* GUIConcessionario() {
       } // Fl_Group* o
       o->end();
     } // Fl_Tabs* o
+    { Fl_Button* o = conce_btn_vendi = new Fl_Button(75, 445, 60, 50, "Vendi");
+      conce_btn_vendi->callback((Fl_Callback*)cb_conce_btn_vendi);
+      if(ScooterData.stato==-1000) o->deactivate();
+    } // Fl_Button* conce_btn_vendi
     { Fl_Button* o = conce_btn_compra = new Fl_Button(450, 445, 60, 50, "Compra!");
       conce_btn_compra->callback((Fl_Callback*)cb_conce_btn_compra);
       o->deactivate();
@@ -7529,13 +7546,13 @@ Fl_Double_Window* GUIConcessionario() {
     { Fl_Return_Button* o = new Fl_Return_Button(515, 445, 60, 50, "Back");
       o->callback((Fl_Callback*)cb_Back);
     } // Fl_Return_Button* o
-    { Fl_Value_Output* o = new Fl_Value_Output(270, 440, 115, 25, "Soldi L.");
-      o->step(1);
-      o->textfont(5);
-      o->callback((Fl_Callback*)cb_Soldi);
+    { Fl_Value_Output* o = conce_soldi = new Fl_Value_Output(270, 440, 115, 25, "Soldi L.");
+      conce_soldi->step(1);
+      conce_soldi->textfont(5);
+      conce_soldi->callback((Fl_Callback*)cb_conce_soldi);
       o->value(CALCSOLDI(Soldi));
       if(euro) o->label("Soldi  €");
-    } // Fl_Value_Output* o
+    } // Fl_Value_Output* conce_soldi
     { Fl_Value_Output* o = new Fl_Value_Output(355, 470, 30, 25, "Figosit\303\240");
       o->textfont(5);
       o->callback((Fl_Callback*)cb_Figosit);
