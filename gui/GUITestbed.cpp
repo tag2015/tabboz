@@ -4,6 +4,7 @@
 #include "GUITabboz.h"
 #include "../zarrosim.h"
 #include "../sound.h"
+#include "../sharedimg.h"
 #include <FL/Fl_Shared_Image.H>
 #include <FL/Fl_PNG_Image.H>
 static int num_file; 
@@ -27,13 +28,14 @@ static void cb_caricapics(Fl_Button*, void*) {
 //Fl_PNG_Image("provagiacca",giubbotto_0,sizeof(giubbotto_0));
 //Fl_PNG_Image("metallaro",metallaro,18984);
 
-Fl_Shared_Image *sh_img = Fl_Shared_Image::get("res/pic/giubbotto_0.png");
+//Fl_Shared_Image *sh_img = Fl_Shared_Image::get("res/pic/giubbotto_0.png");
 
-box_1->image(sh_img);
-
+box_1->image(ImgGiubbotto[1]);
+box_2->image(ImgGiubbotto[2]);
+box_3->image(ImgScarpe[0]);
 box_1->label(NULL);
 box_1->redraw();
-but_essenza->image(sh_img);
+//but_essenza->image(sh_img);
 win_testbed->redraw();
 }
 
