@@ -462,8 +462,9 @@ Fl_Double_Window* GUITabboz() {
       main_box_giorno->labelfont(3);
       main_box_giorno->align(Fl_Align(260|FL_ALIGN_INSIDE));
     } // Fl_Box* main_box_giorno
-    { btn_fastfw = new Fl_Button(440, 35, 20, 20, ">>");
+    { Fl_Button* o = btn_fastfw = new Fl_Button(440, 35, 20, 20, ">>");
       btn_fastfw->callback((Fl_Callback*)cb_btn_fastfw);
+      if(!TABBOZ_DEBUG) o->deactivate();
     } // Fl_Button* btn_fastfw
     { Fl_Group* o = new Fl_Group(160, 85, 135, 85, "Tipa");
       o->box(FL_EMBOSSED_FRAME);
@@ -539,8 +540,9 @@ Fl_Double_Window* GUITabboz() {
       main_valbox_studio->labelsize(12);
       main_valbox_studio->maximum(0);
     } // Fl_Value_Output* main_valbox_studio
-    { Fl_Button* o = new Fl_Button(445, 410, 20, 25, "T");
+    { Fl_Button* o = new Fl_Button(415, 35, 20, 20, "T");
       o->callback((Fl_Callback*)cb_T);
+      if(!TABBOZ_DEBUG) o->deactivate();
     } // Fl_Button* o
     { main_fig_scarpe = new Fl_Box(45, 245, 60, 65);
     } // Fl_Box* main_fig_scarpe
