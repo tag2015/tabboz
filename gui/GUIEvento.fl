@@ -1,0 +1,68 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cpp}
+decl {\#include "GUITabboz.h"} {private global
+}
+
+decl {\#include "../zarrosim.h"} {private global
+}
+
+decl {\#include "../global.h"} {private global
+}
+
+decl {\#include "../sound.h"} {private global
+}
+
+decl {\#include "../sharedimg.h"} {private global
+}
+
+decl {\#include <FL/Fl_Shared_Image.H>} {private global
+}
+
+decl {\#include <FL/Fl_PNG_Image.H>} {private global
+}
+
+Function {GUIEventoVert(int img_evento, char *txt_evento)} {open C
+} {
+  Fl_Window win_evento_v {
+    label {Evento Casuale} open
+    xywh {383 391 340 305} type Double color 54 modal size_range {340 305 340 305} visible
+  } {
+    Fl_Box {} {
+      xywh {10 10 140 280} box SHADOW_BOX labelsize 16 align 16
+      code0 {o->image(ImgEventi[img_evento]);}
+    }
+    Fl_Return_Button {} {
+      label Back
+      callback {win_evento_v->hide();}
+      xywh {270 260 60 35} hotspot
+    }
+    Fl_Box {} {
+      xywh {165 40 165 205}
+      code0 {o->label(txt_evento);}
+    }
+  }
+}
+
+Function {GUIEventoOriz(int img_evento, char *txt_evento)} {open C
+} {
+  Fl_Window win_evento_o {
+    label {Evento Casuale} open
+    xywh {211 406 270 345} type Double color 54 modal size_range {270 345 270 345} visible
+  } {
+    Fl_Box {} {
+      xywh {10 10 250 175} box SHADOW_BOX labelsize 16 align 16
+      code0 {o->image(ImgEventi[img_evento]);}
+    }
+    Fl_Return_Button {} {
+      label Back
+      callback {win_evento_o->hide();}
+      xywh {195 295 60 35} hotspot
+    }
+    Fl_Box {} {
+      xywh {10 190 245 95}
+      code0 {o->label(txt_evento);}
+    }
+  }
+}
