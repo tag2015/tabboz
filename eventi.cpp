@@ -33,26 +33,23 @@
 #include "debug.h"
 
 #include "eventi.h"
-
-//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+#include "gui/GUIEvento.h"
 
 /* Header per toolkit FLTK */
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
+//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 
-//BOOL FAR PASCAL MostraMetallone(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 //extern    BOOL FAR PASCAL DueDonne(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
-//extern    int   figTemp;
-//extern    char  nomeTemp[];
-
-//extern    int    AdV;
 
 //FIXME questi erano extern perchè definiti in tipa.c, per ora li mettiamo qui
 int     figTemp;
 char    nomeTemp[30];
+
+static char txt_finestra[256];  // stringa per le finestre metallari/scooter/camion
 
 
 /* Generatore Eventi (Casuali e Non) */
@@ -62,12 +59,10 @@ void Evento()
     char    tmp[128];
     char messaggio[256];
 
-//    FARPROC lpproc;
 
     if (Fortuna < 0) Fortuna = 0;        // Prima che qualcuno bari...
     if (Fortuna > 100) Fortuna = 100;
 
-    //if ( (AdV - 1) != 0 ) return;
 
     Giorno();  // avanza il calendario
 
@@ -216,19 +211,14 @@ void Evento()
                 if (sesso == 'F') break; // Se sei una tipa non vieni pestata...
                 Reputazione-=caso;
                 if (Reputazione < 0) Reputazione = 0;
-                //lpproc = MakeProcInstance(MostraMetallone, hInst);
 
-                i=100 + rand() % 6;    /* 100 - 105 */
-                //FIXME Metallari Viene estratto un nro a caso corrispondente alla 
-                //relativa dialog da visualizzare. Ognuna ha un'immagine
-                //diversa ma nessuna funzione. Viene inoltre estratta a
-                //caso la via dove accade l'evento. (vedere MostraMetallone)
-                //DialogBox(hInst, MAKEINTRESOURCE(i), hInstance, lpproc);
-                //FreeProcInstance(lpproc);
-                //FIXME workaround temporaneo
-                fl_message_title("Rissa con un metallaro");
-                fl_alert("Insulti un gruppo di metallari di passaggio,\ne uno di questi ti spacca le ossa.");
-                //FIXME /workaround temporaneo
+                if(sound_active) TabbozPlaySound(1400);
+
+                i=rand() % 6;    /* estrae un metallaro a caso 0-5 */
+                if(i<=4)
+                    FinestraEvento(i,i,"Rissa con un metallaro",TRUE);  //metallari
+                else
+                    FinestraEvento(i,i,"Rissa con un manovale",FALSE);  //manovale
                 #ifdef TABBOZ_DEBUG
                     sprintf(tmp,"eventi: Metallaro n. %d",i);
                     writelog(tmp);
@@ -255,34 +245,23 @@ void Evento()
                         // 0 = 'morente', -1 = 'morto'
                         if (CellularData.stato < 0 ) CellularData.stato=0;  //FIXME rivedere condizioni 0 o -1
                     }
+                    
+                    if(sound_active) TabbozPlaySound(1401);
 
                     if (caso < 15) {  // Camionista - ( caso 11-14) BUGFIX visto che danneggia + del muro, abbasssato di 2 i possibili casi
                         ScooterData.stato-=35;
-                        //lpproc = MakeProcInstance(MostraMetallone, hInst);
-                        //DialogBox(hInst, MAKEINTRESOURCE(106), hInstance, lpproc);
-                        //FreeProcInstance(lpproc);
-                        //FIXME workaround finestra 106
-                        fl_message_title("Fai incazzare un camionista");
-                        fl_alert("Facendo il pirla con lo scooter fai incazzare un camionista.");
-                        //FIXME /workaround
+                        FinestraEvento(6,6,"Fai incazzare un camionista",FALSE);  //camionista
                         #ifdef TABBOZ_DEBUG
                             writelog("eventi: Scooter - Camionista...");
                         #endif
                     
                     } else {  // Muro ! ( caso 15 - 20) -------------------
                         ScooterData.stato-=20;
-                        //lpproc = MakeProcInstance(MostraMetallone, hInst);
-                        //DialogBox(hInst, MAKEINTRESOURCE(107), hInstance, lpproc);
-                        //FreeProcInstance(lpproc);
-                        //FIXME workaround finestra 107
-                        fl_message_title("Incidente");
-                        fl_alert("Mentre giri per la città con lo scooter,\nincontri sfortunatamente un muro...");
-                        //FIXME /workaround
+                        FinestraEvento(7,7,"Incidente",FALSE);  //muro
                         #ifdef TABBOZ_DEBUG
                             writelog("eventi: Scooter - Muro...");
                         #endif
                     }
-                    
                     Reputazione-=2;
                     if (Reputazione < 0) Reputazione = 0;
                     if (ScooterData.stato <= 0) {
@@ -491,44 +470,38 @@ void EventiPalestra(void)
 }
 
 
-//
-//    MOSTRA METALLONE, non e' solo per i metalloni, e' molto utile anche per mostrare
-//    tutte quelle finestre in cui non c'e' altro di particolare se non il pulsante di
-//    [OK] ed un nome casuale di [VIA]...
-//
+/* Dialog per eventi con immagine dedicata */
+/* nro evento in elenco img condivise | nro stringa in elenco testi eventi | titolo finestra | orientamento immagine*/
+void FinestraEvento(int n_evento, int n_testo, const char *titolo, bool verticale)
+{
+    char tail[128];
+    char via[128];
+    char *pos;
 
-/* TAG2015 per ora commentiamo, poi si vedrà */
-// # pragma argsused
-// BOOL FAR PASCAL MostraMetallone(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//      char          tmp[1024];
+    strcpy(txt_finestra,StrEventiFinestra[n_evento]);  //copia testo evento
+    
+    pos = strstr(txt_finestra, "_NOMEVIA_");  // cerca token da sostituire con nome via 
+    if(pos) {
+        strcpy(tail, (pos+strlen("_NOMEVIA_")));  // crea stringa tail dalla precedente togliendo il token
+        strcpy(via, StrNomiStrade[(rand() % 50)]);  //copia una via a caso
+        strcpy(pos, via);  //accoda una via a caso
+        strcpy( (pos+strlen(via)) , tail); //accoda rimanenza
+    }
 
-//      if (message == WM_INITDIALOG) {
-//         LoadString(hInst, (450 + random(50) ), tmp, (sizeof(tmp)-1) );
+    if(verticale) {   // finestra a 2 colonne con immagine verticale
+        GUIEventoVert(n_evento, txt_finestra);
+        win_evento_v->label(titolo);
+        win_evento_v->show();
+        while(win_evento_v->shown()) Fl::wait();    // attende chiusura dialog
+    } else {    // finestra con immagine sopra e testo sotto
+        GUIEventoOriz(n_evento, txt_finestra);
+        win_evento_o->label(titolo);
+        win_evento_o->show();
+        while(win_evento_o->shown()) Fl::wait();    // attende chiusura dialog
 
-// /* 15 giugno 1998 - La prima lettera viene scritta minuscola (appare "via..." al posto di "Via..." ) */
+    }
 
-//         tmp[0]=tolower(tmp[0]);
-//         SetDlgItemText(hDlg, 111, tmp);
-
-//         if (sound_active) TabbozPlaySound(1400);
-//             return(TRUE);
-
-//      } else if (message == WM_COMMAND) {
-//         switch (wParam) {
-
-//         case IDCANCEL:
-//         case IDOK:
-//             EndDialog(hDlg, TRUE);
-//             return(TRUE);
-
-//         default:
-//             return(TRUE);
-//         }
-//      }
-
-//      return(FALSE);
-// }
+}
 
 
 #ifdef DEADCODE
@@ -1008,4 +981,37 @@ BOOL FAR PASCAL MostraMetallone(HWND hDlg, WORD message, WORD wParam, LONG lPara
 
      return(FALSE);
 }
+
+# pragma argsused
+BOOL FAR PASCAL MostraMetallone(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+{
+     char          tmp[1024];
+
+     if (message == WM_INITDIALOG) {
+        LoadString(hInst, (450 + random(50) ), tmp, (sizeof(tmp)-1) );
+
+/* 15 giugno 1998 - La prima lettera viene scritta minuscola (appare "via..." al posto di "Via..." ) */
+
+        tmp[0]=tolower(tmp[0]);
+        SetDlgItemText(hDlg, 111, tmp);
+
+        if (sound_active) TabbozPlaySound(1400);
+            return(TRUE);
+
+     } else if (message == WM_COMMAND) {
+        switch (wParam) {
+
+        case IDCANCEL:
+        case IDOK:
+            EndDialog(hDlg, TRUE);
+            return(TRUE);
+
+        default:
+            return(TRUE);
+        }
+     }
+
+     return(FALSE);
+}
+
 #endif

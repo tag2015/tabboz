@@ -18,5 +18,8 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-void Evento(void);          // Generatore Eventi (Casuali e Non)
-void EventiPalestra(void);  // Generatore Eventi Casuali Per Palestra
+
+void Evento(void);
+void EventiPalestra(void);
+
+void FinestraEvento(int n_evento, int n_testo, const char *titolo, bool verticale);
