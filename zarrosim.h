@@ -19,10 +19,10 @@
 */
 
 /* Versione gioco... */
-#define VERSION "Version 0.92q"
+#define VERSION "NG-pre20220410"
 
 /* Per attivare il Debug... */
-#define TABBOZ_DEBUG
+#define TABBOZ_DEBUG 1
 
 /* Per attivare il logging */
 #define LOGGING 1
