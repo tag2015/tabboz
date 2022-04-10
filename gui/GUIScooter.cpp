@@ -74,6 +74,7 @@ Fl_Double_Window* GUIScooter() {
     } // Fl_Return_Button* o
     { scooter_btn_usa = new Fl_Button(10, 95, 240, 35, "Parcheggia scooter");
       scooter_btn_usa->callback((Fl_Callback*)cb_scooter_btn_usa);
+      if(ScooterData.attivita==4) { scooter_btn_usa->label("Usa scooter"); scooter_btn_usa->redraw(); }
     } // Fl_Button* scooter_btn_usa
     { Fl_Button* o = new Fl_Button(10, 135, 240, 35, "Fai benza");
       o->callback((Fl_Callback*)cb_Fai);
@@ -110,7 +111,6 @@ Fl_Double_Window* GUIScooter() {
       sco_val_soldi->textfont(5);
     } // Fl_Value_Output* sco_val_soldi
     AggiornaScooter();
-    if(ScooterData.attivita==4) { scooter_btn_usa->label("Usa scooter"); scooter_btn_usa->redraw(); }
     win_scooter->set_modal();
     win_scooter->size_range(510, 250, 510, 250);
     win_scooter->end();

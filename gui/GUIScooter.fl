@@ -29,10 +29,9 @@ decl {\#include "../scooter.h"} {private global
 Function {GUIScooter()} {open
 } {
   Fl_Window win_scooter {
-    label Scooter open
-    xywh {1154 554 510 250} type Double color 54 labelfont 1 labelsize 12 hotspot
-    code0 {AggiornaScooter();}
-    code1 {if(ScooterData.attivita==4) { scooter_btn_usa->label("Usa scooter"); scooter_btn_usa->redraw(); }} modal size_range {510 250 510 250} visible
+    label Scooter open selected
+    xywh {1042 585 510 250} type Double color 54 labelfont 1 labelsize 12 hotspot
+    code0 {AggiornaScooter();} modal size_range {510 250 510 250} visible
   } {
     Fl_Button {} {
       label Concessionario
@@ -60,8 +59,9 @@ win_scooter->hide();}
 else
   o->label("Parcheggia scooter");
 o->redraw();
-AggiornaScooter();} selected
+AggiornaScooter();}
       xywh {10 95 240 35}
+      code0 {if(ScooterData.attivita==4) { scooter_btn_usa->label("Usa scooter"); scooter_btn_usa->redraw(); }}
     }
     Fl_Button {} {
       label {Fai benza}
