@@ -3,11 +3,13 @@
 #include "GUITestbed.h"
 #include "GUITabboz.h"
 #include "../zarrosim.h"
+#include "../eventi.h"
 #include "../sound.h"
 #include "../sharedimg.h"
 #include <FL/Fl_Shared_Image.H>
 #include <FL/Fl_PNG_Image.H>
 static int num_file; 
+static int num_evento; 
 
 Fl_Double_Window *win_testbed=(Fl_Double_Window *)0;
 
@@ -53,6 +55,18 @@ static void cb_Play(Fl_Button*, void*) {
   TabbozPlaySound(num_file);
 }
 
+static void cb_Evento(Fl_Value_Input* o, void*) {
+  num_evento=o->value();
+}
+
+static void cb_RunH(Fl_Button*, void*) {
+  FinestraEvento(num_evento,num_evento,"",FALSE);
+}
+
+static void cb_RunV(Fl_Button*, void*) {
+  FinestraEvento(num_evento,num_evento,"",TRUE);
+}
+
 Fl_Double_Window* GUITestbed() {
   { win_testbed = new Fl_Double_Window(836, 656, "TestBed");
     win_testbed->color(FL_LIGHT3);
@@ -75,7 +89,7 @@ Fl_Double_Window* GUITestbed() {
       box_3->labelsize(16);
       box_3->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
     } // Fl_Box* box_3
-    { Fl_Button* o = new Fl_Button(10, 595, 100, 30, "caricapics");
+    { Fl_Button* o = new Fl_Button(35, 255, 100, 30, "caricapics");
       o->callback((Fl_Callback*)cb_caricapics);
     } // Fl_Button* o
     { Fl_Group* o = new Fl_Group(85, 100, 620, 125);
@@ -97,13 +111,20 @@ Fl_Double_Window* GUITestbed() {
       } // Fl_Button* but_essenza3
       o->end();
     } // Fl_Group* o
-    { new Fl_Button(25, 25, 64, 20, "button");
-    } // Fl_Button* o
-    { Fl_Value_Input* o = new Fl_Value_Input(280, 590, 70, 25, "nro file suono");
+    { Fl_Value_Input* o = new Fl_Value_Input(105, 595, 70, 25, "nro file suono");
       o->callback((Fl_Callback*)cb_nro);
     } // Fl_Value_Input* o
-    { Fl_Button* o = new Fl_Button(365, 595, 64, 20, "Play");
+    { Fl_Button* o = new Fl_Button(180, 600, 64, 20, "Play");
       o->callback((Fl_Callback*)cb_Play);
+    } // Fl_Button* o
+    { Fl_Value_Input* o = new Fl_Value_Input(445, 595, 70, 25, "Evento");
+      o->callback((Fl_Callback*)cb_Evento);
+    } // Fl_Value_Input* o
+    { Fl_Button* o = new Fl_Button(520, 600, 64, 20, "RunH");
+      o->callback((Fl_Callback*)cb_RunH);
+    } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(520, 620, 64, 20, "RunV");
+      o->callback((Fl_Callback*)cb_RunV);
     } // Fl_Button* o
     num_file=0;
     win_testbed->set_modal();
