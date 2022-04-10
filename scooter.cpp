@@ -85,11 +85,6 @@ int    PezziMem[] = {
 };
 
 
-// BOOL FAR PASCAL VendiScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// BOOL FAR PASCAL TruccaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-// BOOL FAR PASCAL CompraUnPezzo(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-
-
 const char    *n_attivita[]= { "incidentato", "funzionante", "ingrippato", "invasato" , "parcheggiato", "sequestrato", "a secco" };
 int           benzina;
 int           antifurto;
@@ -413,110 +408,8 @@ return FALSE;
 }
 
 
-//FIXME manca la vendita scooter
-// -----------------------------------------------------------------------
-// Concessionario...  7 Maggio 1998
-// -----------------------------------------------------------------------
 
-// # pragma argsused
-// BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//     char          tmp[128];
-//     FARPROC       lpproc;
-
-//     if (message == WM_INITDIALOG) {
-//     SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-//     return(TRUE);
-//     }
-
-//     else if (message == WM_COMMAND)
-//     {
-//     switch (wParam)
-//     {
-//         case 101:                   /* Compra Scooter Malagutty      */
-//         case 102:            /* Compra Scooter di altre marche */
-//         scelta = -1;
-//         lpproc = MakeProcInstance(AcquistaScooter, hInst);
-//         DialogBox(hInst,
-//             MAKEINTRESOURCE(wParam - 101 + 78),
-//             hDlg,
-//             lpproc);
-//         FreeProcInstance(lpproc);
-//         if (scelta != -1) {
-//             if (ScooterData.stato != -1) {
-//                 sprintf(tmp,"Per il tuo vecchio scooter da rottamare ti diamo %s di supervalutazione...",MostraSoldi(1000));
-//                 MessageBox( hDlg,
-//                   tmp,
-//                   "Incentivi", MB_OK | MB_ICONINFORMATION);
-//                 Soldi+=1000;
-//                 #ifdef TABBOZ_DEBUG
-//                 sprintf(tmp,"scooter: Imcentivo rottamazione %s",MostraSoldi(1000));
-//                 writelog(tmp);
-//                 #endif
-
-//                 ScooterData = ScooterMem[0];  /* nessuno scooter            */
-//                 benzina = 0;              /* serbatoio vuoto    7 Maggio 1998    */
-//                 ScooterData.stato = -1;
-//                 }
-//             if (ScooterMem[scelta].prezzo > Soldi) {
-//                 MessageBox( hDlg,
-//                   "Ti piacerebbe comprare lo scooter, vero ?\nPurtroppo, non hai abbastanza soldi...",
-//                   "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
-//                 if (Reputazione > 3 )
-//                      Reputazione-=1;
-//             } else {
-//                 Soldi-=ScooterMem[scelta].prezzo;
-//                 #ifdef TABBOZ_DEBUG
-//                 sprintf(tmp,"scooter: Acquista uno scooter per %s",MostraSoldi(ScooterMem[scelta].prezzo));
-//                 writelog(tmp);
-//                 #endif
-
-//                 ScooterData=ScooterMem[scelta];
-//                 benzina=20;
-//                 MessageBox( hDlg,
-//                   "Fai un giro del quartiere per farti vedere con lo scooter nuovo...",
-//                   "Lo scooter nuovo", MB_OK | MB_ICONINFORMATION);
-//                                 Reputazione+=4;
-//                 if (Reputazione > 100) Reputazione=100;
-//             }
-//             Evento(hDlg);
-//         }
-//         SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-//         return(TRUE);
-
-//         case 103:
-//         if (ScooterData.stato != -1) {
-//             lpproc = MakeProcInstance(VendiScooter, hInst);
-//                  DialogBox(hInst,
-//                  MAKEINTRESOURCE(VENDISCOOTER),
-//                  hDlg,
-//                  lpproc);
-//             FreeProcInstance(lpproc);
-//         } else MessageBox( hDlg,
-//               "Scusa, ma quale scooter avresti intenzione di vendere visto che non ne hai neanche uno ???",
-//               "Vendi lo scooter", MB_OK | MB_ICONQUESTION);
-
-//         SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-//         return(TRUE);
-
-//         case IDCANCEL:
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
-
-//         case IDOK:
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
-
-//         default:
-//         return(TRUE);
-//     }
-//     }
-
-//     return(FALSE);
-// }
-
-
-
+//FIXME manca elaborazione scooter
 /********************************************************************/
 /* Scooter...                                                       */
 /********************************************************************/
@@ -689,389 +582,6 @@ return FALSE;
 //}
 
 
-#ifdef DEADCODE
-/********************************************************************/
-/* Scooter...                                                       */
-/********************************************************************/
-
-// # pragma argsused
-// BOOL FAR PASCAL Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//     char          buf[128];
-//     char          tmp[128];
-//     FARPROC       lpproc;
-
-//     if (message == WM_INITDIALOG) {
-//     SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-
-//     sprintf(tmp, "Parcheggia scooter");               SetDlgItemText(hDlg, 105, tmp); /* 7 Maggio 1998 */
-
-//     if (ScooterData.stato != -1) {
-//         AggiornaScooter(hDlg);
-//         if (ScooterData.attivita == 4) {
-//             sprintf(tmp, "Usa scooter");
-//             SetDlgItemText(hDlg, 105, tmp);
-//             }
-//     }
-
-//     return(TRUE);
-//     }
-
-//     else if (message == WM_COMMAND)
-//     {
-//     switch (wParam)
-//     {
-//         case 101:
-//         if ( x_vacanza == 2 ) {
-//             sprintf(tmp,"Oh, tip%c... oggi il concessionario e' chiuso...",ao);
-//             MessageBox( hDlg,
-//               tmp,
-//               "Concessionario", MB_OK | MB_ICONINFORMATION);
-//             return(TRUE);
-//         }
-
-//         lpproc = MakeProcInstance(Concessionario, hInst);
-//         DialogBox(hInst,
-//               MAKEINTRESOURCE(ACQUISTASCOOTER),
-//               hDlg,
-//               lpproc);
-//         FreeProcInstance(lpproc);
-//         Evento(hDlg);
-//         AggiornaScooter(hDlg);
-//         return(TRUE);
-
-//         case 102:                   /* Trucca */
-//         if (ScooterData.stato != -1) {
-//             if ( x_vacanza != 2 ) {
-//                 /* 28 Aprile 1998 La procedura per truccare gli scooter cambia completamente... */
-//                 lpproc = MakeProcInstance(TruccaScooter, hInst);
-//                 DialogBox(hInst,
-//                     MAKEINTRESOURCE(73),
-//                     hDlg,
-//                     lpproc);
-
-//                 FreeProcInstance(lpproc);
-//                 Evento(hDlg);
-//                 AggiornaScooter(hDlg);
-
-//                 return(TRUE);
-//             } else {
-//                 sprintf(tmp,"Oh, tip%c... oggi il meccanico e' chiuso...",ao);
-//                 MessageBox( hDlg, tmp,
-//                 "Trucca lo scooter", MB_OK | MB_ICONINFORMATION);
-//             }
-//         } else MessageBox( hDlg,
-//               "Scusa, ma quale scooter avresti intenzione di truccare visto che non ne hai neanche uno ???",
-//               "Trucca lo scooter", MB_OK | MB_ICONQUESTION);
-
-//         sprintf(tmp, "Parcheggia scooter");    /* 7 Maggio 1998 */
-//         SetDlgItemText(hDlg, 105, tmp);
-
-//         if (ScooterData.attivita == 4) {
-//             sprintf(tmp, "Usa scooter");
-//             SetDlgItemText(hDlg, 105, tmp);
-//             }
-
-//         Evento(hDlg);
-//         return(TRUE);
-
-//         case 103:                   /* Ripara */
-//             if (ScooterData.stato != -1) {
-//                 if (ScooterData.stato == 100)
-//                     MessageBox( hDlg,
-//                         "Che motivi hai per voleer riparare il tuo scooter\nvisto che e' al 100% di efficienza ???",
-//                         "Ripara lo scooter", MB_OK | MB_ICONQUESTION);
-//                 else {
-//                     if ( x_vacanza != 2 ) {
-//                         lpproc = MakeProcInstance(RiparaScooter, hInst);
-//                             DialogBox(hInst,
-//                             MAKEINTRESOURCE(RIPARASCOOTER),
-//                             hDlg,lpproc);
-//                         FreeProcInstance(lpproc);
-//                         AggiornaScooter(hDlg);
-//                     } else {
-//                         sprintf(tmp,"Oh, tip%c... oggi il meccanico e' chiuso...",ao);
-//                         MessageBox( hDlg, tmp,
-//                             "Ripara lo scooter", MB_OK | MB_ICONINFORMATION);
-//                         }
-//                     }
-//                 return(TRUE);
-//             } else MessageBox( hDlg,
-//                   "Mi spieghi come fai a farti riparare lo scooter se non lo hai ???",
-//                   "Ripara lo scooter", MB_OK | MB_ICONQUESTION);
-//             Evento(hDlg);
-//             return(TRUE);
-
-//          case 105:                   /* Parcheggia / Usa Scooter    7 Maggio 1998 */
-//         if (ScooterData.stato < 0) {
-//             MessageBox( hDlg,
-//               "Mi spieghi come fai a parcheggiare lo scooter se non lo hai ???",
-//               "Parcheggia lo scooter", MB_OK | MB_ICONQUESTION);
-//             return(TRUE);
-//             }
-
-//         switch (ScooterData.attivita)
-//         {
-//             case 1:     ScooterData.attivita = 4;
-//                  sprintf(tmp, "Usa scooter");
-//                  SetDlgItemText(hDlg, 105, tmp);
-//                  break;
-//             case 4:  ScooterData.attivita = 1;
-//                  sprintf(tmp, "Parcheggia scooter");
-//                  SetDlgItemText(hDlg, 105, tmp);
-//                  break;
-//             default: sprintf(buf, "Mi spieghi come fai a parcheggiare lo scooter visto che e' %s ???",n_attivita[ScooterData.attivita]);
-//                  MessageBox( hDlg,
-//                    buf,
-//                    "Parcheggia lo scooter", MB_OK | MB_ICONQUESTION);
-//         };
-
-//         AggiornaScooter(hDlg);
-//         return(TRUE);
-
-
-//         case 106:                   /* Fai Benzina    8 Maggio 1998 */
-//         if (ScooterData.stato < 0) {
-//             MessageBox( hDlg,
-//               "Mi spieghi come fai a far benzina allo scooter se non lo hai ???",
-//               "Fai benza", MB_OK | MB_ICONQUESTION);
-//             return(TRUE);
-//             }
-
-//         switch (ScooterData.attivita)
-//         {
-//             case 1:
-//             case 2:
-//             case 3:
-//             case 6:
-//                  if (Soldi < 10) {
-//                     sprintf(buf, "Al distributore automatico puoi fare un minimo di %s di benzina...",MostraSoldi(10));
-//                     MessageBox( hDlg,
-//                       buf,
-//                       "Fai benza", MB_OK | MB_ICONQUESTION);
-//                     break;
-//                     }
-
-//                  Soldi-=10;
-//                  #ifdef TABBOZ_DEBUG
-//                     sprintf(tmp,"scooter: Paga benzina (%s)",MostraSoldi(10));
-//                     writelog(tmp);
-
-//                  #endif
-
-//                  benzina=50;    /* 5 litri, il massimo che puo' contenere... */
-
-//                  if (ScooterData.cc == 5) benzina = 850;  /* 85 litri, x la macchinina un po' figa... */
-//                  showscooter=0;
-//                  CalcolaVelocita(hDlg);
-
-//                  sprintf(buf, "Fai %s di benzina e riempi lo scooter...",MostraSoldi(10));
-//                  MessageBox( hDlg,
-//                     buf,
-//                     "Fai benza", MB_OK | MB_ICONINFORMATION);
-
-//                  break;
-
-//             default: sprintf(buf, "Mi spieghi come fai a far benzina allo scooter visto che e' %s ???",n_attivita[ScooterData.attivita]);
-//                  MessageBox( hDlg,
-//                    buf,
-//                     "Fai benza", MB_OK | MB_ICONQUESTION);
-//         };
-
-//         AggiornaScooter(hDlg);
-//         Evento(hDlg);
-//         return(TRUE);
-
-
-//         case IDCANCEL:
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
-
-//         case IDOK:
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
-
-//         default:
-//         return(TRUE);
-//     }
-//     }
-
-//     return(FALSE);
-// }
-#endif
-
-
-/********************************************************************/
-/* Acquista Scooter                                                 */
-/********************************************************************/
-
-// # pragma argsused
-// BOOL FAR PASCAL AcquistaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//          int           num_moto;
-// static  NEWSTSCOOTER  ScooterTemp;
-
-//     if (message == WM_INITDIALOG) {
-//         scelta=-1;
-//         ScooterTemp=ScooterData;
-//          SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-//         return(TRUE);
-//     } else if (message == WM_COMMAND) {
-//         switch (wParam) {
-//             case 121:
-//             case 122:
-//             case 123:
-//             case 124:
-//             case 125:
-//             case 126:
-//                 num_moto=wParam-120;
-//                 scelta=num_moto;
-//                 ScooterData=ScooterMem[num_moto];
-//                 showscooter=1;
-//                 CalcolaVelocita(hDlg);
-//                 showscooter=0;
-
-//                 AggiornaScooter(hDlg);
-//                 ScooterData=ScooterMem[0];
-//                 return(TRUE);
-
-//             case IDCANCEL:
-//                 scelta=-1;
-//                 ScooterData=ScooterTemp;
-//                 EndDialog(hDlg, TRUE);
-//                 return(TRUE);
-
-//             case IDOK:
-//                 ScooterData=ScooterTemp;
-//                 EndDialog(hDlg, TRUE);
-//                 return(TRUE);
-
-//             default:
-//                 return(TRUE);
-//             }
-//      }
-
-//      return(FALSE);
-// }
-
-
-/********************************************************************/
-/* Vendi Scooter                                                    */
-/********************************************************************/
-
-// # pragma argsused
-// BOOL FAR PASCAL VendiScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//        char          tmp[128]; /* Arghhhh ! fino alla 0.8.0 qui c'era un 30 che faceva crashiare tutto !!!! */
-// static long          offerta;  /* importante lo static !!! */
-//        ldiv_t        lx;
-
-//     if (message == WM_INITDIALOG) {
-//     lx=ldiv(ScooterData.prezzo, 100L);
-//     if ( (ScooterData.attivita == 1) || (ScooterData.attivita == 4) ) /* 0.8.1pr 28 Novembre 1998 - Se lo scooter e' sputtanato, vale meno... */
-//         offerta=(lx.quot * (ScooterData.stato - 10 - random(10)));
-//     else
-//         offerta=(lx.quot * (ScooterData.stato - 50 - random(10)));
-
-//     if (offerta < 50) offerta = 50;          /* se vale meno di 50.000 nessuno lo vuole... */
-//         /* 0.8.1pr 28 Novembre 1998 - se vale meno di 50.000, viene pagato 50.000      */
-
-//     AggiornaScooter(hDlg);
-
-//     SetDlgItemText(hDlg, 118, MostraSoldi(offerta));
-//     return(TRUE);
-//     }
-
-//     else if (message == WM_COMMAND)
-//     {
-//     switch (wParam)
-//     {
-//         case IDCANCEL:
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
-
-//         case IDOK:
-//         ScooterData = ScooterMem[0];  /* nessuno scooter            */
-//         benzina = 0;              /* serbatoio vuoto    7 Maggio 1998    */
-//         ScooterData.stato = -1;
-
-//         Soldi = Soldi + offerta;
-
-//         #ifdef TABBOZ_DEBUG
-//             sprintf(tmp,"scooter: Vendi lo scooter per %s",MostraSoldi(offerta));
-//             writelog(tmp);
-//         #endif
-
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
-
-//         default:
-//         return(TRUE);
-//     }
-//     }
-
-//     return(FALSE);
-// }
-
-/********************************************************************/
-/* Ripara Scooter                                                   */
-/********************************************************************/
-
-// # pragma argsused
-// BOOL FAR PASCAL RiparaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//          char       tmp[128];
-// static long       costo;  // Importante lo static !!!
-
-//     if (message == WM_INITDIALOG) {
-//         // Calcola il costo della riparazione dello scooter...
-//         costo= (ScooterData.prezzo / 100 * (100 - ScooterData.stato)) + 10;
-
-//         SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-//         SetDlgItemText(hDlg, 105, MostraSoldi(costo));
-
-//         return(TRUE);
-
-//     } else if (message == WM_COMMAND) {
-//         switch (wParam) {
-
-//             case IDCANCEL:
-
-//                 EndDialog(hDlg, TRUE);
-//                 return(TRUE);
-
-//             case IDOK:
-
-//                 if (costo > Soldi)
-//                     nomoney(hDlg,SCOOTER);
-//                 else {
-
-//                     #ifdef TABBOZ_DEBUG
-//                     sprintf(tmp,"scooter: Paga riparazione (%s)",MostraSoldi(costo));
-//                     writelog(tmp);
-//                     #endif
-
-// // Per questa cagata, crascia il tabboz all' uscita...
-// //                    if (sound_active) TabbozPlaySound(102);
-
-//                     ScooterData.stato=100;
-//                     Soldi-=costo;
-//                     CalcolaVelocita(hDlg);
-//                 }
-//                 EndDialog(hDlg, TRUE);
-//                 return(TRUE);
-
-//             default:
-//                 return(TRUE);
-//             }
-//      }
-
-//      return(FALSE);
-// }
-
-
-
-
 /********************************************************************/
 /* Trucca Scooter                                                   */
 /* 28 Aprile 1998 La procedura per truccare gli scooter cambia completamente... */
@@ -1117,41 +627,6 @@ return FALSE;
 //     return(FALSE);
 // }
 
-
-#ifdef DEADCODE
-void AggiornaScooter(HWND hDlg)
-{
-char     tmp[128];
-div_t      d;
-    SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-
-    if (ScooterData.stato != -1) {
-        sprintf(tmp, "%s",  ScooterData.nome);        SetDlgItemText(hDlg, 116, tmp);
-        d = div(benzina,10);
-        sprintf(tmp, "%d.%dl", d.quot, d.rem);        SetDlgItemText(hDlg, 107, tmp);
-
-        SetDlgItemText(hDlg, 110, MostraSpeed());
-        SetDlgItemText(hDlg, 111, n_marmitta[ScooterData.marmitta] );
-        SetDlgItemText(hDlg, 112, n_carburatore[ScooterData.carburatore] );
-        SetDlgItemText(hDlg, 113, n_cc[ScooterData.cc] );
-        SetDlgItemText(hDlg, 114, n_filtro[ScooterData.filtro] );
-        sprintf(tmp, "%d%", ScooterData.stato);       SetDlgItemText(hDlg, 115, tmp);
-
-        SetDlgItemText(hDlg, 117, MostraSoldi(ScooterData.prezzo));
-
-    } else {
-        SetDlgItemText(hDlg, 107, "" );
-        SetDlgItemText(hDlg, 110, "" );
-        SetDlgItemText(hDlg, 111, "" );
-        SetDlgItemText(hDlg, 112, "" );
-        SetDlgItemText(hDlg, 113, "" );
-        SetDlgItemText(hDlg, 114, "" );
-        SetDlgItemText(hDlg, 115, "" );
-        SetDlgItemText(hDlg, 116, "" );
-        SetDlgItemText(hDlg, 117, "" );
-    }
-}
-#endif
 
 // -----------------------------------------------------------------------
 // Routine di acquisto generika di un pezzo di motorino
@@ -1298,105 +773,478 @@ char *MostraSpeed(void)
     return tmp;
 }*/
 
+
+
+
+#ifdef DEADCODE
+/********************************************************************/
+/* Scooter...                                                       */
+/********************************************************************/
+
+# pragma argsused
+BOOL FAR PASCAL Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+{
+    char          buf[128];
+    char          tmp[128];
+    FARPROC       lpproc;
+
+    if (message == WM_INITDIALOG) {
+    SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+
+    sprintf(tmp, "Parcheggia scooter");               SetDlgItemText(hDlg, 105, tmp); /* 7 Maggio 1998 */
+
+    if (ScooterData.stato != -1) {
+        AggiornaScooter(hDlg);
+        if (ScooterData.attivita == 4) {
+            sprintf(tmp, "Usa scooter");
+            SetDlgItemText(hDlg, 105, tmp);
+            }
+    }
+
+    return(TRUE);
+    }
+
+    else if (message == WM_COMMAND)
+    {
+    switch (wParam)
+    {
+        case 101:
+        if ( x_vacanza == 2 ) {
+            sprintf(tmp,"Oh, tip%c... oggi il concessionario e' chiuso...",ao);
+            MessageBox( hDlg,
+              tmp,
+              "Concessionario", MB_OK | MB_ICONINFORMATION);
+            return(TRUE);
+        }
+
+        lpproc = MakeProcInstance(Concessionario, hInst);
+        DialogBox(hInst,
+              MAKEINTRESOURCE(ACQUISTASCOOTER),
+              hDlg,
+              lpproc);
+        FreeProcInstance(lpproc);
+        Evento(hDlg);
+        AggiornaScooter(hDlg);
+        return(TRUE);
+
+        case 102:                   /* Trucca */
+        if (ScooterData.stato != -1) {
+            if ( x_vacanza != 2 ) {
+                /* 28 Aprile 1998 La procedura per truccare gli scooter cambia completamente... */
+                lpproc = MakeProcInstance(TruccaScooter, hInst);
+                DialogBox(hInst,
+                    MAKEINTRESOURCE(73),
+                    hDlg,
+                    lpproc);
+
+                FreeProcInstance(lpproc);
+                Evento(hDlg);
+                AggiornaScooter(hDlg);
+
+                return(TRUE);
+            } else {
+                sprintf(tmp,"Oh, tip%c... oggi il meccanico e' chiuso...",ao);
+                MessageBox( hDlg, tmp,
+                "Trucca lo scooter", MB_OK | MB_ICONINFORMATION);
+            }
+        } else MessageBox( hDlg,
+              "Scusa, ma quale scooter avresti intenzione di truccare visto che non ne hai neanche uno ???",
+              "Trucca lo scooter", MB_OK | MB_ICONQUESTION);
+
+        sprintf(tmp, "Parcheggia scooter");    /* 7 Maggio 1998 */
+        SetDlgItemText(hDlg, 105, tmp);
+
+        if (ScooterData.attivita == 4) {
+            sprintf(tmp, "Usa scooter");
+            SetDlgItemText(hDlg, 105, tmp);
+            }
+
+        Evento(hDlg);
+        return(TRUE);
+
+        case 103:                   /* Ripara */
+            if (ScooterData.stato != -1) {
+                if (ScooterData.stato == 100)
+                    MessageBox( hDlg,
+                        "Che motivi hai per voleer riparare il tuo scooter\nvisto che e' al 100% di efficienza ???",
+                        "Ripara lo scooter", MB_OK | MB_ICONQUESTION);
+                else {
+                    if ( x_vacanza != 2 ) {
+                        lpproc = MakeProcInstance(RiparaScooter, hInst);
+                            DialogBox(hInst,
+                            MAKEINTRESOURCE(RIPARASCOOTER),
+                            hDlg,lpproc);
+                        FreeProcInstance(lpproc);
+                        AggiornaScooter(hDlg);
+                    } else {
+                        sprintf(tmp,"Oh, tip%c... oggi il meccanico e' chiuso...",ao);
+                        MessageBox( hDlg, tmp,
+                            "Ripara lo scooter", MB_OK | MB_ICONINFORMATION);
+                        }
+                    }
+                return(TRUE);
+            } else MessageBox( hDlg,
+                  "Mi spieghi come fai a farti riparare lo scooter se non lo hai ???",
+                  "Ripara lo scooter", MB_OK | MB_ICONQUESTION);
+            Evento(hDlg);
+            return(TRUE);
+
+         case 105:                   /* Parcheggia / Usa Scooter    7 Maggio 1998 */
+        if (ScooterData.stato < 0) {
+            MessageBox( hDlg,
+              "Mi spieghi come fai a parcheggiare lo scooter se non lo hai ???",
+              "Parcheggia lo scooter", MB_OK | MB_ICONQUESTION);
+            return(TRUE);
+            }
+
+        switch (ScooterData.attivita)
+        {
+            case 1:     ScooterData.attivita = 4;
+                 sprintf(tmp, "Usa scooter");
+                 SetDlgItemText(hDlg, 105, tmp);
+                 break;
+            case 4:  ScooterData.attivita = 1;
+                 sprintf(tmp, "Parcheggia scooter");
+                 SetDlgItemText(hDlg, 105, tmp);
+                 break;
+            default: sprintf(buf, "Mi spieghi come fai a parcheggiare lo scooter visto che e' %s ???",n_attivita[ScooterData.attivita]);
+                 MessageBox( hDlg,
+                   buf,
+                   "Parcheggia lo scooter", MB_OK | MB_ICONQUESTION);
+        };
+
+        AggiornaScooter(hDlg);
+        return(TRUE);
+
+
+        case 106:                   /* Fai Benzina    8 Maggio 1998 */
+        if (ScooterData.stato < 0) {
+            MessageBox( hDlg,
+              "Mi spieghi come fai a far benzina allo scooter se non lo hai ???",
+              "Fai benza", MB_OK | MB_ICONQUESTION);
+            return(TRUE);
+            }
+
+        switch (ScooterData.attivita)
+        {
+            case 1:
+            case 2:
+            case 3:
+            case 6:
+                 if (Soldi < 10) {
+                    sprintf(buf, "Al distributore automatico puoi fare un minimo di %s di benzina...",MostraSoldi(10));
+                    MessageBox( hDlg,
+                      buf,
+                      "Fai benza", MB_OK | MB_ICONQUESTION);
+                    break;
+                    }
+
+                 Soldi-=10;
+                 #ifdef TABBOZ_DEBUG
+                    sprintf(tmp,"scooter: Paga benzina (%s)",MostraSoldi(10));
+                    writelog(tmp);
+
+                 #endif
+
+                 benzina=50;    /* 5 litri, il massimo che puo' contenere... */
+
+                 if (ScooterData.cc == 5) benzina = 850;  /* 85 litri, x la macchinina un po' figa... */
+                 showscooter=0;
+                 CalcolaVelocita(hDlg);
+
+                 sprintf(buf, "Fai %s di benzina e riempi lo scooter...",MostraSoldi(10));
+                 MessageBox( hDlg,
+                    buf,
+                    "Fai benza", MB_OK | MB_ICONINFORMATION);
+
+                 break;
+
+            default: sprintf(buf, "Mi spieghi come fai a far benzina allo scooter visto che e' %s ???",n_attivita[ScooterData.attivita]);
+                 MessageBox( hDlg,
+                   buf,
+                    "Fai benza", MB_OK | MB_ICONQUESTION);
+        };
+
+        AggiornaScooter(hDlg);
+        Evento(hDlg);
+        return(TRUE);
+
+
+        case IDCANCEL:
+        EndDialog(hDlg, TRUE);
+        return(TRUE);
+
+        case IDOK:
+        EndDialog(hDlg, TRUE);
+        return(TRUE);
+
+        default:
+        return(TRUE);
+    }
+    }
+
+    return(FALSE);
+}
+#endif
+
+
+
+#ifdef DEADCODE
+/********************************************************************/
+/* Vendi Scooter                                                    */
+/********************************************************************/
+
+# pragma argsused
+BOOL FAR PASCAL VendiScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+{
+       char          tmp[128]; /* Arghhhh ! fino alla 0.8.0 qui c'era un 30 che faceva crashiare tutto !!!! */
+static long          offerta;  /* importante lo static !!! */
+       ldiv_t        lx;
+
+    if (message == WM_INITDIALOG) {
+    lx=ldiv(ScooterData.prezzo, 100L);
+    if ( (ScooterData.attivita == 1) || (ScooterData.attivita == 4) ) /* 0.8.1pr 28 Novembre 1998 - Se lo scooter e' sputtanato, vale meno... */
+        offerta=(lx.quot * (ScooterData.stato - 10 - random(10)));
+    else
+        offerta=(lx.quot * (ScooterData.stato - 50 - random(10)));
+
+    if (offerta < 50) offerta = 50;          /* se vale meno di 50.000 nessuno lo vuole... */
+        /* 0.8.1pr 28 Novembre 1998 - se vale meno di 50.000, viene pagato 50.000      */
+
+    AggiornaScooter(hDlg);
+
+    SetDlgItemText(hDlg, 118, MostraSoldi(offerta));
+    return(TRUE);
+    }
+
+    else if (message == WM_COMMAND)
+    {
+    switch (wParam)
+    {
+        case IDCANCEL:
+        EndDialog(hDlg, TRUE);
+        return(TRUE);
+
+        case IDOK:
+        ScooterData = ScooterMem[0];  /* nessuno scooter            */
+        benzina = 0;              /* serbatoio vuoto    7 Maggio 1998    */
+        ScooterData.stato = -1;
+
+        Soldi = Soldi + offerta;
+
+        #ifdef TABBOZ_DEBUG
+            sprintf(tmp,"scooter: Vendi lo scooter per %s",MostraSoldi(offerta));
+            writelog(tmp);
+        #endif
+
+        EndDialog(hDlg, TRUE);
+        return(TRUE);
+
+        default:
+        return(TRUE);
+    }
+    }
+
+    return(FALSE);
+}
+#endif
+
+
+
+#ifdef DEADCODE
+void AggiornaScooter(HWND hDlg)
+{
+char     tmp[128];
+div_t      d;
+    SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+
+    if (ScooterData.stato != -1) {
+        sprintf(tmp, "%s",  ScooterData.nome);        SetDlgItemText(hDlg, 116, tmp);
+        d = div(benzina,10);
+        sprintf(tmp, "%d.%dl", d.quot, d.rem);        SetDlgItemText(hDlg, 107, tmp);
+
+        SetDlgItemText(hDlg, 110, MostraSpeed());
+        SetDlgItemText(hDlg, 111, n_marmitta[ScooterData.marmitta] );
+        SetDlgItemText(hDlg, 112, n_carburatore[ScooterData.carburatore] );
+        SetDlgItemText(hDlg, 113, n_cc[ScooterData.cc] );
+        SetDlgItemText(hDlg, 114, n_filtro[ScooterData.filtro] );
+        sprintf(tmp, "%d%", ScooterData.stato);       SetDlgItemText(hDlg, 115, tmp);
+
+        SetDlgItemText(hDlg, 117, MostraSoldi(ScooterData.prezzo));
+
+    } else {
+        SetDlgItemText(hDlg, 107, "" );
+        SetDlgItemText(hDlg, 110, "" );
+        SetDlgItemText(hDlg, 111, "" );
+        SetDlgItemText(hDlg, 112, "" );
+        SetDlgItemText(hDlg, 113, "" );
+        SetDlgItemText(hDlg, 114, "" );
+        SetDlgItemText(hDlg, 115, "" );
+        SetDlgItemText(hDlg, 116, "" );
+        SetDlgItemText(hDlg, 117, "" );
+    }
+}
+#endif
+
+
+#ifdef DEADCODE
+/********************************************************************/
+/* Ripara Scooter                                                   */
+/********************************************************************/
+
+# pragma argsused
+BOOL FAR PASCAL RiparaScooter(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+{
+         char       tmp[128];
+static long       costo;  // Importante lo static !!!
+
+    if (message == WM_INITDIALOG) {
+        // Calcola il costo della riparazione dello scooter...
+        costo= (ScooterData.prezzo / 100 * (100 - ScooterData.stato)) + 10;
+
+        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+        SetDlgItemText(hDlg, 105, MostraSoldi(costo));
+
+        return(TRUE);
+
+    } else if (message == WM_COMMAND) {
+        switch (wParam) {
+
+            case IDCANCEL:
+
+                EndDialog(hDlg, TRUE);
+                return(TRUE);
+
+            case IDOK:
+
+                if (costo > Soldi)
+                    nomoney(hDlg,SCOOTER);
+                else {
+
+                    #ifdef TABBOZ_DEBUG
+                    sprintf(tmp,"scooter: Paga riparazione (%s)",MostraSoldi(costo));
+                    writelog(tmp);
+                    #endif
+
+// Per questa cagata, crascia il tabboz all' uscita...
+//                    if (sound_active) TabbozPlaySound(102);
+
+                    ScooterData.stato=100;
+                    Soldi-=costo;
+                    CalcolaVelocita(hDlg);
+                }
+                EndDialog(hDlg, TRUE);
+                return(TRUE);
+
+            default:
+                return(TRUE);
+            }
+     }
+
+     return(FALSE);
+}
+#endif
+
+
 #ifdef DEADCODE
 // -----------------------------------------------------------------------
 // Concessionario...  7 Maggio 1998
 // -----------------------------------------------------------------------
 
-// # pragma argsused
-// BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//     char          tmp[128];
-//     FARPROC       lpproc;
+# pragma argsused
+BOOL FAR PASCAL Concessionario(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+{
+    char          tmp[128];
+    FARPROC       lpproc;
 
-//     if (message == WM_INITDIALOG) {
-//     SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-//     return(TRUE);
-//     }
+    if (message == WM_INITDIALOG) {
+    SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+    return(TRUE);
+    }
 
-//     else if (message == WM_COMMAND)
-//     {
-//     switch (wParam)
-//     {
-//         case 101:                   /* Compra Scooter Malagutty      */
-//         case 102:            /* Compra Scooter di altre marche */
-//         scelta = -1;
-//         lpproc = MakeProcInstance(AcquistaScooter, hInst);
-//         DialogBox(hInst,
-//             MAKEINTRESOURCE(wParam - 101 + 78),
-//             hDlg,
-//             lpproc);
-//         FreeProcInstance(lpproc);
-//         if (scelta != -1) {
-//             if (ScooterData.stato != -1) {
-//                 sprintf(tmp,"Per il tuo vecchio scooter da rottamare ti diamo %s di supervalutazione...",MostraSoldi(1000));
-//                 MessageBox( hDlg,
-//                   tmp,
-//                   "Incentivi", MB_OK | MB_ICONINFORMATION);
-//                 Soldi+=1000;
-//                 #ifdef TABBOZ_DEBUG
-//                 sprintf(tmp,"scooter: Imcentivo rottamazione %s",MostraSoldi(1000));
-//                 writelog(tmp);
-//                 #endif
+    else if (message == WM_COMMAND)
+    {
+    switch (wParam)
+    {
+        case 101:                   /* Compra Scooter Malagutty      */
+        case 102:            /* Compra Scooter di altre marche */
+        scelta = -1;
+        lpproc = MakeProcInstance(AcquistaScooter, hInst);
+        DialogBox(hInst,
+            MAKEINTRESOURCE(wParam - 101 + 78),
+            hDlg,
+            lpproc);
+        FreeProcInstance(lpproc);
+        if (scelta != -1) {
+            if (ScooterData.stato != -1) {
+                sprintf(tmp,"Per il tuo vecchio scooter da rottamare ti diamo %s di supervalutazione...",MostraSoldi(1000));
+                MessageBox( hDlg,
+                  tmp,
+                  "Incentivi", MB_OK | MB_ICONINFORMATION);
+                Soldi+=1000;
+                #ifdef TABBOZ_DEBUG
+                sprintf(tmp,"scooter: Imcentivo rottamazione %s",MostraSoldi(1000));
+                writelog(tmp);
+                #endif
 
-//                 ScooterData = ScooterMem[0];  /* nessuno scooter            */
-//                 benzina = 0;              /* serbatoio vuoto    7 Maggio 1998    */
-//                 ScooterData.stato = -1;
-//                 }
-//             if (ScooterMem[scelta].prezzo > Soldi) {
-//                 MessageBox( hDlg,
-//                   "Ti piacerebbe comprare lo scooter, vero ?\nPurtroppo, non hai abbastanza soldi...",
-//                   "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
-//                 if (Reputazione > 3 )
-//                      Reputazione-=1;
-//             } else {
-//                 Soldi-=ScooterMem[scelta].prezzo;
-//                 #ifdef TABBOZ_DEBUG
-//                 sprintf(tmp,"scooter: Acquista uno scooter per %s",MostraSoldi(ScooterMem[scelta].prezzo));
-//                 writelog(tmp);
-//                 #endif
+                ScooterData = ScooterMem[0];  /* nessuno scooter            */
+                benzina = 0;              /* serbatoio vuoto    7 Maggio 1998    */
+                ScooterData.stato = -1;
+                }
+            if (ScooterMem[scelta].prezzo > Soldi) {
+                MessageBox( hDlg,
+                  "Ti piacerebbe comprare lo scooter, vero ?\nPurtroppo, non hai abbastanza soldi...",
+                  "Non hai abbastanza soldi", MB_OK | MB_ICONSTOP);
+                if (Reputazione > 3 )
+                     Reputazione-=1;
+            } else {
+                Soldi-=ScooterMem[scelta].prezzo;
+                #ifdef TABBOZ_DEBUG
+                sprintf(tmp,"scooter: Acquista uno scooter per %s",MostraSoldi(ScooterMem[scelta].prezzo));
+                writelog(tmp);
+                #endif
 
-//                 ScooterData=ScooterMem[scelta];
-//                 benzina=20;
-//                 MessageBox( hDlg,
-//                   "Fai un giro del quartiere per farti vedere con lo scooter nuovo...",
-//                   "Lo scooter nuovo", MB_OK | MB_ICONINFORMATION);
-//                                 Reputazione+=4;
-//                 if (Reputazione > 100) Reputazione=100;
-//             }
-//             Evento(hDlg);
-//         }
-//         SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-//         return(TRUE);
+                ScooterData=ScooterMem[scelta];
+                benzina=20;
+                MessageBox( hDlg,
+                  "Fai un giro del quartiere per farti vedere con lo scooter nuovo...",
+                  "Lo scooter nuovo", MB_OK | MB_ICONINFORMATION);
+                                Reputazione+=4;
+                if (Reputazione > 100) Reputazione=100;
+            }
+            Evento(hDlg);
+        }
+        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+        return(TRUE);
 
-//         case 103:
-//         if (ScooterData.stato != -1) {
-//             lpproc = MakeProcInstance(VendiScooter, hInst);
-//                  DialogBox(hInst,
-//                  MAKEINTRESOURCE(VENDISCOOTER),
-//                  hDlg,
-//                  lpproc);
-//             FreeProcInstance(lpproc);
-//         } else MessageBox( hDlg,
-//               "Scusa, ma quale scooter avresti intenzione di vendere visto che non ne hai neanche uno ???",
-//               "Vendi lo scooter", MB_OK | MB_ICONQUESTION);
+        case 103:
+        if (ScooterData.stato != -1) {
+            lpproc = MakeProcInstance(VendiScooter, hInst);
+                 DialogBox(hInst,
+                 MAKEINTRESOURCE(VENDISCOOTER),
+                 hDlg,
+                 lpproc);
+            FreeProcInstance(lpproc);
+        } else MessageBox( hDlg,
+              "Scusa, ma quale scooter avresti intenzione di vendere visto che non ne hai neanche uno ???",
+              "Vendi lo scooter", MB_OK | MB_ICONQUESTION);
 
-//         SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-//         return(TRUE);
+        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+        return(TRUE);
 
-//         case IDCANCEL:
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
+        case IDCANCEL:
+        EndDialog(hDlg, TRUE);
+        return(TRUE);
 
-//         case IDOK:
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
+        case IDOK:
+        EndDialog(hDlg, TRUE);
+        return(TRUE);
 
-//         default:
-//         return(TRUE);
-//     }
-//     }
+        default:
+        return(TRUE);
+    }
+    }
 
-//     return(FALSE);
-// }
+    return(FALSE);
+}
 #endif
