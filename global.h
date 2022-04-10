@@ -28,7 +28,8 @@
 #define MSG_PALESTRA  42
 
 
-extern const char *StrEventi[];         // Stringhe usate nelle dialog degli eventi
+extern const char *StrEventi[];         // Stringhe usate nelle dialog semplici degli eventi
+extern const char *StrEventiFinestra[]; // Stringhe usate nelle dialog con immagine degli eventi
 
 
 extern const char *StrNomiStrade[];     // Nomi strade milanesi usate negli eventi

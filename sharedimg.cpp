@@ -11,6 +11,8 @@ Fl_Shared_Image *ImgGiubbotto[N_GIUBBOTTO];
 Fl_Shared_Image *ImgPantaloni[N_PANTALONI];
 Fl_Shared_Image *ImgScarpe[N_SCARPE];
 
+Fl_Shared_Image *ImgEventi[N_EVENTI];
+
 
 void CaricaSharedImgs()
 {
@@ -33,5 +35,9 @@ void CaricaSharedImgs()
         ImgScarpe[i] = Fl_Shared_Image::get(path);
     }
 
+    for(int i=0; i < N_EVENTI; ++i) {
+        sprintf(path, "res/pic/eventi_%d.png",i);
+        ImgEventi[i] = Fl_Shared_Image::get(path);
+    }
 
 }

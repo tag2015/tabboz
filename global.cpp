@@ -23,6 +23,7 @@
 /* IMPORTANTE */
 /* Non è (ancora) possibile aggiungere altri eventi senza cambiare radicalmente la routine in eventi.cpp */
 
+
 const char *StrEventi[] = {
     "Cerchi la rissa con un metallaro e lui ti spacca le ossa...",  // id=1000
     "Cadi in lago di merda tra le risate generali...",
@@ -76,6 +77,17 @@ const char *StrEventi[] = {
     "Una ragazza ti guarda e ride per le vistose chiazze di sudore sotto le tue ascelle...",
     "Dopo 5 minuti di corsa cadi al suolo stremato...",
     "Ti perdi per i meandri della tua palestra, solo l'intervento del guardiano notturno può salvarti.",
+};
+
+const char *StrEventiFinestra[] = {
+    "Cerchi la rissa con\nun metallaro che\npassa in\n_NOMEVIA_\ne lui ti spacca tutte\nle ossa.",
+    "Incontri un metallaro\nin\n_NOMEVIA_\nlo minacci e lui ti\nspacca tutte le ossa.",
+    "Insulti un gruppo di\nmetallari che\npassano in\n_NOMEVIA_\ne uno di questi ti\nspacca le ossa.",
+    "Cerchi la rissa con\nun metallaro e lui ti\nspacca tutte le ossa.",
+    "Mentre cammini per\n_NOMEVIA_\ncerchi la rissa con\nun metallaro e lui ti\nspacca tutte le ossa.",
+    "Senza un preciso motivo, prendi per\nil culo un manovale che, essendo privo\ndi senso dell'umorismo, ti fa a pezzi.",
+    "Facendo il pirla con lo scooter in\n_NOMEVIA_\nriesci a fare incazzare un camionista.",
+    "Mentre giri per la città con il tuo scooter,\nincontri sfortunatamente un muro...",
 };
 
 
