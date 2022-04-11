@@ -21,7 +21,7 @@ Function {GUITabbozDisco()} {open
     xywh {525 429 485 290} type Double color 54 hotspot modal size_range {485 290 485 290} visible
   } {
     Fl_Group {} {open
-      xywh {5 5 160 225} box ENGRAVED_FRAME
+      xywh {5 5 160 225} box EMBOSSED_FRAME
     } {
       Fl_Round_Button {} {
         label Splush
@@ -97,36 +97,36 @@ disco_btn_ok->activate();}
       }
     }
     Fl_Browser disco_txtbox {
-      xywh {165 5 315 225} box ENGRAVED_FRAME
+      xywh {165 5 315 225} box EMBOSSED_FRAME
       code0 {o->add("\\n\\n\\n\\n\\n    A che disco andiamo?",0);}
     }
-    Fl_Group {} {
-      xywh {5 235 220 50} box ENGRAVED_FRAME labelsize 10 align 5
+    Fl_Group {} {open
+      xywh {5 235 475 50} box EMBOSSED_FRAME labelsize 10 align 5
     } {
       Fl_Value_Output disco_val_soldi {
-        label Soldi
+        label {Soldi L. }
         callback {o->value(CALCSOLDI(Soldi));}
-        xywh {45 246 165 25} color 7 labelsize 12 maximum 0 step 1
+        xywh {65 247 80 25} box EMBOSSED_BOX color 7 selection_color 7 labelsize 12 maximum 0 step 1 value 1e+08 textfont 5
         code0 {o->value(CALCSOLDI(Soldi));}
       }
-    }
-    Fl_Button disco_btn_ok {
-      label {OK!}
-      callback {PagaDisco(disco_scelta);
+      Fl_Button disco_btn_ok {
+        label {OK!}
+        callback {PagaDisco(disco_scelta);
 win_principale->activate();
 AggiornaPrincipale();
 win_disco->hide();
 disco_scelta=0;}
-      xywh {350 235 60 50}
-      code0 {if(!disco_scelta) o->deactivate();}
-    }
-    Fl_Return_Button {} {
-      label {Nah...}
-      callback {win_principale->activate();
+        xywh {345 240 60 40} color 51 selection_color 51
+        code0 {if(!disco_scelta) o->deactivate();}
+      }
+      Fl_Return_Button {} {
+        label Back
+        callback {win_principale->activate();
 AggiornaPrincipale();
 win_disco->hide();
 disco_scelta=0;} selected
-      xywh {420 235 60 50}
+        xywh {415 240 60 40} color 51 selection_color 51
+      }
     }
   }
 }

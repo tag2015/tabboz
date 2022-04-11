@@ -7443,6 +7443,12 @@ Fl_Output *conce_txt_filtro=(Fl_Output *)0;
 
 Fl_Output *conce_txt_prezzo=(Fl_Output *)0;
 
+Fl_Value_Output *conce_soldi=(Fl_Value_Output *)0;
+
+static void cb_conce_soldi(Fl_Value_Output* o, void*) {
+  o->value(CALCSOLDI(Soldi));
+}
+
 Fl_Button *conce_btn_vendi=(Fl_Button *)0;
 
 static void cb_conce_btn_vendi(Fl_Button* o, void*) {
@@ -7468,41 +7474,34 @@ static void cb_Back(Fl_Return_Button*, void*) {
 win_conce->hide();
 }
 
-Fl_Value_Output *conce_soldi=(Fl_Value_Output *)0;
-
-static void cb_conce_soldi(Fl_Value_Output* o, void*) {
-  o->value(CALCSOLDI(Soldi));
-}
-
-static void cb_Figosit(Fl_Value_Output* o, void*) {
-  o->value(Fama);
-}
-
 Fl_Double_Window* GUIConcessionario() {
-  { win_conce = new Fl_Double_Window(600, 507);
+  { win_conce = new Fl_Double_Window(575, 485);
     win_conce->color(FL_LIGHT3);
     win_conce->hotspot(win_conce);
-    { Fl_Tabs* o = new Fl_Tabs(5, 5, 560, 420);
+    { Fl_Tabs* o = new Fl_Tabs(5, 5, 565, 420);
+      o->box(FL_UP_BOX);
       o->color(FL_LIGHT3);
-      { Fl_Group* o = new Fl_Group(10, 40, 555, 365, "Malagutty");
+      o->selection_color((Fl_Color)51);
+      { Fl_Group* o = new Fl_Group(5, 40, 565, 385, "Malagutty");
+        o->box(FL_EMBOSSED_FRAME);
         o->color(FL_LIGHT3);
-        { Fl_Group* o = new Fl_Group(15, 50, 550, 150, "tasti");
+        { Fl_Group* o = new Fl_Group(10, 50, 560, 150, "tasti");
           o->labeltype(FL_NO_LABEL);
-          { Fl_Button* o = new Fl_Button(15, 50, 175, 125);
+          { Fl_Button* o = new Fl_Button(15, 55, 175, 125);
             o->type(102);
             o->color(FL_BACKGROUND2_COLOR);
             o->selection_color((Fl_Color)3);
             o->image( image_scooter_1() );
             o->callback((Fl_Callback*)cb_);
           } // Fl_Button* o
-          { Fl_Button* o = new Fl_Button(200, 50, 175, 125);
+          { Fl_Button* o = new Fl_Button(200, 55, 175, 125);
             o->type(102);
             o->color(FL_BACKGROUND2_COLOR);
             o->selection_color((Fl_Color)3);
             o->image( image_scooter_2() );
             o->callback((Fl_Callback*)cb_1);
           } // Fl_Button* o
-          { Fl_Button* o = new Fl_Button(385, 50, 175, 125);
+          { Fl_Button* o = new Fl_Button(385, 55, 175, 125);
             o->type(102);
             o->color(FL_BACKGROUND2_COLOR);
             o->selection_color((Fl_Color)3);
@@ -7511,55 +7510,73 @@ Fl_Double_Window* GUIConcessionario() {
           } // Fl_Button* o
           o->end();
         } // Fl_Group* o
-        { Fl_Group* o = new Fl_Group(15, 190, 315, 175);
-          { conce_txt_speed = new Fl_Output(100, 200, 150, 20, "Velocit\303\240");
+        { Fl_Group* o = new Fl_Group(15, 190, 315, 185);
+          { conce_txt_speed = new Fl_Output(100, 200, 150, 25, "Velocit\303\240 Max");
+            conce_txt_speed->box(FL_EMBOSSED_BOX);
           } // Fl_Output* conce_txt_speed
-          { conce_txt_marmitta = new Fl_Output(100, 300, 150, 20, "Marmitta");
+          { conce_txt_marmitta = new Fl_Output(100, 305, 150, 25, "Marmitta");
+            conce_txt_marmitta->box(FL_EMBOSSED_BOX);
           } // Fl_Output* conce_txt_marmitta
-          { conce_txt_carb = new Fl_Output(100, 250, 150, 20, "Carburatore");
+          { conce_txt_carb = new Fl_Output(100, 255, 150, 25, "Carburatore");
+            conce_txt_carb->box(FL_EMBOSSED_BOX);
           } // Fl_Output* conce_txt_carb
-          { conce_txt_cc = new Fl_Output(100, 225, 150, 20, "Cilindrata");
+          { conce_txt_cc = new Fl_Output(100, 230, 150, 25, "Cilindrata");
+            conce_txt_cc->box(FL_EMBOSSED_BOX);
           } // Fl_Output* conce_txt_cc
-          { conce_txt_filtro = new Fl_Output(100, 275, 150, 20, "Filtro aria");
+          { conce_txt_filtro = new Fl_Output(100, 280, 150, 25, "Filtro aria");
+            conce_txt_filtro->box(FL_EMBOSSED_BOX);
           } // Fl_Output* conce_txt_filtro
-          { conce_txt_prezzo = new Fl_Output(100, 335, 150, 20, "Prezzo");
+          { conce_txt_prezzo = new Fl_Output(155, 350, 95, 25, "Prezzo");
+            conce_txt_prezzo->box(FL_EMBOSSED_BOX);
+            conce_txt_prezzo->textfont(5);
           } // Fl_Output* conce_txt_prezzo
           o->end();
         } // Fl_Group* o
+        { new Fl_Box(280, 204, 280, 172, "Scegli il tuo scooter preferito...");
+        } // Fl_Box* o
         o->end();
       } // Fl_Group* o
-      { Fl_Group* o = new Fl_Group(15, 40, 550, 385, "Altre marche");
+      { Fl_Group* o = new Fl_Group(5, 40, 565, 385, "Altre marche");
+        o->box(FL_EMBOSSED_FRAME);
         o->color(FL_LIGHT3);
         o->hide();
         o->end();
       } // Fl_Group* o
       o->end();
     } // Fl_Tabs* o
-    { Fl_Button* o = conce_btn_vendi = new Fl_Button(75, 445, 60, 50, "Vendi");
-      conce_btn_vendi->callback((Fl_Callback*)cb_conce_btn_vendi);
-      if(ScooterData.stato==-1000) o->deactivate();
-    } // Fl_Button* conce_btn_vendi
-    { Fl_Button* o = conce_btn_compra = new Fl_Button(450, 445, 60, 50, "Compra!");
-      conce_btn_compra->callback((Fl_Callback*)cb_conce_btn_compra);
-      o->deactivate();
-    } // Fl_Button* conce_btn_compra
-    { Fl_Return_Button* o = new Fl_Return_Button(515, 445, 60, 50, "Back");
-      o->callback((Fl_Callback*)cb_Back);
-    } // Fl_Return_Button* o
-    { Fl_Value_Output* o = conce_soldi = new Fl_Value_Output(270, 440, 115, 25, "Soldi L.");
-      conce_soldi->step(1);
-      conce_soldi->textfont(5);
-      conce_soldi->callback((Fl_Callback*)cb_conce_soldi);
-      o->value(CALCSOLDI(Soldi));
-      if(euro) o->label("Soldi  €");
-    } // Fl_Value_Output* conce_soldi
-    { Fl_Value_Output* o = new Fl_Value_Output(355, 470, 30, 25, "Figosit\303\240");
-      o->textfont(5);
-      o->callback((Fl_Callback*)cb_Figosit);
-      o->value(Fama);
-    } // Fl_Value_Output* o
+    { Fl_Group* o = new Fl_Group(5, 430, 565, 50);
+      o->box(FL_EMBOSSED_FRAME);
+      { Fl_Value_Output* o = conce_soldi = new Fl_Value_Output(155, 445, 95, 25, "Soldi L.");
+        conce_soldi->box(FL_EMBOSSED_BOX);
+        conce_soldi->color(FL_BACKGROUND2_COLOR);
+        conce_soldi->labelsize(12);
+        conce_soldi->step(1);
+        conce_soldi->textfont(5);
+        conce_soldi->callback((Fl_Callback*)cb_conce_soldi);
+        o->value(CALCSOLDI(Soldi));
+        if(euro) o->label("Soldi  €");
+      } // Fl_Value_Output* conce_soldi
+      { Fl_Button* o = conce_btn_vendi = new Fl_Button(340, 435, 60, 40, "Vendi");
+        conce_btn_vendi->color((Fl_Color)51);
+        conce_btn_vendi->selection_color((Fl_Color)51);
+        conce_btn_vendi->callback((Fl_Callback*)cb_conce_btn_vendi);
+        if(ScooterData.stato==-1000) o->deactivate();
+      } // Fl_Button* conce_btn_vendi
+      { Fl_Button* o = conce_btn_compra = new Fl_Button(435, 435, 60, 40, "Compra!");
+        conce_btn_compra->color((Fl_Color)51);
+        conce_btn_compra->selection_color((Fl_Color)51);
+        conce_btn_compra->callback((Fl_Callback*)cb_conce_btn_compra);
+        o->deactivate();
+      } // Fl_Button* conce_btn_compra
+      { Fl_Return_Button* o = new Fl_Return_Button(505, 435, 60, 40, "Back");
+        o->color((Fl_Color)51);
+        o->selection_color((Fl_Color)51);
+        o->callback((Fl_Callback*)cb_Back);
+      } // Fl_Return_Button* o
+      o->end();
+    } // Fl_Group* o
     win_conce->set_modal();
-    win_conce->size_range(600, 507, 600, 507);
+    win_conce->size_range(575, 485, 575, 485);
     win_conce->end();
   } // Fl_Double_Window* win_conce
   return win_conce;

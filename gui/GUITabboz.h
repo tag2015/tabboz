@@ -10,10 +10,9 @@ extern Fl_Double_Window *win_principale;
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Box.H>
-extern Fl_Box *main_box_figurino;
 extern Fl_Box *main_box_nome;
+extern Fl_Box *main_box_figurino;
 extern Fl_Box *main_box_giorno;
-extern Fl_Button *btn_fastfw;
 #include <FL/Fl_Output.H>
 extern Fl_Output *main_txtbox_tipa;
 #include <FL/Fl_Value_Output.H>
@@ -28,6 +27,9 @@ extern Fl_Box *main_fig_scarpe;
 extern Fl_Box *main_fig_panta;
 extern Fl_Box *main_fig_giub;
 extern Fl_Box *main_fig_testa;
+extern Fl_Group *main_grp_scooter;
+extern Fl_Output *main_txtbox_scooter;
+extern Fl_Value_Output *main_valbox_scooterstato;
 Fl_Double_Window* GUITabboz();
 extern Fl_Menu_Item menu_[];
 #endif

@@ -90,7 +90,7 @@ win_disco->hide();
 disco_scelta=0;
 }
 
-static void cb_Nah(Fl_Return_Button*, void*) {
+static void cb_Back(Fl_Return_Button*, void*) {
   win_principale->activate();
 AggiornaPrincipale();
 win_disco->hide();
@@ -102,7 +102,7 @@ Fl_Double_Window* GUITabbozDisco() {
     win_disco->color(FL_LIGHT3);
     win_disco->hotspot(win_disco);
     { Fl_Group* o = new Fl_Group(5, 5, 160, 225);
-      o->box(FL_ENGRAVED_FRAME);
+      o->box(FL_EMBOSSED_FRAME);
       { Fl_Round_Button* o = new Fl_Round_Button(10, 10, 150, 20, "Splush");
         o->type(102);
         o->down_box(FL_DIAMOND_UP_BOX);
@@ -162,30 +162,38 @@ Fl_Double_Window* GUITabbozDisco() {
       o->end();
     } // Fl_Group* o
     { Fl_Browser* o = disco_txtbox = new Fl_Browser(165, 5, 315, 225);
-      disco_txtbox->box(FL_ENGRAVED_FRAME);
+      disco_txtbox->box(FL_EMBOSSED_FRAME);
       o->add("\n\n\n\n\n    A che disco andiamo?",0);
     } // Fl_Browser* disco_txtbox
-    { Fl_Group* o = new Fl_Group(5, 235, 220, 50);
-      o->box(FL_ENGRAVED_FRAME);
+    { Fl_Group* o = new Fl_Group(5, 235, 475, 50);
+      o->box(FL_EMBOSSED_FRAME);
       o->labelsize(10);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { Fl_Value_Output* o = disco_val_soldi = new Fl_Value_Output(45, 246, 165, 25, "Soldi");
+      { Fl_Value_Output* o = disco_val_soldi = new Fl_Value_Output(65, 247, 80, 25, "Soldi L. ");
+        disco_val_soldi->box(FL_EMBOSSED_BOX);
         disco_val_soldi->color(FL_BACKGROUND2_COLOR);
+        disco_val_soldi->selection_color(FL_BACKGROUND2_COLOR);
         disco_val_soldi->labelsize(12);
         disco_val_soldi->maximum(0);
         disco_val_soldi->step(1);
+        disco_val_soldi->value(1e+08);
+        disco_val_soldi->textfont(5);
         disco_val_soldi->callback((Fl_Callback*)cb_disco_val_soldi);
         o->value(CALCSOLDI(Soldi));
       } // Fl_Value_Output* disco_val_soldi
+      { Fl_Button* o = disco_btn_ok = new Fl_Button(345, 240, 60, 40, "OK!");
+        disco_btn_ok->color((Fl_Color)51);
+        disco_btn_ok->selection_color((Fl_Color)51);
+        disco_btn_ok->callback((Fl_Callback*)cb_disco_btn_ok);
+        if(!disco_scelta) o->deactivate();
+      } // Fl_Button* disco_btn_ok
+      { Fl_Return_Button* o = new Fl_Return_Button(415, 240, 60, 40, "Back");
+        o->color((Fl_Color)51);
+        o->selection_color((Fl_Color)51);
+        o->callback((Fl_Callback*)cb_Back);
+      } // Fl_Return_Button* o
       o->end();
     } // Fl_Group* o
-    { Fl_Button* o = disco_btn_ok = new Fl_Button(350, 235, 60, 50, "OK!");
-      disco_btn_ok->callback((Fl_Callback*)cb_disco_btn_ok);
-      if(!disco_scelta) o->deactivate();
-    } // Fl_Button* disco_btn_ok
-    { Fl_Return_Button* o = new Fl_Return_Button(420, 235, 60, 50, "Nah...");
-      o->callback((Fl_Callback*)cb_Nah);
-    } // Fl_Return_Button* o
     win_disco->set_modal();
     win_disco->size_range(485, 290, 485, 290);
     win_disco->end();

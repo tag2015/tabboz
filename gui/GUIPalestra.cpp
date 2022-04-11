@@ -7,12 +7,6 @@
 
 Fl_Double_Window *win_palestra=(Fl_Double_Window *)0;
 
-static void cb_Back(Fl_Return_Button*, void*) {
-  win_principale->activate();
-AggiornaPrincipale();
-win_palestra->hide();
-}
-
 #include <FL/Fl_Image.H>
 static const unsigned char idata_palestra[] =
 {96,96,64,96,96,64,64,96,64,96,64,64,64,96,64,96,96,64,64,64,64,96,96,64,64,
@@ -5223,35 +5217,46 @@ static void cb_pal_soldi(Fl_Value_Output* o, void*) {
 
 Fl_Value_Output *pal_fama=(Fl_Value_Output *)0;
 
+static void cb_Back(Fl_Return_Button*, void*) {
+  win_principale->activate();
+AggiornaPrincipale();
+win_palestra->hide();
+}
+
 Fl_Double_Window* GUITabbozPalestra() {
-  { win_palestra = new Fl_Double_Window(490, 255, "Palestra");
+  { win_palestra = new Fl_Double_Window(486, 251, "Palestra");
     win_palestra->color(FL_LIGHT3);
     win_palestra->labelfont(1);
     win_palestra->labelsize(12);
     win_palestra->hotspot(win_palestra);
-    { Fl_Return_Button* o = new Fl_Return_Button(420, 200, 60, 45, "Back");
-      o->callback((Fl_Callback*)cb_Back);
-    } // Fl_Return_Button* o
-    { Fl_Box* o = new Fl_Box(5, 7, 250, 187);
+    { Fl_Box* o = new Fl_Box(5, 5, 250, 185);
       o->image( image_palestra() );
     } // Fl_Box* o
-    { Fl_Button* o = new Fl_Button(260, 110, 220, 25, "Vai in palestra");
+    { Fl_Button* o = new Fl_Button(260, 105, 220, 25, "Vai in palestra");
+      o->color((Fl_Color)51);
+      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Vai);
     } // Fl_Button* o
-    { Fl_Group* o = new Fl_Group(260, 10, 220, 70);
+    { Fl_Group* o = new Fl_Group(260, 5, 220, 70);
       o->box(FL_EMBOSSED_FRAME);
       o->labelsize(12);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { Fl_Button* o = new Fl_Button(265, 15, 105, 20, "1 mese");
+      { Fl_Button* o = new Fl_Button(265, 10, 105, 20, "1 mese");
+        o->color((Fl_Color)51);
+        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_1);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(265, 35, 105, 20, "6 mesi");
+      { Fl_Button* o = new Fl_Button(265, 30, 105, 20, "6 mesi");
+        o->color((Fl_Color)51);
+        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_6);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(265, 55, 105, 20, "1 anno");
+      { Fl_Button* o = new Fl_Button(265, 50, 105, 20, "1 anno");
+        o->color((Fl_Color)51);
+        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_11);
       } // Fl_Button* o
-      { Fl_Value_Output* o = new Fl_Value_Output(403, 15, 70, 20, "L. ");
+      { Fl_Value_Output* o = new Fl_Value_Output(403, 10, 70, 20, "L. ");
         o->box(FL_FLAT_BOX);
         o->color(FL_LIGHT3);
         o->labelfont(4);
@@ -5259,13 +5264,13 @@ Fl_Double_Window* GUITabbozPalestra() {
         o->value(CALCSOLDI(PalestraMem[0].prezzo));
         if(euro) o->label("€");
       } // Fl_Value_Output* o
-      { Fl_Value_Output* o = new Fl_Value_Output(395, 35, 80, 20);
+      { Fl_Value_Output* o = new Fl_Value_Output(395, 30, 80, 20);
         o->box(FL_FLAT_BOX);
         o->color(FL_LIGHT3);
         o->textfont(5);
         o->value(CALCSOLDI(PalestraMem[1].prezzo));
       } // Fl_Value_Output* o
-      { Fl_Value_Output* o = new Fl_Value_Output(395, 55, 80, 20);
+      { Fl_Value_Output* o = new Fl_Value_Output(395, 50, 80, 20);
         o->box(FL_FLAT_BOX);
         o->color(FL_LIGHT3);
         o->textfont(5);
@@ -5273,32 +5278,52 @@ Fl_Double_Window* GUITabbozPalestra() {
       } // Fl_Value_Output* o
       o->end();
     } // Fl_Group* o
-    { Fl_Button* o = new Fl_Button(260, 170, 220, 25, "Fai una lampada");
+    { Fl_Button* o = new Fl_Button(260, 165, 220, 25, "Fai una lampada");
+      o->color((Fl_Color)51);
+      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Fai);
     } // Fl_Button* o
-    { pal_txtscadenza = new Fl_Output(370, 85, 110, 20, "Scadenza:");
+    { pal_txtscadenza = new Fl_Output(370, 80, 110, 20, "Scadenza:");
+      pal_txtscadenza->box(FL_EMBOSSED_BOX);
       pal_txtscadenza->labelsize(12);
     } // Fl_Output* pal_txtscadenza
-    { pal_txtfaccia = new Fl_Output(370, 145, 110, 20, "Stato abbronzatura");
+    { pal_txtfaccia = new Fl_Output(370, 140, 110, 20, "Stato abbronzatura");
+      pal_txtfaccia->box(FL_EMBOSSED_BOX);
       pal_txtfaccia->labelsize(12);
     } // Fl_Output* pal_txtfaccia
-    { Fl_Value_Output* o = pal_soldi = new Fl_Value_Output(70, 211, 130, 24, "Soldi L.");
-      pal_soldi->step(1);
-      pal_soldi->value(1e+07);
-      pal_soldi->textfont(5);
-      pal_soldi->callback((Fl_Callback*)cb_pal_soldi);
-      o->value(CALCSOLDI(Soldi));
-      if(euro) o->label("Soldi €");
-    } // Fl_Value_Output* pal_soldi
-    { Fl_Value_Output* o = pal_fama = new Fl_Value_Output(285, 211, 30, 24, "Figosit\303\240");
-      pal_fama->maximum(100);
-      pal_fama->value(100);
-      pal_fama->textfont(5);
-      o->value(Fama);
-    } // Fl_Value_Output* pal_fama
+    { Fl_Group* o = new Fl_Group(5, 195, 475, 50);
+      o->box(FL_EMBOSSED_FRAME);
+      { Fl_Value_Output* o = pal_soldi = new Fl_Value_Output(55, 207, 80, 25, "Soldi L.");
+        pal_soldi->box(FL_EMBOSSED_BOX);
+        pal_soldi->color(FL_BACKGROUND2_COLOR);
+        pal_soldi->labelsize(12);
+        pal_soldi->step(1);
+        pal_soldi->value(1e+08);
+        pal_soldi->textfont(5);
+        pal_soldi->callback((Fl_Callback*)cb_pal_soldi);
+        o->value(CALCSOLDI(Soldi));
+        if(euro) o->label("Soldi €");
+      } // Fl_Value_Output* pal_soldi
+      { Fl_Value_Output* o = pal_fama = new Fl_Value_Output(210, 207, 35, 25, "Figosit\303\240");
+        pal_fama->box(FL_EMBOSSED_BOX);
+        pal_fama->color(FL_BACKGROUND2_COLOR);
+        pal_fama->labelsize(12);
+        pal_fama->maximum(100);
+        pal_fama->value(100);
+        o->value(Fama);
+      } // Fl_Value_Output* pal_fama
+      { Fl_Return_Button* o = new Fl_Return_Button(415, 200, 60, 40, "Back");
+        o->color((Fl_Color)51);
+        o->selection_color((Fl_Color)51);
+        o->callback((Fl_Callback*)cb_Back);
+      } // Fl_Return_Button* o
+      { new Fl_Box(245, 212, 15, 16, "%");
+      } // Fl_Box* o
+      o->end();
+    } // Fl_Group* o
     AggiornaPalestra();
     win_palestra->set_modal();
-    win_palestra->size_range(490, 255, 490, 255);
+    win_palestra->size_range(486, 251, 486, 251);
     win_palestra->end();
   } // Fl_Double_Window* win_palestra
   return win_palestra;

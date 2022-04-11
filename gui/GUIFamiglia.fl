@@ -14,12 +14,12 @@ decl {\#include "../famiglia.h"} {private global
 Function {GUITabbozFamiglia()} {open
 } {
   Fl_Window win_famiglia {
-    label Famiglia open
-    xywh {373 433 415 330} type Double color 54 hotspot modal size_range {415 330 415 330} visible
+    label Famiglia open selected
+    xywh {434 318 415 330} type Double box BORDER_BOX color 54 hotspot modal size_range {415 330 415 330} visible
   } {
     Fl_Box {} {
       label {immagine casa}
-      xywh {10 5 395 140} box ENGRAVED_FRAME
+      xywh {10 10 395 140} box EMBOSSED_FRAME
     }
     Fl_Button {} {
       label {Chiedi aumento paghetta}
@@ -38,27 +38,29 @@ Function {GUITabbozFamiglia()} {open
       code0 {if(euro) o->label("Papà, mi dai 50€ ?");}
     }
     Fl_Group {} {open
-      xywh {10 265 330 50} box ENGRAVED_FRAME labelsize 10 align 5
+      xywh {10 265 395 50} box EMBOSSED_FRAME labelsize 10 align 5
     } {
       Fl_Value_Output fam_val_soldi {
         label {Soldi  L.}
-        xywh {65 277 105 25} color 7 labelsize 12 step 1
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {65 277 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+06 textfont 5
         code0 {o->value(CALCSOLDI(Soldi));}
         code1 {if(euro) o->label("Soldi  €");}
       }
       Fl_Value_Output fam_val_paghetta {
-        label {Paghetta  L.} selected
-        xywh {250 278 80 23} color 7 labelsize 12 step 1
+        label {Paghetta  L.}
+        callback {o->value(CALCSOLDI(Paghetta));}
+        xywh {230 277 70 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+06 textfont 5
         code0 {o->value(CALCSOLDI(Paghetta));}
         code1 {if(euro) o->label("Paghetta  €");}
       }
-    }
-    Fl_Return_Button {} {
-      label OK
-      callback {win_principale->activate();
+      Fl_Return_Button {} {
+        label Back
+        callback {win_principale->activate();
 AggiornaPrincipale();
 win_famiglia->hide();}
-      xywh {345 265 60 50}
+        xywh {340 270 60 40} color 51 selection_color 51
+      }
     }
   }
 }

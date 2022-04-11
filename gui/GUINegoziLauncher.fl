@@ -29,14 +29,14 @@ decl {\#include "../sound.h"} {private global
 Function {GUINegoziLauncher()} {open
 } {
   Fl_Window win_negozi {
-    label Negozi open
-    xywh {672 664 395 215} type Double color 54 labelfont 1 labelsize 12 hotspot modal size_range {395 215 395 215} visible
+    label Negozi open selected
+    xywh {746 577 395 215} type Double color 54 labelfont 1 labelsize 12 hotspot modal size_range {395 215 395 215} visible
   } {
     Fl_Return_Button {} {
       label Back
       callback {win_principale->activate();
 win_negozi->hide();}
-      xywh {325 155 60 50}
+      xywh {325 165 60 40} color 51 selection_color 51
     }
     Fl_Group {} {
       label Abbigliamento open
@@ -52,16 +52,16 @@ win_negozi->hide();}
 }else {
   fl_message_title("Negozio chiuso");
   fl_alert("Oh, tip%c... i negozi sono chiusi di festa...",ao);
-}} selected
-        xywh {15 30 170 30}
+}}
+        xywh {15 30 170 30} color 51 selection_color 51
       }
       Fl_Button {} {
         label {Blue Rider}
-        xywh {15 65 170 30} deactivate
+        xywh {15 65 170 30} color 51 selection_color 51
       }
       Fl_Button {} {
         label Zoccolaro
-        xywh {15 100 170 30}
+        xywh {15 100 170 30} color 51 selection_color 51
       }
       Fl_Button {} {
         label Footsmocker
@@ -69,11 +69,11 @@ win_negozi->hide();}
       }
       Fl_Button {} {
         label {Footsmocker II}
-        xywh {15 170 170 30}
+        xywh {15 170 170 30} color 51 selection_color 51 deactivate
       }
       Fl_Button {} {
         label Footsmocker
-        xywh {15 135 170 30}
+        xywh {15 135 170 30} color 51 selection_color 51 deactivate
       }
     }
     Fl_Group {} {
@@ -92,11 +92,11 @@ win_negozi->hide();}
   fl_message_title("Tabaccaio chiuso");
   fl_alert("Rimani fiss%c a guardare la saracinesca del tabaccaio irrimediabilmente chiusa...",ao);
 }}
-        xywh {210 30 170 30}
+        xywh {210 30 170 30} color 51 selection_color 51
       }
       Fl_Button {} {
         label Telefonia
-        xywh {210 65 170 30}
+        xywh {210 65 170 30} color 51 selection_color 51
       }
     }
   }

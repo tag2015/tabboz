@@ -6086,12 +6086,6 @@ static Fl_Image *image_compagnia() {
   return image;
 }
 
-static void cb_OK(Fl_Return_Button*, void*) {
-  win_principale->activate();
-AggiornaPrincipale();
-win_compagnia->hide();
-}
-
 static void cb_Gareggia(Fl_Button*, void*) {
   GareggiaScooter();
 win_principale->activate();
@@ -6115,17 +6109,20 @@ win_compagnia->hide();
 
 Fl_Value_Output *compa_val_rep=(Fl_Value_Output *)0;
 
+static void cb_Back(Fl_Return_Button*, void*) {
+  win_principale->activate();
+AggiornaPrincipale();
+win_compagnia->hide();
+}
+
 Fl_Double_Window* GUITabbozCompagnia() {
-  { win_compagnia = new Fl_Double_Window(310, 370, "Compagnia");
+  { win_compagnia = new Fl_Double_Window(310, 360, "Compagnia");
     win_compagnia->color(FL_LIGHT3);
     win_compagnia->hotspot(win_compagnia);
     { Fl_Box* o = new Fl_Box(10, 0, 290, 190);
       o->box(FL_BORDER_FRAME);
       o->image( image_compagnia() );
     } // Fl_Box* o
-    { Fl_Return_Button* o = new Fl_Return_Button(240, 305, 60, 50, "OK");
-      o->callback((Fl_Callback*)cb_OK);
-    } // Fl_Return_Button* o
     { Fl_Button* o = new Fl_Button(10, 195, 290, 30, "Gareggia con lo scooter");
       o->color((Fl_Color)51);
       o->selection_color((Fl_Color)51);
@@ -6141,15 +6138,24 @@ Fl_Double_Window* GUITabbozCompagnia() {
       o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Chiama);
     } // Fl_Button* o
-    { Fl_Group* o = new Fl_Group(10, 305, 220, 50);
-      o->box(FL_ENGRAVED_FRAME);
+    { Fl_Group* o = new Fl_Group(10, 300, 290, 50);
+      o->box(FL_EMBOSSED_FRAME);
       o->labelsize(10);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { Fl_Value_Output* o = compa_val_rep = new Fl_Value_Output(95, 319, 40, 25, "Reputazione");
+      { Fl_Value_Output* o = compa_val_rep = new Fl_Value_Output(95, 312, 35, 25, "Reputazione");
+        compa_val_rep->box(FL_EMBOSSED_BOX);
         compa_val_rep->color(FL_BACKGROUND2_COLOR);
         compa_val_rep->labelsize(12);
+        compa_val_rep->value(100);
         o->value(Reputazione);
       } // Fl_Value_Output* compa_val_rep
+      { new Fl_Box(130, 316, 15, 16, "%");
+      } // Fl_Box* o
+      { Fl_Return_Button* o = new Fl_Return_Button(235, 305, 60, 40, "Back");
+        o->color((Fl_Color)51);
+        o->selection_color((Fl_Color)51);
+        o->callback((Fl_Callback*)cb_Back);
+      } // Fl_Return_Button* o
       o->end();
     } // Fl_Group* o
     win_compagnia->set_modal();

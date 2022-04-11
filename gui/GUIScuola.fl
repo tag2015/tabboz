@@ -2,10 +2,7 @@
 version 1.0308
 header_name {.h}
 code_name {.cpp}
-decl {int materia_selezionata;} {private global
-}
-
-decl {\#include "GUITabboz.h"} {private global
+decl {\#include "GUITabboz.h"} {selected private global
 }
 
 decl {\#include "../zarrosim.h"} {private global
@@ -14,15 +11,18 @@ decl {\#include "../zarrosim.h"} {private global
 decl {\#include "../scuola.h"} {private global
 }
 
+decl {int materia_selezionata;} {private global
+}
+
 Function {GUITabbozScuola()} {open
 } {
   Fl_Window win_scuola {
     label Scuola open
-    xywh {223 541 540 355} type Double color 54 hotspot
+    xywh {187 368 540 350} type Double color 54 hotspot
     code0 {materia_selezionata=1;}
-    code1 {AggiornaScuola();} modal size_range {540 355 540 355} visible
+    code1 {AggiornaScuola();} modal size_range {540 350 540 350} visible
   } {
-    Fl_Group {} {
+    Fl_Group {} {open
       xywh {10 10 245 275} box SHADOW_BOX color 7
     } {
       Fl_Round_Button {} {
@@ -72,34 +72,34 @@ Function {GUITabbozScuola()} {open
         xywh {12 215 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Group grp_voti {
-        xywh {185 15 55 215}
+        xywh {185 15 60 215}
       } {
         Fl_Value_Output val_voto1 {
-          xywh {225 20 15 15} box FLAT_BOX color 7 textfont 5
+          xywh {225 20 20 15} box FLAT_BOX color 7 textfont 5
         }
         Fl_Value_Output val_voto2 {
-          xywh {225 44 15 15} box FLAT_BOX color 7 textfont 5
+          xywh {225 44 20 15} box FLAT_BOX color 7 textfont 5
         }
         Fl_Value_Output val_voto3 {
-          xywh {225 68 15 15} box FLAT_BOX color 7 textfont 5
+          xywh {225 68 20 15} box FLAT_BOX color 7 textfont 5
         }
         Fl_Value_Output val_voto4 {
-          xywh {225 93 15 15} box FLAT_BOX color 7 textfont 5
+          xywh {225 93 20 15} box FLAT_BOX color 7 textfont 5
         }
         Fl_Value_Output val_voto5 {
-          xywh {225 117 15 15} box FLAT_BOX color 7 textfont 5
+          xywh {225 117 20 15} box FLAT_BOX color 7 textfont 5
         }
         Fl_Value_Output val_voto6 {
-          xywh {225 141 15 15} box FLAT_BOX color 7 textfont 5
+          xywh {225 141 20 15} box FLAT_BOX color 7 textfont 5
         }
         Fl_Value_Output val_voto7 {
-          xywh {225 166 15 15} box FLAT_BOX color 7 textfont 5
+          xywh {225 166 20 15} box FLAT_BOX color 7 textfont 5
         }
         Fl_Value_Output val_voto8 {
-          xywh {225 190 15 15} box FLAT_BOX color 7 textfont 5
+          xywh {225 190 20 15} box FLAT_BOX color 7 textfont 5
         }
         Fl_Value_Output val_voto9 {
-          xywh {225 215 15 15} box FLAT_BOX color 7 textfont 5
+          xywh {225 215 20 15} box FLAT_BOX color 7 textfont 5
         }
       }
       Fl_Value_Output scuola_val_media {
@@ -129,28 +129,33 @@ Function {GUITabbozScuola()} {open
       xywh {260 255 270 30} color 51 selection_color 51
     }
     Fl_Group grp_barrastato {open
-      xywh {10 295 405 50} box ENGRAVED_FRAME labelsize 10 align 5
+      xywh {10 290 520 50} box EMBOSSED_FRAME labelsize 10 align 5
     } {
       Fl_Value_Output scuola_val_soldi {
-        label {Soldi  L.} selected
-        xywh {65 307 125 25} color 7 labelsize 12 step 1
+        label {Soldi  L.}
+        callback {scuola_val_soldi->value(CALCSOLDI(Soldi));}
+        xywh {65 302 80 25} box EMBOSSED_BOX color 7 labelsize 12 align 260 step 1 value 1e+08 textfont 5
         code0 {if (euro) o->label("Soldi  €");}
       }
       Fl_Value_Output scuola_val_rep {
         label Reputazione
-        xywh {340 307 35 25} color 7 labelsize 12
+        xywh {270 302 35 25} box EMBOSSED_BOX color 7 labelsize 12 value 100
+      }
+      Fl_Box {} {
+        label {%}
+        xywh {305 307 15 16}
       }
       Fl_Value_Output scuola_val_studio {
         label Studio
-        xywh {370 305 35 25} color 7 labelsize 12 hide
+        xywh {370 300 35 30} color 7 labelsize 12 hide
       }
-    }
-    Fl_Return_Button {} {
-      label OK
-      callback {win_principale->activate();
+      Fl_Return_Button {} {
+        label Back
+        callback {win_principale->activate();
 AggiornaPrincipale();
 win_scuola->hide();}
-      xywh {470 295 60 50}
+        xywh {465 295 60 40} color 51 selection_color 51
+      }
     }
   }
 }

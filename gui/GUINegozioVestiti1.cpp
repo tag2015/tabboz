@@ -160,7 +160,7 @@ static void cb_Figosit(Fl_Value_Output* o, void*) {
 }
 
 Fl_Double_Window* GUINegozioVestiti_1() {
-  { win_vestiti_1 = new Fl_Double_Window(580, 325, "Bau House");
+  { win_vestiti_1 = new Fl_Double_Window(580, 320, "Bau House");
     win_vestiti_1->color(FL_LIGHT3);
     win_vestiti_1->labelfont(1);
     win_vestiti_1->labelsize(12);
@@ -194,32 +194,47 @@ Fl_Double_Window* GUINegozioVestiti_1() {
       giub_colore->menu(menu_giub_colore);
       o->deactivate();
     } // Fl_Choice* giub_colore
-    { boxtxt_vestiti = new Fl_Browser(10, 175, 380, 140);
+    { boxtxt_vestiti = new Fl_Browser(10, 165, 380, 140);
       boxtxt_vestiti->box(FL_EMBOSSED_FRAME);
       boxtxt_vestiti->color(FL_LIGHT3);
       boxtxt_vestiti->when(FL_WHEN_NEVER);
     } // Fl_Browser* boxtxt_vestiti
-    { Fl_Button* o = neg1_btn_compra = new Fl_Button(440, 265, 60, 50, "Compra!");
-      neg1_btn_compra->callback((Fl_Callback*)cb_neg1_btn_compra);
-      o->deactivate();
-    } // Fl_Button* neg1_btn_compra
-    { Fl_Return_Button* o = new Fl_Return_Button(510, 265, 60, 50, "Back");
-      o->callback((Fl_Callback*)cb_Back);
-    } // Fl_Return_Button* o
-    { Fl_Value_Output* o = new Fl_Value_Output(455, 175, 115, 25, "Soldi L.");
-      o->step(1);
-      o->textfont(5);
-      o->callback((Fl_Callback*)cb_Soldi);
-      o->value(CALCSOLDI(Soldi));
-      if(euro) o->label("Soldi  €");
-    } // Fl_Value_Output* o
-    { Fl_Value_Output* o = new Fl_Value_Output(540, 205, 30, 25, "Figosit\303\240");
-      o->textfont(5);
-      o->callback((Fl_Callback*)cb_Figosit);
-      o->value(Fama);
-    } // Fl_Value_Output* o
+    { Fl_Group* o = new Fl_Group(400, 165, 170, 140);
+      o->box(FL_EMBOSSED_FRAME);
+      { Fl_Button* o = neg1_btn_compra = new Fl_Button(405, 260, 60, 40, "Compra!");
+        neg1_btn_compra->color((Fl_Color)51);
+        neg1_btn_compra->selection_color((Fl_Color)51);
+        neg1_btn_compra->callback((Fl_Callback*)cb_neg1_btn_compra);
+        o->deactivate();
+      } // Fl_Button* neg1_btn_compra
+      { Fl_Return_Button* o = new Fl_Return_Button(505, 260, 60, 40, "Back");
+        o->color((Fl_Color)51);
+        o->selection_color((Fl_Color)51);
+        o->callback((Fl_Callback*)cb_Back);
+      } // Fl_Return_Button* o
+      { Fl_Value_Output* o = new Fl_Value_Output(485, 170, 80, 25, "Soldi L.");
+        o->box(FL_EMBOSSED_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelsize(12);
+        o->step(1);
+        o->textfont(5);
+        o->callback((Fl_Callback*)cb_Soldi);
+        o->value(CALCSOLDI(Soldi));
+        if(euro) o->label("Soldi  €");
+      } // Fl_Value_Output* o
+      { Fl_Value_Output* o = new Fl_Value_Output(530, 200, 35, 25, "Figosit\303\240");
+        o->box(FL_EMBOSSED_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelsize(12);
+        o->callback((Fl_Callback*)cb_Figosit);
+        o->value(Fama);
+      } // Fl_Value_Output* o
+      o->end();
+    } // Fl_Group* o
     win_vestiti_1->set_modal();
-    win_vestiti_1->size_range(580, 325, 580, 325);
+    win_vestiti_1->size_range(580, 320, 580, 320);
     win_vestiti_1->end();
   } // Fl_Double_Window* win_vestiti_1
   return win_vestiti_1;

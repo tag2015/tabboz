@@ -6,10 +6,10 @@
 #include <FL/Fl_Double_Window.H>
 extern Fl_Double_Window *win_compagnia;
 #include <FL/Fl_Box.H>
-#include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Value_Output.H>
 extern Fl_Value_Output *compa_val_rep;
+#include <FL/Fl_Return_Button.H>
 Fl_Double_Window* GUITabbozCompagnia();
 #endif

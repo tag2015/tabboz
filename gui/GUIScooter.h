@@ -6,7 +6,6 @@
 #include <FL/Fl_Double_Window.H>
 extern Fl_Double_Window *win_scooter;
 #include <FL/Fl_Button.H>
-#include <FL/Fl_Return_Button.H>
 extern Fl_Button *scooter_btn_usa;
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Output.H>
@@ -17,5 +16,6 @@ extern Fl_Output *sco_txt_stato;
 extern Fl_Output *sco_txt_benza;
 #include <FL/Fl_Value_Output.H>
 extern Fl_Value_Output *sco_val_soldi;
+#include <FL/Fl_Return_Button.H>
 Fl_Double_Window* GUIScooter();
 #endif

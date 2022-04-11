@@ -21,9 +21,17 @@ static void cb_Pap(Fl_Button*, void*) {
 
 Fl_Value_Output *fam_val_soldi=(Fl_Value_Output *)0;
 
+static void cb_fam_val_soldi(Fl_Value_Output* o, void*) {
+  o->value(CALCSOLDI(Soldi));
+}
+
 Fl_Value_Output *fam_val_paghetta=(Fl_Value_Output *)0;
 
-static void cb_OK(Fl_Return_Button*, void*) {
+static void cb_fam_val_paghetta(Fl_Value_Output* o, void*) {
+  o->value(CALCSOLDI(Paghetta));
+}
+
+static void cb_Back(Fl_Return_Button*, void*) {
   win_principale->activate();
 AggiornaPrincipale();
 win_famiglia->hide();
@@ -31,10 +39,11 @@ win_famiglia->hide();
 
 Fl_Double_Window* GUITabbozFamiglia() {
   { win_famiglia = new Fl_Double_Window(415, 330, "Famiglia");
+    win_famiglia->box(FL_BORDER_BOX);
     win_famiglia->color(FL_LIGHT3);
     win_famiglia->hotspot(win_famiglia);
-    { Fl_Box* o = new Fl_Box(10, 5, 395, 140, "immagine casa");
-      o->box(FL_ENGRAVED_FRAME);
+    { Fl_Box* o = new Fl_Box(10, 10, 395, 140, "immagine casa");
+      o->box(FL_EMBOSSED_FRAME);
     } // Fl_Box* o
     { Fl_Button* o = new Fl_Button(10, 155, 395, 30, "Chiedi aumento paghetta");
       o->color((Fl_Color)51);
@@ -52,29 +61,39 @@ Fl_Double_Window* GUITabbozFamiglia() {
       o->callback((Fl_Callback*)cb_Pap);
       if(euro) o->label("Papà, mi dai 50€ ?");
     } // Fl_Button* o
-    { Fl_Group* o = new Fl_Group(10, 265, 330, 50);
-      o->box(FL_ENGRAVED_FRAME);
+    { Fl_Group* o = new Fl_Group(10, 265, 395, 50);
+      o->box(FL_EMBOSSED_FRAME);
       o->labelsize(10);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { Fl_Value_Output* o = fam_val_soldi = new Fl_Value_Output(65, 277, 105, 25, "Soldi  L.");
+      { Fl_Value_Output* o = fam_val_soldi = new Fl_Value_Output(65, 277, 80, 25, "Soldi  L.");
+        fam_val_soldi->box(FL_EMBOSSED_BOX);
         fam_val_soldi->color(FL_BACKGROUND2_COLOR);
         fam_val_soldi->labelsize(12);
         fam_val_soldi->step(1);
+        fam_val_soldi->value(1e+06);
+        fam_val_soldi->textfont(5);
+        fam_val_soldi->callback((Fl_Callback*)cb_fam_val_soldi);
         o->value(CALCSOLDI(Soldi));
         if(euro) o->label("Soldi  €");
       } // Fl_Value_Output* fam_val_soldi
-      { Fl_Value_Output* o = fam_val_paghetta = new Fl_Value_Output(250, 278, 80, 23, "Paghetta  L.");
+      { Fl_Value_Output* o = fam_val_paghetta = new Fl_Value_Output(230, 277, 70, 25, "Paghetta  L.");
+        fam_val_paghetta->box(FL_EMBOSSED_BOX);
         fam_val_paghetta->color(FL_BACKGROUND2_COLOR);
         fam_val_paghetta->labelsize(12);
         fam_val_paghetta->step(1);
+        fam_val_paghetta->value(1e+06);
+        fam_val_paghetta->textfont(5);
+        fam_val_paghetta->callback((Fl_Callback*)cb_fam_val_paghetta);
         o->value(CALCSOLDI(Paghetta));
         if(euro) o->label("Paghetta  €");
       } // Fl_Value_Output* fam_val_paghetta
+      { Fl_Return_Button* o = new Fl_Return_Button(340, 270, 60, 40, "Back");
+        o->color((Fl_Color)51);
+        o->selection_color((Fl_Color)51);
+        o->callback((Fl_Callback*)cb_Back);
+      } // Fl_Return_Button* o
       o->end();
     } // Fl_Group* o
-    { Fl_Return_Button* o = new Fl_Return_Button(345, 265, 60, 50, "OK");
-      o->callback((Fl_Callback*)cb_OK);
-    } // Fl_Return_Button* o
     win_famiglia->set_modal();
     win_famiglia->size_range(415, 330, 415, 330);
     win_famiglia->end();

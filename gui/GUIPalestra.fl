@@ -15,84 +15,92 @@ Function {GUITabbozPalestra()} {open
 } {
   Fl_Window win_palestra {
     label Palestra open
-    xywh {710 540 490 255} type Double color 54 labelfont 1 labelsize 12 hotspot
-    code0 {AggiornaPalestra();} modal size_range {490 255 490 255} visible
+    xywh {223 510 486 251} type Double color 54 labelfont 1 labelsize 12 hotspot
+    code0 {AggiornaPalestra();} modal size_range {486 251 486 251} visible
   } {
-    Fl_Return_Button {} {
-      label Back
-      callback {win_principale->activate();
-AggiornaPrincipale();
-win_palestra->hide();}
-      xywh {420 200 60 45}
-    }
     Fl_Box {} {
-      image {pic/palestra.png} xywh {5 7 250 187}
+      image {pic/palestra.png} xywh {5 5 250 185}
     }
     Fl_Button {} {
       label {Vai in palestra}
       callback {VaiInPalestra();
 AggiornaPrincipale();
 win_principale->activate();
-win_palestra->hide();} selected
-      xywh {260 110 220 25}
+win_palestra->hide();}
+      xywh {260 105 220 25} color 51 selection_color 51
     }
     Fl_Group {} {open
-      xywh {260 10 220 70} box EMBOSSED_FRAME labelsize 12 align 5
+      xywh {260 5 220 70} box EMBOSSED_FRAME labelsize 12 align 5
     } {
       Fl_Button {} {
         label {1 mese}
         callback {CompraAbbonamento(0);}
-        xywh {265 15 105 20}
+        xywh {265 10 105 20} color 51 selection_color 51
       }
       Fl_Button {} {
         label {6 mesi}
         callback {CompraAbbonamento(1);}
-        xywh {265 35 105 20}
+        xywh {265 30 105 20} color 51 selection_color 51
       }
       Fl_Button {} {
         label {1 anno}
         callback {CompraAbbonamento(2);}
-        xywh {265 55 105 20}
+        xywh {265 50 105 20} color 51 selection_color 51
       }
       Fl_Value_Output {} {
         label {L. }
-        xywh {403 15 70 20} box FLAT_BOX color 54 labelfont 4 textfont 5
+        xywh {403 10 70 20} box FLAT_BOX color 54 labelfont 4 textfont 5
         code0 {o->value(CALCSOLDI(PalestraMem[0].prezzo));}
         code1 {if(euro) o->label("€");}
       }
       Fl_Value_Output {} {
-        xywh {395 35 80 20} box FLAT_BOX color 54 textfont 5
+        xywh {395 30 80 20} box FLAT_BOX color 54 textfont 5
         code0 {o->value(CALCSOLDI(PalestraMem[1].prezzo));}
       }
       Fl_Value_Output {} {
-        xywh {395 55 80 20} box FLAT_BOX color 54 textfont 5
+        xywh {395 50 80 20} box FLAT_BOX color 54 textfont 5
         code0 {o->value(CALCSOLDI(PalestraMem[2].prezzo));}
       }
     }
     Fl_Button {} {
       label {Fai una lampada}
       callback {FaiLampada();}
-      xywh {260 170 220 25}
+      xywh {260 165 220 25} color 51 selection_color 51
     }
     Fl_Output pal_txtscadenza {
       label {Scadenza:}
-      xywh {370 85 110 20} labelsize 12
+      xywh {370 80 110 20} box EMBOSSED_BOX labelsize 12
     }
     Fl_Output pal_txtfaccia {
       label {Stato abbronzatura}
-      xywh {370 145 110 20} labelsize 12
+      xywh {370 140 110 20} box EMBOSSED_BOX labelsize 12
     }
-    Fl_Value_Output pal_soldi {
-      label {Soldi L.}
-      callback {o->value(CALCSOLDI(Soldi));}
-      xywh {70 211 130 24} step 1 value 1e+07 textfont 5
-      code0 {o->value(CALCSOLDI(Soldi));}
-      code1 {if(euro) o->label("Soldi €");}
-    }
-    Fl_Value_Output pal_fama {
-      label {Figosità}
-      xywh {285 211 30 24} maximum 100 value 100 textfont 5
-      code0 {o->value(Fama);}
+    Fl_Group {} {open
+      xywh {5 195 475 50} box EMBOSSED_FRAME
+    } {
+      Fl_Value_Output pal_soldi {
+        label {Soldi L.}
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {55 207 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+08 textfont 5
+        code0 {o->value(CALCSOLDI(Soldi));}
+        code1 {if(euro) o->label("Soldi €");}
+      }
+      Fl_Value_Output pal_fama {
+        label {Figosità} selected
+        xywh {210 207 35 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 100 value 100
+        code0 {o->value(Fama);}
+      }
+      Fl_Return_Button {} {
+        label Back
+        callback {win_principale->activate();
+AggiornaPrincipale();
+win_palestra->hide();}
+        xywh {415 200 60 40} color 51 selection_color 51
+      }
+      Fl_Box {} {
+        label {%}
+        xywh {245 212 15 16}
+      }
     }
   }
 }

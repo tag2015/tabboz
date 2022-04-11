@@ -37,110 +37,112 @@ conce_txt_prezzo->value(buf);} {}
 Function {GUIConcessionario()} {open
 } {
   Fl_Window win_conce {open
-    xywh {1109 292 600 507} type Double color 54 hotspot modal size_range {600 507 600 507} visible
+    xywh {-5 389 575 485} type Double color 54 hotspot modal size_range {575 485 575 485} visible
   } {
     Fl_Tabs {} {open
-      xywh {5 5 560 420} color 54
+      xywh {5 5 565 420} box UP_BOX color 54 selection_color 51
     } {
       Fl_Group {} {
-        label Malagutty open
-        xywh {10 40 555 365} color 54
+        label Malagutty open selected
+        xywh {5 40 565 385} box EMBOSSED_FRAME color 54
       } {
         Fl_Group {} {
           label tasti open
-          xywh {15 50 550 150} labeltype NO_LABEL
+          xywh {10 50 560 150} labeltype NO_LABEL
         } {
           Fl_Button {} {
             callback {scelta_gui=1;
 RiempiScheda(scelta_gui);
 conce_btn_compra->activate();}
-            image {../res/pic/scooter_1.png} xywh {15 50 175 125} type Radio color 7 selection_color 3
+            image {../res/pic/scooter_1.png} xywh {15 55 175 125} type Radio color 7 selection_color 3
           }
           Fl_Button {} {
             callback {scelta_gui=4;
 RiempiScheda(scelta_gui);
 conce_btn_compra->activate();}
-            image {../res/pic/scooter_2.png} xywh {200 50 175 125} type Radio color 7 selection_color 3
+            image {../res/pic/scooter_2.png} xywh {200 55 175 125} type Radio color 7 selection_color 3
           }
           Fl_Button {} {
             callback {scelta_gui=5;
 RiempiScheda(scelta_gui);
 conce_btn_compra->activate();}
-            image {../res/pic/scooter_3.png} xywh {385 50 175 125} type Radio color 7 selection_color 3
+            image {../res/pic/scooter_3.png} xywh {385 55 175 125} type Radio color 7 selection_color 3
           }
         }
         Fl_Group {} {open
-          xywh {15 190 315 175}
+          xywh {15 190 315 185}
         } {
           Fl_Output conce_txt_speed {
-            label {Velocità}
-            xywh {100 200 150 20}
+            label {Velocità Max}
+            xywh {100 200 150 25} box EMBOSSED_BOX
           }
           Fl_Output conce_txt_marmitta {
             label Marmitta
-            xywh {100 300 150 20}
+            xywh {100 305 150 25} box EMBOSSED_BOX
           }
           Fl_Output conce_txt_carb {
             label Carburatore
-            xywh {100 250 150 20}
+            xywh {100 255 150 25} box EMBOSSED_BOX
           }
           Fl_Output conce_txt_cc {
             label Cilindrata
-            xywh {100 225 150 20}
+            xywh {100 230 150 25} box EMBOSSED_BOX
           }
           Fl_Output conce_txt_filtro {
             label {Filtro aria}
-            xywh {100 275 150 20}
+            xywh {100 280 150 25} box EMBOSSED_BOX
           }
           Fl_Output conce_txt_prezzo {
             label Prezzo
-            xywh {100 335 150 20}
+            xywh {155 350 95 25} box EMBOSSED_BOX textfont 5
           }
+        }
+        Fl_Box {} {
+          label {Scegli il tuo scooter preferito...}
+          xywh {280 204 280 172}
         }
       }
       Fl_Group {} {
         label {Altre marche} open
-        xywh {15 40 550 385} color 54 hide
+        xywh {5 40 565 385} box EMBOSSED_FRAME color 54 hide
       } {}
     }
-    Fl_Button conce_btn_vendi {
-      label Vendi
-      callback {if(VendiScooter()) {
+    Fl_Group {} {open
+      xywh {5 430 565 50} box EMBOSSED_FRAME
+    } {
+      Fl_Value_Output conce_soldi {
+        label {Soldi L.}
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {155 445 95 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 textfont 5
+        code0 {o->value(CALCSOLDI(Soldi));}
+        code1 {if(euro) o->label("Soldi  €");}
+      }
+      Fl_Button conce_btn_vendi {
+        label Vendi
+        callback {if(VendiScooter()) {
 conce_soldi->value(CALCSOLDI(Soldi));
 AggiornaScooter();
 o->deactivate();
 }
-win_conce->redraw();} selected
-      xywh {75 445 60 50}
-      code0 {if(ScooterData.stato==-1000) o->deactivate();}
-    }
-    Fl_Button conce_btn_compra {
-      label {Compra!}
-      callback {AcquistaScooter(scelta_gui);
+win_conce->redraw();}
+        xywh {340 435 60 40} color 51 selection_color 51
+        code0 {if(ScooterData.stato==-1000) o->deactivate();}
+      }
+      Fl_Button conce_btn_compra {
+        label {Compra!}
+        callback {AcquistaScooter(scelta_gui);
 win_scooter->activate();
 AggiornaScooter();
 win_conce->hide();}
-      xywh {450 445 60 50}
-      code0 {o->deactivate();}
-    }
-    Fl_Return_Button {} {
-      label Back
-      callback {win_scooter->activate();
+        xywh {435 435 60 40} color 51 selection_color 51
+        code0 {o->deactivate();}
+      }
+      Fl_Return_Button {} {
+        label Back
+        callback {win_scooter->activate();
 win_conce->hide();}
-      xywh {515 445 60 50}
-    }
-    Fl_Value_Output conce_soldi {
-      label {Soldi L.}
-      callback {o->value(CALCSOLDI(Soldi));}
-      xywh {270 440 115 25} step 1 textfont 5
-      code0 {o->value(CALCSOLDI(Soldi));}
-      code1 {if(euro) o->label("Soldi  €");}
-    }
-    Fl_Value_Output {} {
-      label {Figosità}
-      callback {o->value(Fama);}
-      xywh {355 470 30 25} textfont 5
-      code0 {o->value(Fama);}
+        xywh {505 435 60 40} color 51 selection_color 51
+      }
     }
   }
 }
