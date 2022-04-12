@@ -46,16 +46,16 @@
 NEWSTSCOOTER ScooterData;
 
 NEWSTSCOOTER ScooterMem[] = {
-    {0,   0,  0, 0, 0, 0,     0, 0,  -1, "Nessuno scooter",             0},
-    {1,  65,  0, 0, 0, 0,  2498, 1, 100, "Malagutty Firecow",           5},
-    {2,  75,  0, 1, 1, 1,  4348, 1, 100, "Honda F98",                  10},
-    {3, 105,  1, 1, 2, 1,  6498, 1, 100, "Mizzubisci R200 Millenium",  15},
+    {0,   0,  0, 0, 0, 0,     0,  1, -1000, "Nessuno scooter",             0},
+    {1,  65,  0, 0, 0, 0,  2498,  1,   100, "Malagutty Firecow",           5},
+    {2,  75,  0, 1, 1, 1,  4348,  1,   100, "Honda F98",                  10},
+    {3, 105,  1, 1, 2, 1,  6498,  1,   100, "Mizzubisci R200 Millenium",  15},
 
-    {4,  75,  0, 0, 1, 1,  4298, 1, 100, "Malagutty Firecow+",          7},
-    {5, 100,  0, 1, 2, 1,  5998, 1, 100, "Malagutty Firecow II",       10},
-    {6, 100,  0, 1, 2, 1,  6348, 1, 100, "Honda F98s",                 13},
+    {4,  75,  0, 0, 1, 1,  4298,  1,   100, "Malagutty Firecow+",          7},
+    {5, 100,  0, 1, 2, 1,  5998,  1,   100, "Malagutty Firecow II",       10},
+    {6, 100,  0, 1, 2, 1,  6348,  1,   100, "Honda F98s",                 13},
 
-    {7, 250,  0, 5, 5, 0,  1450, 1, 100, "Lexux LS400 ",               60}
+    {7, 250,  0, 5, 5, 0,  1450,  1, 100, "Lexux LS400 ",               60}
 };
 
 
