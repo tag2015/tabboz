@@ -1,0 +1,104 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cpp}
+decl {\#include <FL/Fl.H>} {private global
+}
+
+decl {\#include <FL/fl_ask.H>} {private global
+}
+
+decl {\#include "GUITabboz.h"} {private global
+}
+
+decl {\#include "../zarrosim.h"} {private global
+}
+
+decl {\#include "../calendario.h"} {private global
+}
+
+decl {\#include "../sound.h"} {private global
+}
+
+decl {\#include "../lavoro.h"} {private global
+}
+
+Function {GUILavoro()} {open
+} {
+  Fl_Window win_lavoro {
+    label Lavoro open
+    xywh {323 435 512 246} type Double color 54 labelfont 1 labelsize 12 hotspot
+    code0 {AggiornaLavoro();} modal size_range {512 246 512 246} visible
+  } {
+    Fl_Group {} {open
+      xywh {325 0 185 180}
+    } {
+      Fl_Button {} {
+        label {Cerca lavoro}
+        callback {CercaLavoro();} selected
+        xywh {330 5 175 25} color 51 selection_color 51
+      }
+      Fl_Button {} {
+        label Licenziati
+        callback {Licenziati();}
+        xywh {330 30 175 25} color 51 selection_color 51
+      }
+      Fl_Button {} {
+        label Lavora
+        callback {Lavora();}
+        xywh {330 75 175 25} color 51 selection_color 51
+      }
+      Fl_Button {} {
+        label {Fai il leccaculo}
+        callback {FaiIlLeccaculo();}
+        xywh {330 100 175 25} color 51 selection_color 51
+      }
+      Fl_Button {} {
+        label {Chiedi aumento salario}
+        callback {ChiediAumento();}
+        xywh {330 125 175 25} color 51 selection_color 51
+      }
+      Fl_Button {} {
+        label Sciopera
+        callback {Sciopera();}
+        xywh {330 150 175 25} color 51 selection_color 51
+      }
+    }
+    Fl_Box {} {
+      image {pic/lavoro.png} xywh {5 0 320 180}
+    }
+    Fl_Group {} {open
+      xywh {5 180 500 60} box EMBOSSED_FRAME
+    } {
+      Fl_Value_Output lavoro_val_impegno {
+        label Impegno
+        xywh {100 210 35 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 100 value 100
+      }
+      Fl_Value_Output lavoro_val_soldi {
+        label {Soldi L.}
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {310 185 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+08 textfont 5
+      }
+      Fl_Value_Output lavoro_val_stipendio {
+        label {Stipendio L.}
+        callback {o->value(CALCSOLDI(stipendio));}
+        xywh {310 210 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+08 textfont 5
+      }
+      Fl_Return_Button {} {
+        label Back
+        callback {win_principale->activate();
+AggiornaPrincipale();
+win_lavoro->hide();}
+        xywh {435 190 60 40} color 51 selection_color 51
+      }
+      Fl_Box {} {
+        label {%}
+        xywh {140 214 15 16}
+      }
+      Fl_Output lavoro_txt_ditta {
+        label Ditta
+        xywh {100 185 165 25} box FLAT_BOX color 54 labelsize 12 textfont 1 textsize 12
+      }
+    }
+  }
+}
