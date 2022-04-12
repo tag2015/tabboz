@@ -225,13 +225,6 @@ extern  char      ao;               // lettera in funzione del sesso (tabbozza/t
 extern  char      un_una[];         // articolo in funzione del sesso (un/una)
 
 
-/* Parametri Lavoro */
-extern  int       numeroditta;        // Ditta in cui sei impiegato (-1 se disoccupato)
-extern  int       impegno;            // Impegno sul lavoro (1-100)
-extern  int       giorni_di_lavoro;   // Serve x calcolare lo stipendio SOLO per il primo mese...
-extern  int       stipendio;          // Stipendio mensile
-
-
 /* Accessori */
 extern  int       current_testa;      // Grado di abbronzatura del tabbozzo
 extern  int       current_gibbotto;   // Giubbotto attuale del tabbozzo
