@@ -3,6 +3,7 @@
 #include "GUITestbed.h"
 #include "GUITabboz.h"
 #include "../zarrosim.h"
+#include "../global.h"
 #include "../eventi.h"
 #include "../sound.h"
 #include "../sharedimg.h"
