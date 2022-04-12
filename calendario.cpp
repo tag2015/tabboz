@@ -26,12 +26,15 @@
 #include "zarrosim.h"
 #include "calendario.h"
 #include "scuola.h"
+#include "lavoro.h"
 
 #include "debug.h"
 
 /* Header per toolkit FLTK */
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
+
+#include "gui/GUITabboz.h"  // Per aggiornare la data sulla finestra principale
 
 //static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
@@ -144,7 +147,7 @@ void Giorno(void)
             if ( giorni_di_lavoro > 29)
                 totale_stipendio=stipendio;  // se g.d.l. > 29, stipendio intero...
             else
-                totale_stipendio = stipendio * (giorni_di_lavoro / 30);  // se g.d.l. < 29, calcolato per i giorni effettivi
+                totale_stipendio = stipendio * (giorni_di_lavoro / 30.0 );  // se g.d.l. < 29, calcolato per i giorni effettivi
 
             giorni_di_lavoro=1;
 
@@ -274,6 +277,13 @@ void Giorno(void)
         sprintf(tmp, "giorno: %s %d %s, %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome,MostraSoldi(Soldi));
         writelog(tmp);
     #endif
+
+    /* Aggiorna il calendario sulla finestra principale */
+    if(win_principale) {   // Controlla che sia inizializzata altrimenti crasha tutto
+        sprintf(tmp, "  %s %d %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome);  // Calendario
+        main_box_giorno->copy_label(tmp);
+        win_principale->redraw();
+    }
 
 }
 
