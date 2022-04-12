@@ -18,7 +18,21 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-int    stipendio;
-int    numeroditta;
-int    giorni_di_lavoro;
-int    impegno;
+// Numero di ditte
+#define NUM_DITTE 8
+
+extern  int   numeroditta;        // Ditta in cui sei impiegato (-1 se disoccupato)
+extern  int   stipendio;          // Stipendio mensile
+extern  int   giorni_di_lavoro;   // Serve x calcolare lo stipendio SOLO per il primo mese...
+extern  int   impegno;            // Impegno sul lavoro (1-100)
+
+
+void AggiornaLavoro(void);
+
+void CercaLavoro(void);
+void Licenziati(void);
+
+void Lavora(void);
+void FaiIlLeccaculo(void);
+void ChiediAumento(void);
+void Sciopera(void);
