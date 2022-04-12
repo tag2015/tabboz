@@ -180,7 +180,6 @@ static void CalcolaSesso(void)
 /* ResetMe - Reset del Tabboz Simulator */
 void ResetMe(int primavolta)
 {
-    int   i;
 
     TabbozRedraw      =    1;
     Soldi             =   10;
@@ -192,19 +191,22 @@ void ResetMe(int primavolta)
     impegno           =    0;
     giorni_di_lavoro  =    0;
     numeroditta       =    0;
+    stipendio         =    0;
     AttesaSoldi       =  ATTESAMAX;
     scad_pal_giorno   =    0;
     scad_pal_mese     =    0;
 
     strcpy(Residenza,"Milano");
-    Nometipa[0]=0;
+
+    Nometipa[0] =   0;
+    FigTipa     =   0;
 
 //FIXME Carica random di città/via dalla lista stringhe
 //   LoadString(hInst, (400 + random(22) ), City, (sizeof(City)-1));
 //    LoadString(hInst, (450 + random(50) ), tmp, (sizeof(tmp)-1));
 //    sprintf(Street,"%s n. %d",tmp,(1 + random(150)));
 
-    for (i=1;i<10;i++)
+    for (int i=1;i<10;i++)
         MaterieMem[i].voto=2;   //BUGFIX partiamo dalla media del 2
 
     CalcolaStudio();
@@ -241,7 +243,7 @@ void ResetMe(int primavolta)
     current_pantaloni =  0;
     current_scarpe    =  0;
 
-    ScooterData.stato    = -1000;
+    ScooterData = ScooterMem[0];
 
     #ifndef TAG2015_NOCELL
         AbbonamentData.creditorest = -1;
@@ -1234,7 +1236,7 @@ void nomoney(int tipo)
         
         case VESTITI:
             fl_message_title("Bella figura");
-            fl_alert("Con cosa avresti intenzione di pagare, stronzett%c ??? Caramelle ???",ao);
+            fl_alert("Con cosa avresti intenzione di pagare, stronzett%c ???\nCaramelle ???",ao);
             if (Fama > 12 )
                 Fama-=3;
             if (Reputazione > 4 )
@@ -1244,7 +1246,7 @@ void nomoney(int tipo)
         case PALESTRA:
             if (sesso == 'M') {
                 fl_message_title("Non hai abbastanza soldi...");
-                fl_alert("L'enorme istruttore di bodybulding ultra-palestrato ti suona come una zampogna e ti scaraventa fuori dalla palestra.");
+                fl_alert("L'enorme istruttore di bodybulding ultra-palestrato ti suona come una zampogna\ne ti scaraventa fuori dalla palestra.");
             } else {
                 fl_message_title("Non hai abbastanza soldi...");
                 fl_alert("L'enorme istruttore di bodybulding ultra-palestrato ti scaraventa fuori dalla palestra.");
@@ -1258,7 +1260,7 @@ void nomoney(int tipo)
         case SCOOTER:
             if (sesso == 'M') {
                 fl_message_title("Non hai abbastanza soldi...");
-                fl_alert("L'enorme meccanico ti affera con una sola mano, ti riempe di pugni, e non esita a scaraventare te ed il tuo motorino fuori dall'officina.");
+                fl_alert("L'enorme meccanico ti afferra con una sola mano, ti riempe di pugni,\ne non esita a scaraventare te ed il tuo motorino fuori dall'officina.");
                 if (Reputazione > 7 )
                     Reputazione-=5;
                 if (ScooterData.stato > 7 )
@@ -1275,7 +1277,7 @@ void nomoney(int tipo)
         
         case TABACCAIO:
             fl_message_title("Non hai abbastanza soldi...");
-            fl_alert("Fai fuori dal mio locale, brut%c pezzente! Esclama il tabaccaio con un AK 47 in mano...",ao);
+            fl_alert("Fai fuori dal mio locale, brut%c pezzente!\nEsclama il tabaccaio con un AK 47 in mano...",ao);
             if (Fama > 2)
                 Fama-=1;
             break;;
@@ -1385,6 +1387,20 @@ void AggiornaPrincipale()
     main_fig_panta->image(ImgPantaloni[current_pantaloni]);
     main_fig_giub->image(ImgGiubbotto[current_gibbotto]);
     main_fig_testa->image(ImgTesta[current_testa]);
+
+    if(ScooterData.stato!=-1000) {
+        main_valbox_scooterstato->activate();
+        if(ScooterData.attivita == 1)
+            sprintf(tmp,"%s (in uso)",ScooterData.nome);
+        else
+            sprintf(tmp,"%s (%s)",ScooterData.nome,n_attivita[ScooterData.attivita]);
+        main_txtbox_scooter->value(tmp);
+        main_valbox_scooterstato->value(ScooterData.stato);
+    } else {
+        main_txtbox_scooter->value("--");
+        main_valbox_scooterstato->value(0);
+        main_valbox_scooterstato->deactivate();
+    }
     win_principale->redraw();
 }
 
