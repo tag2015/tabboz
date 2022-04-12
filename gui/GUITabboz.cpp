@@ -5,8 +5,10 @@
 #include "../zarrosim.h"
 #include "../calendario.h"
 #include "../scuola.h"
+#include "../lavoro.h"
 #include "../negozi.h"
 #include "GUIScuola.h"
+#include "GUILavoro.h"
 #include "GUIPalestra.h"
 #include "GUICompagnia.h"
 #include "GUIFamiglia.h"
@@ -79,7 +81,9 @@ static Fl_Image *image_b_scuola() {
 }
 
 static void cb_Lavoro(Fl_Button*, void*) {
-  fl_alert("Non ancora implementato!");
+  GUILavoro();
+win_lavoro->show();
+win_principale->deactivate();
 }
 
 static void cb_Palestra(Fl_Button*, void*) {
