@@ -26,11 +26,14 @@
 
 #include "zarrosim.h"
 #include "global.h"
-#include "scuola.h"
 #include "calendario.h"
-#include "scooter.h"
+
 #include "sound.h"
 #include "debug.h"
+
+#include "lavoro.h"
+#include "scuola.h"
+#include "scooter.h"
 
 #include "eventi.h"
 #include "gui/GUIEvento.h"
@@ -141,7 +144,13 @@ void Evento()
 /* Rapporti Tipa ---------------------------------------------------- */
     if (Rapporti > 3) {
         i=rand() % 5 - 3;      // peggioramento random dei rapporti
-        if (i > 0) Rapporti--;
+        if (i > 0) {
+            Rapporti--;
+            #ifdef LOGGING
+                sprintf(tmp,"Evento: Peggioramento random rapporti (-1) i=%d",i);
+                writelog(tmp);
+            #endif
+        }
     }
 
     if (Rapporti > 0)
@@ -167,8 +176,14 @@ void Evento()
 
 /* Lavoro ----------------------------------------------------------- */
     if (impegno > 3) {
-        i=rand() % 7 - 3;       // peggioramento random dell'impegno
-        if (i > 0) impegno--;
+        i= (rand() % 7) - 3;       // peggioramento random dell'impegno
+        if (i > 0) {
+            impegno--;
+            #ifdef LOGGING
+                sprintf(tmp,"Evento: Peggioramento random impegno (-1) i=%d",i);
+                writelog(tmp);
+            #endif
+        }
     }
 
     if (numeroditta > 0) {
@@ -245,7 +260,7 @@ void Evento()
                         // 0 = 'morente', -1 = 'morto'
                         if (CellularData.stato < 0 ) CellularData.stato=0;  //FIXME rivedere condizioni 0 o -1
                     }
-                    
+
                     if(sound_active) TabbozPlaySound(1401);
 
                     if (caso < 15) {  // Camionista - ( caso 11-14) BUGFIX visto che danneggia + del muro, abbasssato di 2 i possibili casi
@@ -447,6 +462,7 @@ void Evento()
         }
     }
 #endif
+
 }
 
 
