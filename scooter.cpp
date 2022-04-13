@@ -46,7 +46,7 @@
 NEWSTSCOOTER ScooterData;
 
 NEWSTSCOOTER ScooterMem[] = {
-    {0,   0,  0, 0, 0, 0,     0,  1, -1000, "Nessuno scooter",             0},
+    {0,   0,  0, 0, 0, 0,     0,  0, -1000, "Nessuno scooter",             0},
     {1,  65,  0, 0, 0, 0,  2498,  1,   100, "Malagutty Firecow",           5},
     {2,  75,  0, 1, 1, 1,  4348,  1,   100, "Honda F98",                  10},
     {3, 105,  1, 1, 2, 1,  6498,  1,   100, "Mizzubisci R200 Millenium",  15},
@@ -397,6 +397,7 @@ bool VendiScooter(void)
         ScooterData = ScooterMem[0];  // nessuno scooter
         benzina = 0;                  // serbatoio vuoto
         ScooterData.stato = -1000;
+        ScooterData.attivita = 0;
         Soldi += offerta;
         #ifdef LOGGING
             sprintf(tmp,"scooter: Vendi lo scooter per %s",MostraSoldi(offerta));
