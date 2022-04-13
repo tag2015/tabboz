@@ -10,6 +10,8 @@
 
 #define N_EVENTI        8
 
+#define N_DITTE         8
+
 extern Fl_Shared_Image *ImgTesta[];
 extern Fl_Shared_Image *ImgGiubbotto[];
 extern Fl_Shared_Image *ImgPantaloni[];
@@ -17,5 +19,6 @@ extern Fl_Shared_Image *ImgScarpe[];
 
 extern Fl_Shared_Image *ImgEventi[];
 
+extern Fl_Shared_Image *ImgDitte[];
 
 void CaricaSharedImgs();

@@ -13,6 +13,8 @@ Fl_Shared_Image *ImgScarpe[N_SCARPE];
 
 Fl_Shared_Image *ImgEventi[N_EVENTI];
 
+Fl_Shared_Image *ImgDitte[N_DITTE];
+
 
 void CaricaSharedImgs()
 {
@@ -40,4 +42,8 @@ void CaricaSharedImgs()
         ImgEventi[i] = Fl_Shared_Image::get(path);
     }
 
+    for(int i=0; i < N_DITTE; ++i) {
+        sprintf(path, "res/pic/ditta_%d.png",i);
+        ImgDitte[i] = Fl_Shared_Image::get(path);
+    }
 }
