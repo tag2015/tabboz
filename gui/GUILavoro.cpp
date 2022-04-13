@@ -3,16 +3,35 @@
 #include "GUILavoro.h"
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
+#include <FL/Fl_Shared_Image.H>
+#include <FL/Fl_PNG_Image.H>
 #include "GUITabboz.h"
 #include "../zarrosim.h"
 #include "../calendario.h"
+#include "../global.h"
+#include "../sharedimg.h"
 #include "../sound.h"
+#include "../scooter.h"
 #include "../lavoro.h"
+char tmp[128]; 
+int num_ditta=0; 
+static int n_scheda; 
 
 Fl_Double_Window *win_lavoro=(Fl_Double_Window *)0;
 
 static void cb_Cerca(Fl_Button*, void*) {
-  CercaLavoro();
+  if (numeroditta > 0)  {
+  fl_message_title("Cerca Lavoro (ancora?)");
+  fl_alert("Forse non ti ricordi che hai già un lavoro...");
+  return;
+}
+if ( (x_vacanza == 2) || (x_giornoset == 6) )  {
+  fl_message_title("Cerca Lavoro");
+  fl_alert("Arrivat%c davanti ai cancelli della ditta li trovi irrimediabilmente chiusi...",ao);
+  return;
+}
+GUICercaLavoro();
+win_cercalavoro->show();
 }
 
 static void cb_Licenziati(Fl_Button*, void*) {
@@ -7637,6 +7656,7 @@ Fl_Double_Window* GUILavoro() {
         o->color((Fl_Color)51);
         o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_Licenziati);
+        if(sesso=='F') o->label("Fai la leccaculo");
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(330, 75, 175, 25, "Lavora");
         o->color((Fl_Color)51);
@@ -7712,4 +7732,291 @@ Fl_Double_Window* GUILavoro() {
     win_lavoro->end();
   } // Fl_Double_Window* win_lavoro
   return win_lavoro;
+}
+
+Fl_Double_Window *win_cercalavoro=(Fl_Double_Window *)0;
+
+Fl_Button *lav_btn_ok=(Fl_Button *)0;
+
+static void cb_lav_btn_ok(Fl_Button*, void*) {
+  if((LavoroMem[(num_ditta+1)].speed == 1 ) && (ScooterData.attivita != 1)) {
+  fl_message_title("Lavoro fuori porta");
+  fl_message("Senza uno scooter funzionante non puoi raggiungere questa ditta...");
+  return;
+}
+n_scheda = (rand() % NUM_SCHEDEQUIZ);
+GUIQuizzone();
+win_quizzone->show();
+win_cercalavoro->hide();
+}
+
+Fl_Return_Button *lav_btn_back=(Fl_Return_Button *)0;
+
+static void cb_lav_btn_back(Fl_Return_Button*, void*) {
+  fl_message_title("Cerca lavoro");
+fl_alert("Allora sparisci...");
+win_lavoro->activate();
+win_cercalavoro->hide();
+}
+
+Fl_Box *lav_img_ditta=(Fl_Box *)0;
+
+Fl_Box *lav_txt_ditta=(Fl_Box *)0;
+
+static void cb_4(Fl_Button*, void*) {
+  num_ditta--;
+if(num_ditta < 0) num_ditta=(NUM_DITTE-1);
+lav_img_ditta->image(ImgDitte[num_ditta]);
+lav_txt_ditta->label(StrOfferteLavoro[num_ditta][0]);
+lav_btn_ok->label(StrOfferteLavoro[num_ditta][1]);
+lav_btn_back->label(StrOfferteLavoro[num_ditta][2]);
+win_cercalavoro->redraw();
+}
+
+static void cb_5(Fl_Button*, void*) {
+  num_ditta++;
+if(num_ditta == NUM_DITTE) num_ditta=0;
+lav_img_ditta->image(ImgDitte[num_ditta]);
+lav_txt_ditta->label(StrOfferteLavoro[num_ditta][0]);
+lav_btn_ok->label(StrOfferteLavoro[num_ditta][1]);
+lav_btn_back->label(StrOfferteLavoro[num_ditta][2]);
+win_cercalavoro->redraw();
+}
+
+Fl_Double_Window* GUICercaLavoro() {
+  { win_cercalavoro = new Fl_Double_Window(400, 370, "Annunci - Offro Lavoro");
+    win_cercalavoro->color(FL_LIGHT3);
+    win_cercalavoro->labelfont(1);
+    win_cercalavoro->labelsize(12);
+    win_cercalavoro->hotspot(win_cercalavoro);
+    { Fl_Button* o = lav_btn_ok = new Fl_Button(45, 300, 310, 30, "OK");
+      lav_btn_ok->callback((Fl_Callback*)cb_lav_btn_ok);
+      o->label(StrOfferteLavoro[num_ditta][1]);
+    } // Fl_Button* lav_btn_ok
+    { Fl_Return_Button* o = lav_btn_back = new Fl_Return_Button(45, 335, 310, 30, "Back");
+      lav_btn_back->callback((Fl_Callback*)cb_lav_btn_back);
+      o->label(StrOfferteLavoro[num_ditta][2]);
+    } // Fl_Return_Button* lav_btn_back
+    { Fl_Group* o = new Fl_Group(45, 5, 310, 290);
+      o->box(FL_EMBOSSED_FRAME);
+      { Fl_Box* o = lav_img_ditta = new Fl_Box(50, 15, 300, 130);
+        o->image(ImgDitte[num_ditta]);
+      } // Fl_Box* lav_img_ditta
+      { Fl_Box* o = lav_txt_ditta = new Fl_Box(55, 150, 290, 145);
+        lav_txt_ditta->labelsize(12);
+        lav_txt_ditta->align(Fl_Align(129|FL_ALIGN_INSIDE));
+        o->label(StrOfferteLavoro[num_ditta][0]);
+      } // Fl_Box* lav_txt_ditta
+      o->end();
+    } // Fl_Group* o
+    { Fl_Button* o = new Fl_Button(5, 150, 35, 35, "@4");
+      o->color((Fl_Color)51);
+      o->selection_color((Fl_Color)51);
+      o->labelsize(22);
+      o->callback((Fl_Callback*)cb_4);
+    } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(360, 155, 35, 35, "@5");
+      o->color((Fl_Color)51);
+      o->selection_color((Fl_Color)51);
+      o->labelsize(22);
+      o->callback((Fl_Callback*)cb_5);
+    } // Fl_Button* o
+    win_cercalavoro->set_modal();
+    win_cercalavoro->size_range(400, 370, 400, 370);
+    win_cercalavoro->end();
+  } // Fl_Double_Window* win_cercalavoro
+  return win_cercalavoro;
+}
+
+Fl_Double_Window *win_quizzone=(Fl_Double_Window *)0;
+
+static void cb_Risp1(Fl_Check_Button* o, void*) {
+  if( (o->value()) == 1)
+  crocette_risposte[0][0] = 1;
+else
+  crocette_risposte[0][0] = 0;
+}
+
+static void cb_Risp2(Fl_Check_Button* o, void*) {
+  if( (o->value()) == 1)
+  crocette_risposte[0][1] = 1;
+else
+  crocette_risposte[0][1] = 0;
+}
+
+static void cb_Risp3(Fl_Check_Button* o, void*) {
+  if( (o->value()) == 1)
+  crocette_risposte[0][2] = 1;
+else
+  crocette_risposte[0][2] = 0;
+}
+
+static void cb_Risp11(Fl_Check_Button* o, void*) {
+  if( (o->value()) == 1)
+  crocette_risposte[1][0] = 1;
+else
+  crocette_risposte[1][0] = 0;
+}
+
+static void cb_Risp21(Fl_Check_Button* o, void*) {
+  if( (o->value()) == 1)
+  crocette_risposte[1][1] = 1;
+else
+  crocette_risposte[1][1] = 0;
+}
+
+static void cb_Risp31(Fl_Check_Button* o, void*) {
+  if( (o->value()) == 1)
+  crocette_risposte[1][2] = 1;
+else
+  crocette_risposte[1][2] = 0;
+}
+
+static void cb_Risp12(Fl_Check_Button* o, void*) {
+  if( (o->value()) == 1)
+  crocette_risposte[2][0] = 1;
+else
+  crocette_risposte[2][0] = 0;
+}
+
+static void cb_Risp22(Fl_Check_Button* o, void*) {
+  if( (o->value()) == 1)
+  crocette_risposte[2][1] = 1;
+else
+  crocette_risposte[2][1] = 0;
+}
+
+static void cb_Risp32(Fl_Check_Button* o, void*) {
+  if( (o->value()) == 1)
+  crocette_risposte[2][2] = 1;
+else
+  crocette_risposte[2][2] = 0;
+}
+
+static void cb_Clicca(Fl_Button*, void*) {
+  ControllaRisposte(num_ditta, n_scheda);
+win_quizzone->hide();
+}
+
+Fl_Double_Window* GUIQuizzone() {
+  { Fl_Double_Window* o = win_quizzone = new Fl_Double_Window(585, 575, "Quiz");
+    win_quizzone->color(FL_LIGHT3);
+    win_quizzone->labelfont(1);
+    win_quizzone->labelsize(12);
+    win_quizzone->hotspot(win_quizzone);
+    { Fl_Group* o = new Fl_Group(5, 10, 575, 510, "pagina");
+      o->box(FL_SHADOW_BOX);
+      o->color(FL_BACKGROUND2_COLOR);
+      o->labeltype(FL_NO_LABEL);
+      { Fl_Box* o = new Fl_Box(30, 24, 525, 66, "Intro");
+        o->align(Fl_Align(FL_ALIGN_WRAP));
+        o->label(StrTitoliQuizLavoro[n_scheda]);
+      } // Fl_Box* o
+      { Fl_Box* o = new Fl_Box(30, 105, 20, 35, "1.");
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_LIGHT2);
+        o->align(Fl_Align(133|FL_ALIGN_INSIDE));
+      } // Fl_Box* o
+      { Fl_Box* o = new Fl_Box(45, 105, 505, 35, "Domanda 1");
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_LIGHT2);
+        o->align(Fl_Align(133|FL_ALIGN_INSIDE));
+        o->label(StrDomandeLavoro[n_scheda][0]);
+      } // Fl_Box* o
+      { Fl_Group* o = new Fl_Group(30, 135, 450, 65);
+        { Fl_Check_Button* o = new Fl_Check_Button(30, 145, 15, 15, "Risp1");
+          o->down_box(FL_DOWN_BOX);
+          o->callback((Fl_Callback*)cb_Risp1);
+          o->label(StrRisposteLavoro[n_scheda][0]);
+        } // Fl_Check_Button* o
+        { Fl_Check_Button* o = new Fl_Check_Button(30, 165, 15, 15, "Risp2");
+          o->down_box(FL_DOWN_BOX);
+          o->callback((Fl_Callback*)cb_Risp2);
+          o->label(StrRisposteLavoro[n_scheda][1]);
+        } // Fl_Check_Button* o
+        { Fl_Check_Button* o = new Fl_Check_Button(30, 185, 15, 15, "Risp3");
+          o->down_box(FL_DOWN_BOX);
+          o->callback((Fl_Callback*)cb_Risp3);
+          o->label(StrRisposteLavoro[n_scheda][2]);
+        } // Fl_Check_Button* o
+        o->end();
+      } // Fl_Group* o
+      { Fl_Box* o = new Fl_Box(30, 215, 520, 2, "separatore");
+        o->box(FL_EMBOSSED_FRAME);
+        o->labeltype(FL_NO_LABEL);
+      } // Fl_Box* o
+      { Fl_Box* o = new Fl_Box(30, 235, 20, 35, "2.");
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_LIGHT2);
+        o->align(Fl_Align(133|FL_ALIGN_INSIDE));
+      } // Fl_Box* o
+      { Fl_Box* o = new Fl_Box(45, 235, 505, 35, "Domanda 2");
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_LIGHT2);
+        o->align(Fl_Align(133|FL_ALIGN_INSIDE));
+        o->label(StrDomandeLavoro[n_scheda][1]);
+      } // Fl_Box* o
+      { Fl_Group* o = new Fl_Group(30, 265, 450, 65);
+        { Fl_Check_Button* o = new Fl_Check_Button(30, 275, 15, 15, "Risp1");
+          o->down_box(FL_DOWN_BOX);
+          o->callback((Fl_Callback*)cb_Risp11);
+          o->label(StrRisposteLavoro[n_scheda][3]);
+        } // Fl_Check_Button* o
+        { Fl_Check_Button* o = new Fl_Check_Button(30, 295, 15, 15, "Risp2");
+          o->down_box(FL_DOWN_BOX);
+          o->callback((Fl_Callback*)cb_Risp21);
+          o->label(StrRisposteLavoro[n_scheda][4]);
+        } // Fl_Check_Button* o
+        { Fl_Check_Button* o = new Fl_Check_Button(30, 315, 15, 15, "Risp3");
+          o->down_box(FL_DOWN_BOX);
+          o->callback((Fl_Callback*)cb_Risp31);
+          o->label(StrRisposteLavoro[n_scheda][5]);
+        } // Fl_Check_Button* o
+        o->end();
+      } // Fl_Group* o
+      { Fl_Box* o = new Fl_Box(30, 345, 520, 2, "separatore");
+        o->box(FL_EMBOSSED_FRAME);
+        o->labeltype(FL_NO_LABEL);
+      } // Fl_Box* o
+      { Fl_Box* o = new Fl_Box(30, 365, 20, 35, "3.");
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_LIGHT2);
+        o->align(Fl_Align(133|FL_ALIGN_INSIDE));
+      } // Fl_Box* o
+      { Fl_Box* o = new Fl_Box(45, 365, 505, 35, "Domanda 3");
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_LIGHT2);
+        o->align(Fl_Align(133|FL_ALIGN_INSIDE));
+        o->label(StrDomandeLavoro[n_scheda][2]);
+      } // Fl_Box* o
+      { Fl_Group* o = new Fl_Group(30, 395, 450, 65);
+        { Fl_Check_Button* o = new Fl_Check_Button(30, 405, 15, 15, "Risp1");
+          o->down_box(FL_DOWN_BOX);
+          o->callback((Fl_Callback*)cb_Risp12);
+          o->label(StrRisposteLavoro[n_scheda][6]);
+        } // Fl_Check_Button* o
+        { Fl_Check_Button* o = new Fl_Check_Button(30, 425, 15, 15, "Risp2");
+          o->down_box(FL_DOWN_BOX);
+          o->callback((Fl_Callback*)cb_Risp22);
+          o->label(StrRisposteLavoro[n_scheda][7]);
+        } // Fl_Check_Button* o
+        { Fl_Check_Button* o = new Fl_Check_Button(30, 445, 15, 15, "Risp3");
+          o->down_box(FL_DOWN_BOX);
+          o->callback((Fl_Callback*)cb_Risp32);
+          o->label(StrRisposteLavoro[n_scheda][8]);
+        } // Fl_Check_Button* o
+        o->end();
+      } // Fl_Group* o
+      o->end();
+    } // Fl_Group* o
+    { Fl_Button* o = new Fl_Button(142, 530, 300, 30, "Clicca qui quando hai finito il test!");
+      o->callback((Fl_Callback*)cb_Clicca);
+    } // Fl_Button* o
+    memset(crocette_risposte,0,sizeof(crocette_risposte));
+    o->label(StrFinestraQuizLavoro[n_scheda]);
+    win_quizzone->set_modal();
+    win_quizzone->size_range(585, 575, 585, 575);
+    win_quizzone->end();
+  } // Fl_Double_Window* win_quizzone
+  return win_quizzone;
 }

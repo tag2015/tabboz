@@ -16,4 +16,13 @@ extern Fl_Value_Output *lavoro_val_stipendio;
 #include <FL/Fl_Output.H>
 extern Fl_Output *lavoro_txt_ditta;
 Fl_Double_Window* GUILavoro();
+extern Fl_Double_Window *win_cercalavoro;
+extern Fl_Button *lav_btn_ok;
+extern Fl_Return_Button *lav_btn_back;
+extern Fl_Box *lav_img_ditta;
+extern Fl_Box *lav_txt_ditta;
+Fl_Double_Window* GUICercaLavoro();
+extern Fl_Double_Window *win_quizzone;
+#include <FL/Fl_Check_Button.H>
+Fl_Double_Window* GUIQuizzone();
 #endif

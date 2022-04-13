@@ -8,6 +8,12 @@ decl {\#include <FL/Fl.H>} {private global
 decl {\#include <FL/fl_ask.H>} {private global
 }
 
+decl {\#include <FL/Fl_Shared_Image.H>} {private global
+}
+
+decl {\#include <FL/Fl_PNG_Image.H>} {private global
+}
+
 decl {\#include "GUITabboz.h"} {private global
 }
 
@@ -17,17 +23,34 @@ decl {\#include "../zarrosim.h"} {private global
 decl {\#include "../calendario.h"} {private global
 }
 
+decl {\#include "../global.h"} {private global
+}
+
+decl {\#include "../sharedimg.h"} {private global
+}
+
 decl {\#include "../sound.h"} {private global
+}
+
+decl {\#include "../scooter.h"} {private global
 }
 
 decl {\#include "../lavoro.h"} {private global
 }
 
-Function {GUILavoro()} {open
-} {
+decl {char tmp[128]} {private global
+}
+
+decl {int num_ditta=0;} {private global
+}
+
+decl {int n_scheda;} {selected private local
+}
+
+Function {GUILavoro()} {} {
   Fl_Window win_lavoro {
-    label Lavoro open
-    xywh {323 435 512 246} type Double color 54 labelfont 1 labelsize 12 hotspot
+    label Lavoro
+    xywh {345 650 512 246} type Double color 54 labelfont 1 labelsize 12 hotspot
     code0 {AggiornaLavoro();} modal size_range {512 246 512 246} visible
   } {
     Fl_Group {} {open
@@ -35,13 +58,25 @@ Function {GUILavoro()} {open
     } {
       Fl_Button {} {
         label {Cerca lavoro}
-        callback {CercaLavoro();} selected
+        callback {if (numeroditta > 0)  {
+  fl_message_title("Cerca Lavoro (ancora?)");
+  fl_alert("Forse non ti ricordi che hai già un lavoro...");
+  return;
+}
+if ( (x_vacanza == 2) || (x_giornoset == 6) )  {
+  fl_message_title("Cerca Lavoro");
+  fl_alert("Arrivat%c davanti ai cancelli della ditta li trovi irrimediabilmente chiusi...",ao);
+  return;
+}
+GUICercaLavoro();
+win_cercalavoro->show();}
         xywh {330 5 175 25} color 51 selection_color 51
       }
       Fl_Button {} {
         label Licenziati
         callback {Licenziati();}
         xywh {330 30 175 25} color 51 selection_color 51
+        code0 {if(sesso=='F') o->label("Fai la leccaculo");}
       }
       Fl_Button {} {
         label Lavora
@@ -99,6 +134,227 @@ win_lavoro->hide();}
         label Ditta
         xywh {100 185 165 25} box FLAT_BOX color 54 labelsize 12 textfont 1 textsize 12
       }
+    }
+  }
+}
+
+Function {GUICercaLavoro()} {open
+} {
+  Fl_Window win_cercalavoro {
+    label {Annunci - Offro Lavoro} open
+    xywh {435 411 400 370} type Double color 54 labelfont 1 labelsize 12 hotspot modal size_range {400 370 400 370} visible
+  } {
+    Fl_Button lav_btn_ok {
+      label OK
+      callback {if((LavoroMem[(num_ditta+1)].speed == 1 ) && (ScooterData.attivita != 1)) {
+  fl_message_title("Lavoro fuori porta");
+  fl_message("Senza uno scooter funzionante non puoi raggiungere questa ditta...");
+  return;
+}
+n_scheda = (rand() % NUM_SCHEDEQUIZ);
+GUIQuizzone();
+win_quizzone->show();
+win_cercalavoro->hide();}
+      xywh {45 300 310 30}
+      code0 {o->label(StrOfferteLavoro[num_ditta][1]);}
+    }
+    Fl_Return_Button lav_btn_back {
+      label Back
+      callback {fl_message_title("Cerca lavoro");
+fl_alert("Allora sparisci...");
+win_lavoro->activate();
+win_cercalavoro->hide();}
+      xywh {45 335 310 30}
+      code0 {o->label(StrOfferteLavoro[num_ditta][2]);}
+    }
+    Fl_Group {} {open
+      xywh {45 5 310 290} box EMBOSSED_FRAME
+    } {
+      Fl_Box lav_img_ditta {
+        xywh {50 15 300 130}
+        code0 {o->image(ImgDitte[num_ditta]);}
+      }
+      Fl_Box lav_txt_ditta {
+        xywh {55 150 290 145} labelsize 12 align 145
+        code0 {o->label(StrOfferteLavoro[num_ditta][0]);}
+      }
+    }
+    Fl_Button {} {
+      label {@4}
+      callback {num_ditta--;
+if(num_ditta < 0) num_ditta=(NUM_DITTE-1);
+lav_img_ditta->image(ImgDitte[num_ditta]);
+lav_txt_ditta->label(StrOfferteLavoro[num_ditta][0]);
+lav_btn_ok->label(StrOfferteLavoro[num_ditta][1]);
+lav_btn_back->label(StrOfferteLavoro[num_ditta][2]);
+win_cercalavoro->redraw();}
+      xywh {5 150 35 35} color 51 selection_color 51 labelsize 22
+    }
+    Fl_Button {} {
+      label {@5}
+      callback {num_ditta++;
+if(num_ditta == NUM_DITTE) num_ditta=0;
+lav_img_ditta->image(ImgDitte[num_ditta]);
+lav_txt_ditta->label(StrOfferteLavoro[num_ditta][0]);
+lav_btn_ok->label(StrOfferteLavoro[num_ditta][1]);
+lav_btn_back->label(StrOfferteLavoro[num_ditta][2]);
+win_cercalavoro->redraw();}
+      xywh {360 155 35 35} color 51 selection_color 51 labelsize 22
+    }
+  }
+}
+
+Function {GUIQuizzone()} {open
+} {
+  Fl_Window win_quizzone {
+    label Quiz open
+    xywh {904 307 585 575} type Double color 54 labelfont 1 labelsize 12 hotspot
+    code0 {memset(crocette_risposte,0,sizeof(crocette_risposte));}
+    code1 {o->label(StrFinestraQuizLavoro[n_scheda]);} modal size_range {585 575 585 575} visible
+  } {
+    Fl_Group {} {
+      label pagina open
+      xywh {5 10 575 510} box SHADOW_BOX color 7 labeltype NO_LABEL
+    } {
+      Fl_Box {} {
+        label Intro
+        xywh {30 24 525 66} align 128
+        code0 {o->label(StrTitoliQuizLavoro[n_scheda]);}
+      }
+      Fl_Box {} {
+        label {1.}
+        xywh {30 105 20 35} color 7 selection_color 52 align 149
+      }
+      Fl_Box {} {
+        label {Domanda 1}
+        xywh {45 105 505 35} color 7 selection_color 52 align 149
+        code0 {o->label(StrDomandeLavoro[n_scheda][0]);}
+      }
+      Fl_Group {} {open
+        xywh {30 135 450 65}
+      } {
+        Fl_Check_Button {} {
+          label Risp1
+          callback {if( (o->value()) == 1)
+  crocette_risposte[0][0] = 1;
+else
+  crocette_risposte[0][0] = 0;}
+          xywh {30 145 15 15} down_box DOWN_BOX
+          code0 {o->label(StrRisposteLavoro[n_scheda][0]);}
+        }
+        Fl_Check_Button {} {
+          label Risp2
+          callback {if( (o->value()) == 1)
+  crocette_risposte[0][1] = 1;
+else
+  crocette_risposte[0][1] = 0;}
+          xywh {30 165 15 15} down_box DOWN_BOX
+          code0 {o->label(StrRisposteLavoro[n_scheda][1]);}
+        }
+        Fl_Check_Button {} {
+          label Risp3
+          callback {if( (o->value()) == 1)
+  crocette_risposte[0][2] = 1;
+else
+  crocette_risposte[0][2] = 0;}
+          xywh {30 185 15 15} down_box DOWN_BOX
+          code0 {o->label(StrRisposteLavoro[n_scheda][2]);}
+        }
+      }
+      Fl_Box {} {
+        label separatore
+        xywh {30 215 520 2} box EMBOSSED_FRAME labeltype NO_LABEL
+      }
+      Fl_Box {} {
+        label {2.}
+        xywh {30 235 20 35} color 7 selection_color 52 align 149
+      }
+      Fl_Box {} {
+        label {Domanda 2}
+        xywh {45 235 505 35} color 7 selection_color 52 align 149
+        code0 {o->label(StrDomandeLavoro[n_scheda][1]);}
+      }
+      Fl_Group {} {open
+        xywh {30 265 450 65}
+      } {
+        Fl_Check_Button {} {
+          label Risp1
+          callback {if( (o->value()) == 1)
+  crocette_risposte[1][0] = 1;
+else
+  crocette_risposte[1][0] = 0;}
+          xywh {30 275 15 15} down_box DOWN_BOX
+          code0 {o->label(StrRisposteLavoro[n_scheda][3]);}
+        }
+        Fl_Check_Button {} {
+          label Risp2
+          callback {if( (o->value()) == 1)
+  crocette_risposte[1][1] = 1;
+else
+  crocette_risposte[1][1] = 0;}
+          xywh {30 295 15 15} down_box DOWN_BOX
+          code0 {o->label(StrRisposteLavoro[n_scheda][4]);}
+        }
+        Fl_Check_Button {} {
+          label Risp3
+          callback {if( (o->value()) == 1)
+  crocette_risposte[1][2] = 1;
+else
+  crocette_risposte[1][2] = 0;}
+          xywh {30 315 15 15} down_box DOWN_BOX
+          code0 {o->label(StrRisposteLavoro[n_scheda][5]);}
+        }
+      }
+      Fl_Box {} {
+        label separatore
+        xywh {30 345 520 2} box EMBOSSED_FRAME labeltype NO_LABEL
+      }
+      Fl_Box {} {
+        label {3.}
+        xywh {30 365 20 35} color 7 selection_color 52 align 149
+      }
+      Fl_Box {} {
+        label {Domanda 3}
+        xywh {45 365 505 35} color 7 selection_color 52 align 149
+        code0 {o->label(StrDomandeLavoro[n_scheda][2]);}
+      }
+      Fl_Group {} {open
+        xywh {30 395 450 65}
+      } {
+        Fl_Check_Button {} {
+          label Risp1
+          callback {if( (o->value()) == 1)
+  crocette_risposte[2][0] = 1;
+else
+  crocette_risposte[2][0] = 0;}
+          xywh {30 405 15 15} down_box DOWN_BOX
+          code0 {o->label(StrRisposteLavoro[n_scheda][6]);}
+        }
+        Fl_Check_Button {} {
+          label Risp2
+          callback {if( (o->value()) == 1)
+  crocette_risposte[2][1] = 1;
+else
+  crocette_risposte[2][1] = 0;}
+          xywh {30 425 15 15} down_box DOWN_BOX
+          code0 {o->label(StrRisposteLavoro[n_scheda][7]);}
+        }
+        Fl_Check_Button {} {
+          label Risp3
+          callback {if( (o->value()) == 1)
+  crocette_risposte[2][2] = 1;
+else
+  crocette_risposte[2][2] = 0;}
+          xywh {30 445 15 15} down_box DOWN_BOX
+          code0 {o->label(StrRisposteLavoro[n_scheda][8]);}
+        }
+      }
+    }
+    Fl_Button {} {
+      label {Clicca qui quando hai finito il test!}
+      callback {ControllaRisposte(num_ditta, n_scheda);
+win_quizzone->hide();}
+      xywh {142 530 300 30}
     }
   }
 }

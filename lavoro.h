@@ -18,16 +18,25 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Numero di ditte
+/* Numero di ditte */
 #define NUM_DITTE 8
 
-extern  int   numeroditta;        // Ditta in cui sei impiegato (-1 se disoccupato)
-extern  int   stipendio;          // Stipendio mensile
-extern  int   giorni_di_lavoro;   // Serve x calcolare lo stipendio SOLO per il primo mese...
-extern  int   impegno;            // Impegno sul lavoro (1-100)
+/* Numero schede quiz colloquio*/
+#define NUM_SCHEDEQUIZ  10
+
+
+extern STSCOOTER LavoroMem[];
+
+extern  int   numeroditta;              // Ditta in cui sei impiegato (-1 se disoccupato)
+extern  int   stipendio;                // Stipendio mensile
+extern  int   giorni_di_lavoro;         // Serve x calcolare lo stipendio SOLO per il primo mese...
+extern  int   impegno;                  // Impegno sul lavoro (1-100)
+
+extern bool crocette_risposte[3][3];    // Crocette inserite nel quiz
 
 
 void AggiornaLavoro(void);
+void ControllaRisposte(int n_ditta, int n_scheda);
 
 void CercaLavoro(void);
 void Licenziati(void);

@@ -52,13 +52,14 @@ int    giorni_di_lavoro;
 int    impegno;
 
 
-int     scheda;    /* numero scheda del quiz ( 0 - 9 ) */
-int     punti_scheda;
-char    Risposte1[3];
-char    Risposte2[3];
-char    Risposte3[3];
-int     accetto;
+//int     scheda;    /* numero scheda del quiz ( 0 - 9 ) */
+//int     punti_scheda;
+// char    Risposte1[3];
+// char    Risposte2[3];
+// char    Risposte3[3];
+//int     accetto;
 
+bool crocette_risposte[3][3]={0};
 
 bool GiornoDiLavoro(const char *titolo_dialog);
 
@@ -110,7 +111,7 @@ bool GiornoDiLavoro(const char *titolo_dialog)
         return FALSE;
     }
 
-    if ( x_vacanza == 2 ) {
+    if ( ( x_vacanza == 2 ) || (x_giornoset == 6) ) {  // BUGFIX le ditte sono chiuse al sabato...
         fl_alert("Arrivat%c davanti ai cancelli della ditta li trovi irrimediabilmente chiusi...",ao);
         return FALSE;
         }
@@ -119,91 +120,43 @@ bool GiornoDiLavoro(const char *titolo_dialog)
 }
 
 
-/* FIXME manca il quiz, per adesso fa solo la randomata e dice se assunto o meno */
-void CercaLavoro(void)
+void ControllaRisposte(int n_ditta, int n_scheda)
 {
-//     char       tmp[255];
-    int          n_ditta;
-//     int          i;
-//     static    int      Rcheck;
-//     static    int      Lcheck;
+    int Rcheck = 0;
 
-/* FIXME spostare questi nella gui */
-    if (numeroditta > 0)  {
-        fl_message_title("Cerca Lavoro");
-        fl_alert("Forse non ti ricordi che hai già un lavoro...");
+    /* n_scheda potrebbe servire in futuro se mai le risposte avranno un senso */
+    /* attualmente non servono a nulla... controlliamo semplicemente che sia stata data una sola risposta per domanda */
+    for(int i=0;i<3;i++) {
+        if (crocette_risposte[0][i]) Rcheck+=1;
+        if (crocette_risposte[1][i]) Rcheck+=10;
+        if (crocette_risposte[2][i]) Rcheck+=100;
+    }
+
+    if (Rcheck != 111) {    // + di una crocetta per risposta o nessuna risposta...
+        if (sesso == 'M') {
+            fl_message_title("Sei un po' stupido...");
+            fl_alert("Mi spieghi perchè dovremmo assumere qualcuno che non è neanche in grado di mettere delle crocette su un foglio ???");
+        }
+        else {
+            fl_message_title("Sei un po' stupida...");
+            fl_alert("Signorina, mi spieghi perchè dovremmo assumere qualcuno che non è neanche in grado di mettere delle crocette su un foglio ???");
+        }
+        Evento();
+        AggiornaLavoro();
         return;
     }
 
-    if ( x_vacanza == 2 ) {
-        fl_message_title("Cerca Lavoro");
-        fl_alert("Arrivat%c davanti ai cancelli della ditta li trovi irrimediabilmente chiusi...",ao);
-        return;
-    }
-
-
-
-//     Rcheck = 0;    /* Check per il numero di risposte */
-//     Lcheck = 0;    /* Check delle risposte */
-
-    n_ditta = rand() % NUM_DITTE + 1;
-//     /* crea finestra con info ditta e scelta si/no */
-//             lpproc = MakeProcInstance(CercaLavoro, hInst);
-//         DialogBox(hInst,
-//              MAKEINTRESOURCE(389 + n_ditta),
-//              hDlg,
-//              lpproc);
-//         FreeProcInstance(lpproc);
-//                 if (accetto == IDNO ) { // Viva la finezza...
-//             MessageBox( hDlg,
-//               "Allora sparisci...",
-//                         "Cerca Lavoro", MB_OK | MB_ICONINFORMATION);
-//             return(TRUE);
-//         }
-//        lpproc = MakeProcInstance(CercaLavoro, hInst);
-//         scheda = random(9);
-//         punti_scheda = 0;
-
-//         DialogBox(hInst,
-//              MAKEINTRESOURCE(200+scheda),
-//              hDlg,
-//              lpproc);
-//         FreeProcInstance(lpproc);
-
-   // /* Facciamo finta che la scheda venga effettivamente tenuta in considerazione...            */
-        // /* forse in un futuro verranno controllate le risposte, ma per ora non servono a nulla.     */
-
-
-        // /* 24 Maggio 1998 - v0.6.94 */
-        // /* Le risposte cominciano a venire controllate.... */
-        // for(i=0;i<3;i++)
-        //     if (Risposte1[i]) Rcheck+=1;
-        // for(i=0;i<3;i++)
-        //     if (Risposte2[i]) Rcheck+=10;
-        // for(i=0;i<3;i++)
-        //     if (Risposte3[i]) Rcheck+=100;
-
-
-        // if ( Rcheck != 111 ) {
-        //     if (sesso == 'M')
-        //         MessageBox( hDlg, "Mi spieghi perche' dovremmo assumere qualcuno che non e' neanche in grado di mettere delle crocette su un foglio ???", "Sei un po' stupido...", MB_OK | MB_ICONQUESTION);
-        //     else
-        //         MessageBox( hDlg, "Signorina,mi spieghi perche' dovremmo assumere qualcuno che non e' neanche in grado di mettere delle crocette su un foglio ???", "Sei un po' stupida...", MB_OK | MB_ICONQUESTION);
-        //     AggiornaLavoro(hDlg);
-        //     return(TRUE);
-        //     }
-
-    if (( Reputazione + Fortuna + (rand() % 80) ) > (rand() % 200) ) {
-        impegno=10 + (rand() % 20);
+    if (( Reputazione + Fortuna + (rand() % 80) ) > (rand() % 200) ) {   // 3 risposte date, OK - con rep bassa e fortuna=0, la prob assunzione è circa del 25%
+        impegno=10 + (rand() % 20);    // impegno iniziale random 10-29
         giorni_di_lavoro=1;
-        stipendio=1000 + ( (rand() % 10) * 100);
-        numeroditta=n_ditta;
+        stipendio=1000 + ( (rand() % 10) * 100);    // stipendio random tra 1 mil e 1.9 mil
+        numeroditta=n_ditta + 1;  //nelle dialog l'indice parte da zero
 
         fl_message_title("Hai trovato lavoro!");
         if (sesso == 'M')
-            fl_alert("SEI STATO ASSUNTO!\nOra sei un felice dipendente della %s !", LavoroMem[n_ditta].nome);
+            fl_alert("SEI STATO ASSUNTO!\nOra sei un felice dipendente della %s !", LavoroMem[numeroditta].nome);
         else
-            fl_alert("SEI STATA ASSUNTA!\nOra sei una felice dipendente della %s !", LavoroMem[n_ditta].nome);
+            fl_alert("SEI STATA ASSUNTA!\nOra sei una felice dipendente della %s !", LavoroMem[numeroditta].nome);
 
     } else {
         fl_message_title("Niente da fare...");
@@ -214,7 +167,6 @@ void CercaLavoro(void)
         if (Reputazione > 10)
             Reputazione-=2;
     }
- 
     Evento();
     AggiornaLavoro();
 }
@@ -328,14 +280,6 @@ void Lavora(void)
 }
 
 
-//BOOL FAR PASCAL        Lavoro(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//      char       tmp[255];
-//      FARPROC      lpproc;
-//      int          n_ditta;
-//      int          i;
-// static    int      Rcheck;
-// static    int      Lcheck;
 
 //      if (message == WM_INITDIALOG) {
 //         if (sesso == 'M')
@@ -343,16 +287,10 @@ void Lavora(void)
 //         else
 //             SetDlgItemText(hDlg, 113, "Fai la leccaculo");
 
-//         AggiornaLavoro(hDlg);
-//         return(TRUE);
-//         }
 
-//      else if (message == WM_COMMAND)
-//      {
-//         switch (wParam)
-//         {
 
-        //FIXME in futuro
+
+//FIXME Meglio mettere un tasto nella ricerca lavoro x visualizzare info aggiuntive sull'azienda anzichè fare l'elenco separato
         //  case 114:        /* Elenco ditte ---------------------------------------------------------------------------------- */
         //     if (numeroditta == 0) {
         //         lpproc = MakeProcInstance(ElencoDitte, hInst);
@@ -370,62 +308,6 @@ void Lavora(void)
         //     FreeProcInstance(lpproc);
         // }
         // return(TRUE);
-
-
- 
-
-
-/*FIXME QUIZZONE*/
-// # pragma argsused
-// BOOL FAR PASCAL CercaLavoro(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-// int         i;
-
-//     if (message == WM_INITDIALOG) {
-//     for(i=0;i<3;i++)        /* Azzera le risposte... */
-//         Risposte1[i]=0;
-//     for(i=0;i<3;i++)
-//         Risposte2[i]=0;
-//     for(i=0;i<3;i++)
-//         Risposte3[i]=0;
-//     return(TRUE);
-//     }
-
-//     else if (message == WM_COMMAND)
-//     {
-//     switch (wParam)
-//     {
-//         case 101:
-//         case 102:
-//         case 103:
-//         Risposte1[wParam-101]=!(Risposte1[wParam-101]);
-//         return(TRUE);
-//         case 104:
-//         case 105:
-//         case 106:
-//         Risposte2[wParam-104]=!(Risposte2[wParam-104]);
-//         return(TRUE);
-//         case 107:
-//         case 108:
-//         case 109:
-//         Risposte3[wParam-107]=!(Risposte3[wParam-107]);
-//         return(TRUE);
-//         case IDCANCEL:
-//         EndDialog(hDlg, TRUE);
-//         accetto = IDNO;
-//         return(TRUE);
-//         case IDOK:
-//         EndDialog(hDlg, TRUE);
-//         accetto = IDYES;
-//         return(TRUE);
-
-//     }
-//     }
-
-//     return(FALSE);
-// }
-
-
 // # pragma argsused
 // BOOL FAR PASCAL ElencoDitte(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 // {
