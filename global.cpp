@@ -21,18 +21,18 @@
 #include "global.h"
 
 /* IMPORTANTE */
-/* Non è (ancora) possibile aggiungere altri eventi senza cambiare radicalmente la routine in eventi.cpp */
+/* Se si aggiungono nuovi eventi bisogna anche modificare la routine in eventi.cpp */
 
 
 const char *StrEventi[] = {
-    "Cerchi la rissa con un metallaro e lui ti spacca le ossa...",  // id=1000
-    "Cadi in lago di merda tra le risate generali...",
+    "Cerchi la rissa con un metallaro e lui ti spacca le ossa...",  // id=1000  inutilizzata?
+    "Cadi in un lago di merda tra le risate generali...",  // inutilizzata?
     "Mentre cammini per il quartiere con la tua compagnia, un piccione ti caga in testa...",   // id=1021
     "Cadi nel laghetto di Parco Sempione.",
     "Mentre cammini per il quartiere con la tua compagnia, un cane ti piscia su una gamba...",
     "Un attacco di diarrea ti costringe a restare a casa.",
     "Bevi due bicchieri di birra e vomiti per tutta la sera.",
-    "Sei seduto al bar con i tuoi amici, passa una ragazza e fai dei commenti... Poi si gira e ti accorgi che è un uomo.",
+    "Sei seduto al bar con i tuoi amici, passa una ragazza e fai dei commenti...\nPoi si gira e ti accorgi che è un uomo.",
     "Sei fermo al semaforo, un TIR ti passa vicino e solleva un'ondata di fango.",
     "Ti perdi e non arrivi ad un appuntamento importante.",
     "La televisione si rompe e perdi l'ultima puntata di Tabboz News.",
@@ -90,20 +90,90 @@ const char *StrEventiFinestra[] = {
     "Mentre giri per la città con il tuo scooter,\nincontri sfortunatamente un muro...",
 };
 
+
+const char *StrOfferteLavoro[][3] = {
+    {
+        "Si desidera incontrare giovani, età massima 30 anni, con una precedente esperienza nel settore, conoscenza della lingua inglese e dimestichezza nell'uso del PC. Trattamenti economici commisurati alle effettive capacità.",
+        "Mi presento!",
+        "Lascio perdere...",
+    },
+    {
+        "Cercasi n.6 addetti alla manutenzione delle apparecchiature, n.4 ballerine di danza classica con esperienza decennale, n.20 operai non specializzati da sfruttare e retribuire male, n.1 figli di puttana per quadri dirigenziali.",
+        "Potrei provare...",
+        "Non ho molta voglia di lavorare...",
+    },
+    {
+        "Azienda leader nella produzione di motoseghe, cerca giovani di età non superiore ad anni 22, fini, educati e di gradevole aspetto per la vendita porta a porta di motoseghe cingolate da cava e da cantiere.",
+        "Basta fare il disokkupato!",
+        "Lavoro??? Sto cercando di smettere...",
+    },
+    {
+        "TIBB cerca: n.10 Apprendisti, n.1 Tecnico specializzato riparazione materiale rotabile disponibili trasferte settimanali; inglese o tedesco saranno requisiti preferenziali. N.4 collaboratori/collaboaratrici età massima anni 30, esperti in vendita, automuniti.",
+        "Voglio trovare un posto!",
+        "Che palle lavorare...",
+    },
+    {
+        "La October Heavy Industries cerca personale NON SPECIALIZZATO per la pulitura di noccioli dei reattori nucleari e per lo smaltimento dei rifiuti radioattivi. NON E' RICHIESTO ALCUN TITOLO DI STUDIO.",
+        "Sembra interessante...",
+        "Troppo faticoso!",
+    },
+    {
+        "Cerchiamo giovani dinamici e fantasiosi da inserire nella nostra catena di produzione dei pesticidi, un ramo emergente e gratificante che offre interessanti possibilità di guadagno.",
+        "Figata!",
+        "Torno a casa a dormire...",
+    },
+    {
+        "Ecco finalmente l'unica discarica abusiva dove potrete buttare tutti i vostri rottami informatici e riacquistarli al doppio del prezzo... Cercasi personale defic..ehm con una graaande passione per l'informatica, bella o brutta presenza, perfetta padronanza del sistema ZX Spectrum, CP/M, MS-DOS v1.0 o inferiore, padronanza della lingua di mucca, cerchiamo giovani elastici, vitali, stronzi, scazzati basta che non siano tabbozzi....",
+        "Tabbozzo?? Cos'è??",
+        "Ma io sono un po' tabboz...",
+    },
+    {
+        "La RICOPIO, e' la prima azienda al mondo che vanta innumerevoli copie illegali di libri, CD, cassette, persone, oggetti, progetti, brevetti, ecc... Cercasi personale disinvolto, di piccola presenza, da assumersi come copertura.",
+        "Potrei provare...",
+        "Piccola presenza?? No, grazie!",
+    },
+};
+
+const char *StrFinestraQuizLavoro[] = {
+    "Sei ancora disoccupato? Ah! Ah! Ah! ...",
+    "Test attitudinale ministero pubblica distruzione",
+    "Questionario...",
+    "Nuovi Quiz Ministeriali",
+    "Pestasti lo sterco mezzo di strizzo",
+    "Quiz attitudinale per pirloni senza lavoro",
+    "._..  .._  .._--__.. ._.._-- .__:.-_:::... ---_:.:::..:.--._",
+    "Provaci sarai fortunato",
+    "Test lavorativo per disoccupati",
+    "Test attitudinale",
+};
+
+const char *StrTitoliQuizLavoro[] = {
+    "Sai, vorremmo assumerti subito, ma prima dovresti superare una piccola formalità.\nQuesto semplice test attitudinale sarà uno scherzo per una mente sveglia come la tua!",
+    "Non sarai mica in difficoltà, non è da te riflettere su queste banalissime domande...\nAuguri e buon lavoro (si fa per dire)",
+    "Leggere attentamente le domande, poi con la matita segnare la...\nCATZ! Porc! AAaaaaahhhhhhhhhh !!!",
+    "Tracciate una retta A-B, partite poi dai suddetti punti per disegnare la secante, l'angolo formato dovrà essere di 32 gradi.\n Se fallite significa che non siete buoni a un cazzo!",
+    "Non è male questa pastasciutta, pero' quest'altra volta ci si rimette il parmigiano eh ?!",
+    "Cortesemente, potrebbe compilare questo test di modo da comprovare la sua discutibile preparazione e mettere in condizioni noi della ditta a risparmiarci la sua orrenda puzza di zarro ",
+    "Test attitudinale statale per portatori di handicap.\nQuesto test è esclusivamente adibito all'uso dei non vedenti.\nI mutilati di guerra sono sempre i benaccetti.",
+    "Con questo test verificheremo la tempra di ogni aspirante operaio per vedere la sua validità e la sua devozione al lavoro, nonchè la sua tenuta di strada...",
+    "I nuovi\nQUIZ MINISTERIALI\nIn vigore dal 15 settembre 1997",
+    "Dal paterno terrazzo donde lucean le stelle illuminar con luci rubelle\nci viene ora la rima in -azzo\ne si è sciupata tutta la poesia.",
+};
+
 const char *StrDomandeLavoro[][3] = {
     {
         "Di che colore era il cavallo bianco di Napoleone?",
-        "In un lavoro in cantiere il vostro compagno viene travolto da una\ndecina di travi provenienti dall'alto, ne deducete che...",
+        "In un lavoro in cantiere il vostro compagno viene travolto da una decina di travi provenienti dall'alto, ne deducete che...",
         "Vi rendete conto di quello che state facendo?",
     },
     {
-        "Qual è il lasso di tempo che intercorre tra l'arresto di un mafioso e\nla sua scarcerazione?",
-        "Quando i vostri genitori credono opportuno non elargire la paghetta\nsettimanale, credete sia il caso di:",
+        "Qual è il lasso di tempo che intercorre tra l'arresto di un mafioso e la sua scarcerazione?",
+        "Quando i vostri genitori credono opportuno non elargire la paghetta settimanale, credete sia il caso di:",
         "E' vietato il sorpasso",
     },
     {
-        "Indivinate, stronzoni, cos'è quell'oggetto tondo con un buco\nin mezzo, dal quale escono strani odori?",
-        "Riteniamo che voi che leggete siate tutti dei disadattati e per di\npiù senza lavoro... Ah dimenticavamo, anche un po' stronzi!",
+        "Indivinate, stronzoni, cos'è quell'oggetto tondo con un buco in mezzo, dal quale escono strani odori?",
+        "Riteniamo che voi che leggete siate tutti dei disadattati e per di più senza lavoro... Ah dimenticavamo, anche un po' stronzi!",
         "Come ci si comporta per aumentare la produttività?",
     },
     {
@@ -112,11 +182,35 @@ const char *StrDomandeLavoro[][3] = {
         "Quando dista la nebulosa del granchio dalla stella del buco strappato?",
     },
     {
-        "Allo stadio sei in curva sud, in mezzo alla bolgia vedi una bella\nfigona che balla e si dimena a ritmo di samba...",
+        "Allo stadio sei in curva sud, in mezzo alla bolgia vedi una bella figona che balla e si dimena a ritmo di samba...",
         "Che ruolo vorresti avere in una squadra di calcio?",
         "L'inquinamento atmosferico prodotto dai veicoli con motore a scoppio",
     },
-
+    {
+        "Quando ritornate a casa e trovate la vostra nonna che vi guarda con uno sguardo terrorizzato...",
+        "Cosa significa:\n<< Le calcul de la gran mere d'Ada? >>",
+        "Cosa può provocare una puzzetta in ufficio?",
+    },
+    {
+        "- _.-__..   ._  _.._..  ._._._.  .._..  _..._._...._ -",
+        "Come forse avrete capito ci siamo presi gioco di lei...\nCome reagite davanti un simile sopruso ?",
+        "Da quanti e quali atomi è composta la molecola della benzina?",
+    },
+    {
+        "Come forse avete capito dalla didascalia sul fronte del documento\ncrediamo opportuno domandarvi se possedete una Fiat Tempra.",
+        "Vi è stato facile trovare altri lavori?",
+        "Vi trovate in una strada buia e desolata...",
+    },
+    {
+        "Come si può trasmettere l'A.I.D.S. ?",
+        "Il mod. 740 si compila seguendo...",
+        "Come si provoca una combustione in camera stagna?",
+    },
+    {
+        "Quando si esegue una colata di titanio ad elevata temperatura,\nnormalmente accade che:",
+        "Solitamente in gergo lavorativo si usa dire:",
+        "Con il sistema anti-infortunistico sul lavoro...",
+    },
 };
 
 const char *StrRisposteLavoro[][9] = {
@@ -175,7 +269,64 @@ const char *StrRisposteLavoro[][9] = {
         "Puo essere incrementato dall'uso di camion senza marmitte.",
         "Dipende dal camionista.",
     },
+    {
+        "La fai a pezzi con un colpo di fucile.",
+        "La fai a pezzi con una granata di mortaio.",
+        "Uhm... povera nonna!",
+        "Nel mezzo del cammin di nostra vita.",
+        "I calcoli della nonna di Ada.",
+        "Quei tegami delle vostre madri?",
+        "Un'evacuazione immediata dello stabile.",
+        "Dispersione del personale.",
+        "Disapprovazione da parte del personale.",
+    },
+    {
+        "Ma state scherzando?",
+        "Sono un mutilato di guerra!",
+        "Non conosco il braille, non sono cieco.",
+        "Male, molto male!",
+        "Ora vi faccio a pezzi con una motosega!",
+        "I dipendenti devono essere sempre sottomessi.",
+        "2 atomi di potassio e mezzo.",
+        "12 atomi di idrogeno e 24 di carbonio.",
+        "8 atomi di idrogeno e 3 di potassio.",
+    },
+    {
+        "Purtroppo no!",
+        "Ehm... uhm... err.. certamente!",
+        "No, ma se mi assumete potrò comprarla!",
+        "Come rubare una mazza ferrata ad un bambino!",
+        "Come bere un bicchier d'acqua (e veleno) !",
+        "Sì , sì , sì , sì , sì!",
+        "Speriamo non mi rubino il portafogli!",
+        "La prima persona che trovo la faccio a pezzi!",
+        "Devo tornare a casa, domani devo andare al lavoro.",
+    },
+    {
+        "In TV.",
+        "Con un cellulare dual-band.",
+        "Sulla Panda?",
+        "Ordine e disciplina!",
+        "Una vecchietta brandendo un'ascia!",
+        "Le leggi n° 345 cod. 2 comma 3 paragrafo VII",
+        "A forza di rutti abominevoli.",
+        "Con una scatola di fiammiferi.",
+        "Con un candelotto di dinamite ed armi assortite.",
+    },
+    {
+        "Si verifichino bolle nella colata.",
+        "Volino le bestemmie.",
+        "Si rompa il catino rovesciando il titanio liquido sui lavoratori.",
+        "Bestemmie varie",
+        "Governo ladro!",
+        "Che voglia di lavorare che ho!",
+        "Tutti gli operai possono lavorare tranquilli.",
+        "Tutti gli operai crepano ugualmente per gli incidenti.",
+        "Tutti gli operai bestemmiano durante il lavoro.",
+    },
+
 };
+
 
 const char *StrNomiStrade[] = {
     "Via Lorenteggio",    // id=450

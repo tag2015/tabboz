@@ -27,7 +27,6 @@
 #define MSG_TIPO      32
 #define MSG_PALESTRA  42
 
-#define N_DOMANDE_LAVORO    5
 
 extern const char *StrEventi[];         // Stringhe usate nelle dialog semplici degli eventi
 extern const char *StrEventiFinestra[]; // Stringhe usate nelle dialog con immagine degli eventi
@@ -40,4 +39,9 @@ extern const char *StrNomiTipi[];       // Elenco nomi tipi
 
 extern const char *StrRisposteTipe[];   // Stringhe due di picche (dalle tipe)
 
-extern const char *StrDomande[][10];
+extern const char *StrFinestraQuizLavoro[];     // Il titolo della finestra quiz
+extern const char *StrTitoliQuizLavoro[];       // Introduzione della scheda
+extern const char *StrDomandeLavoro[][3];       // Elenco domande scheda
+extern const char *StrRisposteLavoro[][9];      // Elenco risposte scheda
+
+extern const char *StrOfferteLavoro[][3];       // Annunci di lavoro
