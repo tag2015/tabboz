@@ -625,6 +625,8 @@ static void CaricaTutto(void)
 
     x_giorno--;  //Per evitare che avanzi di giorno ogni volta che si apre il programma
     x_giornoset--;
+    if(giorni_di_lavoro > 0)
+        giorni_di_lavoro--;  // Come sopra
     AttesaSoldi++;  //Idem ma al contrario, per evitare che scenda ad ogni avvio
     Giorno();
 
@@ -1897,6 +1899,8 @@ int main(void)
     fl_register_images();
     CaricaSharedImgs();
 
+    Fl::option(Fl::OPTION_VISIBLE_FOCUS, false);  //disattiva tratteggio del pulsante selezionato
+    Fl::option(Fl::OPTION_DND_TEXT, false);  //disattiva possibilità di evidenziare i testi
 
     /* FIXME suono di prova */
     //TabbozPlaySound(0000);
