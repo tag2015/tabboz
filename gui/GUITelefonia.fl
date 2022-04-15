@@ -1,0 +1,326 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cpp}
+decl {\#include <FL/Fl.H>} {private global
+}
+
+decl {\#include <FL/fl_ask.H>} {private global
+}
+
+decl {\#include "GUITabboz.h"} {private global
+}
+
+decl {\#include "../zarrosim.h"} {private global
+}
+
+decl {\#include "../calendario.h"} {private global
+}
+
+decl {\#include "../sharedimg.h"} {private global
+}
+
+decl {\#include "../sound.h"} {private global
+}
+
+decl {\#include "../telefono.h"} {private global
+}
+
+Function {add_prezzo(int scelta)} {open private C
+} {
+  code {static char buf[80];
+if(!euro)
+  sprintf(buf, "Prezzo: L. %d",CALCSOLDI(CellularMem[scelta].prezzo));
+else
+  sprintf(buf, "Prezzo: € %d",CALCSOLDI(CellularMem[scelta].prezzo));
+negcell_txt_prezzocell->label(buf);} {}
+}
+
+Function {GUITelefonia()} {} {
+  Fl_Window win_telefonia {
+    label Telefonia open
+    xywh {290 690 510 225} type Double color 54 labelfont 1 labelsize 12 hotspot
+    code0 {AggiornaCell();} modal size_range {510 225 510 225} visible
+  } {
+    Fl_Button {} {
+      label {Compra cellulare}
+      callback {if (x_vacanza != 2) {
+  GUICompraCell();
+  win_compracell->show();
+
+}else {
+  fl_message_title("Negozio chiuso");
+  fl_alert("Stranamente, in un giorno di vacanza, il negozio è chiuso...");
+}}
+      xywh {10 10 240 35} color 51 selection_color 51
+    }
+    Fl_Button {} {
+      label {Vendi cellulare}
+      callback {if (x_vacanza != 2) {
+ if( VendiCellulare() )
+   AggiornaCell();
+}
+else {
+  fl_message_title("Negozio chiuso");
+  fl_alert("Stranamente, in un giorno di vacanza, il negozio è chiuso...");
+}}
+      xywh {10 50 240 35} color 51 selection_color 51
+    }
+    Fl_Button {} {
+      label Ricarica
+      callback {if (x_vacanza != 2) {
+  GUIRicaricaCell();
+  win_ricaricacell->show();
+}
+else {
+  fl_message_title("Negozio chiuso");
+  fl_alert("Stranamente, in un giorno di vacanza, il negozio è chiuso...");
+}}
+      xywh {10 125 240 35} color 51 selection_color 51
+    }
+    Fl_Group {} {open
+      xywh {260 10 240 150} box EMBOSSED_FRAME labelfont 1 labelsize 12
+    } {
+      Fl_Output tel_txt_nome {
+        label Telefonino
+        xywh {270 30 220 25} box EMBOSSED_BOX labelfont 1 labelsize 12 align 5
+      }
+      Fl_Output tel_txt_abb {
+        label Abbonamento
+        xywh {270 77 220 25} box EMBOSSED_BOX labelfont 1 labelsize 12 align 5
+      }
+      Fl_Output tel_txt_credito {
+        label {Credito restante:}
+        xywh {270 125 220 25} box EMBOSSED_BOX labelfont 1 labelsize 12 align 5
+      }
+    }
+    Fl_Group {} {open
+      xywh {10 165 490 50} box EMBOSSED_FRAME
+    } {
+      Fl_Value_Output tel_val_soldi {
+        label {Soldi L.}
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {65 177 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+08 textfont 5
+      }
+      Fl_Return_Button {} {
+        label Back
+        callback {win_principale->activate();
+AggiornaPrincipale();
+win_telefonia->hide();}
+        xywh {435 170 60 40} color 51 selection_color 51
+      }
+    }
+  }
+}
+
+Function {GUICompraCell()} {open
+} {
+  Fl_Window win_compracell {
+    label {Compra cellulare} open
+    xywh {260 256 580 290} type Double color 54 labelfont 1 labelsize 12 hide hotspot modal size_range {580 290 580 290}
+  } {
+    Fl_Group {} {open
+      xywh {10 10 560 125}
+    } {
+      Fl_Button {} {
+        callback {scelta_gui=0;
+negcell_txt_nomecell->label("Motorolo d170");
+negcell_txt_desccell->label("Libertà, versatilità e sicurezza di comunicazione a un prezzo giusto, queste le caratteristiche del telefono cellulare GSM Motorolo d170.");
+add_prezzo(scelta_gui);
+win_compracell->redraw();
+negcell_btn_compra->activate();}
+        image {../res/pic/cell_0.png} xywh {10 10 180 120} type Radio color 7 selection_color 3
+        code0 {//o->image(ImgCell[1]);}
+      }
+      Fl_Button {} {
+        callback {scelta_gui=1;
+negcell_txt_nomecell->label("Motorolo 8700");
+negcell_txt_desccell->label("Lo stile è classico e inconfondibile ma le prestazioni sono interamente rinnovate e di altissimo livello. Motorolo 8700 consente un'autonomia di conversazione sorprendente (ben 9 mesi!) e un tempo di standby fino a 135 anni!");
+add_prezzo(scelta_gui);
+win_compracell->redraw();
+negcell_btn_compra->activate();}
+        image {../res/pic/cell_1.png} xywh {200 10 180 120} type Radio color 7 selection_color 3
+        code0 {//o->image(ImgCell[2]);}
+      }
+      Fl_Button {} {
+        callback {scelta_gui=2;
+negcell_txt_nomecell->label("Motorolo MacroTAC 8900");
+negcell_txt_desccell->label("Dual band 900/1800, Motorolo MacroTAC 8900 è il primo cellulare in commercio in grado di passare automaticamente dalla banda di frequenza GSM 900 alla banda GSM 1800.");
+add_prezzo(scelta_gui);
+win_compracell->redraw();
+negcell_btn_compra->activate();}
+        image {../res/pic/cell_2.png} xywh {390 10 180 120} type Radio color 7 selection_color 3
+        code0 {//o->image(ImgCell[3]);}
+      }
+    }
+    Fl_Browser {} {
+      xywh {10 140 380 140} box EMBOSSED_FRAME color 54 when 0 hide
+    }
+    Fl_Group {} {open
+      xywh {400 140 170 140} box EMBOSSED_FRAME
+    } {
+      Fl_Button negcell_btn_compra {
+        label {Compra!}
+        callback {if(CompraCellulare(scelta_gui)) {
+  win_compracell->hide();
+  AggiornaCell();
+}}
+        xywh {405 235 60 40} color 51 selection_color 51
+        code0 {o->deactivate();}
+      }
+      Fl_Return_Button {} {
+        label Back
+        callback {win_telefonia->show();
+win_compracell->hide();}
+        xywh {505 235 60 40} color 51 selection_color 51
+      }
+      Fl_Value_Output {} {
+        label {Soldi L.}
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {485 145 80 25} box EMBOSSED_BOX color 7 selection_color 7 labelsize 12 step 1 textfont 5
+        code0 {o->value(CALCSOLDI(Soldi));}
+        code1 {if(euro) o->label("Soldi  €");}
+      }
+      Fl_Value_Output {} {
+        label {Figosità}
+        callback {o->value(Fama);}
+        xywh {530 175 35 25} box EMBOSSED_BOX color 7 selection_color 7 labelsize 12
+        code0 {o->value(Fama);}
+      }
+    }
+    Fl_Box {} {
+      xywh {10 140 380 140} box EMBOSSED_FRAME
+    }
+    Fl_Box negcell_txt_nomecell {
+      xywh {25 154 280 20} labelfont 1 align 21
+    }
+    Fl_Box negcell_txt_desccell {
+      xywh {25 175 350 70} labelsize 12 align 149
+    }
+    Fl_Box negcell_txt_prezzocell {
+      xywh {25 249 170 20} align 20
+    }
+  }
+}
+
+Function {GUIRicaricaCell()} {open
+} {
+  Fl_Window win_ricaricacell {
+    label {Abbonamento e ricarica} open
+    xywh {635 612 530 235} type Double color 54 labelfont 1 labelsize 12 hotspot modal size_range {530 235 530 235} visible
+  } {
+    Fl_Group {} {open
+      xywh {5 5 520 175}
+    } {
+      Fl_Group {} {open
+        xywh {5 5 170 170} box EMBOSSED_FRAME
+      } {
+        Fl_Box {} {
+          image {../res/pic/abbo_0.png} xywh {10 10 160 80}
+        }
+      }
+      Fl_Group {} {open
+        xywh {180 5 170 170} box EMBOSSED_FRAME
+      } {
+        Fl_Box {} {
+          image {../res/pic/abbo_1.png} xywh {185 10 160 80}
+        }
+      }
+      Fl_Group {} {open
+        xywh {355 5 170 170} box EMBOSSED_FRAME
+      } {
+        Fl_Box {} {
+          image {../res/pic/abbo_2.png} xywh {360 9 160 80}
+        }
+      }
+      Fl_Group {} {open
+        xywh {10 90 515 85}
+      } {
+        Fl_Round_Button {} {
+          label {Attivazione  L. 100000}
+          callback {scelta_gui=1;
+negricarica_btn_compra->activate();}
+          xywh {360 90 160 25} type Radio down_box DIAMOND_UP_BOX
+        }
+        Fl_Round_Button {} {
+          label {Ricarica      L.   60000}
+          callback {scelta_gui=5;
+negricarica_btn_compra->activate();}
+          xywh {360 125 160 25} type Radio down_box DIAMOND_UP_BOX
+        }
+        Fl_Round_Button {} {
+          label {Ricarica      L. 110000}
+          callback {scelta_gui=6;
+negricarica_btn_compra->activate();}
+          xywh {360 145 160 25} type Radio down_box DIAMOND_UP_BOX
+        }
+        Fl_Round_Button {} {
+          label {Attivazione  L. 100000}
+          callback {scelta_gui=2;
+negricarica_btn_compra->activate();}
+          xywh {185 90 160 25} type Radio down_box DIAMOND_UP_BOX
+        }
+        Fl_Round_Button {} {
+          label {Ricarica      L.   50000}
+          callback {scelta_gui=7;
+negricarica_btn_compra->activate();}
+          xywh {185 125 160 25} type Radio down_box DIAMOND_UP_BOX
+        }
+        Fl_Round_Button {} {
+          label {Ricarica      L. 100000}
+          callback {scelta_gui=8;
+negricarica_btn_compra->activate();}
+          xywh {185 145 160 25} type Radio down_box DIAMOND_UP_BOX
+        }
+        Fl_Round_Button {} {
+          label {Attivazione  L. 100000}
+          callback {scelta_gui=0;
+negricarica_btn_compra->activate();}
+          xywh {10 90 160 25} type Radio down_box DIAMOND_UP_BOX
+        }
+        Fl_Round_Button {} {
+          label {Ricarica      L.   60000}
+          callback {scelta_gui=3;
+negricarica_btn_compra->activate();}
+          xywh {10 125 160 25} type Radio down_box DIAMOND_UP_BOX
+        }
+        Fl_Round_Button {} {
+          label {Ricarica      L. 110000}
+          callback {scelta_gui=4;
+negricarica_btn_compra->activate();}
+          xywh {10 145 160 25} type Radio down_box DIAMOND_UP_BOX
+        }
+      }
+    }
+    Fl_Group {} {open
+      xywh {5 180 520 50} box EMBOSSED_FRAME
+    } {
+      Fl_Button negricarica_btn_compra {
+        label {Compra!}
+        callback {if( AbbonaCellulare(scelta_gui) ) {
+  AggiornaCell();
+  win_ricaricacell->hide();
+}} selected
+        xywh {390 185 60 40} color 51 selection_color 51
+        code0 {o->deactivate();}
+      }
+      Fl_Return_Button {} {
+        label Back
+        callback {win_ricaricacell->hide();}
+        xywh {460 185 60 40} color 51 selection_color 51
+      }
+      Fl_Value_Output {} {
+        label {Soldi L.}
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {60 195 85 20} box EMBOSSED_BOX color 7 selection_color 7 labelsize 12 step 1 textfont 5
+        code0 {o->value(CALCSOLDI(Soldi));}
+        code1 {if(euro) o->label("Soldi  €");}
+      }
+      Fl_Output {} {
+        label {Operatore attuale:}
+        xywh {260 192 115 25} labelsize 12 textsize 12
+        code0 {if (AbbonamentData.creditorest > -1) o->value(AbbonamentData.nome);}
+      }
+    }
+  }
+}
