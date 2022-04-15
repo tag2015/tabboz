@@ -1,0 +1,55 @@
+DIFFERENZE RISPETTO AL TABBOZ ORIGINALE
+---------------------------------------
+
+Per rimanere fedeli all'originale, i parametri e i check su cui si basano gli eventi, il lavoro, e in generale tutte le situazioni random
+non hanno subito particolari modifiche (ad eccezione di alcune palesemente buggate, e del profitto scolastico che ora può scendere al massimo fino alla media del 2).
+
+Le righe (*) indicano funzionalità rimosse
+Le righe (BF) indicano bugfix
+
+[GENERALI]
+Il gioco è ora compilabile su qualsiasi piattaforma supporti il toolkit FLTK (Windows, Unix/Linux e derivati, etc...)
+Il gioco non usa più il registro di configurazione e salva nel profilo dell'utente (%APPDATA%\Roaming\TabbozNG per windows, .TabbozNG per Unix)
+I testi supportano i caratteri accentati
+La schermata principale è stata riorganizzata con indicazioni aggiuntive
+Sono stati aggiunti alcuni nuovi suoni (metallaro / incidente / ripara scooter / stipendio / acquisti / pagella)
+(*) La modalità di rete non è più disponibile
+(BF) L'anno bisestile viene calcolato correttamente
+
+[SCUOLA]
+Il voto minimo per una materia è 2 (anzichè zero)
+L'andamento scolastico complessivo viene indicato come media con un decimale (es. 6.5) anzichè in centesimi
+I voti sono indicati in colore (rosso - nero - verde)
+
+[LAVORO]
+E' possibile scegliere l'azienda con cui tentare il test anzichè selezionarla a random
+Non è possibile presentarsi alle aziende fuori porta se non si possiede uno scooter funzionante
+Se si è impiegati in una azienda fuori porta e lo scooter diventa inutilizzabile non si può più lavorare
+
+[PALESTRA]
+La palestra ha un tasto specifico e non è più parte dei negozi
+Si può andare in palestra solo una volta al giorno
+(BF) Non è più possibile andare in palestra all'infinito
+
+[NEGOZI]
+I vestiti di base del tabboz sono più "neutri" anzichè essere praticamente identici a quelli acquistabili
+Ora è presente un negozio solo per ogni tipologia di abbigliamento (Bau Haus per le giacche, Blue Rider per i pantaloni e Zoccolaio per le scarpe)
+
+[DISCO]
+(BF) La figosità viene incrementata correttamente per tutte le discoteche
+(*) La riproduzione CD audio nella finestra Disco è rimossa
+
+[FAMIGLIA]
+(BF) L'attesa per richiedere soldi aggiuntivi alla famiglia ora funziona. I giorni di attesa sono inoltre salvati nel profilo
+
+[COMPAGNIA]
+(BF) Dopo un pestaggio non si può più chiamare la compagnia ripetute volte
+
+[SCOOTER]
+Le probabilità degli incidenti con camion e con muro sono state invertite
+Quando lo stato dello scooter scende a 0, lo scooter non sparisce ma diventa incidentato
+Lo scooter incidentato può essere (parzialmente) riparato o rottamato
+Il costo delle riparazioni è stato leggermente ridotto
+(BF) Gli eventi con lo scooter ora avvengono solo se quest'ultimo è funzionante (non grippato/ a secco etc)
+(BF) Non è più possibile ottenere l'incentivo rottamazione (1 mil) senza comprare contestualmente uno scooter nuovo
+(BF) Non si può più fare benzina se il serbatoio è già pieno
