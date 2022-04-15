@@ -14,6 +14,9 @@ decl {\#include "GUITabboz.h"} {private global
 decl {\#include "GUINegozioVestiti1.h"} {private global
 }
 
+decl {\#include "GUITelefonia.h"} {selected private global
+}
+
 decl {\#include "../zarrosim.h"} {private global
 }
 
@@ -29,7 +32,7 @@ decl {\#include "../sound.h"} {private global
 Function {GUINegoziLauncher()} {open
 } {
   Fl_Window win_negozi {
-    label Negozi open selected
+    label Negozi open
     xywh {746 577 395 215} type Double color 54 labelfont 1 labelsize 12 hotspot modal size_range {395 215 395 215} visible
   } {
     Fl_Return_Button {} {
@@ -96,6 +99,9 @@ win_negozi->hide();}
       }
       Fl_Button {} {
         label Telefonia
+        callback {GUITelefonia();
+win_telefonia->show();
+win_negozi->hide();}
         xywh {210 65 170 30} color 51 selection_color 51
       }
     }

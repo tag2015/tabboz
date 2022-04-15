@@ -5,6 +5,7 @@
 #include <FL/fl_ask.H>
 #include "GUITabboz.h"
 #include "GUINegozioVestiti1.h"
+#include "GUITelefonia.h"
 #include "../zarrosim.h"
 #include "../calendario.h"
 #include "../negozi.h"
@@ -40,6 +41,12 @@ static void cb_Tabaccaio(Fl_Button*, void*) {
   fl_message_title("Tabaccaio chiuso");
   fl_alert("Rimani fiss%c a guardare la saracinesca del tabaccaio irrimediabilmente chiusa...",ao);
 };
+}
+
+static void cb_Telefonia(Fl_Button*, void*) {
+  GUITelefonia();
+win_telefonia->show();
+win_negozi->hide();
 }
 
 Fl_Double_Window* GUINegoziLauncher() {
@@ -98,6 +105,7 @@ Fl_Double_Window* GUINegoziLauncher() {
       { Fl_Button* o = new Fl_Button(210, 65, 170, 30, "Telefonia");
         o->color((Fl_Color)51);
         o->selection_color((Fl_Color)51);
+        o->callback((Fl_Callback*)cb_Telefonia);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
