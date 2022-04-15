@@ -31,6 +31,7 @@
 #include "scuola.h"
 #include "lavoro.h"
 #include "scooter.h"
+#include "telefono.h"
 
 #include "calendario.h"
 #include "proteggi.h"
@@ -76,10 +77,6 @@ extern int      vvc(int i);
 static void     SalvaTutto(void);
 static void     CaricaTutto(void);
 
-
-/* FIXME spostare al posto giusto dopo implementazione cell */
-STCEL CellularData;
-STABB AbbonamentData;
 
 /* PRIMA LE VARIABILI GENERIKE... */
 
@@ -245,10 +242,8 @@ void ResetMe(int primavolta)
 
     ScooterData = ScooterMem[0];
 
-    #ifndef TAG2015_NOCELL
-        AbbonamentData.creditorest = -1;
-        CellularData.stato         = -1;
-    #endif
+    AbbonamentData.creditorest = -1;
+    CellularData.stato         = -1;
 
     #ifndef NONETWORK
         net_enable =  1;
@@ -399,6 +394,7 @@ static void CaricaTutto(void)
 
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
     Fl_Preferences ScooterProfilo(TabbozProfilo, "Scooter");
+    Fl_Preferences CellularProfilo(TabbozProfilo, "Cellular");
 
     /* Prima che vengano caricate le informazioni... */
     /* azzera il checksum...                         */
@@ -591,18 +587,27 @@ static void CaricaTutto(void)
 
     ScooterProfilo.get("Nome",ScooterData.nome,"Nessuno...",STR_MAX);
 
-#ifndef TAG2015_NOCELL
     /* Cellulare */
-    AbbonamentData.dualonly    = new_check_i(atoi (RRKey("Cellular\\DualOnly")));
-    AbbonamentData.creditorest = new_check_i(atoi (RRKey("Cellular\\CreditoRest")));
-    if (TabbozReadKey("Cellular\\NomeAbb",AbbonamentData.nome) == 0) AbbonamentData.creditorest= -1;
+    CellularProfilo.get("DualOnly",buf_i,-1);
+    AbbonamentData.dualonly = new_check_i(buf_i);
 
-    CellularData.dual   = new_check_i(atoi (RRKey("Cellular\\DualBand")));
-    CellularData.stato  = new_check_i(atoi (RRKey("Cellular\\Stato")));
-    CellularData.prezzo = new_check_i(atoi (RRKey("Cellular\\Prezzo")));
-    
-    if (TabbozReadKey("Cellular\\Nome",CellularData.nome) == 0) CellularData.stato = -1;
-#endif
+    CellularProfilo.get("CreditoRest",buf_i,-1);
+    AbbonamentData.creditorest = new_check_i(buf_i);
+
+    CellularProfilo.get("NomeAbb",AbbonamentData.nome,0,STR_MAX);
+    if(AbbonamentData.nome==0)  AbbonamentData.creditorest= -1;
+
+    CellularProfilo.get("DualBand",buf_i,-1);
+    CellularData.dual = new_check_i(buf_i);
+
+    CellularProfilo.get("Stato",buf_i,-1);
+    CellularData.stato = new_check_i(buf_i);
+
+    CellularProfilo.get("Prezzo",buf_i,-1);
+    CellularData.prezzo = new_check_i(buf_i);
+
+    CellularProfilo.get("Nome",CellularData.nome,0,STR_MAX);
+    if(CellularData.nome==0) CellularData.stato = -1;
 
     #ifdef TABBOZ_DEBUG
         sprintf(buf_s,"tabboz: (R) new_counter %d", new_counter);
@@ -683,6 +688,8 @@ static void SalvaTutto(void) {
     
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
     Fl_Preferences ScooterProfilo(TabbozProfilo, "Scooter");
+    Fl_Preferences CellularProfilo(TabbozProfilo, "Cellular");
+
 
     /* resetta checksum per ricalcolo */
     new_reset_check();
@@ -768,25 +775,14 @@ static void SalvaTutto(void) {
 //    ScooterProfilo.set("Antifurto",new_check_i(antifurto));
     ScooterProfilo.set("Nome", ScooterData.nome);
 
-
-#ifndef TAG2015_NOCELL
     /* salva dati cellulare */
-    sprintf(tmp,"%d",new_check_i(AbbonamentData.dualonly));
-    TabbozAddKey("Cellular\\DualOnly",tmp);
-    sprintf(tmp,"%d",new_check_i(AbbonamentData.creditorest));
-    TabbozAddKey("Cellular\\CreditoRest",tmp);
-
-    TabbozAddKey("Cellular\\NomeAbb",AbbonamentData.nome);
-
-    sprintf(tmp,"%d",new_check_i(CellularData.dual));
-    TabbozAddKey("Cellular\\DualBand",tmp);
-    sprintf(tmp,"%d",new_check_i(CellularData.stato));
-    TabbozAddKey("Cellular\\Stato",tmp);
-    sprintf(tmp,"%d",new_check_i(CellularData.prezzo));
-    TabbozAddKey("Cellular\\Prezzo",tmp);
-
-    TabbozAddKey("Cellular\\Nome",CellularData.nome);
-#endif
+    CellularProfilo.set("DualOnly", new_check_i(AbbonamentData.dualonly));
+    CellularProfilo.set("CreditoRest", new_check_i(AbbonamentData.creditorest));
+    CellularProfilo.set("NomeAbb", AbbonamentData.nome);
+    CellularProfilo.set("DualBand", new_check_i(CellularData.dual));
+    CellularProfilo.set("Stato", new_check_i(CellularData.stato));
+    CellularProfilo.set("Prezzo", new_check_i(CellularData.prezzo));
+    CellularProfilo.set("Nome", CellularData.nome);
 
     TabbozProfilo.set("SoftCheck", new_counter);
     TabbozProfilo.set("Version", VERSION);
