@@ -19,7 +19,7 @@
 */
 
 /* Versione gioco... */
-#define VERSION "NG-pre20220410"
+#define VERSION "NG-pre20220415"
 
 /* Per attivare il Debug... */
 #define TABBOZ_DEBUG 1
@@ -159,35 +159,6 @@ typedef struct tagSTSCOOTER {
   } STSCOOTER;
 
 
-
-/* INFORMAZIONI SUI TELEFONINI */
-typedef struct tagCEL {
-    int         dual;           // Dual Band ?
-    int         fama;           // figosita'
-    int         stato;          // quanto e' intero (in percuntuale)
-    int         prezzo;
-    char        nome[30];       // nome del telefono
-  } STCEL;
-
-/* INFORMAZIONI SULLE COMPAGNIE DEI TELEFONINI */
-typedef struct tagABB {
-    int         abbonamento;    // 0 = Ricarica, 1 = Abbonamento
-    int         dualonly;       // Dual Band Only ?
-    int         creditorest;    // Credito Restante...
-    int         fama;           // figosita'
-    int         prezzo;
-    char        nome[30];       // nome del telefono
-  } STABB;
-
-
-
-extern   STCEL        CellularData;
-extern   STCEL        CellularMem[];
-
-extern   STABB        AbbonamentData;
-extern   STABB        AbbonamentMem[];
-
-
 /* PRIMA LE VARIABILI GENERIKE... */
 
 extern  int     cheat;
@@ -298,9 +269,6 @@ extern  void  CalcolaStudio(void);
 extern  char  *MostraSoldi(int i);
 extern  void  nomoney(int tipo);
 
-
-/* TAG2015 define temporanei per escludere parti non ancora implementate */
-#define TAG2015_NOCELL
 
 /*Se euro disabilitato, calcola le lire moltiplicando x*1000. Altrimenti divide per 2 */
 #define CALCSOLDI(x) ( (!euro) ? x*1000 : x/2 )
