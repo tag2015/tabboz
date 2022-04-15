@@ -39,19 +39,43 @@ static void cb_Licenziati(Fl_Button*, void*) {
 }
 
 static void cb_Lavora(Fl_Button*, void*) {
-  Lavora();
+  if((LavoroMem[numeroditta].speed == 1 ) && (ScooterData.attivita != 1)) {
+  fl_message_title("Lavoro fuori porta");
+  fl_alert("Senza scooter non puoi andare al lavoro!");
+  return;
+}
+
+Lavora();
 }
 
 static void cb_Fai(Fl_Button*, void*) {
-  FaiIlLeccaculo();
+  if((LavoroMem[numeroditta].speed == 1 ) && (ScooterData.attivita != 1)) {
+  fl_message_title("Lavoro fuori porta");
+  fl_alert("Senza scooter non puoi andare al lavoro!");
+  return;
+}
+
+FaiIlLeccaculo();
 }
 
 static void cb_Chiedi(Fl_Button*, void*) {
-  ChiediAumento();
+  if((LavoroMem[numeroditta].speed == 1 ) && (ScooterData.attivita != 1)) {
+  fl_message_title("Lavoro fuori porta");
+  fl_alert("Senza scooter non puoi andare al lavoro!");
+  return;
+}
+
+ChiediAumento();
 }
 
 static void cb_Sciopera(Fl_Button*, void*) {
-  Sciopera();
+  if((LavoroMem[numeroditta].speed == 1 ) && (ScooterData.attivita != 1)) {
+  fl_message_title("Lavoro fuori porta");
+  fl_alert("Senza scooter non puoi andare al lavoro!");
+  return;
+}
+
+Sciopera();
 }
 
 #include <FL/Fl_Image.H>
@@ -7656,7 +7680,6 @@ Fl_Double_Window* GUILavoro() {
         o->color((Fl_Color)51);
         o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_Licenziati);
-        if(sesso=='F') o->label("Fai la leccaculo");
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(330, 75, 175, 25, "Lavora");
         o->color((Fl_Color)51);
@@ -7667,6 +7690,7 @@ Fl_Double_Window* GUILavoro() {
         o->color((Fl_Color)51);
         o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_Fai);
+        if(sesso=='F') o->label("Fai la leccaculo");
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(330, 125, 175, 25, "Chiedi aumento salario");
         o->color((Fl_Color)51);

@@ -44,12 +44,13 @@ decl {char tmp[128]} {private global
 decl {int num_ditta=0;} {private global
 }
 
-decl {int n_scheda;} {selected private local
+decl {int n_scheda;} {private local
 }
 
-Function {GUILavoro()} {} {
+Function {GUILavoro()} {open
+} {
   Fl_Window win_lavoro {
-    label Lavoro
+    label Lavoro open
     xywh {345 650 512 246} type Double color 54 labelfont 1 labelsize 12 hotspot
     code0 {AggiornaLavoro();} modal size_range {512 246 512 246} visible
   } {
@@ -76,26 +77,50 @@ win_cercalavoro->show();}
         label Licenziati
         callback {Licenziati();}
         xywh {330 30 175 25} color 51 selection_color 51
-        code0 {if(sesso=='F') o->label("Fai la leccaculo");}
       }
       Fl_Button {} {
         label Lavora
-        callback {Lavora();}
+        callback {if((LavoroMem[numeroditta].speed == 1 ) && (ScooterData.attivita != 1)) {
+  fl_message_title("Lavoro fuori porta");
+  fl_alert("Senza scooter non puoi andare al lavoro!");
+  return;
+}
+
+Lavora();}
         xywh {330 75 175 25} color 51 selection_color 51
       }
       Fl_Button {} {
         label {Fai il leccaculo}
-        callback {FaiIlLeccaculo();}
+        callback {if((LavoroMem[numeroditta].speed == 1 ) && (ScooterData.attivita != 1)) {
+  fl_message_title("Lavoro fuori porta");
+  fl_alert("Senza scooter non puoi andare al lavoro!");
+  return;
+}
+
+FaiIlLeccaculo();}
         xywh {330 100 175 25} color 51 selection_color 51
+        code0 {if(sesso=='F') o->label("Fai la leccaculo");}
       }
       Fl_Button {} {
         label {Chiedi aumento salario}
-        callback {ChiediAumento();}
+        callback {if((LavoroMem[numeroditta].speed == 1 ) && (ScooterData.attivita != 1)) {
+  fl_message_title("Lavoro fuori porta");
+  fl_alert("Senza scooter non puoi andare al lavoro!");
+  return;
+}
+
+ChiediAumento();}
         xywh {330 125 175 25} color 51 selection_color 51
       }
       Fl_Button {} {
         label Sciopera
-        callback {Sciopera();}
+        callback {if((LavoroMem[numeroditta].speed == 1 ) && (ScooterData.attivita != 1)) {
+  fl_message_title("Lavoro fuori porta");
+  fl_alert("Senza scooter non puoi andare al lavoro!");
+  return;
+}
+
+Sciopera();} selected
         xywh {330 150 175 25} color 51 selection_color 51
       }
     }
@@ -142,7 +167,7 @@ Function {GUICercaLavoro()} {open
 } {
   Fl_Window win_cercalavoro {
     label {Annunci - Offro Lavoro} open
-    xywh {435 411 400 370} type Double color 54 labelfont 1 labelsize 12 hotspot modal size_range {400 370 400 370} visible
+    xywh {435 411 400 370} type Double color 54 labelfont 1 labelsize 12 hide hotspot modal size_range {400 370 400 370}
   } {
     Fl_Button lav_btn_ok {
       label OK
@@ -204,13 +229,12 @@ win_cercalavoro->redraw();}
   }
 }
 
-Function {GUIQuizzone()} {open
-} {
+Function {GUIQuizzone()} {} {
   Fl_Window win_quizzone {
     label Quiz open
-    xywh {904 307 585 575} type Double color 54 labelfont 1 labelsize 12 hotspot
+    xywh {904 307 585 575} type Double color 54 labelfont 1 labelsize 12 hide hotspot
     code0 {memset(crocette_risposte,0,sizeof(crocette_risposte));}
-    code1 {o->label(StrFinestraQuizLavoro[n_scheda]);} modal size_range {585 575 585 575} visible
+    code1 {o->label(StrFinestraQuizLavoro[n_scheda]);} modal size_range {585 575 585 575}
   } {
     Fl_Group {} {
       label pagina open
