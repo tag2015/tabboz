@@ -34,6 +34,7 @@
 #include "lavoro.h"
 #include "scuola.h"
 #include "scooter.h"
+#include "telefono.h"
 
 #include "eventi.h"
 #include "gui/GUIEvento.h"
