@@ -20,6 +20,9 @@ decl {\#include "../lavoro.h"} {private global
 decl {\#include "../negozi.h"} {private global
 }
 
+decl {\#include "GUIConfig.h"} {private global
+}
+
 decl {\#include "GUIScuola.h"} {private global
 }
 
@@ -56,40 +59,44 @@ decl {int scelta_gui;} {public local
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
-    label {Tabboz Simulator Next Generation!} open selected
-    xywh {155 484 475 450} type Double align 5
-    code0 {AggiornaPrincipale();} size_range {475 450 475 450} visible
+    label {Tabboz Simulator Next Generation!} open
+    xywh {289 252 475 470} type Double align 5
+    code0 {AggiornaPrincipale();} size_range {475 470 475 470} visible
   } {
-    Fl_Menu_Bar {} {
-      xywh {0 0 475 20} labeltype NO_LABEL hide deactivate
+    Fl_Menu_Bar {} {open
+      xywh {0 0 475 20} labeltype NO_LABEL labelsize 12 textsize 12 hide deactivate
     } {
       Submenu {} {
-        label Menu open
-        xywh {0 0 62 20}
+        label Gioco open
+        xywh {0 0 62 20} labelsize 12
       } {
         MenuItem {} {
           label Esci
-          xywh {5 5 100 20}
+          xywh {5 5 100 20} labelsize 12
         }
       }
+      Submenu {} {
+        label Opzioni open
+        xywh {0 0 62 20} labelsize 12
+      } {}
     }
     Fl_Group {} {
       label {Sbatti...} open
-      xywh {10 330 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
+      xywh {10 350 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
     } {
       Fl_Button {} {
         label Scuola
         callback {GUITabbozScuola();
 win_scuola->show();
 win_principale->deactivate();}
-        image {icons/b_scuola.png} xywh {15 335 135 30} labelfont 2 align 272
+        image {icons/b_scuola.png} xywh {15 355 135 30} labelfont 2 align 272
       }
       Fl_Button {} {
         label Lavoro
         callback {GUILavoro();
 win_lavoro->show();
 win_principale->deactivate();}
-        xywh {15 370 135 30} labelfont 2
+        xywh {15 390 135 30} labelfont 2
       }
       Fl_Button {} {
         label Palestra
@@ -101,19 +108,20 @@ win_principale->deactivate();}
   fl_message_title("Palestra chiusa");
   fl_alert("Il tuo fisico da atleta dovrà aspettare...\\nvisto che oggi la palestra è chiusa...");
 }}
-        xywh {15 405 135 30} labelfont 2
+        xywh {15 425 135 30} labelfont 2
       }
     }
     Fl_Group {} {
       label {Social!} open
-      xywh {165 330 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
+      xywh {165 350 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
     } {
       Fl_Button {} {
         label Tipa
         callback {GUITipa();
 win_tipa->show();
-win_principale->deactivate();}
-        image {icons/b_tipa.png} xywh {170 335 135 30} labelfont 2 align 256
+win_principale->deactivate();} selected
+        image {icons/b_tipa.png} xywh {170 355 135 30} labelfont 2 align 256
+        code0 {if(sesso == 'F') o->label("Tipo");}
       }
       Fl_Button {} {
         label Compagnia
@@ -121,26 +129,26 @@ win_principale->deactivate();}
 compa_val_rep->value(Reputazione);
 win_compagnia->show();
 win_principale->deactivate();}
-        image {icons/b_compagnia.png} xywh {170 370 135 30} labelfont 2 align 256
+        image {icons/b_compagnia.png} xywh {170 390 135 30} labelfont 2 align 256
       }
       Fl_Button {} {
         label Famiglia
         callback {GUITabbozFamiglia();
 win_famiglia->show();
 win_principale->deactivate();}
-        image {icons/b_famiglia.png} xywh {170 405 135 30} labelfont 2 align 256
+        image {icons/b_famiglia.png} xywh {170 425 135 30} labelfont 2 align 256
       }
     }
     Fl_Group {} {
       label {Scialla!} open
-      xywh {320 330 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
+      xywh {320 350 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
     } {
       Fl_Button {} {
         label Scooter
         callback {GUIScooter();
 win_scooter->show();
 win_principale->deactivate();}
-        xywh {325 335 135 30} labelfont 2
+        xywh {325 355 135 30} labelfont 2
       }
       Fl_Button {} {
         label Negozi
@@ -150,149 +158,153 @@ win_principale->deactivate();}
   win_negozi->show();
 } else
   AggiornaPrincipale();}
-        xywh {325 370 135 30} labelfont 2
+        xywh {325 390 135 30} labelfont 2
       }
       Fl_Button {} {
         label Disco
         callback {GUITabbozDisco();
 win_disco->show();
 win_principale->deactivate();}
-        xywh {325 405 135 30} labelfont 2
+        xywh {325 425 135 30} labelfont 2
       }
     }
     Fl_Box main_box_nome {
       label {Nome Tabbozzo}
-      xywh {10 10 140 25} box SHADOW_BOX color 7 labelfont 3 labelsize 12
+      xywh {10 30 140 25} box SHADOW_BOX color 7 labelfont 3 labelsize 12
       code0 {o->label(Nome);}
     }
     Fl_Box main_box_figurino {
-      xywh {10 30 140 280} box SHADOW_BOX
+      xywh {10 50 140 280} box SHADOW_BOX
     }
     Fl_Box main_box_giorno {
       label {  Lunedì 31 Gennaio}
-      image {icons/calendario.png} xywh {160 10 305 30} box EMBOSSED_FRAME labelfont 3 align 276
+      image {icons/calendario.png} xywh {160 30 305 30} box EMBOSSED_FRAME labelfont 3 align 276
     }
     Fl_Group {} {
       label Tipa open
-      xywh {160 65 145 95} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+      xywh {160 85 145 95} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+      code0 {if(sesso=='F') o->label("Tipo");}
     } {
       Fl_Output main_txtbox_tipa {
         label Tipa
-        xywh {167 75 120 25} box FLAT_BOX color 49 labeltype NO_LABEL labelfont 1 align 0 textsize 12
+        xywh {167 95 120 25} box FLAT_BOX color 49 labeltype NO_LABEL labelfont 1 align 0 textsize 12
         code0 {o->value(Nometipa);}
         code1 {o->clear_visible_focus();}
       }
       Fl_Value_Output main_valbox_rapporti {
         label {Rapporto }
-        xywh {240 110 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 value 100 textfont 1
+        xywh {240 130 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 value 100 textfont 1
       }
       Fl_Box {} {
         label {%}
-        xywh {275 114 20 16} labelfont 1
+        xywh {275 134 20 16} labelfont 1
       }
     }
     Fl_Group {} {
       label Soldi open
-      xywh {160 180 305 65} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+      xywh {160 200 305 65} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
     } {
       Fl_Value_Output main_valbox_soldi {
         label {L.}
         callback {o->value(CALCSOLDI(Soldi));}
-        xywh {180 200 100 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 0 step 1 value 1e+10 textfont 5
+        xywh {180 220 100 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 0 step 1 value 1e+10 textfont 5
       }
       Fl_Value_Output main_valbox_paghetta {
         label {Paghetta  L.}
         callback {o->value(CALCSOLDI(Paghetta));}
-        tooltip {Paghetta settimanale} xywh {380 185 80 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 0 step 1 value 50000 textfont 5
+        tooltip {Paghetta settimanale} xywh {380 205 80 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 0 step 1 value 50000 textfont 5
       }
       Fl_Value_Output main_valbox_stipendio {
         label {Stipendio  L.}
         callback {o->value(CALCSOLDI(stipendio));}
-        tooltip {Se non sei disoccupato...} xywh {380 215 80 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 0 step 1 value 1e+07 textfont 5
+        tooltip {Se non sei disoccupato...} xywh {380 235 80 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 0 step 1 value 1e+07 textfont 5
       }
     }
     Fl_Group {} {
       label {Tabbo-stats} open
-      xywh {315 65 150 95} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+      xywh {315 85 150 95} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
     } {
       Fl_Value_Output main_valbox_rep {
         label {Reputazione }
-        xywh {405 70 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 value 100 textfont 1
+        xywh {405 90 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 value 100 textfont 1
       }
       Fl_Value_Output main_valbox_fama {
         label {Figosità }
-        tooltip {L'innato carisma del tabbozzo} xywh {405 100 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 value 100 textfont 1
+        tooltip {L'innato carisma del tabbozzo} xywh {405 120 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 value 100 textfont 1
       }
       Fl_Value_Output main_valbox_studio {
         label {Media Voti }
         callback {o->precision(1);
 o->value(MEDIAVOTI(Studio,N_MATERIE));}
-        tooltip {Media scolastica} xywh {405 130 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 textfont 1
+        tooltip {Media scolastica} xywh {405 150 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 textfont 1
       }
       Fl_Box {} {
         label {%}
-        xywh {440 74 15 16} labelfont 1
+        xywh {440 94 15 16} labelfont 1
       }
       Fl_Box {} {
         label {%}
-        xywh {440 104 15 16} labelfont 1
+        xywh {440 124 15 16} labelfont 1
       }
     }
     Fl_Box main_fig_scarpe {
-      xywh {45 245 60 65}
+      xywh {45 265 60 65}
     }
     Fl_Box main_fig_panta {
-      xywh {20 127 110 150}
+      xywh {20 147 110 150}
     }
     Fl_Box main_fig_giub {
-      xywh {43 80 60 65}
+      xywh {43 100 60 65}
     }
     Fl_Box main_fig_testa {
-      xywh {42 36 60 65}
+      xywh {42 56 60 65}
     }
     Fl_Group {} {open
-      xywh {390 15 70 20}
+      xywh {335 35 60 20}
+      code0 {if(!TABBOZ_DEBUG) o->hide();}
     } {
       Fl_Button {} {
         label {>>}
         callback {Giorno();
 AggiornaPrincipale();}
-        xywh {390 15 20 20}
-        code0 {if(!TABBOZ_DEBUG) o->hide();}
+        xywh {335 35 20 20}
       }
       Fl_Button {} {
         label T
         callback {GUITestbed();
 win_testbed->show();
 win_principale->deactivate();}
-        xywh {440 15 20 20}
-        code0 {if(!TABBOZ_DEBUG) o->hide();}
+        xywh {375 35 20 20}
       }
       Fl_Button {} {
         label {$}
         callback {Soldi+=1000;
 main_valbox_soldi->value(CALCSOLDI(Soldi));}
-        xywh {415 15 20 20}
-        code0 {if(!TABBOZ_DEBUG) o->hide();}
+        xywh {355 35 20 20}
       }
     }
     Fl_Group main_grp_scooter {
       label Scooter open
-      xywh {160 270 305 35} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+      xywh {160 290 305 35} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
     } {
       Fl_Output main_txtbox_scooter {
         label Scooter
-        xywh {165 275 200 25} box FLAT_BOX color 49 labeltype NO_LABEL labelfont 1 align 0 textsize 12
+        xywh {165 295 200 25} box FLAT_BOX color 49 labeltype NO_LABEL labelfont 1 align 0 textsize 12
         code0 {o->clear_visible_focus();}
       }
       Fl_Value_Output main_valbox_scooterstato {
         label {Stato }
-        xywh {405 275 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 value 100 textfont 1
+        xywh {405 295 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 value 100 textfont 1
       }
       Fl_Box {} {
         label {%}
-        xywh {440 279 15 16} labelfont 1
+        xywh {440 299 15 16} labelfont 1
       }
+    }
+    Fl_Button {} {
+      callback {GUIConfig();
+win_config->show();}
+      tooltip Opzioni image {icons/b_opzioni.png} xywh {438 33 25 25}
     }
   }
 }

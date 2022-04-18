@@ -7,6 +7,7 @@
 #include "../scuola.h"
 #include "../lavoro.h"
 #include "../negozi.h"
+#include "GUIConfig.h"
 #include "GUIScuola.h"
 #include "GUILavoro.h"
 #include "GUIPalestra.h"
@@ -22,8 +23,10 @@ int scelta_gui;
 Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
 
 Fl_Menu_Item menu_[] = {
- {"Menu", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
- {"Esci", 0,  0, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 14, 0},
+ {"Gioco", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {"Esci", 0,  0, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {0,0,0,0,0,0,0,0,0},
+ {"Opzioni", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
  {0,0,0,0,0,0,0,0,0},
  {0,0,0,0,0,0,0,0,0}
 };
@@ -393,52 +396,109 @@ Fl_Output *main_txtbox_scooter=(Fl_Output *)0;
 
 Fl_Value_Output *main_valbox_scooterstato=(Fl_Value_Output *)0;
 
+static void cb_2(Fl_Button*, void*) {
+  GUIConfig();
+win_config->show();
+}
+
+static const unsigned char idata_b_opzioni[] =
+{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,33,23,23,24,195,62,62,63,227,
+62,62,63,227,23,23,24,195,0,0,0,33,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,2,1,1,1,128,4,4,4,151,0,0,0,54,132,134,135,255,229,232,234,
+255,229,232,234,255,132,134,135,255,0,0,0,54,4,4,4,151,1,1,1,128,0,0,0,2,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,2,10,10,10,170,158,160,163,255,153,156,159,255,58,59,
+61,245,176,179,182,255,212,217,221,255,210,215,220,255,174,178,181,255,58,59,
+61,245,153,156,159,255,158,160,163,255,10,10,10,170,0,0,0,2,0,0,0,0,0,0,0,0,1,
+1,1,128,151,155,158,255,211,216,221,255,211,216,221,255,204,210,216,255,190,
+197,205,255,180,188,197,255,170,180,189,255,162,173,183,255,177,186,194,255,207,
+213,218,255,211,216,221,255,151,155,158,255,1,1,1,128,0,0,0,0,0,0,0,0,4,4,4,151,
+142,147,150,255,204,210,215,255,208,213,218,255,199,206,212,255,189,197,204,255,
+180,188,197,255,170,180,189,255,161,172,182,255,152,164,175,255,154,165,176,255,
+199,205,211,255,142,147,150,255,4,4,4,151,0,0,0,0,0,0,0,33,0,0,0,54,52,54,55,
+245,208,213,218,255,209,214,219,255,199,206,212,255,190,198,205,255,152,158,164,
+255,149,156,162,255,171,181,190,255,152,164,175,255,142,155,167,255,158,170,180,
+255,52,54,55,245,0,0,0,54,0,0,0,33,18,19,20,195,105,110,115,255,150,157,163,255,
+217,221,225,255,209,214,219,255,194,201,208,255,64,66,69,242,0,0,0,117,0,0,0,
+117,64,66,69,242,162,173,183,255,142,155,167,255,135,148,162,255,146,152,159,
+255,105,110,115,255,18,19,20,195,46,49,51,227,176,185,193,255,186,194,201,255,
+218,222,226,255,209,214,219,255,147,154,160,255,0,0,0,117,0,0,0,0,0,0,0,0,0,0,0,
+117,135,143,150,255,142,155,167,255,133,147,160,255,165,176,185,255,176,185,193,
+255,46,49,51,227,44,47,49,227,167,177,187,255,179,188,196,255,218,222,226,255,
+209,214,219,255,142,149,156,255,0,0,0,117,0,0,0,0,0,0,0,0,0,0,0,117,130,138,146,
+255,142,155,167,255,133,147,160,255,158,169,180,255,167,177,187,255,44,47,49,
+227,16,17,18,195,92,99,105,255,131,140,148,255,216,221,225,255,209,214,219,255,
+185,193,201,255,53,57,61,242,0,0,0,117,0,0,0,117,53,57,61,242,153,165,176,255,
+142,155,167,255,134,148,161,255,126,136,144,255,92,99,105,255,16,17,18,195,0,0,
+0,33,0,0,0,54,40,44,47,245,190,197,204,255,209,214,219,255,199,206,212,255,
+175,185,193,255,127,136,144,255,125,134,142,255,157,168,179,255,152,164,175,255,
+142,155,167,255,140,153,166,255,40,44,47,245,0,0,0,54,0,0,0,33,0,0,0,0,2,3,3,
+151,98,107,116,255,146,158,170,255,196,203,209,255,199,206,212,255,189,197,204,
+255,180,188,197,255,170,180,189,255,161,172,182,255,152,164,175,255,142,155,167,
+255,141,154,166,255,98,107,116,255,2,3,3,151,0,0,0,0,0,0,0,0,0,1,1,128,96,106,
+115,255,133,147,160,255,137,150,163,255,171,181,190,255,187,195,203,255,180,188,
+197,255,170,180,189,255,160,171,181,255,144,156,168,255,133,147,160,255,133,147,
+160,255,96,106,115,255,0,1,1,128,0,0,0,0,0,0,0,0,0,0,0,2,6,6,7,170,90,100,111,
+255,87,98,108,255,34,38,42,245,103,115,126,255,135,149,162,255,133,147,161,255,
+102,114,125,255,34,38,42,245,87,98,108,255,90,100,111,255,6,6,7,170,0,0,0,2,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,1,128,2,2,3,151,0,0,0,54,66,76,84,255,115,131,
+147,255,115,131,147,255,66,76,84,255,0,0,0,54,2,2,3,151,0,0,1,128,0,0,0,2,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,33,11,12,14,195,29,33,
+37,227,29,33,37,227,11,12,14,195,0,0,0,33,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0};
+static Fl_Image *image_b_opzioni() {
+  static Fl_Image *image = new Fl_RGB_Image(idata_b_opzioni, 16, 16, 4, 0);
+  return image;
+}
+
 Fl_Double_Window* GUITabboz() {
-  { win_principale = new Fl_Double_Window(475, 450, "Tabboz Simulator Next Generation!");
+  { win_principale = new Fl_Double_Window(475, 470, "Tabboz Simulator Next Generation!");
     win_principale->align(Fl_Align(FL_ALIGN_TOP_LEFT));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 475, 20);
       o->labeltype(FL_NO_LABEL);
+      o->labelsize(12);
+      o->textsize(12);
       o->hide();
       o->deactivate();
       o->menu(menu_);
     } // Fl_Menu_Bar* o
-    { Fl_Group* o = new Fl_Group(10, 330, 145, 110, "Sbatti...");
+    { Fl_Group* o = new Fl_Group(10, 350, 145, 110, "Sbatti...");
       o->box(FL_EMBOSSED_FRAME);
       o->labeltype(FL_NO_LABEL);
       o->labelsize(12);
-      { Fl_Button* o = new Fl_Button(15, 335, 135, 30, "Scuola");
+      { Fl_Button* o = new Fl_Button(15, 355, 135, 30, "Scuola");
         o->image( image_b_scuola() );
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Scuola);
         o->align(Fl_Align(256|FL_ALIGN_INSIDE));
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(15, 370, 135, 30, "Lavoro");
+      { Fl_Button* o = new Fl_Button(15, 390, 135, 30, "Lavoro");
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Lavoro);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(15, 405, 135, 30, "Palestra");
+      { Fl_Button* o = new Fl_Button(15, 425, 135, 30, "Palestra");
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Palestra);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(165, 330, 145, 110, "Social!");
+    { Fl_Group* o = new Fl_Group(165, 350, 145, 110, "Social!");
       o->box(FL_EMBOSSED_FRAME);
       o->labeltype(FL_NO_LABEL);
       o->labelsize(12);
-      { Fl_Button* o = new Fl_Button(170, 335, 135, 30, "Tipa");
+      { Fl_Button* o = new Fl_Button(170, 355, 135, 30, "Tipa");
         o->image( image_b_tipa() );
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Tipa);
         o->align(Fl_Align(256));
+        if(sesso == 'F') o->label("Tipo");
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(170, 370, 135, 30, "Compagnia");
+      { Fl_Button* o = new Fl_Button(170, 390, 135, 30, "Compagnia");
         o->image( image_b_compagnia() );
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Compagnia);
         o->align(Fl_Align(256));
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(170, 405, 135, 30, "Famiglia");
+      { Fl_Button* o = new Fl_Button(170, 425, 135, 30, "Famiglia");
         o->image( image_b_famiglia() );
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Famiglia);
@@ -446,46 +506,46 @@ Fl_Double_Window* GUITabboz() {
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(320, 330, 145, 110, "Scialla!");
+    { Fl_Group* o = new Fl_Group(320, 350, 145, 110, "Scialla!");
       o->box(FL_EMBOSSED_FRAME);
       o->labeltype(FL_NO_LABEL);
       o->labelsize(12);
-      { Fl_Button* o = new Fl_Button(325, 335, 135, 30, "Scooter");
+      { Fl_Button* o = new Fl_Button(325, 355, 135, 30, "Scooter");
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Scooter);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(325, 370, 135, 30, "Negozi");
+      { Fl_Button* o = new Fl_Button(325, 390, 135, 30, "Negozi");
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Negozi);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(325, 405, 135, 30, "Disco");
+      { Fl_Button* o = new Fl_Button(325, 425, 135, 30, "Disco");
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Disco);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
-    { Fl_Box* o = main_box_nome = new Fl_Box(10, 10, 140, 25, "Nome Tabbozzo");
+    { Fl_Box* o = main_box_nome = new Fl_Box(10, 30, 140, 25, "Nome Tabbozzo");
       main_box_nome->box(FL_SHADOW_BOX);
       main_box_nome->color(FL_BACKGROUND2_COLOR);
       main_box_nome->labelfont(3);
       main_box_nome->labelsize(12);
       o->label(Nome);
     } // Fl_Box* main_box_nome
-    { main_box_figurino = new Fl_Box(10, 30, 140, 280);
+    { main_box_figurino = new Fl_Box(10, 50, 140, 280);
       main_box_figurino->box(FL_SHADOW_BOX);
     } // Fl_Box* main_box_figurino
-    { main_box_giorno = new Fl_Box(160, 10, 305, 30, "  Luned\303\254 31 Gennaio");
+    { main_box_giorno = new Fl_Box(160, 30, 305, 30, "  Luned\303\254 31 Gennaio");
       main_box_giorno->box(FL_EMBOSSED_FRAME);
       main_box_giorno->image( image_calendario() );
       main_box_giorno->labelfont(3);
       main_box_giorno->align(Fl_Align(260|FL_ALIGN_INSIDE));
     } // Fl_Box* main_box_giorno
-    { Fl_Group* o = new Fl_Group(160, 65, 145, 95, "Tipa");
+    { Fl_Group* o = new Fl_Group(160, 85, 145, 95, "Tipa");
       o->box(FL_EMBOSSED_FRAME);
       o->labelfont(1);
       o->labelsize(12);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { Fl_Output* o = main_txtbox_tipa = new Fl_Output(167, 75, 120, 25, "Tipa");
+      { Fl_Output* o = main_txtbox_tipa = new Fl_Output(167, 95, 120, 25, "Tipa");
         main_txtbox_tipa->box(FL_FLAT_BOX);
         main_txtbox_tipa->color(FL_BACKGROUND_COLOR);
         main_txtbox_tipa->labeltype(FL_NO_LABEL);
@@ -495,7 +555,7 @@ Fl_Double_Window* GUITabboz() {
         o->value(Nometipa);
         o->clear_visible_focus();
       } // Fl_Output* main_txtbox_tipa
-      { main_valbox_rapporti = new Fl_Value_Output(240, 110, 35, 25, "Rapporto ");
+      { main_valbox_rapporti = new Fl_Value_Output(240, 130, 35, 25, "Rapporto ");
         main_valbox_rapporti->box(FL_SHADOW_BOX);
         main_valbox_rapporti->color(FL_BACKGROUND2_COLOR);
         main_valbox_rapporti->labelsize(12);
@@ -503,17 +563,18 @@ Fl_Double_Window* GUITabboz() {
         main_valbox_rapporti->value(100);
         main_valbox_rapporti->textfont(1);
       } // Fl_Value_Output* main_valbox_rapporti
-      { Fl_Box* o = new Fl_Box(275, 114, 20, 16, "%");
+      { Fl_Box* o = new Fl_Box(275, 134, 20, 16, "%");
         o->labelfont(1);
       } // Fl_Box* o
+      if(sesso=='F') o->label("Tipo");
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(160, 180, 305, 65, "Soldi");
+    { Fl_Group* o = new Fl_Group(160, 200, 305, 65, "Soldi");
       o->box(FL_EMBOSSED_FRAME);
       o->labelfont(1);
       o->labelsize(12);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { main_valbox_soldi = new Fl_Value_Output(180, 200, 100, 25, "L.");
+      { main_valbox_soldi = new Fl_Value_Output(180, 220, 100, 25, "L.");
         main_valbox_soldi->box(FL_EMBOSSED_BOX);
         main_valbox_soldi->color(FL_BACKGROUND2_COLOR);
         main_valbox_soldi->labelsize(12);
@@ -523,7 +584,7 @@ Fl_Double_Window* GUITabboz() {
         main_valbox_soldi->textfont(5);
         main_valbox_soldi->callback((Fl_Callback*)cb_main_valbox_soldi);
       } // Fl_Value_Output* main_valbox_soldi
-      { main_valbox_paghetta = new Fl_Value_Output(380, 185, 80, 25, "Paghetta  L.");
+      { main_valbox_paghetta = new Fl_Value_Output(380, 205, 80, 25, "Paghetta  L.");
         main_valbox_paghetta->tooltip("Paghetta settimanale");
         main_valbox_paghetta->box(FL_EMBOSSED_BOX);
         main_valbox_paghetta->color(FL_BACKGROUND2_COLOR);
@@ -534,7 +595,7 @@ Fl_Double_Window* GUITabboz() {
         main_valbox_paghetta->textfont(5);
         main_valbox_paghetta->callback((Fl_Callback*)cb_main_valbox_paghetta);
       } // Fl_Value_Output* main_valbox_paghetta
-      { main_valbox_stipendio = new Fl_Value_Output(380, 215, 80, 25, "Stipendio  L.");
+      { main_valbox_stipendio = new Fl_Value_Output(380, 235, 80, 25, "Stipendio  L.");
         main_valbox_stipendio->tooltip("Se non sei disoccupato...");
         main_valbox_stipendio->box(FL_EMBOSSED_BOX);
         main_valbox_stipendio->color(FL_BACKGROUND2_COLOR);
@@ -547,12 +608,12 @@ Fl_Double_Window* GUITabboz() {
       } // Fl_Value_Output* main_valbox_stipendio
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(315, 65, 150, 95, "Tabbo-stats");
+    { Fl_Group* o = new Fl_Group(315, 85, 150, 95, "Tabbo-stats");
       o->box(FL_EMBOSSED_FRAME);
       o->labelfont(1);
       o->labelsize(12);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { main_valbox_rep = new Fl_Value_Output(405, 70, 35, 25, "Reputazione ");
+      { main_valbox_rep = new Fl_Value_Output(405, 90, 35, 25, "Reputazione ");
         main_valbox_rep->box(FL_SHADOW_BOX);
         main_valbox_rep->color(FL_BACKGROUND2_COLOR);
         main_valbox_rep->labelsize(12);
@@ -560,7 +621,7 @@ Fl_Double_Window* GUITabboz() {
         main_valbox_rep->value(100);
         main_valbox_rep->textfont(1);
       } // Fl_Value_Output* main_valbox_rep
-      { main_valbox_fama = new Fl_Value_Output(405, 100, 35, 25, "Figosit\303\240 ");
+      { main_valbox_fama = new Fl_Value_Output(405, 120, 35, 25, "Figosit\303\240 ");
         main_valbox_fama->tooltip("L\'innato carisma del tabbozzo");
         main_valbox_fama->box(FL_SHADOW_BOX);
         main_valbox_fama->color(FL_BACKGROUND2_COLOR);
@@ -569,7 +630,7 @@ Fl_Double_Window* GUITabboz() {
         main_valbox_fama->value(100);
         main_valbox_fama->textfont(1);
       } // Fl_Value_Output* main_valbox_fama
-      { main_valbox_studio = new Fl_Value_Output(405, 130, 35, 25, "Media Voti ");
+      { main_valbox_studio = new Fl_Value_Output(405, 150, 35, 25, "Media Voti ");
         main_valbox_studio->tooltip("Media scolastica");
         main_valbox_studio->box(FL_SHADOW_BOX);
         main_valbox_studio->color(FL_BACKGROUND2_COLOR);
@@ -578,43 +639,41 @@ Fl_Double_Window* GUITabboz() {
         main_valbox_studio->textfont(1);
         main_valbox_studio->callback((Fl_Callback*)cb_main_valbox_studio);
       } // Fl_Value_Output* main_valbox_studio
-      { Fl_Box* o = new Fl_Box(440, 74, 15, 16, "%");
+      { Fl_Box* o = new Fl_Box(440, 94, 15, 16, "%");
         o->labelfont(1);
       } // Fl_Box* o
-      { Fl_Box* o = new Fl_Box(440, 104, 15, 16, "%");
+      { Fl_Box* o = new Fl_Box(440, 124, 15, 16, "%");
         o->labelfont(1);
       } // Fl_Box* o
       o->end();
     } // Fl_Group* o
-    { main_fig_scarpe = new Fl_Box(45, 245, 60, 65);
+    { main_fig_scarpe = new Fl_Box(45, 265, 60, 65);
     } // Fl_Box* main_fig_scarpe
-    { main_fig_panta = new Fl_Box(20, 127, 110, 150);
+    { main_fig_panta = new Fl_Box(20, 147, 110, 150);
     } // Fl_Box* main_fig_panta
-    { main_fig_giub = new Fl_Box(43, 80, 60, 65);
+    { main_fig_giub = new Fl_Box(43, 100, 60, 65);
     } // Fl_Box* main_fig_giub
-    { main_fig_testa = new Fl_Box(42, 36, 60, 65);
+    { main_fig_testa = new Fl_Box(42, 56, 60, 65);
     } // Fl_Box* main_fig_testa
-    { Fl_Group* o = new Fl_Group(390, 15, 70, 20);
-      { Fl_Button* o = new Fl_Button(390, 15, 20, 20, ">>");
+    { Fl_Group* o = new Fl_Group(335, 35, 60, 20);
+      { Fl_Button* o = new Fl_Button(335, 35, 20, 20, ">>");
         o->callback((Fl_Callback*)cb_);
-        if(!TABBOZ_DEBUG) o->hide();
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(440, 15, 20, 20, "T");
+      { Fl_Button* o = new Fl_Button(375, 35, 20, 20, "T");
         o->callback((Fl_Callback*)cb_T);
-        if(!TABBOZ_DEBUG) o->hide();
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(415, 15, 20, 20, "$");
+      { Fl_Button* o = new Fl_Button(355, 35, 20, 20, "$");
         o->callback((Fl_Callback*)cb_1);
-        if(!TABBOZ_DEBUG) o->hide();
       } // Fl_Button* o
+      if(!TABBOZ_DEBUG) o->hide();
       o->end();
     } // Fl_Group* o
-    { main_grp_scooter = new Fl_Group(160, 270, 305, 35, "Scooter");
+    { main_grp_scooter = new Fl_Group(160, 290, 305, 35, "Scooter");
       main_grp_scooter->box(FL_EMBOSSED_FRAME);
       main_grp_scooter->labelfont(1);
       main_grp_scooter->labelsize(12);
       main_grp_scooter->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { Fl_Output* o = main_txtbox_scooter = new Fl_Output(165, 275, 200, 25, "Scooter");
+      { Fl_Output* o = main_txtbox_scooter = new Fl_Output(165, 295, 200, 25, "Scooter");
         main_txtbox_scooter->box(FL_FLAT_BOX);
         main_txtbox_scooter->color(FL_BACKGROUND_COLOR);
         main_txtbox_scooter->labeltype(FL_NO_LABEL);
@@ -623,7 +682,7 @@ Fl_Double_Window* GUITabboz() {
         main_txtbox_scooter->align(Fl_Align(FL_ALIGN_CENTER));
         o->clear_visible_focus();
       } // Fl_Output* main_txtbox_scooter
-      { main_valbox_scooterstato = new Fl_Value_Output(405, 275, 35, 25, "Stato ");
+      { main_valbox_scooterstato = new Fl_Value_Output(405, 295, 35, 25, "Stato ");
         main_valbox_scooterstato->box(FL_SHADOW_BOX);
         main_valbox_scooterstato->color(FL_BACKGROUND2_COLOR);
         main_valbox_scooterstato->labelsize(12);
@@ -631,13 +690,18 @@ Fl_Double_Window* GUITabboz() {
         main_valbox_scooterstato->value(100);
         main_valbox_scooterstato->textfont(1);
       } // Fl_Value_Output* main_valbox_scooterstato
-      { Fl_Box* o = new Fl_Box(440, 279, 15, 16, "%");
+      { Fl_Box* o = new Fl_Box(440, 299, 15, 16, "%");
         o->labelfont(1);
       } // Fl_Box* o
       main_grp_scooter->end();
     } // Fl_Group* main_grp_scooter
+    { Fl_Button* o = new Fl_Button(438, 33, 25, 25);
+      o->tooltip("Opzioni");
+      o->image( image_b_opzioni() );
+      o->callback((Fl_Callback*)cb_2);
+    } // Fl_Button* o
     AggiornaPrincipale();
-    win_principale->size_range(475, 450, 475, 450);
+    win_principale->size_range(475, 470, 475, 470);
     win_principale->end();
   } // Fl_Double_Window* win_principale
   return win_principale;
