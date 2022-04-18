@@ -1,0 +1,207 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cpp}
+decl {\#include <FL/Fl.H>} {private global
+}
+
+decl {\#include <FL/fl_ask.H>} {private global
+}
+
+decl {\#include <FL/Fl_Shared_Image.H>} {private global
+}
+
+decl {\#include <FL/Fl_PNG_Image.H>} {private global
+}
+
+decl {\#include "GUITabboz.h"} {private global
+}
+
+decl {\#include "../zarrosim.h"} {private global
+}
+
+decl {\#include "../global.h"} {private global
+}
+
+decl {\#include "../eventi.h"} {private global
+}
+
+decl {\#include "../sound.h"} {private global
+}
+
+decl {\#include "../sharedimg.h"} {private global
+}
+
+decl {const char *tema_corr;} {private global
+}
+
+decl {int diff_nuova;} {private global
+}
+
+Function {GUIConfig()} {open
+} {
+  Fl_Window win_config {
+    label Configurazione open
+    xywh {217 476 505 215} type Double hotspot
+    code0 {tema_corr = Fl::scheme();} modal size_range {505 215 505 215} visible
+  } {
+    Fl_Group {} {
+      label {Difficoltà} open
+      tooltip {Difficoltà inferiori riducono la probabilità
+ di essere lasciato/licenziato e la
+frequenza degli eventi casuali} xywh {10 25 240 145} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+      code0 {Fl_Round_Button *btn = (Fl_Round_Button *) o->child(difficolta-1);}
+      code1 {btn->set();}
+      code2 {diff_nuova = difficolta;}
+    } {
+      Fl_Round_Button {} {
+        label {I'm too young to be a tabbozzo.}
+        callback {diff_nuova=1;}
+        xywh {15 30 230 25} type Radio down_box ROUND_DOWN_BOX
+      }
+      Fl_Round_Button {} {
+        label {Hey, not too rough.}
+        callback {diff_nuova=2;}
+        xywh {15 57 230 25} type Radio down_box ROUND_DOWN_BOX
+      }
+      Fl_Round_Button {} {
+        label {Hurt me plenty.}
+        callback {diff_nuova=3;}
+        xywh {15 85 230 25} type Radio down_box ROUND_DOWN_BOX
+      }
+      Fl_Round_Button {} {
+        label {Ultra-violence.}
+        callback {diff_nuova=4;}
+        xywh {15 112 230 25} type Radio down_box ROUND_DOWN_BOX
+      }
+      Fl_Round_Button {} {
+        label {Nightmare! (like real life...)}
+        callback {diff_nuova=5;}
+        xywh {15 140 230 25} type Radio down_box ROUND_DOWN_BOX
+      }
+    }
+    Fl_Group {} {
+      label Opzioni open
+      xywh {255 25 240 145} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+    } {
+      Fl_Choice {} {
+        label {Tema grafico} open
+        tooltip {Stile delle finestre/pulsanti} xywh {350 30 135 25} down_box BORDER_BOX
+        code0 {if (Fl::is_scheme("none")) o->value(0);}
+        code1 {if (Fl::is_scheme("gtk+")) o->value(1);}
+        code2 {if (Fl::is_scheme("plastic")) o->value(2);}
+        code3 {if (Fl::is_scheme("gleam")) o->value(3);}
+      } {
+        MenuItem {} {
+          label {Windows 9x}
+          callback {Fl::scheme("base");}
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label GTK
+          callback {Fl::scheme("gtk+");}
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label {Plastic (OSX)}
+          callback {Fl::scheme("plastic");}
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label Gleam
+          callback {Fl::scheme("gleam");}
+          xywh {0 0 30 20}
+        }
+      }
+      Fl_Check_Button cfg_euro {
+        label {Importi in Euro}
+        tooltip {Converte tutti gli importi in Euro} xywh {265 65 220 25} down_box DOWN_BOX
+        code0 {o->value(euro);}
+      }
+      Fl_Check_Button cfg_timer {
+        label Timer
+        tooltip {NON IMPLEMENTATO
+Se attivato, i giorni avanzano automaticamente
+ anche se l'utente non effettua azioni} xywh {265 90 220 25} down_box DOWN_BOX deactivate
+        code0 {o->value(timer_active);}
+      }
+      Fl_Check_Button cfg_suono {
+        label {Effetti sonori}
+        tooltip {Abilita effetti sonori (solo per Windows)} xywh {265 115 220 25} down_box DOWN_BOX
+        code0 {o->value(sound_active);}
+      }
+      Fl_Check_Button cfg_log {
+        label {File di log (zarrosim.log)}
+        tooltip {Scrive gli eventi principali in un file di log
+nel profilo dell'utente} xywh {265 140 220 25} down_box DOWN_BOX
+      }
+    }
+    Fl_Button {} {
+      label OK
+      callback {difficolta=diff_nuova;
+ApplicaDifficolta();
+
+//Copiando direttamente in tema_corr segfaulta
+if (Fl::is_scheme("gtk+"))
+  strcpy(tema_grafico,"gtk+");
+else if (Fl::is_scheme("plastic"))
+  strcpy(tema_grafico,"plastic");
+else if (Fl::is_scheme("gleam"))
+  strcpy(tema_grafico,"gleam");
+else
+  strcpy(tema_grafico,"none");
+
+euro = cfg_euro->value();
+sound_active = cfg_suono->value();
+
+win_principale->activate();
+AggiornaPrincipale();
+win_config->hide();}
+      xywh {345 180 70 25}
+    }
+    Fl_Button {} {
+      label Annulla
+      callback {if(tema_corr)
+  Fl::scheme(tema_corr);
+else
+  Fl::scheme("none");
+win_principale->activate();
+AggiornaPrincipale();
+win_config->hide();}
+      xywh {425 180 70 25}
+    }
+    Fl_Button {} {
+      label {Info...}
+      callback {GUIAbout();
+win_about->show();}
+      xywh {10 180 70 25}
+    }
+  }
+}
+
+Function {GUIAbout()} {open
+} {
+  Fl_Window win_about {
+    label {A proposito di Tabboz Simulator NG} open
+    xywh {307 473 405 160} type Double hotspot modal size_range {505 215 505 215} visible
+  } {
+    Fl_Box {} {
+      label {Tabboz Simulator Next Generation
+
+Copyright (C) 2022 by Walter Agazzi ( github.com/tag2015 )
+Basato sul progetto originale copyright 1997-2000 by Andrea Bonomi, Emanuele Caccialanza, Daniele Gazzarri.}
+      xywh {5 3 395 122} labelsize 12 align 128
+    }
+    Fl_Button {} {
+      label OK
+      callback {win_about->hide();}
+      xywh {330 130 70 25}
+    }
+    Fl_Button {} {
+      label {Norme di utilizzo}
+      callback {fl_message_title("Norme di utilizzo");
+fl_message("Il biglietto è valido solo dopo la convalida.\\nIl biglietto deve essere conservato per tutta la durata del viaggio.\\nIl diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto.\\nIl passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile,\\no comunque non valido, verrà abbattuto.\\nLa notifica del decesso verrà inviata ai parenti solo previo pagamento delle spese postali.");} selected
+      xywh {5 140 95 15} labelsize 12
+    }
+  }
+}
