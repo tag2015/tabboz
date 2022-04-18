@@ -189,6 +189,10 @@ void Evento()
 
     if (numeroditta > 0) {
         i = rand() % (impegno * 2 + Fortuna * 3);
+        #ifdef LOGGING
+            sprintf(tmp,"Evento:Licenziamento random (se i<2) i=%d",i);
+            writelog(tmp);
+        #endif
         if (i < 2) {           // perdi il lavoro
             impegno=0;
             giorni_di_lavoro=0;
