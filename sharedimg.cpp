@@ -15,6 +15,7 @@ Fl_Shared_Image *ImgEventi[N_EVENTI];
 
 Fl_Shared_Image *ImgDitte[N_DITTE];
 
+Fl_Shared_Image *ImgExit;
 
 void CaricaSharedImgs()
 {
@@ -46,4 +47,6 @@ void CaricaSharedImgs()
         sprintf(path, "res/pic/ditta_%d.png",i);
         ImgDitte[i] = Fl_Shared_Image::get(path);
     }
+
+    ImgExit = Fl_Shared_Image::get("gui/icons/b_exit.png");
 }

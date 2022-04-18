@@ -21,4 +21,6 @@ extern Fl_Shared_Image *ImgEventi[];
 
 extern Fl_Shared_Image *ImgDitte[];
 
+extern Fl_Shared_Image *ImgExit;
+
 void CaricaSharedImgs();
