@@ -21,7 +21,16 @@
 /* Numero di materie nella struttura */
 #define N_MATERIE  9
 
+
+/* INFORMAZIONI MATERIE SCOLASTICHE */
+typedef struct tagSTMATERIE {
+    char        nome[30];       // nome della materia
+    int         voto;           // voto materia
+    } STMATERIE;
+
+
 extern   STMATERIE    MaterieMem[];
+
 
 void AggiornaScuola();
 
