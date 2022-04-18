@@ -72,8 +72,7 @@ char              path_profilo[STR_MAX]="dummy.tbz";  // FIMXE Path e file dove 
 
 //extern void     Atinom(HANDLE hInstance);  //visualizza messaggio extra in about
 
-/*verifica se valore è compreso in intervallo corretto*/
-extern int      vvc(int i);
+int vvc(int i);
 
 //extern ATOM     RegisterBMPTipaClass(HANDLE hInst);
 //extern ATOM     RegisterBMPViewClass(HANDLE hInst);
@@ -139,7 +138,8 @@ int     euro;
 int     timer_active;       // Abilita il timer
 int     sound_active;
 int     intro_active;       // Visualizza schermata introduttiva
-
+int     difficolta;
+char    tema_grafico[STR_MAX];
 
 #ifdef DEADCODE
     HANDLE    hInst;                    // hInstance dell'applicazione
@@ -223,6 +223,7 @@ void ResetMe(int primavolta)
 
 
     if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
+        difficolta          =  5;
         intro_active        =  1;
         timer_active        =  1;
         sound_active        =  1;
@@ -518,6 +519,10 @@ static void CaricaTutto(void)
     TabbozProfilo.get("Scarpe",buf_i,0);
     current_scarpe = vvc(new_check_i(buf_i));
 
+    TabbozProfilo.get("Difficolta",difficolta,5);
+    if ((difficolta < 1) || (difficolta > 5)) difficolta=5;
+    ApplicaDifficolta();
+
     TabbozProfilo.get("Euro",euro,0);
     if (euro < 0) euro=0;
     
@@ -539,6 +544,9 @@ static void CaricaTutto(void)
 
     TabbozProfilo.get("SoundActive",sound_active,-1);
     if (sound_active < 0) sound_active=1;
+
+    TabbozProfilo.get("TemaGrafico",tema_grafico,"none",STR_MAX);
+    Fl::scheme(tema_grafico);
 
     #ifndef NONETWORK
         net_enable   = atoi (RRKey("NetEnable"));
@@ -749,10 +757,14 @@ static void SalvaTutto(void) {
     TabbozProfilo.set("Scarpe", new_check_i(current_scarpe));
 
     /* salva opzioni */
+
+    TabbozProfilo.set("Difficolta", difficolta);
     TabbozProfilo.set("Euro", euro);
     TabbozProfilo.set("IntroActive", intro_active);
     TabbozProfilo.set("TimerActive", timer_active);
     TabbozProfilo.set("SoundActive", sound_active);
+    TabbozProfilo.set("TemaGrafico", tema_grafico);
+
 
 #ifndef NOTABBOZZA
     TabbozProfilo.set("Sesso", sesso);
@@ -1030,11 +1042,11 @@ static void SalvaTutto(void) {
 // }
 
 
+//FIXME implementata in gui, manca il reset
 
 /********************************************************************/
 /* Configuration...                                                 */
 /********************************************************************/
-// //Schermata config con impostazione difficoltà, etc. In futuro
 // # pragma argsused
 // BOOL FAR PASCAL Configuration(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 // {
@@ -1138,11 +1150,11 @@ static void SalvaTutto(void) {
 // }
 
 
+//FIXME Schermata info tabbozzo, verrà implementata in futuro
+//dato che non serve a nulla
 /********************************************************************/
 /* Personal Information...                                          */
 /********************************************************************/
-//TAG2015 Schermata info tabbozzo, verrà implementata in futuro
-//dato che non serve a nulla
 // # pragma argsused
 // BOOL FAR PASCAL PersonalInfo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 // {
@@ -1293,67 +1305,70 @@ void nomoney(int tipo)
     }
 }
 
+
+#ifdef DEADCODE
 //*******************************************************************
 // Aggiorna la finestra principale
 //*******************************************************************
-// void AggiornaPrincipale(HWND parent)
-// {
-// char tmp[128];
+void AggiornaPrincipale(HWND parent)
+{
+    char tmp[128];
 
-//      ShowWindow(parent, WIN_GRANDE);
+    ShowWindow(parent, WIN_GRANDE);
 
-//      sprintf(tmp, "%s %s",Nome,Cognome);
-//      SetDlgItemText(parent, QX_NOME, tmp);
+    sprintf(tmp, "%s %s",Nome,Cognome);
+    SetDlgItemText(parent, QX_NOME, tmp);
 
-//      SetDlgItemText(parent, QX_SOLDI, MostraSoldi(Soldi));
+    SetDlgItemText(parent, QX_SOLDI, MostraSoldi(Soldi));
 
-//      sprintf(tmp, "%d/100", Fama);        // Figosita'
-//      SetDlgItemText(parent, 151, tmp);
+    sprintf(tmp, "%d/100", Fama);        // Figosita'
+    SetDlgItemText(parent, 151, tmp);
 
-//      sprintf(tmp, "%d/100", Reputazione);    // Reputazione
-//      SetDlgItemText(parent, 152, tmp);
+    sprintf(tmp, "%d/100", Reputazione);    // Reputazione
+    SetDlgItemText(parent, 152, tmp);
 
-//      sprintf(tmp, "%d/100", Studio);        // Profitto scolastico
-//      SetDlgItemText(parent, 153, tmp);
+    sprintf(tmp, "%d/100", Studio);        // Profitto scolastico
+    SetDlgItemText(parent, 153, tmp);
 
-//      if ( Rapporti != 0 ) {
-//          sprintf(tmp, "%s", Nometipa);    // Nometipa
-//          SetDlgItemText(parent, 155, tmp);
-//          sprintf(tmp, "%d/100", Rapporti);    // Rapporti con la tipa
-//          SetDlgItemText(parent, 154, tmp);
-//      } else {
-//          sprintf(tmp, " ");            // Nometipa
-//          SetDlgItemText(parent, 155, tmp);
-//          SetDlgItemText(parent, 154, tmp);
-//      }
+    if ( Rapporti != 0 ) {
+        sprintf(tmp, "%s", Nometipa);    // Nometipa
+        SetDlgItemText(parent, 155, tmp);
+        sprintf(tmp, "%d/100", Rapporti);    // Rapporti con la tipa
+        SetDlgItemText(parent, 154, tmp);
+    } else {
+        sprintf(tmp, " ");            // Nometipa
+        SetDlgItemText(parent, 155, tmp);
+        SetDlgItemText(parent, 154, tmp);
+    }
 
 
-//      if (ScooterData.stato != -1) {
-//         sprintf(tmp, "%s", ScooterData.nome);
-//         SetDlgItemText(parent, 150, tmp);    // Nomescooter
-//         sprintf(tmp, "%d/100", ScooterData.stato);
-//         SetDlgItemText(parent, 156, tmp);    // Stato scooter
-//      } else {
-//         sprintf(tmp, " ");
-//         SetDlgItemText(parent, 150, tmp);    // Nomescooter
-//         SetDlgItemText(parent, 156, tmp);    // Stato scooter
-//      }
+    if (ScooterData.stato != -1) {
+        sprintf(tmp, "%s", ScooterData.nome);
+        SetDlgItemText(parent, 150, tmp);    // Nomescooter
+        sprintf(tmp, "%d/100", ScooterData.stato);
+        SetDlgItemText(parent, 156, tmp);    // Stato scooter
+    } else {
+        sprintf(tmp, " ");
+        SetDlgItemText(parent, 150, tmp);    // Nomescooter
+        SetDlgItemText(parent, 156, tmp);    // Stato scooter
+    }
 
-//      SetDlgItemText(parent, 157, tmp);
+    SetDlgItemText(parent, 157, tmp);
 
-//      if ( sesso == 'M' )    {// Non usare la variabile "ao" xche' qui e' necessario
-//          DeleteMenu(GetMenu(parent), QX_TIPA, MF_BYCOMMAND);
-//          AppendMenu( GetSubMenu(GetMenu(parent),1), MF_STRING, QX_TIPA, "&Tipa...");
-//          SetDlgItemText(parent, 133, "Tipa"); // che ci sia scritto Tipa x il maschietto e
-//          SetDlgItemText(parent, 170, "Rapporto con la tipa");
-//      } else {                              //    Tipo x la femminuccia...
-//          DeleteMenu( GetMenu(parent), QX_TIPA, MF_BYCOMMAND);
-//          AppendMenu( GetSubMenu(GetMenu(parent),1), MF_STRING, QX_TIPA, "&Tipo...");
-//          SetDlgItemText(parent, 133, "Tipo");
-//          SetDlgItemText(parent, 170, "Rapporto con il tipo");
-//      }
+    if ( sesso == 'M' )    {// Non usare la variabile "ao" xche' qui e' necessario
+         DeleteMenu(GetMenu(parent), QX_TIPA, MF_BYCOMMAND);
+         AppendMenu( GetSubMenu(GetMenu(parent),1), MF_STRING, QX_TIPA, "&Tipa...");
+         SetDlgItemText(parent, 133, "Tipa"); // che ci sia scritto Tipa x il maschietto e
+         SetDlgItemText(parent, 170, "Rapporto con la tipa");
+    } else {                              //    Tipo x la femminuccia...
+         DeleteMenu( GetMenu(parent), QX_TIPA, MF_BYCOMMAND);
+         AppendMenu( GetSubMenu(GetMenu(parent),1), MF_STRING, QX_TIPA, "&Tipo...");
+         SetDlgItemText(parent, 133, "Tipo");
+         SetDlgItemText(parent, 170, "Rapporto con il tipo");
+    }
 
-// }
+}
+#endif
 
 
 /* Aggiorna Finestra Principale*/
@@ -1361,8 +1376,6 @@ void AggiornaPrincipale()
 {
     char tmp[128];
      
-//FIXME Nome e cognome, le variazioni per M o F, scooter
-
     sprintf(tmp, "  %s %d %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome);  // Calendario
     main_box_giorno->copy_label(tmp);
     main_valbox_rep->value(Reputazione);
@@ -1889,6 +1902,28 @@ int vvc(int i)
 }
 
 
+/* Legge il valore settato di difficolta e modifica i valori correlati */
+void  ApplicaDifficolta(void)
+{
+    switch(difficolta) {
+        case 1:     // per ora l'unico parametro influenzato è la fortuna
+                Fortuna = 20;
+                break;
+        case 2:
+                Fortuna = 15;
+                break;
+        case 3:
+                Fortuna = 10;
+                break;
+        case 4:
+                Fortuna = 5;
+                break;
+        case 5:
+                Fortuna = 0;
+    }
+}
+
+
 /* PROCEDURA PRINCIPALE */
 int main(int argc, char **argv)
 {
@@ -1901,9 +1936,6 @@ int main(int argc, char **argv)
 
     Fl::option(Fl::OPTION_VISIBLE_FOCUS, false);  //disattiva tratteggio del pulsante selezionato
 
-    /* FIXME suono di prova */
-    //TabbozPlaySound(0000);
-    
     /* Icona per la taskbar */
     Fl_Pixmap *icona_xpm = new Fl_Pixmap(tabboz_xpm);
     Fl_RGB_Image *icona = new Fl_RGB_Image(icona_xpm);
@@ -2002,51 +2034,3 @@ void SaveFileDlg(HWND hwnd)
   }
 }
 #endif
-
-#ifdef DEADCODE
-# pragma argsused
-/* Warning... - Questa funzione non e' piu' usata da anni...    */
-BOOL FAR PASCAL Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-    char          buf[128];
-
-
-    if (message == WM_INITDIALOG)
-    return(TRUE);
-
-
-     else if (message == WM_COMMAND)
-     {
-
-    switch (LOWORD(wParam))
-    {
-        case IDOK:
-        EndDialog(hDlg, TRUE);
-        return(TRUE);
-
-         default:
-        return(TRUE);
-    }
-    }
-
-     return(FALSE);
-}
-#endif
-
-
-/* FIXME questa verrà implementata direttamente nella gui
-void Atinom(HANDLE hInstance)
- {
-
-     MessageBox( hInstance, "Il biglietto e' valido solo dopo la convalida.Il biglietto deve essere conservato per tutta la durata \
- del viaggio. Il diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto. \
- Il passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile, \
- o comunque non valido, verra' abbattuto. La notifica del decesso verra' inviata ai parenti solo previo pagamento \
- delle spese postali.", "Norme di utilizzo", MB_OK | MB_ICONINFORMATION);
-
-}
-*/
-
-//*******************************************************************
-// Copyright (c) 1997-2000 Andrea Bonomi
-//*******************************************************************

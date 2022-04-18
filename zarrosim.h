@@ -139,11 +139,6 @@
 
 //typedef unsigned long   u_long;
 
-/* INFORMAZIONI MATERIE SCOLASTICHE */
-typedef struct tagSTMATERIE {
-    char        nome[30];       // nome della materia
-    int         voto;           // voto materia
-  } STMATERIE;
 
 /* INFORMAZIONI SUGLI SCOOTER  (ora usato solo per cose generiche...)  */
 typedef struct tagSTSCOOTER {
@@ -208,6 +203,9 @@ extern  int       sizze;              // Numero di sigarette
 /* Opzioni */
 extern  int       sound_active;       // Abilita i suoni
 extern  int       euro;               // Usa euro anzichè lire
+extern  int       difficolta;         // Livello difficoltà 1-5
+extern  int       timer_active;       // Timer avanzamento automatico
+extern  char      tema_grafico[];     // Nome tema grafico di FLTK
 
 
 /* Supporto Rete */
@@ -268,7 +266,7 @@ extern  void  FineProgramma(char const *caller);
 extern  void  CalcolaStudio(void);
 extern  char  *MostraSoldi(int i);
 extern  void  nomoney(int tipo);
-
+extern  void  ApplicaDifficolta(void);
 
 /*Se euro disabilitato, calcola le lire moltiplicando x*1000. Altrimenti divide per 2 */
 #define CALCSOLDI(x) ( (!euro) ? x*1000 : x/2 )
