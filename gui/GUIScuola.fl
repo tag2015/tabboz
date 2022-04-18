@@ -2,10 +2,13 @@
 version 1.0308
 header_name {.h}
 code_name {.cpp}
-decl {\#include "GUITabboz.h"} {selected private global
+decl {\#include "GUITabboz.h"} {private global
 }
 
 decl {\#include "../zarrosim.h"} {private global
+}
+
+decl {\#include "../sharedimg.h"} {private global
 }
 
 decl {\#include "../scuola.h"} {private global
@@ -18,7 +21,7 @@ Function {GUITabbozScuola()} {open
 } {
   Fl_Window win_scuola {
     label Scuola open
-    xywh {187 368 540 350} type Double color 54 hotspot
+    xywh {343 505 540 350} type Double hotspot
     code0 {materia_selezionata=1;}
     code1 {AggiornaScuola();} modal size_range {540 350 540 350} visible
   } {
@@ -104,6 +107,7 @@ Function {GUITabbozScuola()} {open
       }
       Fl_Value_Output scuola_val_media {
         label { MEDIA SCOLASTICA }
+        callback {o->value(MEDIAVOTI(Studio,N_MATERIE));} selected
         xywh {195 250 35 25} box FLAT_BOX color 7 labelfont 5 textfont 5 textsize 15
       }
       Fl_Box {} {
@@ -116,17 +120,17 @@ Function {GUITabbozScuola()} {open
     Fl_Button {} {
       label Studia
       callback {StudiaMateria(materia_selezionata);}
-      xywh {260 185 270 30} color 51 selection_color 51
+      xywh {260 185 270 30}
     }
     Fl_Button {} {
       label Corrompi
       callback {CorrompiProf(materia_selezionata);}
-      xywh {260 220 270 30} color 51 selection_color 51
+      xywh {260 220 270 30}
     }
     Fl_Button {} {
       label Minaccia
       callback {MinacciaSeduciProf(materia_selezionata);}
-      xywh {260 255 270 30} color 51 selection_color 51
+      xywh {260 255 270 30}
     }
     Fl_Group grp_barrastato {open
       xywh {10 290 520 50} box EMBOSSED_FRAME labelsize 10 align 5
@@ -150,11 +154,11 @@ Function {GUITabbozScuola()} {open
         xywh {370 300 35 30} color 7 labelsize 12 hide
       }
       Fl_Return_Button {} {
-        label Back
         callback {win_principale->activate();
 AggiornaPrincipale();
 win_scuola->hide();}
-        xywh {465 295 60 40} color 51 selection_color 51
+        xywh {465 295 60 40} align 20
+        code0 {o->image(ImgExit);}
       }
     }
   }

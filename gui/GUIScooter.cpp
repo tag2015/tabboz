@@ -6,6 +6,7 @@
 #include "GUITabboz.h"
 #include "GUIConcessionario.h"
 #include "../zarrosim.h"
+#include "../sharedimg.h"
 #include "../calendario.h"
 #include "../sound.h"
 #include "../scooter.h"
@@ -58,7 +59,7 @@ static void cb_sco_val_soldi(Fl_Value_Output* o, void*) {
   o->value(CALCSOLDI(Soldi));
 }
 
-static void cb_Back(Fl_Return_Button*, void*) {
+static void cb_(Fl_Return_Button*, void*) {
   win_principale->activate();
 AggiornaPrincipale();
 win_scooter->hide();
@@ -66,61 +67,60 @@ win_scooter->hide();
 
 Fl_Double_Window* GUIScooter() {
   { win_scooter = new Fl_Double_Window(510, 240, "Scooter");
-    win_scooter->color(FL_LIGHT3);
     win_scooter->labelfont(1);
     win_scooter->labelsize(12);
     win_scooter->hotspot(win_scooter);
     { Fl_Button* o = new Fl_Button(10, 10, 240, 35, "Concessionario");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Concessionario);
     } // Fl_Button* o
     { scooter_btn_usa = new Fl_Button(10, 85, 240, 35, "Parcheggia scooter");
-      scooter_btn_usa->color((Fl_Color)51);
-      scooter_btn_usa->selection_color((Fl_Color)51);
       scooter_btn_usa->callback((Fl_Callback*)cb_scooter_btn_usa);
       if(ScooterData.attivita==4) { scooter_btn_usa->label("Usa scooter"); scooter_btn_usa->redraw(); }
     } // Fl_Button* scooter_btn_usa
     { Fl_Button* o = new Fl_Button(10, 125, 240, 35, "Fai benza");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Fai);
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(260, 165, 240, 30, "Elabora Scooter");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->deactivate();
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(260, 200, 240, 30, "Ripara Scooter");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Ripara);
     } // Fl_Button* o
     { Fl_Group* o = new Fl_Group(260, 10, 240, 150);
       o->box(FL_EMBOSSED_FRAME);
       o->labelfont(1);
       o->labelsize(12);
-      { sco_txt_nome = new Fl_Output(275, 20, 220, 25);
+      { Fl_Output* o = sco_txt_nome = new Fl_Output(275, 20, 210, 25);
         sco_txt_nome->box(FL_FLAT_BOX);
-        sco_txt_nome->color(FL_LIGHT3);
+        sco_txt_nome->color(FL_BACKGROUND_COLOR);
+        sco_txt_nome->textsize(12);
+        o->clear_visible_focus();
       } // Fl_Output* sco_txt_nome
-      { sco_txt_speed = new Fl_Output(340, 50, 150, 25, "Velocit\303\240   ");
+      { Fl_Output* o = sco_txt_speed = new Fl_Output(350, 50, 140, 25, "Velocit\303\240 max ");
         sco_txt_speed->box(FL_EMBOSSED_BOX);
+        sco_txt_speed->labelsize(12);
+        o->clear_visible_focus();
       } // Fl_Output* sco_txt_speed
-      { sco_txt_cc = new Fl_Output(340, 75, 150, 25, "Cilindrata ");
+      { Fl_Output* o = sco_txt_cc = new Fl_Output(350, 75, 140, 25, "Cilindrata ");
         sco_txt_cc->box(FL_EMBOSSED_BOX);
+        sco_txt_cc->labelsize(12);
+        o->clear_visible_focus();
       } // Fl_Output* sco_txt_cc
-      { sco_txt_stato = new Fl_Output(340, 100, 150, 25, "Efficienza ");
+      { Fl_Output* o = sco_txt_stato = new Fl_Output(350, 100, 140, 25, "Efficienza ");
         sco_txt_stato->box(FL_EMBOSSED_BOX);
+        sco_txt_stato->labelsize(12);
+        o->clear_visible_focus();
       } // Fl_Output* sco_txt_stato
-      { sco_txt_benza = new Fl_Output(340, 125, 150, 25, "Benzina   ");
+      { Fl_Output* o = sco_txt_benza = new Fl_Output(350, 125, 140, 25, "Benzina ");
         sco_txt_benza->box(FL_EMBOSSED_BOX);
+        sco_txt_benza->labelsize(12);
+        o->clear_visible_focus();
       } // Fl_Output* sco_txt_benza
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(10, 180, 240, 50);
       o->box(FL_EMBOSSED_FRAME);
-      { sco_val_soldi = new Fl_Value_Output(65, 192, 80, 25, "Soldi L.");
+      { Fl_Value_Output* o = sco_val_soldi = new Fl_Value_Output(65, 192, 80, 25, "Soldi L.");
         sco_val_soldi->box(FL_EMBOSSED_BOX);
         sco_val_soldi->color(FL_BACKGROUND2_COLOR);
         sco_val_soldi->labelsize(12);
@@ -128,11 +128,12 @@ Fl_Double_Window* GUIScooter() {
         sco_val_soldi->value(1e+08);
         sco_val_soldi->textfont(5);
         sco_val_soldi->callback((Fl_Callback*)cb_sco_val_soldi);
+        if (euro) o->label("Soldi  €");
       } // Fl_Value_Output* sco_val_soldi
-      { Fl_Return_Button* o = new Fl_Return_Button(185, 185, 60, 40, "Back");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
-        o->callback((Fl_Callback*)cb_Back);
+      { Fl_Return_Button* o = new Fl_Return_Button(185, 185, 60, 40);
+        o->callback((Fl_Callback*)cb_);
+        o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+        o->image(ImgExit);
       } // Fl_Return_Button* o
       o->end();
     } // Fl_Group* o

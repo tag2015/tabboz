@@ -18,7 +18,7 @@ extern Fl_Output *lavoro_txt_ditta;
 Fl_Double_Window* GUILavoro();
 extern Fl_Double_Window *win_cercalavoro;
 extern Fl_Button *lav_btn_ok;
-extern Fl_Return_Button *lav_btn_back;
+extern Fl_Button *lav_btn_back;
 extern Fl_Box *lav_img_ditta;
 extern Fl_Box *lav_txt_ditta;
 Fl_Double_Window* GUICercaLavoro();

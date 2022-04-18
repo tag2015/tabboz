@@ -7,13 +7,14 @@
 #include "GUINegozioVestiti1.h"
 #include "GUITelefonia.h"
 #include "../zarrosim.h"
+#include "../sharedimg.h"
 #include "../calendario.h"
 #include "../negozi.h"
 #include "../sound.h"
 
 Fl_Double_Window *win_negozi=(Fl_Double_Window *)0;
 
-static void cb_Back(Fl_Return_Button*, void*) {
+static void cb_(Fl_Return_Button*, void*) {
   win_principale->activate();
 win_negozi->hide();
 }
@@ -51,14 +52,13 @@ win_negozi->hide();
 
 Fl_Double_Window* GUINegoziLauncher() {
   { win_negozi = new Fl_Double_Window(395, 215, "Negozi");
-    win_negozi->color(FL_LIGHT3);
     win_negozi->labelfont(1);
     win_negozi->labelsize(12);
     win_negozi->hotspot(win_negozi);
-    { Fl_Return_Button* o = new Fl_Return_Button(325, 165, 60, 40, "Back");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
-      o->callback((Fl_Callback*)cb_Back);
+    { Fl_Return_Button* o = new Fl_Return_Button(325, 165, 60, 40);
+      o->callback((Fl_Callback*)cb_);
+      o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+      o->image(ImgExit);
     } // Fl_Return_Button* o
     { Fl_Group* o = new Fl_Group(10, 25, 180, 180, "Abbigliamento");
       o->box(FL_EMBOSSED_FRAME);
@@ -66,28 +66,18 @@ Fl_Double_Window* GUINegoziLauncher() {
       o->labelsize(12);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
       { Fl_Button* o = new Fl_Button(15, 30, 170, 30, "Bau House");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_Bau);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(15, 65, 170, 30, "Blue Rider");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
+      { new Fl_Button(15, 65, 170, 30, "Blue Rider");
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(15, 100, 170, 30, "Zoccolaro");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
+      { new Fl_Button(15, 100, 170, 30, "Zoccolaro");
       } // Fl_Button* o
       { new Fl_Button(15, 135, 170, 30, "Footsmocker");
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(15, 170, 170, 30, "Footsmocker II");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->deactivate();
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(15, 135, 170, 30, "Footsmocker");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->deactivate();
       } // Fl_Button* o
       o->end();
@@ -98,13 +88,9 @@ Fl_Double_Window* GUINegoziLauncher() {
       o->labelsize(12);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
       { Fl_Button* o = new Fl_Button(210, 30, 170, 30, "Tabaccaio");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_Tabaccaio);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(210, 65, 170, 30, "Telefonia");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_Telefonia);
       } // Fl_Button* o
       o->end();

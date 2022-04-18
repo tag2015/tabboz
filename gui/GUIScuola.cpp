@@ -3,6 +3,7 @@
 #include "GUIScuola.h"
 #include "GUITabboz.h"
 #include "../zarrosim.h"
+#include "../sharedimg.h"
 #include "../scuola.h"
 int materia_selezionata; 
 
@@ -65,6 +66,10 @@ Fl_Value_Output *val_voto8=(Fl_Value_Output *)0;
 Fl_Value_Output *val_voto9=(Fl_Value_Output *)0;
 
 Fl_Value_Output *scuola_val_media=(Fl_Value_Output *)0;
+
+static void cb_scuola_val_media(Fl_Value_Output* o, void*) {
+  o->value(MEDIAVOTI(Studio,N_MATERIE));
+}
 
 #include <FL/Fl_Image.H>
 static const unsigned char idata_scuola[] =
@@ -5853,7 +5858,7 @@ Fl_Value_Output *scuola_val_rep=(Fl_Value_Output *)0;
 
 Fl_Value_Output *scuola_val_studio=(Fl_Value_Output *)0;
 
-static void cb_Back(Fl_Return_Button*, void*) {
+static void cb_(Fl_Return_Button*, void*) {
   win_principale->activate();
 AggiornaPrincipale();
 win_scuola->hide();
@@ -5861,7 +5866,6 @@ win_scuola->hide();
 
 Fl_Double_Window* GUITabbozScuola() {
   { win_scuola = new Fl_Double_Window(540, 350, "Scuola");
-    win_scuola->color(FL_LIGHT3);
     win_scuola->hotspot(win_scuola);
     { Fl_Group* o = new Fl_Group(10, 10, 245, 275);
       o->box(FL_SHADOW_BOX);
@@ -5984,6 +5988,7 @@ Fl_Double_Window* GUITabbozScuola() {
         scuola_val_media->labelfont(5);
         scuola_val_media->textfont(5);
         scuola_val_media->textsize(15);
+        scuola_val_media->callback((Fl_Callback*)cb_scuola_val_media);
       } // Fl_Value_Output* scuola_val_media
       { Fl_Box* o = new Fl_Box(75, 240, 105, 5);
         o->box(FL_FLAT_BOX);
@@ -5996,18 +6001,12 @@ Fl_Double_Window* GUITabbozScuola() {
       o->image( image_scuola() );
     } // Fl_Box* o
     { Fl_Button* o = new Fl_Button(260, 185, 270, 30, "Studia");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Studia);
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(260, 220, 270, 30, "Corrompi");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Corrompi);
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(260, 255, 270, 30, "Minaccia");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Minaccia);
     } // Fl_Button* o
     { grp_barrastato = new Fl_Group(10, 290, 520, 50);
@@ -6038,10 +6037,10 @@ Fl_Double_Window* GUITabbozScuola() {
         scuola_val_studio->labelsize(12);
         scuola_val_studio->hide();
       } // Fl_Value_Output* scuola_val_studio
-      { Fl_Return_Button* o = new Fl_Return_Button(465, 295, 60, 40, "Back");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
-        o->callback((Fl_Callback*)cb_Back);
+      { Fl_Return_Button* o = new Fl_Return_Button(465, 295, 60, 40);
+        o->callback((Fl_Callback*)cb_);
+        o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+        o->image(ImgExit);
       } // Fl_Return_Button* o
       grp_barrastato->end();
     } // Fl_Group* grp_barrastato

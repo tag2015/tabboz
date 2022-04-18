@@ -17,6 +17,9 @@ decl {\#include "GUIConcessionario.h"} {private global
 decl {\#include "../zarrosim.h"} {private global
 }
 
+decl {\#include "../sharedimg.h"} {private global
+}
+
 decl {\#include "../calendario.h"} {private global
 }
 
@@ -30,7 +33,7 @@ Function {GUIScooter()} {open
 } {
   Fl_Window win_scooter {
     label Scooter open
-    xywh {467 535 510 240} type Double color 54 labelfont 1 labelsize 12 hotspot
+    xywh {459 617 510 240} type Double labelfont 1 labelsize 12 hotspot
     code0 {AggiornaScooter();} modal size_range {510 240 510 240} visible
   } {
     Fl_Button {} {
@@ -43,7 +46,7 @@ Function {GUIScooter()} {open
   fl_message_title("Concessionario chiuso");
   fl_alert("Oh, tip%c... oggi il concessionario è chiuso...",ao);
 }}
-      xywh {10 10 240 35} color 51 selection_color 51
+      xywh {10 10 240 35}
     }
     Fl_Button scooter_btn_usa {
       label {Parcheggia scooter}
@@ -53,44 +56,49 @@ else
   o->label("Parcheggia scooter");
 o->redraw();
 AggiornaScooter();}
-      xywh {10 85 240 35} color 51 selection_color 51
+      xywh {10 85 240 35}
       code0 {if(ScooterData.attivita==4) { scooter_btn_usa->label("Usa scooter"); scooter_btn_usa->redraw(); }}
     }
     Fl_Button {} {
       label {Fai benza}
       callback {FaiBenza();}
-      xywh {10 125 240 35} color 51 selection_color 51
+      xywh {10 125 240 35}
     }
     Fl_Button {} {
       label {Elabora Scooter}
-      xywh {260 165 240 30} color 51 selection_color 51 deactivate
+      xywh {260 165 240 30} deactivate
     }
     Fl_Button {} {
       label {Ripara Scooter}
       callback {RiparaScooter();}
-      xywh {260 200 240 30} color 51 selection_color 51
+      xywh {260 200 240 30}
     }
-    Fl_Group {} {
+    Fl_Group {} {open
       xywh {260 10 240 150} box EMBOSSED_FRAME labelfont 1 labelsize 12
     } {
       Fl_Output sco_txt_nome {
-        xywh {275 20 220 25} box FLAT_BOX color 54
+        xywh {275 20 210 25} box FLAT_BOX color 49 textsize 12
+        code0 {o->clear_visible_focus();}
       }
       Fl_Output sco_txt_speed {
-        label {Velocità   }
-        xywh {340 50 150 25} box EMBOSSED_BOX
+        label {Velocità max }
+        xywh {350 50 140 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
       }
       Fl_Output sco_txt_cc {
         label {Cilindrata }
-        xywh {340 75 150 25} box EMBOSSED_BOX
+        xywh {350 75 140 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
       }
       Fl_Output sco_txt_stato {
         label {Efficienza }
-        xywh {340 100 150 25} box EMBOSSED_BOX
+        xywh {350 100 140 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
       }
       Fl_Output sco_txt_benza {
-        label {Benzina   }
-        xywh {340 125 150 25} box EMBOSSED_BOX
+        label {Benzina }
+        xywh {350 125 140 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
       }
     }
     Fl_Group {} {open
@@ -100,13 +108,14 @@ AggiornaScooter();}
         label {Soldi L.}
         callback {o->value(CALCSOLDI(Soldi));} selected
         xywh {65 192 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+08 textfont 5
+        code0 {if (euro) o->label("Soldi  €");}
       }
       Fl_Return_Button {} {
-        label Back
         callback {win_principale->activate();
 AggiornaPrincipale();
 win_scooter->hide();}
-        xywh {185 185 60 40} color 51 selection_color 51
+        xywh {185 185 60 40} align 20
+        code0 {o->image(ImgExit);}
       }
     }
   }

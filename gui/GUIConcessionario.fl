@@ -37,14 +37,14 @@ conce_txt_prezzo->value(buf);} {}
 Function {GUIConcessionario()} {open
 } {
   Fl_Window win_conce {open
-    xywh {-5 389 575 485} type Double color 54 hotspot modal size_range {575 485 575 485} visible
+    xywh {275 368 575 485} type Double hotspot modal size_range {575 485 575 485} visible
   } {
     Fl_Tabs {} {open
-      xywh {5 5 565 420} box UP_BOX color 54 selection_color 51
+      xywh {5 5 565 420} box UP_BOX
     } {
       Fl_Group {} {
-        label Malagutty open selected
-        xywh {5 40 565 385} box EMBOSSED_FRAME color 54
+        label Malagutty open
+        xywh {5 40 565 385} box EMBOSSED_FRAME
       } {
         Fl_Group {} {
           label tasti open
@@ -70,36 +70,43 @@ conce_btn_compra->activate();}
           }
         }
         Fl_Group {} {open
-          xywh {15 190 315 185}
+          xywh {15 195 250 185} box EMBOSSED_FRAME
         } {
           Fl_Output conce_txt_speed {
-            label {Velocità Max}
-            xywh {100 200 150 25} box EMBOSSED_BOX
+            label {Velocità max }
+            xywh {100 205 150 25} box EMBOSSED_BOX labelsize 12
+            code0 {o->clear_visible_focus();}
           }
           Fl_Output conce_txt_marmitta {
-            label Marmitta
-            xywh {100 305 150 25} box EMBOSSED_BOX
+            label {Marmitta }
+            xywh {100 305 150 25} box EMBOSSED_BOX labelsize 12
+            code0 {o->clear_visible_focus();}
           }
           Fl_Output conce_txt_carb {
-            label Carburatore
-            xywh {100 255 150 25} box EMBOSSED_BOX
+            label {Carburatore }
+            xywh {100 255 150 25} box EMBOSSED_BOX labelsize 12
+            code0 {o->clear_visible_focus();}
           }
           Fl_Output conce_txt_cc {
-            label Cilindrata
-            xywh {100 230 150 25} box EMBOSSED_BOX
+            label {Cilindrata }
+            xywh {100 230 150 25} box EMBOSSED_BOX labelsize 12
+            code0 {o->clear_visible_focus();}
           }
           Fl_Output conce_txt_filtro {
-            label {Filtro aria}
-            xywh {100 280 150 25} box EMBOSSED_BOX
+            label {Filtro aria }
+            xywh {100 280 150 25} box EMBOSSED_BOX labelsize 12
+            code0 {o->clear_visible_focus();}
           }
           Fl_Output conce_txt_prezzo {
-            label Prezzo
-            xywh {155 350 95 25} box EMBOSSED_BOX textfont 5
+            label {Prezzo L. }
+            xywh {100 345 150 25} box EMBOSSED_BOX labelsize 12 textfont 5
+            code0 {if (euro) o->label("Prezzo € ");}
+            code1 {o->clear_visible_focus();}
           }
         }
         Fl_Box {} {
           label {Scegli il tuo scooter preferito...}
-          xywh {280 204 280 172}
+          xywh {280 195 280 184}
         }
       }
       Fl_Group {} {
@@ -107,13 +114,13 @@ conce_btn_compra->activate();}
         xywh {5 40 565 385} box EMBOSSED_FRAME color 54 hide
       } {}
     }
-    Fl_Group {} {open
+    Fl_Group {} {open selected
       xywh {5 430 565 50} box EMBOSSED_FRAME
     } {
       Fl_Value_Output conce_soldi {
         label {Soldi L.}
         callback {o->value(CALCSOLDI(Soldi));}
-        xywh {155 445 95 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 textfont 5
+        xywh {155 445 95 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+10 textfont 5
         code0 {o->value(CALCSOLDI(Soldi));}
         code1 {if(euro) o->label("Soldi  €");}
       }
@@ -125,7 +132,7 @@ AggiornaScooter();
 o->deactivate();
 }
 win_conce->redraw();}
-        xywh {340 435 60 40} color 51 selection_color 51
+        xywh {340 435 60 40}
         code0 {if(ScooterData.stato==-1000) o->deactivate();}
       }
       Fl_Button conce_btn_compra {
@@ -134,14 +141,14 @@ win_conce->redraw();}
 win_scooter->activate();
 AggiornaScooter();
 win_conce->hide();}
-        xywh {435 435 60 40} color 51 selection_color 51
+        xywh {435 435 60 40}
         code0 {o->deactivate();}
       }
       Fl_Return_Button {} {
-        label Back
         callback {win_scooter->activate();
 win_conce->hide();}
-        xywh {505 435 60 40} color 51 selection_color 51
+        xywh {505 435 60 40} align 20
+        code0 {o->image(ImgExit);}
       }
     }
   }

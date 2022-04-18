@@ -3,6 +3,7 @@
 #include "GUIFamiglia.h"
 #include "GUITabboz.h"
 #include "../zarrosim.h"
+#include "../sharedimg.h"
 #include "../famiglia.h"
 
 Fl_Double_Window *win_famiglia=(Fl_Double_Window *)0;
@@ -31,7 +32,7 @@ static void cb_fam_val_paghetta(Fl_Value_Output* o, void*) {
   o->value(CALCSOLDI(Paghetta));
 }
 
-static void cb_Back(Fl_Return_Button*, void*) {
+static void cb_(Fl_Return_Button*, void*) {
   win_principale->activate();
 AggiornaPrincipale();
 win_famiglia->hide();
@@ -40,24 +41,17 @@ win_famiglia->hide();
 Fl_Double_Window* GUITabbozFamiglia() {
   { win_famiglia = new Fl_Double_Window(415, 330, "Famiglia");
     win_famiglia->box(FL_BORDER_BOX);
-    win_famiglia->color(FL_LIGHT3);
     win_famiglia->hotspot(win_famiglia);
     { Fl_Box* o = new Fl_Box(10, 10, 395, 140, "immagine casa");
       o->box(FL_EMBOSSED_FRAME);
     } // Fl_Box* o
     { Fl_Button* o = new Fl_Button(10, 155, 395, 30, "Chiedi aumento paghetta");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Chiedi);
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(10, 190, 395, 30, "Chiedi soldi extra");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Chiedi1);
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(10, 225, 395, 30, "Pap\303\240, mi dai 100.000 lire?");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Pap);
       if(euro) o->label("Papà, mi dai 50€ ?");
     } // Fl_Button* o
@@ -87,10 +81,10 @@ Fl_Double_Window* GUITabbozFamiglia() {
         o->value(CALCSOLDI(Paghetta));
         if(euro) o->label("Paghetta  €");
       } // Fl_Value_Output* fam_val_paghetta
-      { Fl_Return_Button* o = new Fl_Return_Button(340, 270, 60, 40, "Back");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
-        o->callback((Fl_Callback*)cb_Back);
+      { Fl_Return_Button* o = new Fl_Return_Button(340, 270, 60, 40);
+        o->callback((Fl_Callback*)cb_);
+        o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+        o->image(ImgExit);
       } // Fl_Return_Button* o
       o->end();
     } // Fl_Group* o

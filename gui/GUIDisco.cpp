@@ -3,6 +3,7 @@
 #include "GUIDisco.h"
 #include "GUITabboz.h"
 #include "../zarrosim.h"
+#include "../sharedimg.h"
 #include "../disco.h"
 int disco_scelta=0; 
 
@@ -90,7 +91,7 @@ win_disco->hide();
 disco_scelta=0;
 }
 
-static void cb_Back(Fl_Return_Button*, void*) {
+static void cb_(Fl_Return_Button*, void*) {
   win_principale->activate();
 AggiornaPrincipale();
 win_disco->hide();
@@ -99,7 +100,6 @@ disco_scelta=0;
 
 Fl_Double_Window* GUITabbozDisco() {
   { win_disco = new Fl_Double_Window(485, 290, "Disco");
-    win_disco->color(FL_LIGHT3);
     win_disco->hotspot(win_disco);
     { Fl_Group* o = new Fl_Group(5, 5, 160, 225);
       o->box(FL_EMBOSSED_FRAME);
@@ -182,15 +182,13 @@ Fl_Double_Window* GUITabbozDisco() {
         o->value(CALCSOLDI(Soldi));
       } // Fl_Value_Output* disco_val_soldi
       { Fl_Button* o = disco_btn_ok = new Fl_Button(345, 240, 60, 40, "OK!");
-        disco_btn_ok->color((Fl_Color)51);
-        disco_btn_ok->selection_color((Fl_Color)51);
         disco_btn_ok->callback((Fl_Callback*)cb_disco_btn_ok);
         if(!disco_scelta) o->deactivate();
       } // Fl_Button* disco_btn_ok
-      { Fl_Return_Button* o = new Fl_Return_Button(415, 240, 60, 40, "Back");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
-        o->callback((Fl_Callback*)cb_Back);
+      { Fl_Return_Button* o = new Fl_Return_Button(415, 240, 60, 40);
+        o->callback((Fl_Callback*)cb_);
+        o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+        o->image(ImgExit);
       } // Fl_Return_Button* o
       o->end();
     } // Fl_Group* o

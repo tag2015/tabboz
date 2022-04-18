@@ -66,7 +66,7 @@ static void cb_tel_val_soldi(Fl_Value_Output* o, void*) {
   o->value(CALCSOLDI(Soldi));
 }
 
-static void cb_Back(Fl_Return_Button*, void*) {
+static void cb_(Fl_Return_Button*, void*) {
   win_principale->activate();
 AggiornaPrincipale();
 win_telefonia->hide();
@@ -74,52 +74,48 @@ win_telefonia->hide();
 
 Fl_Double_Window* GUITelefonia() {
   { win_telefonia = new Fl_Double_Window(510, 225, "Telefonia");
-    win_telefonia->color(FL_LIGHT3);
     win_telefonia->labelfont(1);
     win_telefonia->labelsize(12);
     win_telefonia->hotspot(win_telefonia);
     { Fl_Button* o = new Fl_Button(10, 10, 240, 35, "Compra cellulare");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Compra);
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(10, 50, 240, 35, "Vendi cellulare");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Vendi);
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(10, 125, 240, 35, "Ricarica");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Ricarica);
     } // Fl_Button* o
     { Fl_Group* o = new Fl_Group(260, 10, 240, 150);
       o->box(FL_EMBOSSED_FRAME);
       o->labelfont(1);
       o->labelsize(12);
-      { tel_txt_nome = new Fl_Output(270, 30, 220, 25, "Telefonino");
+      { Fl_Output* o = tel_txt_nome = new Fl_Output(270, 30, 220, 25, "Telefonino");
         tel_txt_nome->box(FL_EMBOSSED_BOX);
         tel_txt_nome->labelfont(1);
         tel_txt_nome->labelsize(12);
         tel_txt_nome->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+        o->clear_visible_focus();
       } // Fl_Output* tel_txt_nome
-      { tel_txt_abb = new Fl_Output(270, 77, 220, 25, "Abbonamento");
+      { Fl_Output* o = tel_txt_abb = new Fl_Output(270, 77, 220, 25, "Abbonamento");
         tel_txt_abb->box(FL_EMBOSSED_BOX);
         tel_txt_abb->labelfont(1);
         tel_txt_abb->labelsize(12);
         tel_txt_abb->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+        o->clear_visible_focus();
       } // Fl_Output* tel_txt_abb
-      { tel_txt_credito = new Fl_Output(270, 125, 220, 25, "Credito restante:");
+      { Fl_Output* o = tel_txt_credito = new Fl_Output(270, 125, 220, 25, "Credito restante:");
         tel_txt_credito->box(FL_EMBOSSED_BOX);
         tel_txt_credito->labelfont(1);
         tel_txt_credito->labelsize(12);
         tel_txt_credito->align(Fl_Align(FL_ALIGN_TOP_LEFT));
+        o->clear_visible_focus();
       } // Fl_Output* tel_txt_credito
       o->end();
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(10, 165, 490, 50);
       o->box(FL_EMBOSSED_FRAME);
-      { tel_val_soldi = new Fl_Value_Output(65, 177, 80, 25, "Soldi L.");
+      { Fl_Value_Output* o = tel_val_soldi = new Fl_Value_Output(65, 177, 80, 25, "Soldi L.");
         tel_val_soldi->box(FL_EMBOSSED_BOX);
         tel_val_soldi->color(FL_BACKGROUND2_COLOR);
         tel_val_soldi->labelsize(12);
@@ -127,11 +123,12 @@ Fl_Double_Window* GUITelefonia() {
         tel_val_soldi->value(1e+08);
         tel_val_soldi->textfont(5);
         tel_val_soldi->callback((Fl_Callback*)cb_tel_val_soldi);
+        if(euro) o->label("Soldi €");
       } // Fl_Value_Output* tel_val_soldi
-      { Fl_Return_Button* o = new Fl_Return_Button(435, 170, 60, 40, "Back");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
-        o->callback((Fl_Callback*)cb_Back);
+      { Fl_Return_Button* o = new Fl_Return_Button(435, 170, 60, 40);
+        o->callback((Fl_Callback*)cb_);
+        o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+        o->image(ImgExit);
       } // Fl_Return_Button* o
       o->end();
     } // Fl_Group* o
@@ -145,7 +142,7 @@ Fl_Double_Window* GUITelefonia() {
 
 Fl_Double_Window *win_compracell=(Fl_Double_Window *)0;
 
-static void cb_(Fl_Button*, void*) {
+static void cb_1(Fl_Button*, void*) {
   scelta_gui=0;
 negcell_txt_nomecell->label("Motorolo d170");
 negcell_txt_desccell->label("Libertà, versatilità e sicurezza di comunicazione a un prezzo giusto, queste le caratteristiche del telefono cellulare GSM Motorolo d170.");
@@ -834,7 +831,7 @@ static Fl_Image *image_cell_0() {
   return image;
 }
 
-static void cb_1(Fl_Button*, void*) {
+static void cb_2(Fl_Button*, void*) {
   scelta_gui=1;
 negcell_txt_nomecell->label("Motorolo 8700");
 negcell_txt_desccell->label("Lo stile è classico e inconfondibile ma le prestazioni sono interamente rinnovate e di altissimo livello. Motorolo 8700 consente un'autonomia di conversazione sorprendente (ben 9 mesi!) e un tempo di standby fino a 135 anni!");
@@ -1886,7 +1883,7 @@ static Fl_Image *image_cell_1() {
   return image;
 }
 
-static void cb_2(Fl_Button*, void*) {
+static void cb_3(Fl_Button*, void*) {
   scelta_gui=2;
 negcell_txt_nomecell->label("Motorolo MacroTAC 8900");
 negcell_txt_desccell->label("Dual band 900/1800, Motorolo MacroTAC 8900 è il primo cellulare in commercio in grado di passare automaticamente dalla banda di frequenza GSM 900 alla banda GSM 1800.");
@@ -2775,7 +2772,7 @@ static void cb_negcell_btn_compra(Fl_Button*, void*) {
 };
 }
 
-static void cb_Back1(Fl_Return_Button*, void*) {
+static void cb_4(Fl_Return_Button*, void*) {
   win_telefonia->show();
 win_compracell->hide();
 }
@@ -2796,7 +2793,6 @@ Fl_Box *negcell_txt_prezzocell=(Fl_Box *)0;
 
 Fl_Double_Window* GUICompraCell() {
   { win_compracell = new Fl_Double_Window(580, 290, "Compra cellulare");
-    win_compracell->color(FL_LIGHT3);
     win_compracell->labelfont(1);
     win_compracell->labelsize(12);
     win_compracell->hotspot(win_compracell);
@@ -2806,7 +2802,7 @@ Fl_Double_Window* GUICompraCell() {
         o->color(FL_BACKGROUND2_COLOR);
         o->selection_color((Fl_Color)3);
         o->image( image_cell_0() );
-        o->callback((Fl_Callback*)cb_);
+        o->callback((Fl_Callback*)cb_1);
         //o->image(ImgCell[1]);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(200, 10, 180, 120);
@@ -2814,7 +2810,7 @@ Fl_Double_Window* GUICompraCell() {
         o->color(FL_BACKGROUND2_COLOR);
         o->selection_color((Fl_Color)3);
         o->image( image_cell_1() );
-        o->callback((Fl_Callback*)cb_1);
+        o->callback((Fl_Callback*)cb_2);
         //o->image(ImgCell[2]);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(390, 10, 180, 120);
@@ -2822,7 +2818,7 @@ Fl_Double_Window* GUICompraCell() {
         o->color(FL_BACKGROUND2_COLOR);
         o->selection_color((Fl_Color)3);
         o->image( image_cell_2() );
-        o->callback((Fl_Callback*)cb_2);
+        o->callback((Fl_Callback*)cb_3);
         //o->image(ImgCell[3]);
       } // Fl_Button* o
       o->end();
@@ -2836,35 +2832,37 @@ Fl_Double_Window* GUICompraCell() {
     { Fl_Group* o = new Fl_Group(400, 140, 170, 140);
       o->box(FL_EMBOSSED_FRAME);
       { Fl_Button* o = negcell_btn_compra = new Fl_Button(405, 235, 60, 40, "Compra!");
-        negcell_btn_compra->color((Fl_Color)51);
-        negcell_btn_compra->selection_color((Fl_Color)51);
         negcell_btn_compra->callback((Fl_Callback*)cb_negcell_btn_compra);
         o->deactivate();
       } // Fl_Button* negcell_btn_compra
-      { Fl_Return_Button* o = new Fl_Return_Button(505, 235, 60, 40, "Back");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
-        o->callback((Fl_Callback*)cb_Back1);
+      { Fl_Return_Button* o = new Fl_Return_Button(505, 235, 60, 40);
+        o->callback((Fl_Callback*)cb_4);
+        o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+        o->image(ImgExit);
       } // Fl_Return_Button* o
-      { Fl_Value_Output* o = new Fl_Value_Output(485, 145, 80, 25, "Soldi L.");
+      { Fl_Value_Output* o = new Fl_Value_Output(470, 145, 80, 25, "Soldi L.");
         o->box(FL_EMBOSSED_BOX);
         o->color(FL_BACKGROUND2_COLOR);
         o->selection_color(FL_BACKGROUND2_COLOR);
         o->labelsize(12);
         o->step(1);
+        o->value(1e+08);
         o->textfont(5);
         o->callback((Fl_Callback*)cb_Soldi);
         o->value(CALCSOLDI(Soldi));
         if(euro) o->label("Soldi  €");
       } // Fl_Value_Output* o
-      { Fl_Value_Output* o = new Fl_Value_Output(530, 175, 35, 25, "Figosit\303\240");
+      { Fl_Value_Output* o = new Fl_Value_Output(470, 175, 35, 25, "Figosit\303\240");
         o->box(FL_EMBOSSED_BOX);
         o->color(FL_BACKGROUND2_COLOR);
         o->selection_color(FL_BACKGROUND2_COLOR);
         o->labelsize(12);
+        o->value(100);
         o->callback((Fl_Callback*)cb_Figosit);
         o->value(Fama);
       } // Fl_Value_Output* o
+      { new Fl_Box(505, 179, 15, 16, "%");
+      } // Fl_Box* o
       o->end();
     } // Fl_Group* o
     { Fl_Box* o = new Fl_Box(10, 140, 380, 140);
@@ -6134,7 +6132,7 @@ static void cb_negricarica_btn_compra(Fl_Button*, void*) {
 };
 }
 
-static void cb_Back2(Fl_Return_Button*, void*) {
+static void cb_5(Fl_Return_Button*, void*) {
   win_ricaricacell->hide();
 }
 
@@ -6144,7 +6142,6 @@ static void cb_Soldi1(Fl_Value_Output* o, void*) {
 
 Fl_Double_Window* GUIRicaricaCell() {
   { win_ricaricacell = new Fl_Double_Window(530, 235, "Abbonamento e ricarica");
-    win_ricaricacell->color(FL_LIGHT3);
     win_ricaricacell->labelfont(1);
     win_ricaricacell->labelsize(12);
     win_ricaricacell->hotspot(win_ricaricacell);
@@ -6223,31 +6220,34 @@ Fl_Double_Window* GUIRicaricaCell() {
     { Fl_Group* o = new Fl_Group(5, 180, 520, 50);
       o->box(FL_EMBOSSED_FRAME);
       { Fl_Button* o = negricarica_btn_compra = new Fl_Button(390, 185, 60, 40, "Compra!");
-        negricarica_btn_compra->color((Fl_Color)51);
-        negricarica_btn_compra->selection_color((Fl_Color)51);
         negricarica_btn_compra->callback((Fl_Callback*)cb_negricarica_btn_compra);
         o->deactivate();
       } // Fl_Button* negricarica_btn_compra
-      { Fl_Return_Button* o = new Fl_Return_Button(460, 185, 60, 40, "Back");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
-        o->callback((Fl_Callback*)cb_Back2);
+      { Fl_Return_Button* o = new Fl_Return_Button(460, 185, 60, 40);
+        o->callback((Fl_Callback*)cb_5);
+        o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+        o->image(ImgExit);
       } // Fl_Return_Button* o
-      { Fl_Value_Output* o = new Fl_Value_Output(60, 195, 85, 20, "Soldi L.");
+      { Fl_Value_Output* o = new Fl_Value_Output(60, 192, 85, 25, "Soldi L.");
         o->box(FL_EMBOSSED_BOX);
         o->color(FL_BACKGROUND2_COLOR);
         o->selection_color(FL_BACKGROUND2_COLOR);
         o->labelsize(12);
         o->step(1);
+        o->value(1e+09);
         o->textfont(5);
         o->callback((Fl_Callback*)cb_Soldi1);
         o->value(CALCSOLDI(Soldi));
         if(euro) o->label("Soldi  €");
       } // Fl_Value_Output* o
       { Fl_Output* o = new Fl_Output(260, 192, 115, 25, "Operatore attuale:");
+        o->box(FL_FLAT_BOX);
+        o->color(FL_BACKGROUND_COLOR);
         o->labelsize(12);
+        o->textfont(1);
         o->textsize(12);
         if (AbbonamentData.creditorest > -1) o->value(AbbonamentData.nome);
+        o->clear_visible_focus();
       } // Fl_Output* o
       o->end();
     } // Fl_Group* o

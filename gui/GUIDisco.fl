@@ -8,6 +8,9 @@ decl {\#include "GUITabboz.h"} {private global
 decl {\#include "../zarrosim.h"} {private global
 }
 
+decl {\#include "../sharedimg.h"} {private global
+}
+
 decl {\#include "../disco.h"} {private global
 }
 
@@ -18,7 +21,7 @@ Function {GUITabbozDisco()} {open
 } {
   Fl_Window win_disco {
     label Disco open
-    xywh {525 429 485 290} type Double color 54 hotspot modal size_range {485 290 485 290} visible
+    xywh {432 492 485 290} type Double hotspot modal size_range {485 290 485 290} visible
   } {
     Fl_Group {} {open
       xywh {5 5 160 225} box EMBOSSED_FRAME
@@ -116,16 +119,16 @@ win_principale->activate();
 AggiornaPrincipale();
 win_disco->hide();
 disco_scelta=0;}
-        xywh {345 240 60 40} color 51 selection_color 51
+        xywh {345 240 60 40}
         code0 {if(!disco_scelta) o->deactivate();}
       }
       Fl_Return_Button {} {
-        label Back
         callback {win_principale->activate();
 AggiornaPrincipale();
 win_disco->hide();
 disco_scelta=0;} selected
-        xywh {415 240 60 40} color 51 selection_color 51
+        xywh {415 240 60 40} align 20
+        code0 {o->image(ImgExit);}
       }
     }
   }

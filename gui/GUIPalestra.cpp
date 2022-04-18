@@ -3,6 +3,7 @@
 #include "GUIPalestra.h"
 #include "GUITabboz.h"
 #include "../zarrosim.h"
+#include "../sharedimg.h"
 #include "../palestra.h"
 
 Fl_Double_Window *win_palestra=(Fl_Double_Window *)0;
@@ -5217,7 +5218,7 @@ static void cb_pal_soldi(Fl_Value_Output* o, void*) {
 
 Fl_Value_Output *pal_fama=(Fl_Value_Output *)0;
 
-static void cb_Back(Fl_Return_Button*, void*) {
+static void cb_(Fl_Return_Button*, void*) {
   win_principale->activate();
 AggiornaPrincipale();
 win_palestra->hide();
@@ -5225,7 +5226,6 @@ win_palestra->hide();
 
 Fl_Double_Window* GUITabbozPalestra() {
   { win_palestra = new Fl_Double_Window(486, 251, "Palestra");
-    win_palestra->color(FL_LIGHT3);
     win_palestra->labelfont(1);
     win_palestra->labelsize(12);
     win_palestra->hotspot(win_palestra);
@@ -5233,8 +5233,6 @@ Fl_Double_Window* GUITabbozPalestra() {
       o->image( image_palestra() );
     } // Fl_Box* o
     { Fl_Button* o = new Fl_Button(260, 105, 220, 25, "Vai in palestra");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Vai);
     } // Fl_Button* o
     { Fl_Group* o = new Fl_Group(260, 5, 220, 70);
@@ -5242,23 +5240,16 @@ Fl_Double_Window* GUITabbozPalestra() {
       o->labelsize(12);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
       { Fl_Button* o = new Fl_Button(265, 10, 105, 20, "1 mese");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_1);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(265, 30, 105, 20, "6 mesi");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_6);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(265, 50, 105, 20, "1 anno");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_11);
       } // Fl_Button* o
       { Fl_Value_Output* o = new Fl_Value_Output(403, 10, 70, 20, "L. ");
         o->box(FL_FLAT_BOX);
-        o->color(FL_LIGHT3);
         o->labelfont(4);
         o->textfont(5);
         o->value(CALCSOLDI(PalestraMem[0].prezzo));
@@ -5266,30 +5257,31 @@ Fl_Double_Window* GUITabbozPalestra() {
       } // Fl_Value_Output* o
       { Fl_Value_Output* o = new Fl_Value_Output(395, 30, 80, 20);
         o->box(FL_FLAT_BOX);
-        o->color(FL_LIGHT3);
         o->textfont(5);
         o->value(CALCSOLDI(PalestraMem[1].prezzo));
       } // Fl_Value_Output* o
       { Fl_Value_Output* o = new Fl_Value_Output(395, 50, 80, 20);
         o->box(FL_FLAT_BOX);
-        o->color(FL_LIGHT3);
         o->textfont(5);
         o->value(CALCSOLDI(PalestraMem[2].prezzo));
       } // Fl_Value_Output* o
       o->end();
     } // Fl_Group* o
     { Fl_Button* o = new Fl_Button(260, 165, 220, 25, "Fai una lampada");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
       o->callback((Fl_Callback*)cb_Fai);
+      char buf[128];
+      sprintf(buf,"Fai una lampada (%s)",MostraSoldi(PalestraMem[3].prezzo));
+      o->copy_label(buf);
     } // Fl_Button* o
-    { pal_txtscadenza = new Fl_Output(370, 80, 110, 20, "Scadenza:");
+    { Fl_Output* o = pal_txtscadenza = new Fl_Output(370, 80, 110, 20, "Scadenza:");
       pal_txtscadenza->box(FL_EMBOSSED_BOX);
       pal_txtscadenza->labelsize(12);
+      o->clear_visible_focus();
     } // Fl_Output* pal_txtscadenza
-    { pal_txtfaccia = new Fl_Output(370, 140, 110, 20, "Stato abbronzatura");
+    { Fl_Output* o = pal_txtfaccia = new Fl_Output(370, 140, 110, 20, "Stato abbronzatura");
       pal_txtfaccia->box(FL_EMBOSSED_BOX);
       pal_txtfaccia->labelsize(12);
+      o->clear_visible_focus();
     } // Fl_Output* pal_txtfaccia
     { Fl_Group* o = new Fl_Group(5, 195, 475, 50);
       o->box(FL_EMBOSSED_FRAME);
@@ -5312,10 +5304,10 @@ Fl_Double_Window* GUITabbozPalestra() {
         pal_fama->value(100);
         o->value(Fama);
       } // Fl_Value_Output* pal_fama
-      { Fl_Return_Button* o = new Fl_Return_Button(415, 200, 60, 40, "Back");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
-        o->callback((Fl_Callback*)cb_Back);
+      { Fl_Return_Button* o = new Fl_Return_Button(415, 200, 60, 40);
+        o->callback((Fl_Callback*)cb_);
+        o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+        o->image(ImgExit);
       } // Fl_Return_Button* o
       { new Fl_Box(245, 212, 15, 16, "%");
       } // Fl_Box* o

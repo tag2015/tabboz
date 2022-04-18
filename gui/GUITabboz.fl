@@ -23,10 +23,13 @@ decl {\#include "../negozi.h"} {private global
 decl {\#include "GUIScuola.h"} {private global
 }
 
-decl {\#include "GUILavoro.h"} {selected private global
+decl {\#include "GUILavoro.h"} {private global
 }
 
 decl {\#include "GUIPalestra.h"} {private global
+}
+
+decl {\#include "GUITipa.h"} {private global
 }
 
 decl {\#include "GUICompagnia.h"} {private global
@@ -53,8 +56,8 @@ decl {int scelta_gui;} {public local
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
-    label {Tabboz Simulator Next Generation!} open
-    xywh {183 272 475 450} type Double color 54 align 5
+    label {Tabboz Simulator Next Generation!} open selected
+    xywh {155 484 475 450} type Double align 5
     code0 {AggiornaPrincipale();} size_range {475 450 475 450} visible
   } {
     Fl_Menu_Bar {} {
@@ -72,21 +75,21 @@ Function {GUITabboz()} {open
     }
     Fl_Group {} {
       label {Sbatti...} open
-      xywh {10 330 145 110} box EMBOSSED_FRAME labelsize 12
+      xywh {10 330 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
     } {
       Fl_Button {} {
         label Scuola
         callback {GUITabbozScuola();
 win_scuola->show();
 win_principale->deactivate();}
-        image {icons/b_scuola.png} xywh {15 335 135 30} color 51 selection_color 51 labelfont 2 align 272
+        image {icons/b_scuola.png} xywh {15 335 135 30} labelfont 2 align 272
       }
       Fl_Button {} {
         label Lavoro
         callback {GUILavoro();
 win_lavoro->show();
 win_principale->deactivate();}
-        xywh {15 370 135 30} color 51 selection_color 51 labelfont 2
+        xywh {15 370 135 30} labelfont 2
       }
       Fl_Button {} {
         label Palestra
@@ -98,17 +101,19 @@ win_principale->deactivate();}
   fl_message_title("Palestra chiusa");
   fl_alert("Il tuo fisico da atleta dovrà aspettare...\\nvisto che oggi la palestra è chiusa...");
 }}
-        xywh {15 405 135 30} color 51 selection_color 51 labelfont 2
+        xywh {15 405 135 30} labelfont 2
       }
     }
     Fl_Group {} {
       label {Social!} open
-      xywh {165 330 145 110} box EMBOSSED_FRAME labelsize 12
+      xywh {165 330 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
     } {
       Fl_Button {} {
         label Tipa
-        callback {fl_alert("Non ancora implementato!");}
-        image {icons/b_tipa.png} xywh {170 335 135 30} color 51 selection_color 51 labelfont 2 align 256
+        callback {GUITipa();
+win_tipa->show();
+win_principale->deactivate();}
+        image {icons/b_tipa.png} xywh {170 335 135 30} labelfont 2 align 256
       }
       Fl_Button {} {
         label Compagnia
@@ -116,26 +121,26 @@ win_principale->deactivate();}
 compa_val_rep->value(Reputazione);
 win_compagnia->show();
 win_principale->deactivate();}
-        image {icons/b_compagnia.png} xywh {170 370 135 30} color 51 selection_color 51 labelfont 2 align 256
+        image {icons/b_compagnia.png} xywh {170 370 135 30} labelfont 2 align 256
       }
       Fl_Button {} {
         label Famiglia
         callback {GUITabbozFamiglia();
 win_famiglia->show();
 win_principale->deactivate();}
-        image {icons/b_famiglia.png} xywh {170 405 135 30} color 51 selection_color 51 labelfont 2 align 256
+        image {icons/b_famiglia.png} xywh {170 405 135 30} labelfont 2 align 256
       }
     }
     Fl_Group {} {
       label {Scialla!} open
-      xywh {320 330 145 110} box EMBOSSED_FRAME labelsize 12
+      xywh {320 330 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
     } {
       Fl_Button {} {
         label Scooter
         callback {GUIScooter();
 win_scooter->show();
 win_principale->deactivate();}
-        xywh {325 335 135 30} color 51 selection_color 51 labelfont 2
+        xywh {325 335 135 30} labelfont 2
       }
       Fl_Button {} {
         label Negozi
@@ -145,14 +150,14 @@ win_principale->deactivate();}
   win_negozi->show();
 } else
   AggiornaPrincipale();}
-        xywh {325 370 135 30} color 51 selection_color 51 labelfont 2
+        xywh {325 370 135 30} labelfont 2
       }
       Fl_Button {} {
         label Disco
         callback {GUITabbozDisco();
 win_disco->show();
 win_principale->deactivate();}
-        xywh {325 405 135 30} color 51 selection_color 51 labelfont 2
+        xywh {325 405 135 30} labelfont 2
       }
     }
     Fl_Box main_box_nome {
@@ -173,8 +178,9 @@ win_principale->deactivate();}
     } {
       Fl_Output main_txtbox_tipa {
         label Tipa
-        xywh {167 75 120 25} box FLAT_BOX color 54 labeltype NO_LABEL labelfont 1 align 0
+        xywh {167 75 120 25} box FLAT_BOX color 49 labeltype NO_LABEL labelfont 1 align 0 textsize 12
         code0 {o->value(Nometipa);}
+        code1 {o->clear_visible_focus();}
       }
       Fl_Value_Output main_valbox_rapporti {
         label {Rapporto }
@@ -244,14 +250,14 @@ o->value(MEDIAVOTI(Studio,N_MATERIE));}
     Fl_Box main_fig_testa {
       xywh {42 36 60 65}
     }
-    Fl_Group {} {
+    Fl_Group {} {open
       xywh {390 15 70 20}
     } {
       Fl_Button {} {
         label {>>}
         callback {Giorno();
 AggiornaPrincipale();}
-        xywh {390 15 20 20} color 51
+        xywh {390 15 20 20}
         code0 {if(!TABBOZ_DEBUG) o->hide();}
       }
       Fl_Button {} {
@@ -259,14 +265,14 @@ AggiornaPrincipale();}
         callback {GUITestbed();
 win_testbed->show();
 win_principale->deactivate();}
-        xywh {440 15 20 20} color 51
+        xywh {440 15 20 20}
         code0 {if(!TABBOZ_DEBUG) o->hide();}
       }
       Fl_Button {} {
         label {$}
         callback {Soldi+=1000;
 main_valbox_soldi->value(CALCSOLDI(Soldi));}
-        xywh {415 15 20 20} color 51 selection_color 51
+        xywh {415 15 20 20}
         code0 {if(!TABBOZ_DEBUG) o->hide();}
       }
     }
@@ -276,7 +282,8 @@ main_valbox_soldi->value(CALCSOLDI(Soldi));}
     } {
       Fl_Output main_txtbox_scooter {
         label Scooter
-        xywh {165 275 200 25} box FLAT_BOX color 54 labeltype NO_LABEL labelfont 1 align 0 textsize 12
+        xywh {165 275 200 25} box FLAT_BOX color 49 labeltype NO_LABEL labelfont 1 align 0 textsize 12
+        code0 {o->clear_visible_focus();}
       }
       Fl_Value_Output main_valbox_scooterstato {
         label {Stato }

@@ -15,6 +15,7 @@ extern Fl_Browser *boxtxt_vestiti;
 extern Fl_Button *neg1_btn_compra;
 #include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Value_Output.H>
+#include <FL/Fl_Box.H>
 Fl_Double_Window* GUINegozioVestiti_1();
 extern Fl_Menu_Item menu_giub_colore[];
 #endif

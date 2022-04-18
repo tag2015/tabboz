@@ -10,6 +10,7 @@
 #include "GUIScuola.h"
 #include "GUILavoro.h"
 #include "GUIPalestra.h"
+#include "GUITipa.h"
 #include "GUICompagnia.h"
 #include "GUIFamiglia.h"
 #include "GUIScooter.h"
@@ -98,7 +99,9 @@ static void cb_Palestra(Fl_Button*, void*) {
 }
 
 static void cb_Tipa(Fl_Button*, void*) {
-  fl_alert("Non ancora implementato!");
+  GUITipa();
+win_tipa->show();
+win_principale->deactivate();
 }
 
 static const unsigned char idata_b_tipa[] =
@@ -392,7 +395,6 @@ Fl_Value_Output *main_valbox_scooterstato=(Fl_Value_Output *)0;
 
 Fl_Double_Window* GUITabboz() {
   { win_principale = new Fl_Double_Window(475, 450, "Tabboz Simulator Next Generation!");
-    win_principale->color(FL_LIGHT3);
     win_principale->align(Fl_Align(FL_ALIGN_TOP_LEFT));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 475, 20);
       o->labeltype(FL_NO_LABEL);
@@ -402,24 +404,19 @@ Fl_Double_Window* GUITabboz() {
     } // Fl_Menu_Bar* o
     { Fl_Group* o = new Fl_Group(10, 330, 145, 110, "Sbatti...");
       o->box(FL_EMBOSSED_FRAME);
+      o->labeltype(FL_NO_LABEL);
       o->labelsize(12);
       { Fl_Button* o = new Fl_Button(15, 335, 135, 30, "Scuola");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->image( image_b_scuola() );
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Scuola);
         o->align(Fl_Align(256|FL_ALIGN_INSIDE));
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(15, 370, 135, 30, "Lavoro");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Lavoro);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(15, 405, 135, 30, "Palestra");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Palestra);
       } // Fl_Button* o
@@ -427,26 +424,21 @@ Fl_Double_Window* GUITabboz() {
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(165, 330, 145, 110, "Social!");
       o->box(FL_EMBOSSED_FRAME);
+      o->labeltype(FL_NO_LABEL);
       o->labelsize(12);
       { Fl_Button* o = new Fl_Button(170, 335, 135, 30, "Tipa");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->image( image_b_tipa() );
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Tipa);
         o->align(Fl_Align(256));
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(170, 370, 135, 30, "Compagnia");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->image( image_b_compagnia() );
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Compagnia);
         o->align(Fl_Align(256));
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(170, 405, 135, 30, "Famiglia");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->image( image_b_famiglia() );
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Famiglia);
@@ -456,22 +448,17 @@ Fl_Double_Window* GUITabboz() {
     } // Fl_Group* o
     { Fl_Group* o = new Fl_Group(320, 330, 145, 110, "Scialla!");
       o->box(FL_EMBOSSED_FRAME);
+      o->labeltype(FL_NO_LABEL);
       o->labelsize(12);
       { Fl_Button* o = new Fl_Button(325, 335, 135, 30, "Scooter");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Scooter);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(325, 370, 135, 30, "Negozi");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Negozi);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(325, 405, 135, 30, "Disco");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->labelfont(2);
         o->callback((Fl_Callback*)cb_Disco);
       } // Fl_Button* o
@@ -500,11 +487,13 @@ Fl_Double_Window* GUITabboz() {
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
       { Fl_Output* o = main_txtbox_tipa = new Fl_Output(167, 75, 120, 25, "Tipa");
         main_txtbox_tipa->box(FL_FLAT_BOX);
-        main_txtbox_tipa->color(FL_LIGHT3);
+        main_txtbox_tipa->color(FL_BACKGROUND_COLOR);
         main_txtbox_tipa->labeltype(FL_NO_LABEL);
         main_txtbox_tipa->labelfont(1);
+        main_txtbox_tipa->textsize(12);
         main_txtbox_tipa->align(Fl_Align(FL_ALIGN_CENTER));
         o->value(Nometipa);
+        o->clear_visible_focus();
       } // Fl_Output* main_txtbox_tipa
       { main_valbox_rapporti = new Fl_Value_Output(240, 110, 35, 25, "Rapporto ");
         main_valbox_rapporti->box(FL_SHADOW_BOX);
@@ -607,18 +596,14 @@ Fl_Double_Window* GUITabboz() {
     } // Fl_Box* main_fig_testa
     { Fl_Group* o = new Fl_Group(390, 15, 70, 20);
       { Fl_Button* o = new Fl_Button(390, 15, 20, 20, ">>");
-        o->color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_);
         if(!TABBOZ_DEBUG) o->hide();
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(440, 15, 20, 20, "T");
-        o->color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_T);
         if(!TABBOZ_DEBUG) o->hide();
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(415, 15, 20, 20, "$");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_1);
         if(!TABBOZ_DEBUG) o->hide();
       } // Fl_Button* o
@@ -629,13 +614,14 @@ Fl_Double_Window* GUITabboz() {
       main_grp_scooter->labelfont(1);
       main_grp_scooter->labelsize(12);
       main_grp_scooter->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { main_txtbox_scooter = new Fl_Output(165, 275, 200, 25, "Scooter");
+      { Fl_Output* o = main_txtbox_scooter = new Fl_Output(165, 275, 200, 25, "Scooter");
         main_txtbox_scooter->box(FL_FLAT_BOX);
-        main_txtbox_scooter->color(FL_LIGHT3);
+        main_txtbox_scooter->color(FL_BACKGROUND_COLOR);
         main_txtbox_scooter->labeltype(FL_NO_LABEL);
         main_txtbox_scooter->labelfont(1);
         main_txtbox_scooter->textsize(12);
         main_txtbox_scooter->align(Fl_Align(FL_ALIGN_CENTER));
+        o->clear_visible_focus();
       } // Fl_Output* main_txtbox_scooter
       { main_valbox_scooterstato = new Fl_Value_Output(405, 275, 35, 25, "Stato ");
         main_valbox_scooterstato->box(FL_SHADOW_BOX);

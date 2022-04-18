@@ -146,7 +146,7 @@ AggiornaPrincipale();
 win_vestiti_1->hide();
 }
 
-static void cb_Back(Fl_Return_Button*, void*) {
+static void cb_2(Fl_Return_Button*, void*) {
   win_negozi->show();
 win_vestiti_1->hide();
 }
@@ -161,7 +161,6 @@ static void cb_Figosit(Fl_Value_Output* o, void*) {
 
 Fl_Double_Window* GUINegozioVestiti_1() {
   { win_vestiti_1 = new Fl_Double_Window(580, 320, "Bau House");
-    win_vestiti_1->color(FL_LIGHT3);
     win_vestiti_1->labelfont(1);
     win_vestiti_1->labelsize(12);
     win_vestiti_1->hotspot(win_vestiti_1);
@@ -202,17 +201,15 @@ Fl_Double_Window* GUINegozioVestiti_1() {
     { Fl_Group* o = new Fl_Group(400, 165, 170, 140);
       o->box(FL_EMBOSSED_FRAME);
       { Fl_Button* o = neg1_btn_compra = new Fl_Button(405, 260, 60, 40, "Compra!");
-        neg1_btn_compra->color((Fl_Color)51);
-        neg1_btn_compra->selection_color((Fl_Color)51);
         neg1_btn_compra->callback((Fl_Callback*)cb_neg1_btn_compra);
         o->deactivate();
       } // Fl_Button* neg1_btn_compra
-      { Fl_Return_Button* o = new Fl_Return_Button(505, 260, 60, 40, "Back");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
-        o->callback((Fl_Callback*)cb_Back);
+      { Fl_Return_Button* o = new Fl_Return_Button(505, 260, 60, 40);
+        o->callback((Fl_Callback*)cb_2);
+        o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+        o->image(ImgExit);
       } // Fl_Return_Button* o
-      { Fl_Value_Output* o = new Fl_Value_Output(485, 170, 80, 25, "Soldi L.");
+      { Fl_Value_Output* o = new Fl_Value_Output(470, 170, 80, 25, "Soldi L.");
         o->box(FL_EMBOSSED_BOX);
         o->color(FL_BACKGROUND2_COLOR);
         o->selection_color(FL_BACKGROUND2_COLOR);
@@ -223,14 +220,17 @@ Fl_Double_Window* GUINegozioVestiti_1() {
         o->value(CALCSOLDI(Soldi));
         if(euro) o->label("Soldi  €");
       } // Fl_Value_Output* o
-      { Fl_Value_Output* o = new Fl_Value_Output(530, 200, 35, 25, "Figosit\303\240");
+      { Fl_Value_Output* o = new Fl_Value_Output(470, 200, 35, 25, "Figosit\303\240");
         o->box(FL_EMBOSSED_BOX);
         o->color(FL_BACKGROUND2_COLOR);
         o->selection_color(FL_BACKGROUND2_COLOR);
         o->labelsize(12);
+        o->value(100);
         o->callback((Fl_Callback*)cb_Figosit);
         o->value(Fama);
       } // Fl_Value_Output* o
+      { new Fl_Box(505, 204, 15, 16, "%");
+      } // Fl_Box* o
       o->end();
     } // Fl_Group* o
     win_vestiti_1->set_modal();

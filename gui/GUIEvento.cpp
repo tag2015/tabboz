@@ -11,22 +11,23 @@
 
 Fl_Double_Window *win_evento_v=(Fl_Double_Window *)0;
 
-static void cb_Back(Fl_Return_Button*, void*) {
+static void cb_(Fl_Return_Button*, void*) {
   win_evento_v->hide();
 }
 
 Fl_Double_Window* GUIEventoVert(int img_evento, char *txt_evento) {
   { win_evento_v = new Fl_Double_Window(340, 305, "Evento Casuale");
-    win_evento_v->color(FL_LIGHT3);
     { Fl_Box* o = new Fl_Box(10, 10, 140, 280);
       o->box(FL_SHADOW_BOX);
       o->labelsize(16);
       o->align(Fl_Align(FL_ALIGN_CENTER|FL_ALIGN_INSIDE));
       o->image(ImgEventi[img_evento]);
     } // Fl_Box* o
-    { Fl_Return_Button* o = new Fl_Return_Button(270, 260, 60, 35, "Back");
-      o->callback((Fl_Callback*)cb_Back);
+    { Fl_Return_Button* o = new Fl_Return_Button(270, 255, 60, 40);
+      o->callback((Fl_Callback*)cb_);
+      o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
       o->window()->hotspot(o);
+      o->image(ImgExit);
     } // Fl_Return_Button* o
     { Fl_Box* o = new Fl_Box(165, 40, 165, 205);
       o->label(txt_evento);
@@ -40,22 +41,23 @@ Fl_Double_Window* GUIEventoVert(int img_evento, char *txt_evento) {
 
 Fl_Double_Window *win_evento_o=(Fl_Double_Window *)0;
 
-static void cb_Back1(Fl_Return_Button*, void*) {
+static void cb_1(Fl_Return_Button*, void*) {
   win_evento_o->hide();
 }
 
 Fl_Double_Window* GUIEventoOriz(int img_evento, char *txt_evento) {
   { win_evento_o = new Fl_Double_Window(270, 345, "Evento Casuale");
-    win_evento_o->color(FL_LIGHT3);
     { Fl_Box* o = new Fl_Box(10, 10, 250, 175);
       o->box(FL_SHADOW_BOX);
       o->labelsize(16);
       o->align(Fl_Align(FL_ALIGN_CENTER|FL_ALIGN_INSIDE));
       o->image(ImgEventi[img_evento]);
     } // Fl_Box* o
-    { Fl_Return_Button* o = new Fl_Return_Button(195, 295, 60, 35, "Back");
-      o->callback((Fl_Callback*)cb_Back1);
+    { Fl_Return_Button* o = new Fl_Return_Button(195, 295, 60, 40);
+      o->callback((Fl_Callback*)cb_1);
+      o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
       o->window()->hotspot(o);
+      o->image(ImgExit);
     } // Fl_Return_Button* o
     { Fl_Box* o = new Fl_Box(10, 190, 245, 95);
       o->label(txt_evento);

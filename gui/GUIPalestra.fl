@@ -8,6 +8,9 @@ decl {\#include "GUITabboz.h"} {private global
 decl {\#include "../zarrosim.h"} {private global
 }
 
+decl {\#include "../sharedimg.h"} {private global
+}
+
 decl {\#include "../palestra.h"} {private global
 }
 
@@ -15,7 +18,7 @@ Function {GUITabbozPalestra()} {open
 } {
   Fl_Window win_palestra {
     label Palestra open
-    xywh {223 510 486 251} type Double color 54 labelfont 1 labelsize 12 hotspot
+    xywh {223 510 486 251} type Double labelfont 1 labelsize 12 hotspot
     code0 {AggiornaPalestra();} modal size_range {486 251 486 251} visible
   } {
     Fl_Box {} {
@@ -27,7 +30,7 @@ Function {GUITabbozPalestra()} {open
 AggiornaPrincipale();
 win_principale->activate();
 win_palestra->hide();}
-      xywh {260 105 220 25} color 51 selection_color 51
+      xywh {260 105 220 25}
     }
     Fl_Group {} {open
       xywh {260 5 220 70} box EMBOSSED_FRAME labelsize 12 align 5
@@ -35,45 +38,50 @@ win_palestra->hide();}
       Fl_Button {} {
         label {1 mese}
         callback {CompraAbbonamento(0);}
-        xywh {265 10 105 20} color 51 selection_color 51
+        xywh {265 10 105 20}
       }
       Fl_Button {} {
         label {6 mesi}
         callback {CompraAbbonamento(1);}
-        xywh {265 30 105 20} color 51 selection_color 51
+        xywh {265 30 105 20}
       }
       Fl_Button {} {
         label {1 anno}
         callback {CompraAbbonamento(2);}
-        xywh {265 50 105 20} color 51 selection_color 51
+        xywh {265 50 105 20}
       }
       Fl_Value_Output {} {
         label {L. }
-        xywh {403 10 70 20} box FLAT_BOX color 54 labelfont 4 textfont 5
+        xywh {403 10 70 20} box FLAT_BOX labelfont 4 textfont 5
         code0 {o->value(CALCSOLDI(PalestraMem[0].prezzo));}
         code1 {if(euro) o->label("€");}
       }
       Fl_Value_Output {} {
-        xywh {395 30 80 20} box FLAT_BOX color 54 textfont 5
+        xywh {395 30 80 20} box FLAT_BOX textfont 5
         code0 {o->value(CALCSOLDI(PalestraMem[1].prezzo));}
       }
       Fl_Value_Output {} {
-        xywh {395 50 80 20} box FLAT_BOX color 54 textfont 5
+        xywh {395 50 80 20} box FLAT_BOX textfont 5
         code0 {o->value(CALCSOLDI(PalestraMem[2].prezzo));}
       }
     }
     Fl_Button {} {
       label {Fai una lampada}
       callback {FaiLampada();}
-      xywh {260 165 220 25} color 51 selection_color 51
+      xywh {260 165 220 25}
+      code0 {char buf[128];}
+      code1 {sprintf(buf,"Fai una lampada (%s)",MostraSoldi(PalestraMem[3].prezzo));}
+      code2 {o->copy_label(buf);}
     }
     Fl_Output pal_txtscadenza {
       label {Scadenza:}
       xywh {370 80 110 20} box EMBOSSED_BOX labelsize 12
+      code0 {o->clear_visible_focus();}
     }
     Fl_Output pal_txtfaccia {
       label {Stato abbronzatura}
       xywh {370 140 110 20} box EMBOSSED_BOX labelsize 12
+      code0 {o->clear_visible_focus();}
     }
     Fl_Group {} {open
       xywh {5 195 475 50} box EMBOSSED_FRAME
@@ -86,16 +94,16 @@ win_palestra->hide();}
         code1 {if(euro) o->label("Soldi €");}
       }
       Fl_Value_Output pal_fama {
-        label {Figosità} selected
+        label {Figosità}
         xywh {210 207 35 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 100 value 100
         code0 {o->value(Fama);}
       }
       Fl_Return_Button {} {
-        label Back
         callback {win_principale->activate();
 AggiornaPrincipale();
 win_palestra->hide();}
-        xywh {415 200 60 40} color 51 selection_color 51
+        xywh {415 200 60 40} align 20
+        code0 {o->image(ImgExit);}
       }
       Fl_Box {} {
         label {%}

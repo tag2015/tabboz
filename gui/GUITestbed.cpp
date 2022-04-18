@@ -68,6 +68,26 @@ static void cb_RunV(Fl_Button*, void*) {
   FinestraEvento(num_evento,num_evento,"",TRUE);
 }
 
+static void cb_Tema(Fl_Button*, void*) {
+  Fl::scheme("base");
+win_testbed->redraw();
+}
+
+static void cb_Tema1(Fl_Button*, void*) {
+  Fl::scheme("plastic");
+win_testbed->redraw();
+}
+
+static void cb_Tema2(Fl_Button*, void*) {
+  Fl::scheme("gtk+");
+win_testbed->redraw();
+}
+
+static void cb_Tema3(Fl_Button*, void*) {
+  Fl::scheme("gleam");
+win_testbed->redraw();
+}
+
 Fl_Double_Window* GUITestbed() {
   { win_testbed = new Fl_Double_Window(836, 656, "TestBed");
     win_testbed->color(FL_LIGHT3);
@@ -126,6 +146,18 @@ Fl_Double_Window* GUITestbed() {
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(520, 620, 64, 20, "RunV");
       o->callback((Fl_Callback*)cb_RunV);
+    } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(65, 395, 95, 20, "Tema Win");
+      o->callback((Fl_Callback*)cb_Tema);
+    } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(65, 475, 95, 20, "Tema Plastic");
+      o->callback((Fl_Callback*)cb_Tema1);
+    } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(65, 445, 95, 20, "Tema GTK");
+      o->callback((Fl_Callback*)cb_Tema2);
+    } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(65, 420, 95, 20, "Tema Gleam");
+      o->callback((Fl_Callback*)cb_Tema3);
     } // Fl_Button* o
     num_file=0;
     win_testbed->set_modal();

@@ -47,12 +47,11 @@ decl {int num_ditta=0;} {private global
 decl {int n_scheda;} {private local
 }
 
-Function {GUILavoro()} {open
-} {
+Function {GUILavoro()} {} {
   Fl_Window win_lavoro {
     label Lavoro open
-    xywh {345 650 512 246} type Double color 54 labelfont 1 labelsize 12 hotspot
-    code0 {AggiornaLavoro();} modal size_range {512 246 512 246} visible
+    xywh {345 650 512 246} type Double labelfont 1 labelsize 12 hide hotspot
+    code0 {AggiornaLavoro();} modal size_range {512 246 512 246}
   } {
     Fl_Group {} {open
       xywh {325 0 185 180}
@@ -71,12 +70,12 @@ if ( (x_vacanza == 2) || (x_giornoset == 6) )  {
 }
 GUICercaLavoro();
 win_cercalavoro->show();}
-        xywh {330 5 175 25} color 51 selection_color 51
+        xywh {330 5 175 25}
       }
       Fl_Button {} {
         label Licenziati
         callback {Licenziati();}
-        xywh {330 30 175 25} color 51 selection_color 51
+        xywh {330 30 175 25}
       }
       Fl_Button {} {
         label Lavora
@@ -87,7 +86,7 @@ win_cercalavoro->show();}
 }
 
 Lavora();}
-        xywh {330 75 175 25} color 51 selection_color 51
+        xywh {330 75 175 25}
       }
       Fl_Button {} {
         label {Fai il leccaculo}
@@ -98,7 +97,7 @@ Lavora();}
 }
 
 FaiIlLeccaculo();}
-        xywh {330 100 175 25} color 51 selection_color 51
+        xywh {330 100 175 25}
         code0 {if(sesso=='F') o->label("Fai la leccaculo");}
       }
       Fl_Button {} {
@@ -110,7 +109,7 @@ FaiIlLeccaculo();}
 }
 
 ChiediAumento();}
-        xywh {330 125 175 25} color 51 selection_color 51
+        xywh {330 125 175 25}
       }
       Fl_Button {} {
         label Sciopera
@@ -120,8 +119,8 @@ ChiediAumento();}
   return;
 }
 
-Sciopera();} selected
-        xywh {330 150 175 25} color 51 selection_color 51
+Sciopera();}
+        xywh {330 150 175 25}
       }
     }
     Fl_Box {} {
@@ -138,18 +137,20 @@ Sciopera();} selected
         label {Soldi L.}
         callback {o->value(CALCSOLDI(Soldi));}
         xywh {310 185 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+08 textfont 5
+        code0 {if (euro) o->label("Soldi  €");}
       }
       Fl_Value_Output lavoro_val_stipendio {
         label {Stipendio L.}
         callback {o->value(CALCSOLDI(stipendio));}
         xywh {310 210 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+08 textfont 5
+        code0 {if (euro) o->label("Stipendio  €");}
       }
       Fl_Return_Button {} {
-        label Back
         callback {win_principale->activate();
 AggiornaPrincipale();
 win_lavoro->hide();}
-        xywh {435 190 60 40} color 51 selection_color 51
+        xywh {435 190 60 40} align 20
+        code0 {o->image(ImgExit);}
       }
       Fl_Box {} {
         label {%}
@@ -157,17 +158,17 @@ win_lavoro->hide();}
       }
       Fl_Output lavoro_txt_ditta {
         label Ditta
-        xywh {100 185 165 25} box FLAT_BOX color 54 labelsize 12 textfont 1 textsize 12
+        xywh {100 185 165 25} box FLAT_BOX color 49 labelsize 12 textfont 1 textsize 12
+        code0 {o->clear_visible_focus();}
       }
     }
   }
 }
 
-Function {GUICercaLavoro()} {open
-} {
+Function {GUICercaLavoro()} {} {
   Fl_Window win_cercalavoro {
-    label {Annunci - Offro Lavoro} open
-    xywh {435 411 400 370} type Double color 54 labelfont 1 labelsize 12 hide hotspot modal size_range {400 370 400 370}
+    label {Annunci - Offro Lavoro} open selected
+    xywh {429 471 400 390} type Double labelfont 1 labelsize 12 hotspot modal size_range {400 390 400 390} visible
   } {
     Fl_Button lav_btn_ok {
       label OK
@@ -180,27 +181,27 @@ n_scheda = (rand() % NUM_SCHEDEQUIZ);
 GUIQuizzone();
 win_quizzone->show();
 win_cercalavoro->hide();}
-      xywh {45 300 310 30}
+      xywh {45 320 310 30}
       code0 {o->label(StrOfferteLavoro[num_ditta][1]);}
     }
-    Fl_Return_Button lav_btn_back {
+    Fl_Button lav_btn_back {
       label Back
       callback {fl_message_title("Cerca lavoro");
 fl_alert("Allora sparisci...");
 win_lavoro->activate();
 win_cercalavoro->hide();}
-      xywh {45 335 310 30}
+      xywh {45 355 310 30}
       code0 {o->label(StrOfferteLavoro[num_ditta][2]);}
     }
     Fl_Group {} {open
-      xywh {45 5 310 290} box EMBOSSED_FRAME
+      xywh {45 5 310 310} box EMBOSSED_FRAME
     } {
       Fl_Box lav_img_ditta {
-        xywh {50 15 300 130}
+        xywh {50 10 300 130}
         code0 {o->image(ImgDitte[num_ditta]);}
       }
       Fl_Box lav_txt_ditta {
-        xywh {55 150 290 145} labelsize 12 align 145
+        xywh {55 160 290 155} labelsize 12 align 145
         code0 {o->label(StrOfferteLavoro[num_ditta][0]);}
       }
     }
@@ -213,7 +214,7 @@ lav_txt_ditta->label(StrOfferteLavoro[num_ditta][0]);
 lav_btn_ok->label(StrOfferteLavoro[num_ditta][1]);
 lav_btn_back->label(StrOfferteLavoro[num_ditta][2]);
 win_cercalavoro->redraw();}
-      xywh {5 150 35 35} color 51 selection_color 51 labelsize 22
+      xywh {5 145 35 35} labelsize 22
     }
     Fl_Button {} {
       label {@5}
@@ -224,17 +225,18 @@ lav_txt_ditta->label(StrOfferteLavoro[num_ditta][0]);
 lav_btn_ok->label(StrOfferteLavoro[num_ditta][1]);
 lav_btn_back->label(StrOfferteLavoro[num_ditta][2]);
 win_cercalavoro->redraw();}
-      xywh {360 155 35 35} color 51 selection_color 51 labelsize 22
+      xywh {360 145 35 35} labelsize 22
     }
   }
 }
 
-Function {GUIQuizzone()} {} {
+Function {GUIQuizzone()} {open
+} {
   Fl_Window win_quizzone {
     label Quiz open
-    xywh {904 307 585 575} type Double color 54 labelfont 1 labelsize 12 hide hotspot
+    xywh {658 146 585 575} type Double labelfont 1 labelsize 12 hotspot
     code0 {memset(crocette_risposte,0,sizeof(crocette_risposte));}
-    code1 {o->label(StrFinestraQuizLavoro[n_scheda]);} modal size_range {585 575 585 575}
+    code1 {o->label(StrFinestraQuizLavoro[n_scheda]);} modal size_range {585 575 585 575} visible
   } {
     Fl_Group {} {
       label pagina open

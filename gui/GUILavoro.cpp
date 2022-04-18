@@ -7656,7 +7656,7 @@ static void cb_lavoro_val_stipendio(Fl_Value_Output* o, void*) {
   o->value(CALCSOLDI(stipendio));
 }
 
-static void cb_Back(Fl_Return_Button*, void*) {
+static void cb_(Fl_Return_Button*, void*) {
   win_principale->activate();
 AggiornaPrincipale();
 win_lavoro->hide();
@@ -7666,40 +7666,27 @@ Fl_Output *lavoro_txt_ditta=(Fl_Output *)0;
 
 Fl_Double_Window* GUILavoro() {
   { win_lavoro = new Fl_Double_Window(512, 246, "Lavoro");
-    win_lavoro->color(FL_LIGHT3);
     win_lavoro->labelfont(1);
     win_lavoro->labelsize(12);
     win_lavoro->hotspot(win_lavoro);
     { Fl_Group* o = new Fl_Group(325, 0, 185, 180);
       { Fl_Button* o = new Fl_Button(330, 5, 175, 25, "Cerca lavoro");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_Cerca);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(330, 30, 175, 25, "Licenziati");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_Licenziati);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(330, 75, 175, 25, "Lavora");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_Lavora);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(330, 100, 175, 25, "Fai il leccaculo");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_Fai);
         if(sesso=='F') o->label("Fai la leccaculo");
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(330, 125, 175, 25, "Chiedi aumento salario");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_Chiedi);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(330, 150, 175, 25, "Sciopera");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
         o->callback((Fl_Callback*)cb_Sciopera);
       } // Fl_Button* o
       o->end();
@@ -7716,7 +7703,7 @@ Fl_Double_Window* GUILavoro() {
         lavoro_val_impegno->maximum(100);
         lavoro_val_impegno->value(100);
       } // Fl_Value_Output* lavoro_val_impegno
-      { lavoro_val_soldi = new Fl_Value_Output(310, 185, 80, 25, "Soldi L.");
+      { Fl_Value_Output* o = lavoro_val_soldi = new Fl_Value_Output(310, 185, 80, 25, "Soldi L.");
         lavoro_val_soldi->box(FL_EMBOSSED_BOX);
         lavoro_val_soldi->color(FL_BACKGROUND2_COLOR);
         lavoro_val_soldi->labelsize(12);
@@ -7724,8 +7711,9 @@ Fl_Double_Window* GUILavoro() {
         lavoro_val_soldi->value(1e+08);
         lavoro_val_soldi->textfont(5);
         lavoro_val_soldi->callback((Fl_Callback*)cb_lavoro_val_soldi);
+        if (euro) o->label("Soldi  €");
       } // Fl_Value_Output* lavoro_val_soldi
-      { lavoro_val_stipendio = new Fl_Value_Output(310, 210, 80, 25, "Stipendio L.");
+      { Fl_Value_Output* o = lavoro_val_stipendio = new Fl_Value_Output(310, 210, 80, 25, "Stipendio L.");
         lavoro_val_stipendio->box(FL_EMBOSSED_BOX);
         lavoro_val_stipendio->color(FL_BACKGROUND2_COLOR);
         lavoro_val_stipendio->labelsize(12);
@@ -7733,20 +7721,22 @@ Fl_Double_Window* GUILavoro() {
         lavoro_val_stipendio->value(1e+08);
         lavoro_val_stipendio->textfont(5);
         lavoro_val_stipendio->callback((Fl_Callback*)cb_lavoro_val_stipendio);
+        if (euro) o->label("Stipendio  €");
       } // Fl_Value_Output* lavoro_val_stipendio
-      { Fl_Return_Button* o = new Fl_Return_Button(435, 190, 60, 40, "Back");
-        o->color((Fl_Color)51);
-        o->selection_color((Fl_Color)51);
-        o->callback((Fl_Callback*)cb_Back);
+      { Fl_Return_Button* o = new Fl_Return_Button(435, 190, 60, 40);
+        o->callback((Fl_Callback*)cb_);
+        o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+        o->image(ImgExit);
       } // Fl_Return_Button* o
       { new Fl_Box(140, 214, 15, 16, "%");
       } // Fl_Box* o
-      { lavoro_txt_ditta = new Fl_Output(100, 185, 165, 25, "Ditta");
+      { Fl_Output* o = lavoro_txt_ditta = new Fl_Output(100, 185, 165, 25, "Ditta");
         lavoro_txt_ditta->box(FL_FLAT_BOX);
-        lavoro_txt_ditta->color(FL_LIGHT3);
+        lavoro_txt_ditta->color(FL_BACKGROUND_COLOR);
         lavoro_txt_ditta->labelsize(12);
         lavoro_txt_ditta->textfont(1);
         lavoro_txt_ditta->textsize(12);
+        o->clear_visible_focus();
       } // Fl_Output* lavoro_txt_ditta
       o->end();
     } // Fl_Group* o
@@ -7774,9 +7764,9 @@ win_quizzone->show();
 win_cercalavoro->hide();
 }
 
-Fl_Return_Button *lav_btn_back=(Fl_Return_Button *)0;
+Fl_Button *lav_btn_back=(Fl_Button *)0;
 
-static void cb_lav_btn_back(Fl_Return_Button*, void*) {
+static void cb_lav_btn_back(Fl_Button*, void*) {
   fl_message_title("Cerca lavoro");
 fl_alert("Allora sparisci...");
 win_lavoro->activate();
@@ -7808,45 +7798,40 @@ win_cercalavoro->redraw();
 }
 
 Fl_Double_Window* GUICercaLavoro() {
-  { win_cercalavoro = new Fl_Double_Window(400, 370, "Annunci - Offro Lavoro");
-    win_cercalavoro->color(FL_LIGHT3);
+  { win_cercalavoro = new Fl_Double_Window(400, 390, "Annunci - Offro Lavoro");
     win_cercalavoro->labelfont(1);
     win_cercalavoro->labelsize(12);
     win_cercalavoro->hotspot(win_cercalavoro);
-    { Fl_Button* o = lav_btn_ok = new Fl_Button(45, 300, 310, 30, "OK");
+    { Fl_Button* o = lav_btn_ok = new Fl_Button(45, 320, 310, 30, "OK");
       lav_btn_ok->callback((Fl_Callback*)cb_lav_btn_ok);
       o->label(StrOfferteLavoro[num_ditta][1]);
     } // Fl_Button* lav_btn_ok
-    { Fl_Return_Button* o = lav_btn_back = new Fl_Return_Button(45, 335, 310, 30, "Back");
+    { Fl_Button* o = lav_btn_back = new Fl_Button(45, 355, 310, 30, "Back");
       lav_btn_back->callback((Fl_Callback*)cb_lav_btn_back);
       o->label(StrOfferteLavoro[num_ditta][2]);
-    } // Fl_Return_Button* lav_btn_back
-    { Fl_Group* o = new Fl_Group(45, 5, 310, 290);
+    } // Fl_Button* lav_btn_back
+    { Fl_Group* o = new Fl_Group(45, 5, 310, 310);
       o->box(FL_EMBOSSED_FRAME);
-      { Fl_Box* o = lav_img_ditta = new Fl_Box(50, 15, 300, 130);
+      { Fl_Box* o = lav_img_ditta = new Fl_Box(50, 10, 300, 130);
         o->image(ImgDitte[num_ditta]);
       } // Fl_Box* lav_img_ditta
-      { Fl_Box* o = lav_txt_ditta = new Fl_Box(55, 150, 290, 145);
+      { Fl_Box* o = lav_txt_ditta = new Fl_Box(55, 160, 290, 155);
         lav_txt_ditta->labelsize(12);
         lav_txt_ditta->align(Fl_Align(129|FL_ALIGN_INSIDE));
         o->label(StrOfferteLavoro[num_ditta][0]);
       } // Fl_Box* lav_txt_ditta
       o->end();
     } // Fl_Group* o
-    { Fl_Button* o = new Fl_Button(5, 150, 35, 35, "@4");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
+    { Fl_Button* o = new Fl_Button(5, 145, 35, 35, "@4");
       o->labelsize(22);
       o->callback((Fl_Callback*)cb_4);
     } // Fl_Button* o
-    { Fl_Button* o = new Fl_Button(360, 155, 35, 35, "@5");
-      o->color((Fl_Color)51);
-      o->selection_color((Fl_Color)51);
+    { Fl_Button* o = new Fl_Button(360, 145, 35, 35, "@5");
       o->labelsize(22);
       o->callback((Fl_Callback*)cb_5);
     } // Fl_Button* o
     win_cercalavoro->set_modal();
-    win_cercalavoro->size_range(400, 370, 400, 370);
+    win_cercalavoro->size_range(400, 390, 400, 390);
     win_cercalavoro->end();
   } // Fl_Double_Window* win_cercalavoro
   return win_cercalavoro;
@@ -7924,7 +7909,6 @@ win_quizzone->hide();
 
 Fl_Double_Window* GUIQuizzone() {
   { Fl_Double_Window* o = win_quizzone = new Fl_Double_Window(585, 575, "Quiz");
-    win_quizzone->color(FL_LIGHT3);
     win_quizzone->labelfont(1);
     win_quizzone->labelsize(12);
     win_quizzone->hotspot(win_quizzone);
