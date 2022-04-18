@@ -40,6 +40,8 @@
 
 #include "debug.h"
 
+#include "tabboz.xpm"  // icona
+
 #ifdef TABBOZ_WIN
 #ifndef NONETWORK
 #include "net.h"
@@ -54,6 +56,8 @@
 #include <FL/fl_ask.H>
 #include <FL/Fl_Shared_Image.H>
 #include <FL/Fl_PNG_Image.H>
+#include <FL/Fl_Pixmap.H>
+
 
 /* Header finestre GUI */
 #include "gui/GUITabboz.h"
@@ -1886,7 +1890,7 @@ int vvc(int i)
 
 
 /* PROCEDURA PRINCIPALE */
-int main(void)
+int main(int argc, char **argv)
 {
 
     /* Inizializza il programma */
@@ -1896,14 +1900,18 @@ int main(void)
     CaricaSharedImgs();
 
     Fl::option(Fl::OPTION_VISIBLE_FOCUS, false);  //disattiva tratteggio del pulsante selezionato
-    Fl::option(Fl::OPTION_DND_TEXT, false);  //disattiva possibilità di evidenziare i testi
 
     /* FIXME suono di prova */
     //TabbozPlaySound(0000);
+    
+    /* Icona per la taskbar */
+    Fl_Pixmap *icona_xpm = new Fl_Pixmap(tabboz_xpm);
+    Fl_RGB_Image *icona = new Fl_RGB_Image(icona_xpm);
+    Fl_Window::default_icon(icona);
 
     /* Finestra principale */
     win_principale = GUITabboz();
-    win_principale->show();
+    win_principale->show(argc, argv);
     Fl::run();
 
     /* Chiusura */
