@@ -19,7 +19,7 @@
 */
 
 /* Versione gioco... */
-#define VERSION "NG-pre20220415"
+#define VERSION "NG-pre20220418"
 
 /* Per attivare il Debug... */
 #define TABBOZ_DEBUG 1
