@@ -357,11 +357,11 @@ void Evento()
             figTemp = (rand() % (Fama-30) ) + 30;   // Figosita' minima tipa = 30...
 
             if (sesso == 'M') {
-                strcpy(nomeTemp, StrNomiTipe[ (rand() % 20) ]);    // pesca il nome di una tipa
-                sprintf(tmp,"Una tipa, di nome %s (Figosita' %d/100), ci prova con te...\nCi stai ???",nomeTemp,figTemp);
+                strcpy(nomeTemp, StrNomiTipe[ (rand() % NUM_TIPE) ]);    // pesca il nome di una tipa
+                sprintf(tmp,"Una tipa, di nome %s (Figosità %d/100), ci prova con te...\nCi stai ???",nomeTemp,figTemp);
             } else {
-                strcpy(nomeTemp, StrNomiTipi[ (rand() % 20) ]);    // pesca il nome di un tipo
-                sprintf(tmp,"Una tipo, di nome %s (Figosita' %d/100), ci prova con te...\nCi stai ???",nomeTemp,figTemp);
+                strcpy(nomeTemp, StrNomiTipi[ (rand() % NUM_TIPI) ]);    // pesca il nome di un tipo
+                sprintf(tmp,"Un tipo, di nome %s (Figosità %d/100), ci prova con te...\nCi stai ???",nomeTemp,figTemp);
             }
 
             fl_message_title("Qualcuno ti caga...");

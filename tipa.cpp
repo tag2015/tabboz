@@ -81,7 +81,10 @@ void AggiornaTipa(void)
 /* Cerca tipa - Randomizza un nome e figosità */
 void CercaTipa(void)
 {
-    n_nuovatipa   = rand() % 20;       // randomizza nome tipa/o
+    if(sesso == 'M')
+        n_nuovatipa = rand() % NUM_TIPE;    // randomizza nome tipa
+    else
+        n_nuovatipa = rand() % NUM_TIPI;    // randomizza nome tipo
     fig_nuovatipa = rand() % 71 + 30;  // randomizza figosita 30 -> 100
 
     if (sesso == 'M') {
