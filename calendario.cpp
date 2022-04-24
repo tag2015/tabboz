@@ -24,11 +24,13 @@
 #include <stdlib.h>
 
 #include "zarrosim.h"
-#include "calendario.h"
+
 #include "scuola.h"
 #include "lavoro.h"
 
 #include "debug.h"
+
+#include "calendario.h"
 
 /* Header per toolkit FLTK */
 #include <FL/Fl.H>
@@ -197,10 +199,20 @@ void Giorno(void)
                     fl_message_title("Ultimo giorno di scuola");
                     fl_message("Da domani iniziano le vacanza estive!");
                 }
-                if (x_giorno == 22) {  /* Pagella */
-                    // lpproc = MakeProcInstance(MostraPagella, hInst);  FIXME
-                    // DialogBox(hInst, MAKEINTRESOURCE(110), hInstance, lpproc);
-                    // FreeProcInstance(lpproc);
+                if ((x_giorno == 22) && (win_principale)) {  /* Mostra pagella (controlla se inizializzato)*/
+                    if(MostraPagella()) {
+                        fl_message_title("Studiare paga...");
+                        fl_message("Visto che sei stato promosso,\nti diamo un po' di mancia...");
+                        Soldi+=200;
+                        if(Paghetta<30)     // Se è inferiore, riporta al valore standard
+                            Paghetta=30;
+                    } else {
+                        fl_message_title("Too cool for school");
+                        fl_message("Visto che ti sei fatto bocciare,\npaghetta dimezzata!!!");
+                        Paghetta/=2;
+                        if(Paghetta<5)
+                            Paghetta=5;    //al massimo scendiamo a 5000 lire
+                    }
                 }
                 if (x_giorno > 15)  /* inizio vacanze estive */
                     x_vacanza=1;
@@ -286,69 +298,3 @@ void Giorno(void)
     }
 
 }
-
-
-
-//FIXME Pagella da implementare
-// ------------------------------------------------------------------------------------------
-// Mostra la pagella...
-// ------------------------------------------------------------------------------------------
-
-// # pragma argsused
-// BOOL FAR PASCAL MostraPagella(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//      char          tmp[1024];
-//      int i,k;
-
-//      if (message == WM_INITDIALOG) {
-//     k=0;
-//     for (i=1;i<10;i++) {
-//         if (MaterieMem[i].xxx < 6) k++;        /* k = materie insuff o grav. insuf. */
-//         if (MaterieMem[i].xxx < 4) k++;        /* k = materie insuff o grav. insuf. */
-//         sprintf(tmp, "%d",MaterieMem[i].xxx);
-//         SetDlgItemText(hDlg, i + 119, tmp);
-//     }
-
-//     if (Fama > 75)                    // Condotta... + un e' figo, + sembra un bravo ragazzo...
-//         SetDlgItemText(hDlg, 129, "8");
-//     else
-//         SetDlgItemText(hDlg, 129, "9");
-
-//     if (k > 4) {
-//         if (sound_active) TabbozPlaySound(401);
-//         sprintf(tmp, "NON ammess%c",ao);        /* bocciata/o */
-//         #ifdef TABBOZ_DEBUG
-//         writelog("giorno: Pagella... Bocciato !!!");
-//         #endif
-
-//     } else {
-//         sprintf(tmp, "ammess%c",ao);        /* promossa/o */
-//         Soldi+=200;
-//         #ifdef TABBOZ_DEBUG
-//         writelog("giorno: Pagella... Promosso...");
-//         #endif
-//     }
-
-//     SetDlgItemText(hDlg, 119, tmp);
-//     return(TRUE);
-//     }
-
-//     else if (message == WM_COMMAND)
-//     {
-//     switch (wParam)
-//     {
-//         case IDCANCEL:
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
-
-//         case IDOK:
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
-
-//         default:
-//         return(TRUE);
-//     }
-//     }
-
-//     return(FALSE);
-// }
