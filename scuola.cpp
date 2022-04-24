@@ -215,6 +215,71 @@ bool CheckVacanza(void)
 }
 
 
+/* Mostra la pagella... ritorna true/false per promosso/bocciato*/
+bool MostraPagella(void)
+{
+    char    tmp[1024];
+    int     i;
+    int     insuf=0, grav_insuf=0;
+
+    GUIPagella();			// mostra finestra pagella
+    win_pagella->show();
+    for (i=0;i<N_MATERIE;i++) {
+        Fl_Value_Output *casella = (Fl_Value_Output *) pag_voti->child(i);    // pag_voti è il gruppo contenente le ValueBox per i voti
+        Fl_Round_Button *materia = (Fl_Round_Button *) pag_materie->child(i);
+        casella->value(MaterieMem[i+1].voto);
+        if(casella->value() < 6) {     // evidenzia insufficienze
+			casella->textcolor(FL_RED);
+            if(casella->value() < 5) {
+                grav_insuf++;
+	            materia->labelcolor(FL_RED);
+			}
+			else
+				materia->labelcolor(FL_BLACK);
+            insuf++;
+        } else {
+			casella->labelcolor(FL_BLACK);
+		}
+    }
+
+    pag_gravinsuf->value(grav_insuf);
+    pag_insuf->value(insuf-grav_insuf);
+	if(grav_insuf>0)
+		pag_gravinsuf->textcolor(FL_RED);
+	else
+		pag_gravinsuf->textcolor(FL_BLACK);		
+
+    if (Fama > 75)                    // Condotta... + un e' figo, + sembra un bravo ragazzo...
+        pag_condotta->value(9);
+    else
+        pag_condotta->value(8);
+
+    if( (grav_insuf > 2) || (insuf > 4) ) {
+        if (sound_active) TabbozPlaySound(401);
+        sprintf(tmp, "NON AMMESS%c",toupper(ao));        /* bocciato/a */
+        pag_giudizio->copy_label(tmp);
+		pag_giudizio->labelcolor(FL_RED);
+		pag_btn->copy_label("Ma vaff...");
+		#ifdef TABBOZ_DEBUG
+        	writelog("giorno: Pagella... Bocciato !!!");
+        #endif
+		while(win_pagella->shown()) Fl::wait();   //attende chiusura
+		return FALSE;
+    } else {
+		if (sound_active) TabbozPlaySound(1100);
+        sprintf(tmp, "AMMESS%c",toupper(ao));        /* promosso/a */
+        pag_giudizio->copy_label(tmp);
+		pag_giudizio->labelcolor(FL_BLACK);
+		pag_btn->copy_label("Vacanze!!!");
+		#ifdef TABBOZ_DEBUG
+        	writelog("giorno: Pagella... Promosso...");
+        #endif
+		while(win_pagella->shown()) Fl::wait();   //attende chiusura
+		return TRUE;
+	}
+}
+
+
 
 /*codice originale*/
 #ifdef DEADCODE

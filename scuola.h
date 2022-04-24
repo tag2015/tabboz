@@ -37,3 +37,5 @@ void AggiornaScuola(void);
 void StudiaMateria(int scelta);
 void CorrompiProf(int scelta);
 void MinacciaSeduciProf(int scelta);
+
+bool MostraPagella(void);
