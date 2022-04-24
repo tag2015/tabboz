@@ -18,6 +18,11 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/* Numero di elementi per ogni array di stringhe */
+
+#define NUM_TIPE    65
+#define NUM_TIPI    20
+#define NUM_STRADE  50
 
 /* "Indici" per l'array di stringhe degli eventi */
 
