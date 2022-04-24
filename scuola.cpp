@@ -47,41 +47,24 @@ STMATERIE MaterieMem[] =
 	{   {"---",                   0},
 		{"Agraria",               0},
 		{"Fisica",                0},
-		{"Attivita' culturali",   0},   /* fine alla 0.6.3 era "culurali..." */
+		{"Attivita' culturali",   0},
 		{"Attivita' matematiche", 0},
 		{"Scienze industriali",   0},
 		{"Elettrochimica",        0},
 		{"Petrolchimica",         0},
-		{"Filosofia aziendale",   0},  /* fino alla 0.5.3 "aziendale" aveva due zeta... */
+		{"Filosofia aziendale",   0},
 		{"Metallurgia",           0} 
 	};
 		                   /*     |   */
                            /*     \ voto in una materia */
 
-void ScriviVoti();
-bool CheckVacanza();
 
-
-/* Scrive i voti nelle apposite caselle */
-void ScriviVoti()
-{
-    int i;
-
-    for (i=0;i<N_MATERIE;i++) {
-        Fl_Value_Output *casella = (Fl_Value_Output *) grp_voti->child(i);    // grp_voti è il gruppo contenente le ValueBox per i voti
-        casella->value(MaterieMem[i+1].voto);
-        if(casella->value() < 5)              // aggiunge colore ai voti
-            casella->textcolor(FL_RED);
-        else if (casella->value() > 7)
-            casella->textcolor(FL_DARK_GREEN);
-        else
-            casella->textcolor(FL_BLACK);
-    }
-}
+void ScriviVoti(void);
+bool CheckVacanza(void);
 
 
 /* Aggiorna Finestra Scuola*/
-void AggiornaScuola()
+void AggiornaScuola(void)
 {
     CalcolaStudio();
     ScriviVoti();
@@ -105,18 +88,6 @@ void AggiornaScuola()
 //     sprintf(tmp, "%d",MaterieMem[scelta].xxx);
 //     SetDlgItemText(parent, scelta + 119, tmp);
 //
-}
-
-
-bool CheckVacanza()
-{
-    if ( x_vacanza != 0 ) {
-        fl_message_title("Scuola chiusa...");
-		fl_alert("Non puoi andare a scuola in un giorno di vacanza!");
-        return(true);
-    }
- 	else
-        return(false);
 }
 
 
@@ -211,6 +182,38 @@ void MinacciaSeduciProf(int scelta)
     AggiornaScuola();
     }
 }
+
+
+/* Scrive i voti nelle apposite caselle */
+void ScriviVoti(void)
+{
+    int i;
+
+    for (i=0;i<N_MATERIE;i++) {
+        Fl_Value_Output *casella = (Fl_Value_Output *) grp_voti->child(i);    // grp_voti è il gruppo contenente le ValueBox per i voti
+        casella->value(MaterieMem[i+1].voto);
+        if(casella->value() < 5)              // aggiunge colore ai voti
+            casella->textcolor(FL_RED);
+        else if (casella->value() > 7)
+            casella->textcolor(FL_DARK_GREEN);
+        else
+            casella->textcolor(FL_BLACK);
+    }
+}
+
+
+/* Controlla se è un giorno di vacanza (feste programmate e estate) */
+bool CheckVacanza(void)
+{
+    if ( x_vacanza != 0 ) {
+        fl_message_title("Scuola chiusa...");
+		fl_alert("Non puoi andare a scuola in un giorno di vacanza!");
+        return(true);
+    }
+ 	else
+        return(false);
+}
+
 
 
 /*codice originale*/

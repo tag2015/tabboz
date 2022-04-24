@@ -32,7 +32,7 @@ typedef struct tagSTMATERIE {
 extern   STMATERIE    MaterieMem[];
 
 
-void AggiornaScuola();
+void AggiornaScuola(void);
 
 void StudiaMateria(int scelta);
 void CorrompiProf(int scelta);
