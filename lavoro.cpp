@@ -37,13 +37,7 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
-
-
 //static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
-
-
-//BOOL FAR PASCAL ElencoDitte(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-//BOOL FAR PASCAL CercaLavoro(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
 
 int    numeroditta;
@@ -51,13 +45,6 @@ int    stipendio;
 int    giorni_di_lavoro;
 int    impegno;
 
-
-//int     scheda;    /* numero scheda del quiz ( 0 - 9 ) */
-//int     punti_scheda;
-// char    Risposte1[3];
-// char    Risposte2[3];
-// char    Risposte3[3];
-//int     accetto;
 
 bool crocette_risposte[3][3]={0};
 
@@ -77,6 +64,8 @@ STSCOOTER LavoroMem[] =
     };
 //       |
 //       \lavoro fuori porta (solo con lo scooter puoi arrivarci...)
+
+
 
 
 /* Aggiorna caselle stipendio - impegno */
@@ -100,26 +89,7 @@ void AggiornaLavoro(void)
 }
 
 
-/* Controlla che sia un giorno lavorativo e che il tabbozzo non sia disoccupato */
-bool GiornoDiLavoro(const char *titolo_dialog)
-{
-
-    fl_message_title(titolo_dialog);
-
-    if (numeroditta < 1)  {
-        fl_alert("Forse non ti ricordi che sei disokkupat%c...",ao);
-        return FALSE;
-    }
-
-    if ( ( x_vacanza == 2 ) || (x_giornoset == 6) ) {  // BUGFIX le ditte sono chiuse al sabato...
-        fl_alert("Arrivat%c davanti ai cancelli della ditta li trovi irrimediabilmente chiusi...",ao);
-        return FALSE;
-        }
-
-    return TRUE;
-}
-
-
+/* Controlla quizzone e stabilisce se assunto o no */
 void ControllaRisposte(int n_ditta, int n_scheda)
 {
     int Rcheck = 0;
@@ -172,6 +142,7 @@ void ControllaRisposte(int n_ditta, int n_scheda)
 }
 
 
+/* Per rassegnare le dimissioni */
 void Licenziati(void)
 {
     char tmp[128];
@@ -192,6 +163,45 @@ void Licenziati(void)
 }
 
 
+/* Incrementa l'impegno */
+void Lavora(void)
+{
+    if (! GiornoDiLavoro("Lavora"))
+        return;
+    if (impegno < 85)
+        impegno++;
+    if (sound_active) TabbozPlaySound(501);
+    Evento();
+    AggiornaLavoro();
+
+}
+
+
+/* Aumenta impegno perdendo rep e fama */
+void FaiIlLeccaculo(void)
+{
+    if (sesso == 'M') {
+        if (! GiornoDiLavoro("Fai il leccaculo"))
+            return;
+        } else {
+            if (! GiornoDiLavoro("Fai la leccaculo"))
+            return;
+        }
+    if (sound_active) TabbozPlaySound(503);
+    
+    if (Reputazione > 20 )    /* Facendo il leccaculo perdi reputazione e fama... */
+        Reputazione-=1;
+    if (impegno < 99)
+        impegno++;
+
+    if( (rand() % (Fortuna+3)) == 0 )    // evento casuale per sfigati
+        Evento();
+
+    AggiornaLavoro();
+}
+
+
+/* Routine per incrementare stipendio se impegno è molto alto */
 void ChiediAumento(void)
 {
 
@@ -225,29 +235,7 @@ void ChiediAumento(void)
 }
 
 
-void FaiIlLeccaculo(void)
-{
-    if (sesso == 'M') {
-        if (! GiornoDiLavoro("Fai il leccaculo"))
-            return;
-        } else {
-            if (! GiornoDiLavoro("Fai la leccaculo"))
-            return;
-        }
-    if (sound_active) TabbozPlaySound(503);
-    
-    if (Reputazione > 20 )    /* Facendo il leccaculo perdi reputazione e fama... */
-        Reputazione-=1;
-    if (impegno < 99)
-        impegno++;
-
-    if( (rand() % (Fortuna+3)) == 0 )    // evento casuale per sfigati
-        Evento();
-
-    AggiornaLavoro();
-}
-
-
+/* Aumenta rep perdendo impegno */
 void Sciopera(void)
 {
     if (! GiornoDiLavoro("Sciopera"))
@@ -267,18 +255,6 @@ void Sciopera(void)
 }
 
 
-void Lavora(void)
-{
-    if (! GiornoDiLavoro("Lavora"))
-        return;
-    if (impegno < 85)
-        impegno++;
-    if (sound_active) TabbozPlaySound(501);
-    Evento();
-    AggiornaLavoro();
-
-}
-
 
 
 //      if (message == WM_INITDIALOG) {
@@ -286,10 +262,6 @@ void Lavora(void)
 //             SetDlgItemText(hDlg, 113, "Fai il leccaculo");
 //         else
 //             SetDlgItemText(hDlg, 113, "Fai la leccaculo");
-
-
-
-
 //FIXME Meglio mettere un tasto nella ricerca lavoro x visualizzare info aggiuntive sull'azienda anzichè fare l'elenco separato
         //  case 114:        /* Elenco ditte ---------------------------------------------------------------------------------- */
         //     if (numeroditta == 0) {
@@ -350,6 +322,27 @@ void Lavora(void)
 
 //     return(FALSE);
 // }
+
+
+/* Controlla che sia un giorno lavorativo e che il tabbozzo non sia disoccupato */
+bool GiornoDiLavoro(const char *titolo_dialog)
+{
+
+    fl_message_title(titolo_dialog);
+
+    if (numeroditta < 1)  {
+        fl_alert("Forse non ti ricordi che sei disokkupat%c...",ao);
+        return FALSE;
+    }
+
+    if ( ( x_vacanza == 2 ) || (x_giornoset == 6) ) {  // BUGFIX le ditte sono chiuse al sabato...
+        fl_alert("Arrivat%c davanti ai cancelli della ditta li trovi irrimediabilmente chiusi...",ao);
+        return FALSE;
+        }
+
+    return TRUE;
+}
+
 
 
 #ifdef DEADCODE

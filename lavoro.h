@@ -38,7 +38,6 @@ extern bool crocette_risposte[3][3];    // Crocette inserite nel quiz
 void AggiornaLavoro(void);
 void ControllaRisposte(int n_ditta, int n_scheda);
 
-void CercaLavoro(void);
 void Licenziati(void);
 
 void Lavora(void);
