@@ -8,7 +8,7 @@
 #define N_PANTALONI     1
 #define N_SCARPE        1
 
-#define N_EVENTI        8
+#define N_EVENTI        9
 
 #define N_DITTE         8
 

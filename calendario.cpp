@@ -27,6 +27,7 @@
 
 #include "scuola.h"
 #include "lavoro.h"
+#include "eventi.h"  // per gli auguri di natale
 
 #include "debug.h"
 
@@ -99,14 +100,13 @@ int  x_vacanza;        // 0: giorno lavorativo | 1: vacanza tipo 1 (negozi apert
 int  scad_pal_giorno;  // Giorno e mese in cui scadra' l' abbonamento alla palestra
 int  scad_pal_mese;
 
-static char auguri_natale;
-
 
 /* Giorno - Incrementa il giorno corrente controllando il calendario e attiva eventi programmati*/
 void Giorno(void)
 {
     
     char tmp[255];
+    bool auguri_tipa = FALSE;
 
     x_giorno++;
     if (x_giorno > InfoMese[x_mese-1].num_giorni) {
@@ -123,15 +123,13 @@ void Giorno(void)
         x_mese = 1;
         x_anno_bisesto++;
         if (x_anno_bisesto > 3) x_anno_bisesto=0;
-        /* Capodanno();    */  //FIXME ?
     }
 
     x_giornoset++;
     if (x_giornoset > 7) {
         x_giornoset=1;
         if (current_testa > 0 ) {
-            current_testa--;    // Ogni 7 giorni diminuisce l' abbronzatura
-            TabbozRedraw = 1; // e si deve aggiornare il disegno... (BUG ! Mancava fino alla versione 0.83pr ) FIXME Grafica
+            current_testa--;    // Ogni 7 giorni diminuisce l' abbronzatura FIXME cosi decrementa sempre al lunedi
         }
     }
 
@@ -178,13 +176,8 @@ void Giorno(void)
             }
 
 
-    /* Calcola i giorni di vacanza durante l' anno ( da finire...)    FIXME*/
-    x_vacanza=0;
-
+    x_vacanza=0;     // 0 = giorno lavorativo
     current_tipa=0;  // imposta vestiti standard della tipa
-
-    /* Hai gia' ricevuto gli auguri di natale ??? */
-    auguri_natale=0;
 
     switch (x_mese) {       /* Vacanze di TIPO 1 (negozi aperti) */
         case 1: /* Gennaio --------------------------------------------------------- */
@@ -231,7 +224,7 @@ void Giorno(void)
                     fl_message_title("Primo giorno di scuola");
                     fl_message("Questa mattina devi tornare a scuola...");
                     for (int i=1;i<10;i++)    /* Azzera le materie... */
-                        MaterieMem[i].voto=2;  // TAG2015 cambiato a 0 a 2 e Studio ricalcolato
+                        MaterieMem[i].voto=2;
                     CalcolaStudio();    
                 }
                 break;
@@ -248,14 +241,10 @@ void Giorno(void)
                         Fama+=20;
                         if (Fama > 100) Fama=100;
                     }
-                    #ifdef VERAMENTE_INUTILE
-                    if (Rapporti > 0) { /* Buon Natale dalla tipa */
-                        auguri_natale=1;
-                        lpproc = MakeProcInstance(MostraSalutieBaci, hInst);
-                        DialogBox(hInst, MAKEINTRESOURCE(96), hInstance, lpproc);
-                        FreeProcInstance(lpproc);
+                    if (Rapporti > 30) { /* Buon Natale dalla tipa */
+                        FinestraEvento(8,8,"Tanti Auguri",FALSE);
+                        auguri_tipa = TRUE;
                     }
-                    #endif
                 }
                 if ((x_giorno == 28) && ((current_pantaloni == 19) || (current_gibbotto == 19))) {
                     fl_message_title("Natale...");
@@ -271,18 +260,18 @@ void Giorno(void)
 
     if (x_giornoset == 7 ) x_vacanza=2;    /* Domenica */
 
-    if (auguri_natale == 0)    { //FIXME questo check è inutile
-        int i = 0;
-        while( InfoVacanze[i].giorno != 0 ) {
-            if (InfoVacanze[i].mese == x_mese)
-                if (InfoVacanze[i].giorno == x_giorno) {
-                    fl_message_title(InfoVacanze[i].nome);
-                    fl_message(InfoVacanze[i].descrizione);
-                    x_vacanza=2;        /* 2 = sono chiusi anche i negozi... */
-                }
-            i++;
+    int i = 0;
+    while( InfoVacanze[i].giorno != 0 ) {
+        if (InfoVacanze[i].mese == x_mese)
+            if (InfoVacanze[i].giorno == x_giorno) {
+                if(auguri_tipa)  break; // se già visualizzato "buon natale", usciamo dal ciclo
+                fl_message_title(InfoVacanze[i].nome);
+                fl_message(InfoVacanze[i].descrizione);
+                x_vacanza=2;        /* 2 = sono chiusi anche i negozi... */
             }
-        }
+        i++;
+    }
+        
 
     #ifdef LOGGING
         /* Mostra data e soldi */

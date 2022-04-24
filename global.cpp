@@ -88,6 +88,7 @@ const char *StrEventiFinestra[] = {
     "Senza un preciso motivo, prendi per\nil culo un manovale che, essendo privo\ndi senso dell'umorismo, ti fa a pezzi.",
     "Facendo il pirla con lo scooter in\n_NOMEVIA_\nriesci a fare incazzare un camionista.",
     "Mentre giri per la città con il tuo scooter,\nincontri sfortunatamente un muro...",
+    "BUON NATALE !!!",
 };
 
 
