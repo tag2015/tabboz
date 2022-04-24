@@ -20,10 +20,10 @@ decl {int materia_selezionata;} {private global
 Function {GUITabbozScuola()} {open
 } {
   Fl_Window win_scuola {
-    label Scuola open
-    xywh {343 505 540 350} type Double hotspot
+    label Scuola
+    xywh {-32000 -32000 540 350} type Double hide hotspot
     code0 {materia_selezionata=1;}
-    code1 {AggiornaScuola();} modal size_range {540 350 540 350} visible
+    code1 {AggiornaScuola();} modal size_range {540 350 540 350}
   } {
     Fl_Group {} {open
       xywh {10 10 245 275} box SHADOW_BOX color 7
@@ -107,7 +107,7 @@ Function {GUITabbozScuola()} {open
       }
       Fl_Value_Output scuola_val_media {
         label { MEDIA SCOLASTICA }
-        callback {o->value(MEDIAVOTI(Studio,N_MATERIE));} selected
+        callback {o->value(MEDIAVOTI(Studio,N_MATERIE));}
         xywh {195 250 35 25} box FLAT_BOX color 7 labelfont 5 textfont 5 textsize 15
       }
       Fl_Box {} {
@@ -159,6 +159,126 @@ AggiornaPrincipale();
 win_scuola->hide();}
         xywh {465 295 60 40} align 20
         code0 {o->image(ImgExit);}
+      }
+    }
+  }
+}
+
+Function {GUIPagella()} {open
+} {
+  Fl_Window win_pagella {
+    label {Pagella!} open
+    xywh {554 564 540 325} type Double hotspot modal size_range {540 325 540 325} visible
+  } {
+    Fl_Group pag_materie {open
+      xywh {10 10 245 305} box SHADOW_BOX color 7
+    } {
+      Fl_Round_Button {} {
+        label {Agraria.................}
+        xywh {12 20 213 15} type Radio box FLAT_BOX down_box FLAT_BOX color 7 selection_color 7 labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Fisica..................}
+        xywh {12 44 213 15} type Radio box FLAT_BOX down_box FLAT_BOX color 7 selection_color 7 labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Attività Culturali......}
+        xywh {12 68 213 15} type Radio box FLAT_BOX down_box FLAT_BOX color 7 selection_color 7 labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Attività Matematiche....}
+        xywh {12 93 213 15} type Radio box FLAT_BOX down_box FLAT_BOX color 7 selection_color 7 labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Scienze Industriali.....}
+        xywh {12 117 213 15} type Radio box FLAT_BOX down_box FLAT_BOX color 7 selection_color 7 labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Elettrochimica..........}
+        xywh {12 141 213 15} type Radio box FLAT_BOX down_box FLAT_BOX color 7 selection_color 7 labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Petrolchimica...........}
+        xywh {12 166 213 15} type Radio box FLAT_BOX down_box FLAT_BOX color 7 selection_color 7 labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Filosofia Aziendale.....}
+        xywh {12 190 213 15} type Radio box FLAT_BOX down_box FLAT_BOX color 7 selection_color 7 labelfont 5
+      }
+      Fl_Round_Button {} {
+        label {Metallurgia.............}
+        xywh {12 215 213 15} type Radio box FLAT_BOX down_box FLAT_BOX color 7 selection_color 7 labelfont 5
+      }
+      Fl_Group pag_voti {
+        xywh {185 15 60 215}
+      } {
+        Fl_Value_Output pag_voto1 {
+          xywh {225 20 20 15} box FLAT_BOX color 7 textfont 5
+        }
+        Fl_Value_Output pag_voto2 {
+          xywh {225 44 20 15} box FLAT_BOX color 7 textfont 5
+        }
+        Fl_Value_Output pag_voto3 {
+          xywh {225 68 20 15} box FLAT_BOX color 7 textfont 5
+        }
+        Fl_Value_Output pag_voto4 {
+          xywh {225 93 20 15} box FLAT_BOX color 7 textfont 5
+        }
+        Fl_Value_Output pag_voto5 {
+          xywh {225 117 20 15} box FLAT_BOX color 7 textfont 5
+        }
+        Fl_Value_Output pag_voto6 {
+          xywh {225 141 20 15} box FLAT_BOX color 7 textfont 5
+        }
+        Fl_Value_Output pag_voto7 {
+          xywh {225 166 20 15} box FLAT_BOX color 7 textfont 5
+        }
+        Fl_Value_Output pag_voto8 {
+          xywh {225 190 20 15} box FLAT_BOX color 7 textfont 5
+        }
+        Fl_Value_Output pag_voto9 {
+          xywh {225 215 20 15} box FLAT_BOX color 7 textfont 5
+        }
+      }
+      Fl_Round_Button {} {
+        label {Condotta................} selected
+        xywh {12 245 213 15} type Radio box FLAT_BOX down_box FLAT_BOX color 7 selection_color 7 labelfont 5
+      }
+      Fl_Value_Output pag_condotta {
+        xywh {225 245 20 15} box FLAT_BOX color 7 textfont 5
+      }
+      Fl_Box {} {
+        xywh {75 270 105 5} box FLAT_BOX color 48
+      }
+      Fl_Value_Output pag_insuf {
+        label {Insuff. }
+        xywh {85 285 20 15} box FLAT_BOX color 7 labelfont 2 textfont 1
+      }
+      Fl_Value_Output pag_gravinsuf {
+        label {Grav. insuff. }
+        xywh {210 285 20 15} box FLAT_BOX color 7 labelfont 2 textfont 1
+      }
+    }
+    Fl_Box {} {
+      image {pic/scuola.png} xywh {260 10 270 170} box EMBOSSED_FRAME
+    }
+    Fl_Group {} {open
+      xywh {260 185 270 130} box SHADOW_BOX color 7
+    } {
+      Fl_Box {} {
+        label {Giudizio Finale}
+        xywh {270 205 110 25} labelfont 2
+      }
+      Fl_Box pag_giudizio {
+        label {NON AMMESSO}
+        xywh {385 205 135 25} labelfont 1
+      }
+      Fl_Button pag_btn {
+        label {Ma vaff...}
+        callback {win_principale->activate();
+AggiornaPrincipale();
+win_pagella->hide();}
+        xywh {290 265 205 30}
       }
     }
   }

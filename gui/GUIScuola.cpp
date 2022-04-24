@@ -6052,3 +6052,225 @@ Fl_Double_Window* GUITabbozScuola() {
   } // Fl_Double_Window* win_scuola
   return win_scuola;
 }
+
+Fl_Double_Window *win_pagella=(Fl_Double_Window *)0;
+
+Fl_Group *pag_materie=(Fl_Group *)0;
+
+Fl_Group *pag_voti=(Fl_Group *)0;
+
+Fl_Value_Output *pag_voto1=(Fl_Value_Output *)0;
+
+Fl_Value_Output *pag_voto2=(Fl_Value_Output *)0;
+
+Fl_Value_Output *pag_voto3=(Fl_Value_Output *)0;
+
+Fl_Value_Output *pag_voto4=(Fl_Value_Output *)0;
+
+Fl_Value_Output *pag_voto5=(Fl_Value_Output *)0;
+
+Fl_Value_Output *pag_voto6=(Fl_Value_Output *)0;
+
+Fl_Value_Output *pag_voto7=(Fl_Value_Output *)0;
+
+Fl_Value_Output *pag_voto8=(Fl_Value_Output *)0;
+
+Fl_Value_Output *pag_voto9=(Fl_Value_Output *)0;
+
+Fl_Value_Output *pag_condotta=(Fl_Value_Output *)0;
+
+Fl_Value_Output *pag_insuf=(Fl_Value_Output *)0;
+
+Fl_Value_Output *pag_gravinsuf=(Fl_Value_Output *)0;
+
+Fl_Box *pag_giudizio=(Fl_Box *)0;
+
+Fl_Button *pag_btn=(Fl_Button *)0;
+
+static void cb_pag_btn(Fl_Button*, void*) {
+  win_principale->activate();
+AggiornaPrincipale();
+win_pagella->hide();
+}
+
+Fl_Double_Window* GUIPagella() {
+  { win_pagella = new Fl_Double_Window(540, 325, "Pagella!");
+    win_pagella->hotspot(win_pagella);
+    { pag_materie = new Fl_Group(10, 10, 245, 305);
+      pag_materie->box(FL_SHADOW_BOX);
+      pag_materie->color(FL_BACKGROUND2_COLOR);
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 20, 213, 15, "Agraria.................");
+        o->type(102);
+        o->box(FL_FLAT_BOX);
+        o->down_box(FL_FLAT_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(5);
+      } // Fl_Round_Button* o
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 44, 213, 15, "Fisica..................");
+        o->type(102);
+        o->box(FL_FLAT_BOX);
+        o->down_box(FL_FLAT_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(5);
+      } // Fl_Round_Button* o
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 68, 213, 15, "Attivit\303\240 Culturali......");
+        o->type(102);
+        o->box(FL_FLAT_BOX);
+        o->down_box(FL_FLAT_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(5);
+      } // Fl_Round_Button* o
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 93, 213, 15, "Attivit\303\240 Matematiche....");
+        o->type(102);
+        o->box(FL_FLAT_BOX);
+        o->down_box(FL_FLAT_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(5);
+      } // Fl_Round_Button* o
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 117, 213, 15, "Scienze Industriali.....");
+        o->type(102);
+        o->box(FL_FLAT_BOX);
+        o->down_box(FL_FLAT_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(5);
+      } // Fl_Round_Button* o
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 141, 213, 15, "Elettrochimica..........");
+        o->type(102);
+        o->box(FL_FLAT_BOX);
+        o->down_box(FL_FLAT_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(5);
+      } // Fl_Round_Button* o
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 166, 213, 15, "Petrolchimica...........");
+        o->type(102);
+        o->box(FL_FLAT_BOX);
+        o->down_box(FL_FLAT_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(5);
+      } // Fl_Round_Button* o
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 190, 213, 15, "Filosofia Aziendale.....");
+        o->type(102);
+        o->box(FL_FLAT_BOX);
+        o->down_box(FL_FLAT_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(5);
+      } // Fl_Round_Button* o
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 215, 213, 15, "Metallurgia.............");
+        o->type(102);
+        o->box(FL_FLAT_BOX);
+        o->down_box(FL_FLAT_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(5);
+      } // Fl_Round_Button* o
+      { pag_voti = new Fl_Group(185, 15, 60, 215);
+        { pag_voto1 = new Fl_Value_Output(225, 20, 20, 15);
+          pag_voto1->box(FL_FLAT_BOX);
+          pag_voto1->color(FL_BACKGROUND2_COLOR);
+          pag_voto1->textfont(5);
+        } // Fl_Value_Output* pag_voto1
+        { pag_voto2 = new Fl_Value_Output(225, 44, 20, 15);
+          pag_voto2->box(FL_FLAT_BOX);
+          pag_voto2->color(FL_BACKGROUND2_COLOR);
+          pag_voto2->textfont(5);
+        } // Fl_Value_Output* pag_voto2
+        { pag_voto3 = new Fl_Value_Output(225, 68, 20, 15);
+          pag_voto3->box(FL_FLAT_BOX);
+          pag_voto3->color(FL_BACKGROUND2_COLOR);
+          pag_voto3->textfont(5);
+        } // Fl_Value_Output* pag_voto3
+        { pag_voto4 = new Fl_Value_Output(225, 93, 20, 15);
+          pag_voto4->box(FL_FLAT_BOX);
+          pag_voto4->color(FL_BACKGROUND2_COLOR);
+          pag_voto4->textfont(5);
+        } // Fl_Value_Output* pag_voto4
+        { pag_voto5 = new Fl_Value_Output(225, 117, 20, 15);
+          pag_voto5->box(FL_FLAT_BOX);
+          pag_voto5->color(FL_BACKGROUND2_COLOR);
+          pag_voto5->textfont(5);
+        } // Fl_Value_Output* pag_voto5
+        { pag_voto6 = new Fl_Value_Output(225, 141, 20, 15);
+          pag_voto6->box(FL_FLAT_BOX);
+          pag_voto6->color(FL_BACKGROUND2_COLOR);
+          pag_voto6->textfont(5);
+        } // Fl_Value_Output* pag_voto6
+        { pag_voto7 = new Fl_Value_Output(225, 166, 20, 15);
+          pag_voto7->box(FL_FLAT_BOX);
+          pag_voto7->color(FL_BACKGROUND2_COLOR);
+          pag_voto7->textfont(5);
+        } // Fl_Value_Output* pag_voto7
+        { pag_voto8 = new Fl_Value_Output(225, 190, 20, 15);
+          pag_voto8->box(FL_FLAT_BOX);
+          pag_voto8->color(FL_BACKGROUND2_COLOR);
+          pag_voto8->textfont(5);
+        } // Fl_Value_Output* pag_voto8
+        { pag_voto9 = new Fl_Value_Output(225, 215, 20, 15);
+          pag_voto9->box(FL_FLAT_BOX);
+          pag_voto9->color(FL_BACKGROUND2_COLOR);
+          pag_voto9->textfont(5);
+        } // Fl_Value_Output* pag_voto9
+        pag_voti->end();
+      } // Fl_Group* pag_voti
+      { Fl_Round_Button* o = new Fl_Round_Button(12, 245, 213, 15, "Condotta................");
+        o->type(102);
+        o->box(FL_FLAT_BOX);
+        o->down_box(FL_FLAT_BOX);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(5);
+      } // Fl_Round_Button* o
+      { pag_condotta = new Fl_Value_Output(225, 245, 20, 15);
+        pag_condotta->box(FL_FLAT_BOX);
+        pag_condotta->color(FL_BACKGROUND2_COLOR);
+        pag_condotta->textfont(5);
+      } // Fl_Value_Output* pag_condotta
+      { Fl_Box* o = new Fl_Box(75, 270, 105, 5);
+        o->box(FL_FLAT_BOX);
+        o->color((Fl_Color)48);
+      } // Fl_Box* o
+      { pag_insuf = new Fl_Value_Output(85, 285, 20, 15, "Insuff. ");
+        pag_insuf->box(FL_FLAT_BOX);
+        pag_insuf->color(FL_BACKGROUND2_COLOR);
+        pag_insuf->labelfont(2);
+        pag_insuf->textfont(1);
+      } // Fl_Value_Output* pag_insuf
+      { pag_gravinsuf = new Fl_Value_Output(210, 285, 20, 15, "Grav. insuff. ");
+        pag_gravinsuf->box(FL_FLAT_BOX);
+        pag_gravinsuf->color(FL_BACKGROUND2_COLOR);
+        pag_gravinsuf->labelfont(2);
+        pag_gravinsuf->textfont(1);
+      } // Fl_Value_Output* pag_gravinsuf
+      pag_materie->end();
+    } // Fl_Group* pag_materie
+    { Fl_Box* o = new Fl_Box(260, 10, 270, 170);
+      o->box(FL_EMBOSSED_FRAME);
+      o->image( image_scuola() );
+    } // Fl_Box* o
+    { Fl_Group* o = new Fl_Group(260, 185, 270, 130);
+      o->box(FL_SHADOW_BOX);
+      o->color(FL_BACKGROUND2_COLOR);
+      { Fl_Box* o = new Fl_Box(270, 205, 110, 25, "Giudizio Finale");
+        o->labelfont(2);
+      } // Fl_Box* o
+      { pag_giudizio = new Fl_Box(385, 205, 135, 25, "NON AMMESSO");
+        pag_giudizio->labelfont(1);
+      } // Fl_Box* pag_giudizio
+      { pag_btn = new Fl_Button(290, 265, 205, 30, "Ma vaff...");
+        pag_btn->callback((Fl_Callback*)cb_pag_btn);
+      } // Fl_Button* pag_btn
+      o->end();
+    } // Fl_Group* o
+    win_pagella->set_modal();
+    win_pagella->size_range(540, 325, 540, 325);
+    win_pagella->end();
+  } // Fl_Double_Window* win_pagella
+  return win_pagella;
+}
