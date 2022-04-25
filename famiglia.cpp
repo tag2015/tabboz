@@ -22,14 +22,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
 #include "zarrosim.h"
+#include "sound.h"
 #include "debug.h"
 
 #include "eventi.h"
-#include "sound.h"
 
 #include "famiglia.h"
 #include "gui/GUIFamiglia.h"

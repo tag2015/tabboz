@@ -18,6 +18,7 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 void ChiediAumentoPaghetta(void);
 void ChiediSoldiExtra(void);
 void ChiediSoldiPapa(void);
