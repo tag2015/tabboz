@@ -22,14 +22,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
 #include "zarrosim.h"
+#include "debug.h"
+
 #include "calendario.h"
 #include "eventi.h"
-
-#include "debug.h"
 
 #include "negozi.h"
 
@@ -37,66 +35,62 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
-//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 
+STVARIE VestitiMem[] = {
+    {0, 0, 0, 0, 0,  0, 0,    0,  0, "---"},
+    {0, 0, 0, 0, 0,  8, 0,  348,  0, ""},    // -- Giubbotto "Fatiscenza"
+    {0, 0, 0, 0, 0,  9, 0,  378,  0, ""},    //    Fatiscenza silver
+    {0, 0, 0, 0, 0,  9, 0,  378,  0, ""},    //    Fatiscenza verde
+    {0, 0, 0, 0, 0, 10, 0,  418,  0, ""},    //    Fatiscenza bianco
+    {0, 0, 0, 0, 0,  8, 0,  248,  0, ""},    //    Giacca di pelle
+    {0, 0, 0, 0, 0,  7, 0,  298,  0, ""},    //    Cappotto fluo
 
-/* Per una questione di svogliatezza del programmatore, viene usata STSCOOTER anche x i vestiti. */
-STSCOOTER VestitiMem[] =
-    {   {0,  0, 0, 0, 0, 0,   0,  0,"---"},
-        {0,  0, 0, 8, 0, 0, 348,  0,""},    // -- Giubbotto "Fatiscenza"
-        {0,  0, 0, 9, 0, 0, 378,  0,""},    //    Fatiscenza silver
-        {0,  0, 0, 9, 0, 0, 378,  0,""},    //    Fatiscenza verde
-        {0,  0, 0,10, 0, 0, 418,  0,""},    //    Fatiscenza bianco
-        {0,  0, 0, 8, 0, 0, 248,  0,""},    //    Giacca di pelle
-        {0,  0, 0, 7, 0, 0, 298,  0,""},    //    Cappotto fluo
+    {0, 0, 0, 0, 0,  3, 0,   90,  0, ""},    // -- Pantaloni gessati
+    {0, 0, 0, 0, 0,  5, 0,  170,  0, ""},    //    Pantaloni tuta
+    {0, 0, 0, 0, 0,  6, 0,  248,  0, ""},    //    Pantaloni in plastika
+    {0, 0, 0, 0, 0,  5, 0,  190,  0, ""},    //    Pantaloni scacchiera
 
-
-        {0,  0, 0, 3, 0, 0,  90,  0,""},    // -- Pantaloni gessati
-        {0,  0, 0, 5, 0, 0, 170,  0,""},    //    Pantaloni tuta
-        {0,  0, 0, 6, 0, 0, 248,  0,""},    //    Pantaloni in plastika
-        {0,  0, 0, 5, 0, 0, 190,  0,""},    //    Pantaloni scacchiera
-
-        {0,  0, 0, 4, 0, 0, 122,  0,""},    // -- Scarpe da tabbozzi...
-        {0,  0, 0, 6, 0, 0, 220,  0,""},    //    Buffalo
-        {0,  0, 0, 2, 0, 0,  58,  0,""},    //    Scarpe da tabbozzi...
-        {0,  0, 0, 4, 0, 0, 142,  0,""},    //    NUOVE Scarpe da tabbozzi...
-        {0,  0, 0, 4, 0, 0, 142,  0,""},    //    ""        ""
-        {0,  0, 0, 5, 0, 0, 166,  0,""},    //    ""        ""
-        {0,  0, 0, 6, 0, 0, 230,  0,""}     //     Nuove Buffalo
-    };
-
-
-/* Sigarette --------------------------------------------------------------------------------------- */
-STSCOOTER SizeMem[] = {
-    { 5,  5, 0, 2, 0, 0,   6,  0,"Barclay"},
-    { 8,  7, 0, 1, 0, 0,   6,  0,"Camel"},
-    { 7,  6, 0, 2, 0, 0,   6,  0,"Davidoff Superior Lights"},
-    { 7,  6, 0, 2, 0, 0,   6,  0,"Davidoff Mildnes"},
-    {13,  9, 0, 2, 0, 0,   6,  0,"Davidoff Classic"},
-    { 9,  7, 0, 1, 0, 0,   5,  0,"Diana Blu"},
-    {12,  9, 0, 1, 0, 0,   5,  0,"Diana Rosse"},
-    { 8,  7, 0, 0, 0, 0,   6,  0,"Dunhill Lights"},
-    { 7,  5, 0, 0, 0, 0,   6,  0,"Merit"},
-    {14, 10, 0, 0, 0, 0,   6,  0,"Gauloises Blu"},
-    { 7,  6, 0, 0, 0, 0,   6,  0,"Gauloises Rosse"},
-    {13, 10, 0, 1, 0, 0,   6,  0,"Unlucky Strike"},
-    { 9,  7, 0, 1, 0, 0,   6,  0,"Unlucky Strike Lights"},
-    { 8,  6, 0, 2, 0, 0,   6,  0,"Malborro Medium"},    // dovrebbero essere come le lights
-    {12,  9, 0, 2, 0, 0,   6,  0,"Malborro Rosse"},
-    { 8,  6, 0, 2, 0, 0,   6,  0,"Malborro Lights"},
-    {11, 10, 0, 0, 0, 0,   5,  0,"NS Rosse"},
-    { 9,  8, 0, 0, 0, 0,   5,  0,"NS Mild"},
-    { 9,  7, 0, 1, 0, 0,   5,  0,"Poll Mon Blu"},
-    {12,  9, 0, 1, 0, 0,   5,  0,"Poll Mon Rosse"},
-    {12, 10, 0, 2, 0, 0,   6,  0,"Philip Morris"},
-    { 4,  4, 0, 2, 0, 0,   6,  0,"Philip Morris Super Light"},
-    {10,  9, 0, 1, 0, 0,   5,  0,"Armadis"},
-    {11,  9, 0, 0, 0, 0,   5,  0,"Winston"}
+    {0, 0, 0, 0, 0,  4, 0,  122,  0, ""},    // -- Scarpe da tabbozzi...
+    {0, 0, 0, 0, 0,  6, 0,  220,  0, ""},    //    Buffalo
+    {0, 0, 0, 0, 0,  2, 0,   58,  0, ""},    //    Scarpe da tabbozzi...
+    {0, 0, 0, 0, 0,  4, 0,  142,  0, ""},    //    NUOVE Scarpe da tabbozzi...
+    {0, 0, 0, 0, 0,  4, 0,  142,  0, ""},    //    ""        ""
+    {0, 0, 0, 0, 0,  5, 0,  166,  0, ""},    //    ""        ""
+    {0, 0, 0, 0, 0,  6, 0,  230,  0, ""}     //    Nuove Buffalo
 };
-/*    |   |                                                    */
-/*    |   \nicotina * 10 ( 7 = nicotina 0.7, 10 = nicotina 1 ) */
-/*     \condensato                                             */
+
+
+/* Sigarette */
+STVARIE SizzeMem[] = {
+    { 0,  5,  5, 0, 0, 2, 0,  6, 0, "Barclay"},
+    { 0,  8,  7, 0, 0, 1, 0,  6, 0, "Camel"},
+    { 0,  7,  6, 0, 0, 2, 0,  6, 0, "Davidoff Superior Lights"},
+    { 0,  7,  6, 0, 0, 2, 0,  6, 0, "Davidoff Mildnes"},
+    { 0, 13,  9, 0, 0, 2, 0,  6, 0, "Davidoff Classic"},
+    { 0,  9,  7, 0, 0, 1, 0,  5, 0, "Diana Blu"},
+    { 0, 12,  9, 0, 0, 1, 0,  5, 0, "Diana Rosse"},
+    { 0,  8,  7, 0, 0, 0, 0,  6, 0, "Dunhill Lights"},
+    { 0,  7,  5, 0, 0, 0, 0,  6, 0, "Merit"},
+    { 0, 14, 10, 0, 0, 0, 0,  6, 0, "Gauloises Blu"},
+    { 0,  7,  6, 0, 0, 0, 0,  6, 0, "Gauloises Rosse"},
+    { 0, 13, 10, 0, 0, 1, 0,  6, 0, "Unlucky Strike"},
+    { 0,  9,  7, 0, 0, 1, 0,  6, 0, "Unlucky Strike Lights"},
+    { 0,  8,  6, 0, 0, 2, 0,  6, 0, "Malborro Medium"},    // dovrebbero essere come le lights
+    { 0, 12,  9, 0, 0, 2, 0,  6, 0, "Malborro Rosse"},
+    { 0,  8,  6, 0, 0, 2, 0,  6, 0, "Malborro Lights"},
+    { 0, 11, 10, 0, 0, 0, 0,  5, 0, "NS Rosse"},
+    { 0,  9,  8, 0, 0, 0, 0,  5, 0, "NS Mild"},
+    { 0,  9,  7, 0, 0, 1, 0,  5, 0, "Poll Mon Blu"},
+    { 0, 12,  9, 0, 0, 1, 0,  5, 0, "Poll Mon Rosse"},
+    { 0, 12, 10, 0, 0, 2, 0,  6, 0, "Philip Morris"},
+    { 0,  4,  4, 0, 0, 2, 0,  6, 0, "Philip Morris Super Light"},
+    { 0, 10,  9, 0, 0, 1, 0,  5, 0, "Armadis"},
+    { 0, 11,  9, 0, 0, 0, 0,  5, 0, "Winston"}
+};
+/*        |   |                                                    */
+/*        |   \nicotina * 10 ( 7 = nicotina 0.7, 10 = nicotina 1 ) */
+/*        \condensato                                              */
 
 
 
@@ -136,7 +130,7 @@ void PagaQualcosa (int scelta)
                 sprintf(tmp,"vestiti: Paga %s",MostraSoldi(VestitiMem[scelta].prezzo));
                 writelog(tmp);
             #endif
-            Fama+=VestitiMem[scelta].fama;  // FIXME bisognerebbe rendere i bonus permanenti
+            Fama+=VestitiMem[scelta].fama_inc;  // FIXME bisognerebbe rendere i bonus permanenti
             if (Fama > 100) Fama=100;
         }
         Evento();
@@ -285,14 +279,14 @@ bool OfferteDiNatale(void)
 //             scelta=wParam-400;
 //             LoadString(hInst, (wParam + 1000), tmp, 254);
 
-//             if (SizeMem[scelta].cc == 0) {
+//             if (SizzeMem[scelta].cc == 0) {
 //                 /* Se i valori sono impostati a 0, non li scrive */
 //                 sprintf(tmp_descrizione,"%s\n%s",
-//                     SizeMem[scelta].nome, tmp );
+//                     SizzeMem[scelta].nome, tmp );
 //             } else {
-//                 nico = div(SizeMem[scelta].cc, 10);
+//                 nico = div(SizzeMem[scelta].cc, 10);
 //                 sprintf(tmp_descrizione,"%s\n%sCondensato: %d Nicotina: %d.%d",
-//                     SizeMem[scelta].nome, tmp, SizeMem[scelta].speed, nico.quot, nico.rem);
+//                     SizzeMem[scelta].nome, tmp, SizzeMem[scelta].speed, nico.quot, nico.rem);
 //             }
 
 //             SetDlgItemText(hDlg, 106, tmp_descrizione);
@@ -306,15 +300,15 @@ bool OfferteDiNatale(void)
 
 //          case IDOK:
 //             if (scelta != -1) {
-//                 if (SizeMem[scelta].prezzo > Soldi) {
+//                 if (SizzeMem[scelta].prezzo > Soldi) {
 //                     nomoney(hDlg,TABACCAIO);
 //                 } else {
-//                     Soldi-= SizeMem[scelta].prezzo;
+//                     Soldi-= SizzeMem[scelta].prezzo;
 //                     #ifdef TABBOZ_DEBUG
-//                     sprintf(tmp,"tabaccaio: Paga %s",MostraSoldi(SizeMem[scelta].prezzo));
+//                     sprintf(tmp,"tabaccaio: Paga %s",MostraSoldi(SizzeMem[scelta].prezzo));
 //                     writelog(tmp);
 //                     #endif
-//                     Fama+=SizeMem[scelta].fama;
+//                     Fama+=SizzeMem[scelta].fama;
 //                     if (Fama > 100) Fama=100;
 //                     sizze+=20;
 //                 }

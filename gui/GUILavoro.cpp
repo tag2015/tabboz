@@ -39,7 +39,7 @@ static void cb_Licenziati(Fl_Button*, void*) {
 }
 
 static void cb_Lavora(Fl_Button*, void*) {
-  if((LavoroMem[numeroditta].speed == 1 ) && (ScooterData.attivita != 1)) {
+  if((LavoroMem[numeroditta].fuoriporta == 1 ) && (ScooterData.attivita != 1)) {
   fl_message_title("Lavoro fuori porta");
   fl_alert("Senza scooter non puoi andare al lavoro!");
   return;
@@ -49,7 +49,7 @@ Lavora();
 }
 
 static void cb_Fai(Fl_Button*, void*) {
-  if((LavoroMem[numeroditta].speed == 1 ) && (ScooterData.attivita != 1)) {
+  if((LavoroMem[numeroditta].fuoriporta == 1 ) && (ScooterData.attivita != 1)) {
   fl_message_title("Lavoro fuori porta");
   fl_alert("Senza scooter non puoi andare al lavoro!");
   return;
@@ -59,7 +59,7 @@ FaiIlLeccaculo();
 }
 
 static void cb_Chiedi(Fl_Button*, void*) {
-  if((LavoroMem[numeroditta].speed == 1 ) && (ScooterData.attivita != 1)) {
+  if((LavoroMem[numeroditta].fuoriporta == 1 ) && (ScooterData.attivita != 1)) {
   fl_message_title("Lavoro fuori porta");
   fl_alert("Senza scooter non puoi andare al lavoro!");
   return;
@@ -69,7 +69,7 @@ ChiediAumento();
 }
 
 static void cb_Sciopera(Fl_Button*, void*) {
-  if((LavoroMem[numeroditta].speed == 1 ) && (ScooterData.attivita != 1)) {
+  if((LavoroMem[numeroditta].fuoriporta == 1 ) && (ScooterData.attivita != 1)) {
   fl_message_title("Lavoro fuori porta");
   fl_alert("Senza scooter non puoi andare al lavoro!");
   return;
@@ -7753,7 +7753,7 @@ Fl_Double_Window *win_cercalavoro=(Fl_Double_Window *)0;
 Fl_Button *lav_btn_ok=(Fl_Button *)0;
 
 static void cb_lav_btn_ok(Fl_Button*, void*) {
-  if((LavoroMem[(num_ditta+1)].speed == 1 ) && (ScooterData.attivita != 1)) {
+  if((LavoroMem[(num_ditta+1)].fuoriporta == 1 ) && (ScooterData.attivita != 1)) {
   fl_message_title("Lavoro fuori porta");
   fl_message("Senza uno scooter funzionante non puoi raggiungere questa ditta...");
   return;

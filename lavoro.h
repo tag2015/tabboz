@@ -25,7 +25,7 @@
 #define NUM_SCHEDEQUIZ  10
 
 
-extern STSCOOTER LavoroMem[];
+extern STVARIE LavoroMem[];
 
 extern  int   numeroditta;              // Ditta in cui sei impiegato (-1 se disoccupato)
 extern  int   stipendio;                // Stipendio mensile

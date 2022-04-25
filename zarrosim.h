@@ -140,18 +140,19 @@
 //typedef unsigned long   u_long;
 
 
-/* INFORMAZIONI SUGLI SCOOTER  (ora usato solo per cose generiche...)  */
-typedef struct tagSTSCOOTER {
-    int         speed;          // velocita' massima
-    int         cc;             // cilindrata
-    int         xxx;            // [future espansioni]
-    int         fama;           // figosita' scooter
-    int         mass;           // massa sooter
-    int         maneuver;       // manovrabilita'
-    int         prezzo;         // costo dello scooter (modifiche incluse)
-    int         stato;          // quanto e' intero (in percentuale); -1 nessuno scooter
-    char        nome[30];       // nome dello scooter
-  } STSCOOTER;
+/* STRUTTURA PER INFORMAZIONI VARIE */
+typedef struct tagSTVARIE {
+    bool        fuoriporta;     // luogo/servizio accessibile solo con scooter
+    int         aux1;           // variabile ausiliaria
+    int         aux2;           // variabile ausiliaria
+    int         fama;           // figosita' minima richiesta
+    int         rep;            // reputazione minima richiesta
+    int         fama_inc;       // incremento figosità
+    int         rep_inc;        // incremento reputazione
+    int         prezzo;         // costo oggetto/servizio
+    int         stato;          // condizione (1-100)
+    char        nome[30];       // descrizione
+  } STVARIE;
 
 
 /* PRIMA LE VARIABILI GENERIKE... */

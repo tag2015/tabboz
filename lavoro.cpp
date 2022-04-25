@@ -49,18 +49,18 @@ bool crocette_risposte[3][3]={0};
 bool GiornoDiLavoro(const char *titolo_dialog);
 
 
-STSCOOTER LavoroMem[] =
-    {   {0,  0, 0, 0, 0, 0,   0,  0,"---"},
-        {0,  0, 0, 0, 0, 0,   0,  0,"Magneti Budelli"},
-        {0,  0, 0, 0, 0, 0,   0,  0,"Diamine"},
-        {1,  0, 0, 0, 0, 0,   0,  0,"Testmec"},
-        {0,  0, 0, 0, 0, 0,   0,  0,"Ti Impalo Bene Bene"},
-        {1,  0, 0, 0, 0, 0,   0,  0,"October"},
-        {1,  0, 0, 0, 0, 0,   0,  0,"Arlond's"},
-        {1,  0, 0, 0, 0, 0,   0,  0,"286 - Computer d'annata"},
-        {1,  0, 0, 0, 0, 0,   0,  0,"Ricopio" }
+STVARIE LavoroMem[] =
+    {   {0, 0, 0, 0, 0, 0, 0, 0, 0, "---"},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, "Magneti Budelli"},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, "Diamine"},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, "Testmec"},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, "Ti Impalo Bene Bene"},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, "October"},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, "Arlond's"},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, "286 - Computer d'annata"},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, "Ricopio" }
     };
-//       |
+//       |                    \stipendio base
 //       \lavoro fuori porta (solo con lo scooter puoi arrivarci...)
 
 

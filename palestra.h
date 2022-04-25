@@ -23,7 +23,7 @@
 #define SEI_MESI    270
 #define UN_ANNO     500
 
-extern STSCOOTER PalestraMem[];
+extern STVARIE PalestraMem[];
 
 void VaiInPalestra(void);
 void FaiLampada(void);
