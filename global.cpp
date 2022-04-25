@@ -20,6 +20,7 @@
 
 #include "global.h"
 
+
 /* IMPORTANTE */
 /* Se si aggiungono nuovi eventi bisogna anche modificare la routine in eventi.cpp */
 
@@ -89,6 +90,59 @@ const char *StrEventiFinestra[] = {
     "Facendo il pirla con lo scooter in\n_NOMEVIA_\nriesci a fare incazzare un camionista.",
     "Mentre giri per la città con il tuo scooter,\nincontri sfortunatamente un muro...",
     "BUON NATALE !!!",
+};
+
+const char *StrNomiStrade[] = {
+    "Via Lorenteggio",    // id=450
+    "Corso Vercelli",
+    "Viale Papiniano",
+    "Via Forze Armate",
+    "Via Pontaccio",
+    "Via Padova",
+    "Via Porpora",
+    "Corso Buenos Aires",
+    "Viale Monza",
+    "Via Leoncavallo",
+    "Via Bagarotti",
+    "Via Viterbo",
+    "Via Fratelli Zoia",
+    "Via dei Ciclamini",
+    "Via Bassi",
+    "Viale Monte Ceneri",
+    "Viale Certosa",
+    "Via Lamarmora",
+    "Corso XII Marzo",
+    "Viale dei Mille",
+    "Via Goldoni",
+    "Via Melchiorre Gioia",
+    "Corso Lodi",
+    "Viale Umbria",
+    "Viale Puglie",
+    "Via Tertulliano",
+    "Viale Cassala",
+    "Viale Liguria",
+    "Viale Beatrice D'Este",
+    "Viale Filippetti",
+    "Viale Toscana",
+    "Viale Famagosta",
+    "Via La Spezia",
+    "Via Giambellino",
+    "Via Inganni",
+    "Via Savona",
+    "Viale Lomellina",
+    "Via Galileo Galilei",
+    "Viale Faenza",
+    "Viale Jenner",
+    "Via Fiuggi",
+    "Via Imbonati",
+    "Via Pio II",
+    "Viale Tunisia",
+    "Via Pergolesi",
+    "Via Sammartini",
+    "Via Primaticcio",
+    "Via Archimede",
+    "Corso Venezia",
+    "Via Karl Marx",
 };
 
 
@@ -329,60 +383,6 @@ const char *StrRisposteLavoro[][9] = {
 };
 
 
-const char *StrNomiStrade[] = {
-    "Via Lorenteggio",    // id=450
-    "Corso Vercelli",
-    "Viale Papiniano",
-    "Via Forze Armate",
-    "Via Pontaccio",
-    "Via Padova",
-    "Via Porpora",
-    "Corso Buenos Aires",
-    "Viale Monza",
-    "Via Leoncavallo",
-    "Via Bagarotti",
-    "Via Viterbo",
-    "Via Fratelli Zoia",
-    "Via dei Ciclamini",
-    "Via Bassi",
-    "Viale Monte Ceneri",
-    "Viale Certosa",
-    "Via Lamarmora",
-    "Corso XII Marzo",
-    "Viale dei Mille",
-    "Via Goldoni",
-    "Via Melchiorre Gioia",
-    "Corso Lodi",
-    "Viale Umbria",
-    "Viale Puglie",
-    "Via Tertulliano",
-    "Viale Cassala",
-    "Viale Liguria",
-    "Viale Beatrice D'Este",
-    "Viale Filippetti",
-    "Viale Toscana",
-    "Viale Famagosta",
-    "Via La Spezia",
-    "Via Giambellino",
-    "Via Inganni",
-    "Via Savona",
-    "Viale Lomellina",
-    "Via Galileo Galilei",
-    "Viale Faenza",
-    "Viale Jenner",
-    "Via Fiuggi",
-    "Via Imbonati",
-    "Via Pio II",
-    "Viale Tunisia",
-    "Via Pergolesi",
-    "Via Sammartini",
-    "Via Primaticcio",
-    "Via Archimede",
-    "Corso Venezia",
-    "Via Karl Marx",
-};
-
-
 const char *StrNomiTipe[] = {
     "Alessandra",
     "Alessia",
@@ -495,4 +495,27 @@ const char *StrRisposteTipe[] = {
     "Forse mi hai preso per la ragazza sbagliata...",
     "Vai a farti fottere...",
     "Oh scusa, mi sono dimenticata di dirti che sono impegnata..."
+};
+
+const char *StrRisposteTipi[] = {
+    "Cioè tipa... zerella...",  // id=1300
+    "Ohhhhh..... stammi alla larga...",
+    "Ohhhhh..... vedi di mollarmi !!!!",
+    "Cioè, zero...",
+    "Senti troietta, vai a rompere i coglioni a qualcun altro",
+    "Senti troietta, vai a farti fottere...",
+    "Lasciami stare...",
+    "Scusa... sei una gran bella ragazza... ma... ecco... io...no...",
+    "No.......",
+    "Cioè tipa, vedi, cioè, insomma, io, no...",
+    "Scusami cara, non dirlo a nessuno, però io sono... ecco... insomma... gay...",
+    "Spostati, bambina...",
+    "Tu.... con me ???? Ha, ha, ha....",
+    "Spero che tu stia scherzando...",
+    "Non pensarci neanche lontanamente...",
+    "Sono confuso...",
+    "Scusa, sono già impegnato...",
+    "Ho bisogno di stare da solo...",
+    "Ti vedo solo come una amica",
+    "Si è fatto tardi, scusa, ora devo andare... ne riparliamo domani, ok...",
 };
