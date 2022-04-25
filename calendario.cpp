@@ -24,12 +24,11 @@
 #include <stdlib.h>
 
 #include "zarrosim.h"
+#include "debug.h"
 
 #include "scuola.h"
 #include "lavoro.h"
 #include "eventi.h"  // per gli auguri di natale
-
-#include "debug.h"
 
 #include "calendario.h"
 
@@ -39,15 +38,7 @@
 
 #include "gui/GUITabboz.h"  // Per aggiornare la data sulla finestra principale
 
-//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
-
-typedef struct tagVACANZE {
-    char   const *nome;          // nome del giorno di vacanza
-    int    giorno;               // giorno
-    int    mese;                 // mese
-    char   const *descrizione;   // descrizione giorno di vacanza
-} STVACANZE;
 
 const STMESI InfoMese[] = {
     {"Gennaio",   31},
@@ -64,7 +55,6 @@ const STMESI InfoMese[] = {
     {"Dicembre",  31}
 };
 
-
 const STGIORNI InfoSettimana[] = {
     {"Lunedì",     0},
     {"Martedì",    0},
@@ -76,18 +66,26 @@ const STGIORNI InfoSettimana[] = {
 };
 
 
-const STVACANZE InfoVacanze[] =
-    { {"Capodanno",                 1,   1, "Oggi è Capodanno !"},
-      {"Epifania",                  6,   1, "Epifania..."},
-      {"Anniversario Liberazione", 25,   4, "Oggi mi sento liberato"},
-      {"Festa dei Lavoratori",      1,   5, "Nonostante nella tua vita, tu non faccia nulla, oggi fai festa anche tu..."},
-      {"Ferragosto",               15,   8, "Oggi e' ferragosto..."},
-      {"Tutti i Santi",             1,  11, "Figata, oggi è vacanza..."},
-      {"Sant'Ambrogio",             7,  12, "Visto che siamo a Milano, oggi facciamo festa."},
-      {"Immacolata Concezione",     8,  12, "Oggi è festa..."},
-      {"Natale",                   25,  12, "Buon Natale !!!"},
-      {"Santo Stefano",            26,  12, "Buon Santo Stefano..."},
-      { NULL,                       0,   0, NULL} };
+typedef struct tagVACANZE {
+    char   const *nome;          // nome del giorno di vacanza
+    int    giorno;               // giorno
+    int    mese;                 // mese
+    char   const *descrizione;   // descrizione giorno di vacanza
+} STVACANZE;
+
+const STVACANZE InfoVacanze[] = {
+    {"Capodanno",                 1,   1, "Oggi è Capodanno !"},
+    {"Epifania",                  6,   1, "Epifania..."},
+    {"Anniversario Liberazione", 25,   4, "Oggi mi sento liberato"},
+    {"Festa dei Lavoratori",      1,   5, "Nonostante nella tua vita, tu non faccia nulla, oggi fai festa anche tu..."},
+    {"Ferragosto",               15,   8, "Oggi e' ferragosto..."},
+    {"Tutti i Santi",             1,  11, "Figata, oggi è vacanza..."},
+    {"Sant'Ambrogio",             7,  12, "Visto che siamo a Milano, oggi facciamo festa."},
+    {"Immacolata Concezione",     8,  12, "Oggi è festa..."},
+    {"Natale",                   25,  12, "Buon Natale !!!"},
+    {"Santo Stefano",            26,  12, "Buon Santo Stefano..."},
+    { NULL,                       0,   0, NULL }
+};
 
 
 int  x_giorno;         // giorno corrente (1-31)
