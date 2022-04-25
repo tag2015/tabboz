@@ -19,20 +19,18 @@
 */
 
 #include "os.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
 #include "zarrosim.h"
 #include "global.h"
-#include "calendario.h"
-
 #include "sound.h"
 #include "debug.h"
 
-#include "lavoro.h"
+#include "calendario.h"
 #include "scuola.h"
+#include "lavoro.h"
 #include "scooter.h"
 #include "telefono.h"
 
@@ -43,26 +41,19 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
-//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
-
-
+//FIXME implementare 2 donne
 //extern    BOOL FAR PASCAL DueDonne(HWND hDlg, WORD message, WORD wParam, LONG lParam);
 
-
-//FIXME questi erano extern perchè definiti in tipa.c, per ora li mettiamo qui
-int     figTemp;
-char    nomeTemp[30];
 
 static char txt_finestra[256];  // stringa per le finestre metallari/scooter/camion
 
 
 /* Generatore Eventi (Casuali e Non) */
-void Evento()
+void Evento(void)
 {
     int     caso,i;
     char    tmp[128];
-    char messaggio[256];
-
+    char    messaggio[256];
 
     if (Fortuna < 0) Fortuna = 0;        // Prima che qualcuno bari...
     if (Fortuna > 100) Fortuna = 100;
@@ -354,6 +345,9 @@ void Evento()
 
             if (Fama < 35) break; // Figosita' < 35 = nessuna speranza...
 
+            int     figTemp;
+            char    nomeTemp[30];
+            
             figTemp = (rand() % (Fama-30) ) + 30;   // Figosita' minima tipa = 30...
 
             if (sesso == 'M') {
