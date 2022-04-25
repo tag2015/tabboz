@@ -22,28 +22,25 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
-/* Header per toolkit FLTK */
-#include <FL/Fl.H>
-#include <FL/fl_ask.H>
 
 #include "zarrosim.h"
+#include "sound.h"
 #include "debug.h"
 
 #include "calendario.h"
 #include "scooter.h"
 #include "eventi.h"
-#include "sound.h"
 
 #include "disco.h"
 
+/* Header per toolkit FLTK */
+#include <FL/Fl.H>
+#include <FL/fl_ask.H>
 
-/* L'opzione CDROM è stata tolta... verrà sostituita dalla possibilità di */
-/* riprodurre file audio personali (in futuro...)                         */
 
-//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+/* FIXME L'opzione CDROM è stata tolta... verrà sostituita dalla possibilità di */
+/* riprodurre file audio personali (in futuro...)                               */
+
 
 
 const STDISCO DiscoMem[] =
@@ -63,6 +60,7 @@ const STDISCO DiscoMem[] =
 //          \   \  \incremento reputazione
 //           \   \figosita' minima x entrare (selezione all' ingresso)
 //            \1=disco fuori porta - ci puoi arrivare solo se hai lo scooter...
+
 
 
 /* Routine per il pagamento della Discoteca */
@@ -112,152 +110,3 @@ void PagaDisco(int scelta)
         }
     Evento();
 }
-
-
-
-#ifdef DEADCODE
-/********************************************************************/
-/* Routine per il pagamento della Discoteca.                        */
-/********************************************************************/
-
-static void PagaDisco(HANDLE hInstance)
-{
-    char tmp[128];
-    long Prezzo;
-
-    if (numdisco != 0) {
-        if (DiscoMem[numdisco].speed == 1) {
-            if (ScooterData.stato == -1) {
-                MessageBox(hInstance,
-                    "Senza lo scooter non puoi andare nelle discoteche fuori porta...",
-                    "Discoteca fuori porta", MB_OK | MB_ICONINFORMATION);
-                Evento(hInstance);
-                return;
-            }
-        }
-
-        if (DiscoMem[numdisco].mass == x_giornoset) {
-            MessageBox( hInstance,
-                "Un cartello recita che oggi e' il giorno di chiusura settimanale...",
-                "Giorno di chiusura", MB_OK | MB_ICONINFORMATION);
-            return;
-        }
-
-        if (sesso == 'M')
-            Prezzo=DiscoMem[numdisco].prezzo;
-        else
-            Prezzo=DiscoMem[numdisco].prezzo - 10;
-
-        if (Prezzo > Soldi) {        /* check costo */
-            nomoney(hInstance,DISCO);
-        }
-        else {
-            if ((DiscoMem[numdisco].cc > Fama) && (sesso == 'M')) {            /* check selezione all'ingresso */
-                if (sound_active) TabbozPlaySound(302);
-                MessageBox( hInstance,
-                    "Mi dispiace signore, conciato cosi', qui non puo' entrare...\nVenga vestito meglio la prossima volta, signore.",
-                    "Selezione all' ingresso", MB_OK | MB_ICONINFORMATION);
-                if (Reputazione > 2) Reputazione-=1;
-                if (Fama > 2) Fama-=1;
-            } else {
-                if (sound_active) TabbozPlaySound(303 + random(3));  // suoni: 0303 -> 0305
-                Soldi-= Prezzo;
-                #ifdef TABBOZ_DEBUG
-                    sprintf(tmp,"discoteca: Paga %s",MostraSoldi(DiscoMem[numdisco].prezzo));
-                    writelog(tmp);
-                #endif
-                Fama+=DiscoMem[numdisco].fama;
-                Reputazione+=DiscoMem[numdisco].xxx;
-                if (Fama > 100) Fama=100;
-                if (Reputazione > 100) Reputazione=100;
-            }
-        }
-        Evento(hInstance);
-    }
-}
-
-
-//******************************************************************
-// Disco...
-//******************************************************************
-
-# pragma argsused
-BOOL FAR PASCAL Disco(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-    char buf[1024];
-    char tmp[1024];
-
-#ifdef TABBOZ_WIN
-#ifdef CDROM
-    static char  mciTmp[1024];
-    static int   mciLen;
-    static DWORD mciReturn;
-#endif
-#endif
-
-    if (message == WM_INITDIALOG) {
-        numdisco=0;
-        sprintf(buf, "O tip%c, in che disco andiamo ?",ao);
-        SetDlgItemText(hDlg, 120, buf);
-        SetDlgItemText(hDlg, 110, MostraSoldi(Soldi));
-#ifdef TABBOZ_WIN
-#ifdef CDROM
-//        mciReturn=mciSendString("open cdaudio", mciTmp, mciLen, 0);
-        mciReturn=mciSendString("set cdaudio time format tmsf", mciTmp, mciLen, 0);
-//        mciReturn=mciSendString("set cdaudio door open", mciTmp, mciLen, 0);
-//        mciReturn=mciSendString("close cdaudio", mciTmp, mciLen, 0);
-#endif
-#endif
-        return(TRUE);
-    }
-
-    else if (message == WM_COMMAND) {
-        switch (wParam) {
-            case 101:
-            case 102:
-            case 103:
-            case 104:
-            case 105:
-            case 106:
-            case 107:
-            case 108:
-                numdisco=wParam-100;
-                LoadString(hInst, wParam, buf, 1024);
-                if (sesso == 'M')    // Le donne pagano meno...
-                    sprintf(tmp,buf,MostraSoldi(DiscoMem[numdisco].prezzo));
-                else
-                    sprintf(tmp,buf,MostraSoldi(DiscoMem[numdisco].prezzo - 10));
-                SetDlgItemText(hDlg, 120, tmp);
-                return(TRUE);
-
-#ifdef TABBOZ_WIN
-#ifdef CDROM
-            case 607: // Eject
-                mciReturn=mciSendString("status cdaudio mode", mciTmp, mciLen, 0);
-                sprintf(buf,"%s",mciTmp);
-                SetDlgItemText(hDlg, 120, buf);
-                if (! strcmp(mciTmp,"open") )
-                    mciReturn=mciSendString("set cdaudio door close", mciTmp, mciLen, 0);
-                else
-                    mciReturn=mciSendString("set cdaudio door open", mciTmp, mciLen, 0);
-                return(TRUE);
-#endif
-#endif
-
-            case IDCANCEL:
-                EndDialog(hDlg, TRUE);
-                return(TRUE);
-
-            case IDOK:
-                PagaDisco(hDlg);
-                EndDialog(hDlg, TRUE);
-                return(TRUE);
-
-            default:
-                return(TRUE);
-
-        }
-    }
-    return(FALSE);
-}
-#endif
