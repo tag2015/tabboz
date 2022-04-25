@@ -22,13 +22,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
 #include "zarrosim.h"
+#include "sound.h"
+
 #include "calendario.h"
 #include "eventi.h"
-#include "sound.h"
 
 #include "lavoro.h"
 #include "gui/GUILavoro.h"
@@ -37,7 +36,6 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
-//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 
 int    numeroditta;
