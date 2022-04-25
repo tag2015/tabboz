@@ -225,7 +225,7 @@ void ResetMe(int primavolta)
     if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
         difficolta          =  5;
         intro_active        =  1;
-        timer_active        =  1;
+        timer_active        =  0;
         sound_active        =  1;
         euro                =  0;
         sesso               = 'M';
@@ -318,17 +318,34 @@ static void InitTabboz(void)
     path_profilo[0]=0;
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
-    // Inizializzazione dei numeri casuali...
+    /* Carica immagini shared */
+    fl_register_images();
+    CaricaSharedImgs();
+    
+    /* Opzioni globali di FLTK */
+    Fl::option(Fl::OPTION_VISIBLE_FOCUS, false);  //disattiva tratteggio del pulsante selezionato
+
+    /* Icona per la taskbar */
+    Fl_Pixmap *icona_xpm = new Fl_Pixmap(tabboz_xpm);
+    Fl_RGB_Image *icona = new Fl_RGB_Image(icona_xpm);
+    Fl_Window::default_icon(icona);
+    
+    /* Etichette dei pulsanti per fl_message, fl_alert... */
+    fl_close = "Chiudi";
+    fl_cancel = "Annulla";
+    fl_yes = "Sì";
+
+    /* Inizializzazione dei numeri casuali... */
     srand(time(NULL));
 
-    // Inizializza un po' di variabile...
+    /* Inizializza un po' di variabile... */
     boolean_shutdown=0;               /* 0=resta dentro, 1=uscita, 2=shutdown */
 
-    Fortuna=0;                        /* Uguale a me...               */
-    ScooterData=ScooterMem[0];        /* nessuno scooter              */
-    AttesaSoldi=ATTESAMAX;            /* attesa per avere soldi...    */
-    ImgSelector=0;                    /* W l' arte di arrangiarsi...  */
-    timer_active=1;
+    Fortuna=0;                        // Uguale a me...
+    ScooterData=ScooterMem[0];        // nessuno scooter
+    AttesaSoldi=ATTESAMAX;            // attesa per avere soldi...
+    ImgSelector=0;                    // W l' arte di arrangiarsi... FIXME inutile
+    timer_active=0;
     fase_di_avvio=1;
     tempo_pestaggio=0;
     current_tipa=0;
@@ -540,7 +557,7 @@ static void CaricaTutto(void)
     if (intro_active < 0) intro_active=1;
 
     TabbozProfilo.get("TimerActive",timer_active,-1);
-    if (timer_active < 0) timer_active=1;
+    if (timer_active < 0) timer_active=0;
 
     TabbozProfilo.get("SoundActive",sound_active,-1);
     if (sound_active < 0) sound_active=1;
@@ -1930,16 +1947,6 @@ int main(int argc, char **argv)
 
     /* Inizializza il programma */
     InitTabboz();
-
-    fl_register_images();
-    CaricaSharedImgs();
-
-    Fl::option(Fl::OPTION_VISIBLE_FOCUS, false);  //disattiva tratteggio del pulsante selezionato
-
-    /* Icona per la taskbar */
-    Fl_Pixmap *icona_xpm = new Fl_Pixmap(tabboz_xpm);
-    Fl_RGB_Image *icona = new Fl_RGB_Image(icona_xpm);
-    Fl_Window::default_icon(icona);
 
     /* Finestra principale */
     win_principale = GUITabboz();
