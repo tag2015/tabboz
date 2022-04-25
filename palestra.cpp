@@ -22,26 +22,23 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
 #include "zarrosim.h"
+#include "sound.h"
+#include "debug.h"
+
 #include "calendario.h"
 #include "eventi.h"
-#include "sound.h"
-
-
-#include "debug.h"
 
 #include "palestra.h"
 #include "gui/GUIPalestra.h"
-
 
 /* Header per toolkit FLTK */
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
-/* Abbonamenti Palestra ---------------------------------------------------------------------------- */
+
+/* Abbonamenti Palestra */
 STVARIE PalestraMem[] = {
     {0, 0, 0, 0, 0, 0, 0,  50,  0, ""},       // Un mese
     {0, 0, 0, 0, 0, 8, 0, 270,  0, ""},       // Sei mesi
@@ -50,6 +47,32 @@ STVARIE PalestraMem[] = {
 };
 
 
+/* Aggiorna finestra palestra */
+void AggiornaPalestra(void)
+{
+    char tmp[128];
+
+    pal_soldi->value(CALCSOLDI(Soldi));
+    pal_fama->value(Fama);
+
+    if (scad_pal_giorno < 1)
+        sprintf(tmp, "N/A");
+    else
+        sprintf(tmp, "%d %s",scad_pal_giorno,InfoMese[scad_pal_mese-1].nome);
+    pal_txtscadenza->value(tmp);
+
+    switch (current_testa) {     // Scrive il grado di abbronzatura...
+        case  1: sprintf(tmp,"Lieve");  break;
+        case  2: sprintf(tmp,"Media");  break;
+        case  3: sprintf(tmp,"Pesante");  break;
+        case  4: sprintf(tmp,"Carbonizzat%c...",ao);   break;
+        default: sprintf(tmp,"Mozzarella");
+    }
+    pal_txtfaccia->value(tmp);
+}
+
+
+/* Aumenta figosità (se abbonato alla palestra...) */
 void VaiInPalestra(void)
 {
     if (scad_pal_giorno < 1) {
@@ -66,6 +89,7 @@ void VaiInPalestra(void)
 }
 
 
+/* Aumentà figosità (con moderazione...) */
 void FaiLampada(void)
 {
     int     i;
@@ -100,6 +124,7 @@ void FaiLampada(void)
 }
 
 
+/* Per sottoscrivere un abbonamento alla palestra */
 void CompraAbbonamento(int scelta)
 {
     char tmp[128];
@@ -233,28 +258,3 @@ void CompraAbbonamento(int scelta)
 //     return(FALSE);
 //}
 #endif
-
-
-/* Aggiorna finestra palestra */
-void AggiornaPalestra(void)
-{
-    char tmp[128];
-
-    pal_soldi->value(CALCSOLDI(Soldi));
-    pal_fama->value(Fama);
-
-    if (scad_pal_giorno < 1)
-        sprintf(tmp, "N/A");
-    else
-        sprintf(tmp, "%d %s",scad_pal_giorno,InfoMese[scad_pal_mese-1].nome);
-    pal_txtscadenza->value(tmp);
-
-    switch (current_testa) {     // Scrive il grado di abbronzatura...
-        case  1: sprintf(tmp,"Lieve");  break;
-        case  2: sprintf(tmp,"Media");  break;
-        case  3: sprintf(tmp,"Pesante");  break;
-        case  4: sprintf(tmp,"Carbonizzat%c...",ao);   break;
-        default: sprintf(tmp,"Mozzarella");
-    }
-    pal_txtfaccia->value(tmp);
-}

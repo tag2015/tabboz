@@ -18,14 +18,12 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// Costi... (migliaia di lire)
-#define UN_MESE      50
-#define SEI_MESI    270
-#define UN_ANNO     500
 
 extern STVARIE PalestraMem[];
 
+
+void AggiornaPalestra(void);
+
+void CompraAbbonamento(int scelta);
 void VaiInPalestra(void);
 void FaiLampada(void);
-void CompraAbbonamento(int scelta);
-void AggiornaPalestra(void);
