@@ -22,15 +22,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
 
 #include "zarrosim.h"
+#include "sound.h"
+#include "debug.h"
+
 #include "calendario.h"
 #include "eventi.h"
-#include "sound.h"
-
-#include "debug.h"
 
 #include "scuola.h"
 #include "gui/GUIScuola.h"
@@ -39,8 +37,6 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 #include <FL/Fl_Value_Output.H>
-
-//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 
 STMATERIE MaterieMem[] =
@@ -184,37 +180,6 @@ void MinacciaSeduciProf(int scelta)
 }
 
 
-/* Scrive i voti nelle apposite caselle */
-void ScriviVoti(void)
-{
-    int i;
-
-    for (i=0;i<N_MATERIE;i++) {
-        Fl_Value_Output *casella = (Fl_Value_Output *) grp_voti->child(i);    // grp_voti è il gruppo contenente le ValueBox per i voti
-        casella->value(MaterieMem[i+1].voto);
-        if(casella->value() < 5)              // aggiunge colore ai voti
-            casella->textcolor(FL_RED);
-        else if (casella->value() > 7)
-            casella->textcolor(FL_DARK_GREEN);
-        else
-            casella->textcolor(FL_BLACK);
-    }
-}
-
-
-/* Controlla se è un giorno di vacanza (feste programmate e estate) */
-bool CheckVacanza(void)
-{
-    if ( x_vacanza != 0 ) {
-        fl_message_title("Scuola chiusa...");
-		fl_alert("Non puoi andare a scuola in un giorno di vacanza!");
-        return(true);
-    }
- 	else
-        return(false);
-}
-
-
 /* Mostra la pagella... ritorna true/false per promosso/bocciato*/
 bool MostraPagella(void)
 {
@@ -279,6 +244,36 @@ bool MostraPagella(void)
 	}
 }
 
+
+/* Scrive i voti nelle apposite caselle */
+void ScriviVoti(void)
+{
+    int i;
+
+    for (i=0;i<N_MATERIE;i++) {
+        Fl_Value_Output *casella = (Fl_Value_Output *) grp_voti->child(i);    // grp_voti è il gruppo contenente le ValueBox per i voti
+        casella->value(MaterieMem[i+1].voto);
+        if(casella->value() < 5)              // aggiunge colore ai voti
+            casella->textcolor(FL_RED);
+        else if (casella->value() > 7)
+            casella->textcolor(FL_DARK_GREEN);
+        else
+            casella->textcolor(FL_BLACK);
+    }
+}
+
+
+/* Controlla se è un giorno di vacanza (feste programmate e estate) */
+bool CheckVacanza(void)
+{
+    if ( x_vacanza != 0 ) {
+        fl_message_title("Scuola chiusa...");
+		fl_alert("Non puoi andare a scuola in un giorno di vacanza!");
+        return(true);
+    }
+ 	else
+        return(false);
+}
 
 
 /*codice originale*/
