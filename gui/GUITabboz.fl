@@ -60,7 +60,7 @@ Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
     label {Tabboz Simulator Next Generation!} open
-    xywh {289 252 475 470} type Double align 5
+    xywh {572 493 475 470} type Double align 5
     code0 {AggiornaPrincipale();} size_range {475 470 475 470} visible
   } {
     Fl_Menu_Bar {} {open
@@ -119,7 +119,7 @@ win_principale->deactivate();}
         label Tipa
         callback {GUITipa();
 win_tipa->show();
-win_principale->deactivate();} selected
+win_principale->deactivate();}
         image {icons/b_tipa.png} xywh {170 355 135 30} labelfont 2 align 256
         code0 {if(sesso == 'F') o->label("Tipo");}
       }
@@ -193,7 +193,7 @@ win_principale->deactivate();}
       }
       Fl_Value_Output main_valbox_rapporti {
         label {Rapporto }
-        xywh {240 130 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 value 100 textfont 1
+        xywh {240 130 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 textfont 1
       }
       Fl_Box {} {
         label {%}
@@ -208,16 +208,19 @@ win_principale->deactivate();}
         label {L.}
         callback {o->value(CALCSOLDI(Soldi));}
         xywh {180 220 100 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 0 step 1 value 1e+10 textfont 5
+        code0 {if(euro) o->label("€");}
       }
       Fl_Value_Output main_valbox_paghetta {
         label {Paghetta  L.}
         callback {o->value(CALCSOLDI(Paghetta));}
         tooltip {Paghetta settimanale} xywh {380 205 80 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 0 step 1 value 50000 textfont 5
+        code0 {if(euro) o->label("Paghetta €");}
       }
       Fl_Value_Output main_valbox_stipendio {
         label {Stipendio  L.}
         callback {o->value(CALCSOLDI(stipendio));}
         tooltip {Se non sei disoccupato...} xywh {380 235 80 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 0 step 1 value 1e+07 textfont 5
+        code0 {if(euro) o->label("Stipendio €");}
       }
     }
     Fl_Group {} {
@@ -293,8 +296,8 @@ main_valbox_soldi->value(CALCSOLDI(Soldi));}
         code0 {o->clear_visible_focus();}
       }
       Fl_Value_Output main_valbox_scooterstato {
-        label {Stato }
-        xywh {405 295 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 value 100 textfont 1
+        label {Stato } selected
+        xywh {405 295 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 textfont 1
       }
       Fl_Box {} {
         label {%}

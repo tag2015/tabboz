@@ -42,7 +42,7 @@ Function {GUITabbozDisco()} {open
 disco_scelta=1;
 disco_btn_ok->activate();
 add_prezzo(disco_scelta);
-win_disco->redraw();} selected
+win_disco->redraw();}
         xywh {10 10 150 20} type Radio down_box DIAMOND_UP_BOX color 7 when 1
       }
       Fl_Round_Button {} {
@@ -118,9 +118,10 @@ win_disco->redraw();}
     } {
       Fl_Value_Output disco_val_soldi {
         label {Soldi L. }
-        callback {o->value(CALCSOLDI(Soldi));}
+        callback {o->value(CALCSOLDI(Soldi));} selected
         xywh {65 247 80 25} box EMBOSSED_BOX color 7 selection_color 7 labelsize 12 maximum 0 step 1 value 1e+08 textfont 5
         code0 {o->value(CALCSOLDI(Soldi));}
+        code1 {if(euro) o->label("Soldi  €");}
       }
       Fl_Button disco_btn_ok {
         label {OK!}

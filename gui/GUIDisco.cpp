@@ -189,6 +189,7 @@ Fl_Double_Window* GUITabbozDisco() {
         disco_val_soldi->textfont(5);
         disco_val_soldi->callback((Fl_Callback*)cb_disco_val_soldi);
         o->value(CALCSOLDI(Soldi));
+        if(euro) o->label("Soldi  €");
       } // Fl_Value_Output* disco_val_soldi
       { Fl_Button* o = disco_btn_ok = new Fl_Button(345, 240, 60, 40, "OK!");
         disco_btn_ok->callback((Fl_Callback*)cb_disco_btn_ok);
