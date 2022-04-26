@@ -22,25 +22,20 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
-
-/* Header per toolkit FLTK */
-#include <FL/Fl.H>
-#include <FL/fl_ask.H>
 
 #include "zarrosim.h"
+#include "sound.h"
+#include "debug.h"
+
 #include "calendario.h"
 #include "eventi.h"
-#include "sound.h"
-
-#include "debug.h"
 
 #include "scooter.h"
 #include "gui/GUIScooter.h"
 
-// static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
+/* Header per toolkit FLTK */
+#include <FL/Fl.H>
+#include <FL/fl_ask.H>
 
 
 NEWSTSCOOTER ScooterData;
@@ -55,14 +50,17 @@ NEWSTSCOOTER ScooterMem[] = {
     {5, 100,  0, 1, 2, 1,  5998,  1,   100, "Malagutty Firecow II",       10},
     {6, 100,  0, 1, 2, 1,  6348,  1,   100, "Honda F98s",                 13},
 
-    {7, 250,  0, 5, 5, 0,  1450,  1, 100, "Lexux LS400 ",               60}
+    {7, 250,  0, 5, 5, 0,  1450,  1,   100, "Lexux LS400 ",               60}
 };
-
 
 const char  *n_carburatore[]= { "12/10", "16/16", "19/19", "20/20", "24/24" , "custom" };
 const char  *n_cc[]=          { "50cc", "70cc", "90cc", "120cc", "150cc", "3969cc" };
 const char  *n_marmitta[]=    { "standard", "silenziosa", "rumorosa", "rumorosissima" };
 const char  *n_filtro[]=      { "standard", "P1", "P2", "P2+" , "Extreme" };
+
+const char  *n_attivita[]=    { "incidentato", "funzionante", "ingrippato", "invasato" , "parcheggiato", "sequestrato", "a secco" };
+int         benzina;
+int         antifurto;
 
 
 /* Questa tabella controlla che il carburatore selezionato sia adatto al cilindro/pistone montato e
@@ -84,10 +82,6 @@ int    PezziMem[] = {
      50,  120,  270,  400     /* filtro      */
 };
 
-
-const char    *n_attivita[]= { "incidentato", "funzionante", "ingrippato", "invasato" , "parcheggiato", "sequestrato", "a secco" };
-int           benzina;
-int           antifurto;
 
 
 /* Aggiorna finestra */
