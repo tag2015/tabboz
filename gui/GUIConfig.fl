@@ -182,26 +182,34 @@ win_about->show();}
 Function {GUIAbout()} {open
 } {
   Fl_Window win_about {
-    label {A proposito di Tabboz Simulator NG} open
-    xywh {307 473 405 160} type Double hotspot modal size_range {505 215 505 215} visible
+    label {A proposito di Tabboz Simulator NG} open selected
+    xywh {617 408 405 195} type Double hotspot modal size_range {405 195 405 195} visible
   } {
     Fl_Box {} {
-      label {Tabboz Simulator Next Generation
-
-Copyright (C) 2022 by Walter Agazzi ( github.com/tag2015 )
-Basato sul progetto originale copyright 1997-2000 by Andrea Bonomi, Emanuele Caccialanza, Daniele Gazzarri.}
-      xywh {5 3 395 122} labelsize 12 align 128
+      label {Tabboz Simulator Next Generation}
+      xywh {5 10 395 35} labelfont 1 labelsize 12 align 128
     }
-    Fl_Button {} {
-      label OK
-      callback {win_about->hide();}
-      xywh {330 130 70 25}
+    Fl_Box {} {
+      xywh {5 40 395 20} labelsize 12 align 128
+      code0 {char tabz_ver[80];}
+      code1 {sprintf(tabz_ver,"%s (build del %s)",VERSION,__DATE__);}
+      code2 {o->copy_label(tabz_ver);}
+    }
+    Fl_Box {} {
+      label {Copyright (C) 2022 by Walter Agazzi ( github.com/tag2015 )
+Basato sul progetto originale copyright 1997-2000 by Andrea Bonomi, Emanuele Caccialanza, Daniele Gazzarri.}
+      xywh {5 55 395 100} labelsize 12 align 128
     }
     Fl_Button {} {
       label {Norme di utilizzo}
       callback {fl_message_title("Norme di utilizzo");
-fl_message("Il biglietto è valido solo dopo la convalida.\\nIl biglietto deve essere conservato per tutta la durata del viaggio.\\nIl diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto.\\nIl passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile,\\no comunque non valido, verrà abbattuto.\\nLa notifica del decesso verrà inviata ai parenti solo previo pagamento delle spese postali.");} selected
-      xywh {5 140 95 15} labelsize 12
+fl_message("Il biglietto è valido solo dopo la convalida.\\nIl biglietto deve essere conservato per tutta la durata del viaggio.\\nIl diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto.\\nIl passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile,\\no comunque non valido, verrà abbattuto.\\nLa notifica del decesso verrà inviata ai parenti solo previo pagamento delle spese postali.");}
+      xywh {5 175 90 15} labelsize 10
+    }
+    Fl_Button {} {
+      label OK
+      callback {win_about->hide();}
+      xywh {330 165 70 25}
     }
   }
 }

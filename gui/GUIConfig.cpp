@@ -201,33 +201,45 @@ to/licenziato e la\nfrequenza degli eventi casuali");
 
 Fl_Double_Window *win_about=(Fl_Double_Window *)0;
 
-static void cb_OK1(Fl_Button*, void*) {
-  win_about->hide();
-}
-
 static void cb_Norme(Fl_Button* o, void*) {
   fl_message_title("Norme di utilizzo");
 fl_message("Il biglietto è valido solo dopo la convalida.\nIl biglietto deve essere conservato per tutta la durata del viaggio.\nIl diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto.\nIl passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile,\no comunque non valido, verrà abbattuto.\nLa notifica del decesso verrà inviata ai parenti solo previo pagamento delle spese postali.");
 }
 
+static void cb_OK1(Fl_Button*, void*) {
+  win_about->hide();
+}
+
 Fl_Double_Window* GUIAbout() {
-  { win_about = new Fl_Double_Window(405, 160, "A proposito di Tabboz Simulator NG");
+  { win_about = new Fl_Double_Window(405, 195, "A proposito di Tabboz Simulator NG");
     win_about->hotspot(win_about);
-    { Fl_Box* o = new Fl_Box(5, 3, 395, 122, "Tabboz Simulator Next Generation\n\nCopyright (C) 2022 by Walter Agazzi ( git\
-hub.com/tag2015 )\nBasato sul progetto originale copyright 1997-2000 by Andrea\
- Bonomi, Emanuele Caccialanza, Daniele Gazzarri.");
+    { Fl_Box* o = new Fl_Box(5, 10, 395, 35, "Tabboz Simulator Next Generation");
+      o->labelfont(1);
       o->labelsize(12);
       o->align(Fl_Align(FL_ALIGN_WRAP));
     } // Fl_Box* o
-    { Fl_Button* o = new Fl_Button(330, 130, 70, 25, "OK");
-      o->callback((Fl_Callback*)cb_OK1);
-    } // Fl_Button* o
-    { Fl_Button* o = new Fl_Button(5, 140, 95, 15, "Norme di utilizzo");
+    { Fl_Box* o = new Fl_Box(5, 40, 395, 20);
       o->labelsize(12);
+      o->align(Fl_Align(FL_ALIGN_WRAP));
+      char tabz_ver[80];
+      sprintf(tabz_ver,"%s (build del %s)",VERSION,__DATE__);
+      o->copy_label(tabz_ver);
+    } // Fl_Box* o
+    { Fl_Box* o = new Fl_Box(5, 55, 395, 100, "Copyright (C) 2022 by Walter Agazzi ( github.com/tag2015 )\nBasato sul proget\
+to originale copyright 1997-2000 by Andrea Bonomi, Emanuele Caccialanza, Danie\
+le Gazzarri.");
+      o->labelsize(12);
+      o->align(Fl_Align(FL_ALIGN_WRAP));
+    } // Fl_Box* o
+    { Fl_Button* o = new Fl_Button(5, 175, 90, 15, "Norme di utilizzo");
+      o->labelsize(10);
       o->callback((Fl_Callback*)cb_Norme);
     } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(330, 165, 70, 25, "OK");
+      o->callback((Fl_Callback*)cb_OK1);
+    } // Fl_Button* o
     win_about->set_modal();
-    win_about->size_range(505, 215, 505, 215);
+    win_about->size_range(405, 195, 405, 195);
     win_about->end();
   } // Fl_Double_Window* win_about
   return win_about;
