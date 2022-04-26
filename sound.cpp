@@ -39,7 +39,7 @@ void TabbozPlaySound(int number)
 
 
 /* Interrompe suoni in riproduzione */
-void SpegniISuoni()
+void SpegniISuoni(void)
 {
     #ifdef TABBOZ_WIN
         PlaySoundA(NULL,NULL,SND_ASYNC);

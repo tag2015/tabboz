@@ -19,4 +19,4 @@
 */
 
 void TabbozPlaySound(int number);
-void SpegniISuoni();
+void SpegniISuoni(void);
