@@ -56,15 +56,10 @@
 
 static const char *dir_profilo = "TabbozNG";
 static const char *file_profilo = "TabbozNG";
-char              path_profilo[STR_MAX]="dummy.tbz";  // FIMXE Path e file dove salvare (per ora non usato)
+char              path_profilo[STR_MAX]="dummy.tbz";  // FIXME Path e file dove salvare (per ora non usato)
 
-
-//extern void     Atinom(HANDLE hInstance);  //visualizza messaggio extra in about
 
 int vvc(int i);
-
-//extern ATOM     RegisterBMPTipaClass(HANDLE hInst);
-//extern ATOM     RegisterBMPViewClass(HANDLE hInst);
 
 static void     SalvaTutto(void);
 static void     CaricaTutto(void);
@@ -73,10 +68,6 @@ static void     CaricaTutto(void);
 /* PRIMA LE VARIABILI GENERIKE... */
 
 int     cheat;
-char    Andrea[14];
-char    Caccia[21];
-char    Daniele[17];
-char    Obscured[29];
 int     firsttime;
 int     fase_di_avvio;
 int     ImgSelector;
@@ -129,14 +120,6 @@ int     intro_active;       // Visualizza schermata introduttiva
 int     difficolta;
 char    tema_grafico[STR_MAX];
 
-#ifdef DEADCODE
-    HANDLE    hInst;                    // hInstance dell'applicazione
-    HWND      hWndMain;                 // hWnd della finestra principale
-    // #define WIN_PICCOLO SW_MINIMIZE
-    // #define WIN_PICCOLO SW_SHOWMINIMIZED
-    #define WIN_PICCOLO SW_HIDE
-    #define WIN_GRANDE  SW_SHOWNORMAL
-#endif
 
 
 static  int  t_random;              // Attesa a random tra i vari eventi timer
@@ -230,10 +213,13 @@ void ResetMe(int primavolta)
 
 }
 
+
 //*******************************************************************
 // Formattazione iniziale Tabbozzo (scelta sesso, nome...) 14-01-2000
 //*******************************************************************
-//TAG2015 Questa routine non fa molto si può implementare in gui
+//TAG2015 Questa routine usa una finestra simile al format di windows x creare un nuovo tabbozzo/a
+//TAG2015 carino esteticamente ma sarebbe meglio creare una specie di wizard x scegliere nome cognome
+//TAG2015 compleanno (non random) sesso residenza e le opzioni (difficolta suono etc)
 // #pragma argsused
 // BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 // {
@@ -329,22 +315,7 @@ static void InitTabboz(void)
         sprintf(tmp,"tabboz: Starting Tabboz Simulator %s %s",VERSION,__DATE__);
         writelog(tmp);
     }
-    
-
-    #ifdef TABBOZ_WIN
-        // Ottieni i nomi dei creatori di sto coso...
-        //LoadString(hInst, 10, Andrea,   sizeof(Andrea));
-        //LoadString(hInst, 11, Caccia,   sizeof(Caccia));
-        //LoadString(hInst, 12, Daniele,  sizeof(Daniele));
-        //LoadString(hInst,  2, Obscured, sizeof(Obscured));
-
-        // Registra la Classe BMPView - E' giusto metterlo qui ???
-        //RegisterBMPViewClass(hInst);
-
-        //Registra la Classe BMPTipa
-        //RegisterBMPTipaClass(hInst);
-    #endif
-
+  
     firsttime=0;
     CaricaTutto();
     #ifdef TABBOZ_WIN
@@ -389,6 +360,7 @@ static void CaricaTutto(void)
     /* Cerca le informazioni registrate */
     /* Fl_prefs supporta i tipi, le conversioni da stringa non servono più */
 
+    /* carica parametri */
     TabbozProfilo.get("Soldi",buf_i,0);
     Soldi=new_check_i(buf_i);
 
@@ -416,6 +388,22 @@ static void CaricaTutto(void)
     TabbozProfilo.get("FigTipa",buf_i,0);
     FigTipa=vvc(new_check_i(buf_i));
 
+    TabbozProfilo.get("Fortuna",buf_i,0);
+    Fortuna=vvc(new_check_i(buf_i));
+
+    TabbozProfilo.get("AttesaSoldi",buf_i,ATTESAMAX);
+    AttesaSoldi=vvc(new_check_i(buf_i));
+ 
+    /* carica voti materie e calcola studio */
+    TabbozProfilo.get("Materie",buf_s,"",STR_MAX);
+    if(buf_s[0]=='\0')  sprintf(buf_s,"CCCCCCCCC");      //BUGFIX partiamo dalla media del 2... 0 è esagerato
+    for (i=1;i<10;i++) {
+        MaterieMem[i].voto=buf_s[i-1] - 65;
+        if ((MaterieMem[i].voto < 2) || (MaterieMem[i].voto > 10)) MaterieMem[i].voto=2;
+    }
+    CalcolaStudio();
+
+    /* carica dati anagrafici */
     TabbozProfilo.get("Nome",Nome,"",STR_MAX);
     TabbozProfilo.get("Cognome",Cognome,"",STR_MAX);
     TabbozProfilo.get("Nometipa",Nometipa,"",STR_MAX);
@@ -429,29 +417,13 @@ static void CaricaTutto(void)
 
     TabbozProfilo.get("Street",Street,"",STR_MAX);
 
-    // la serie di 9 "C" messe nella riga sotto NON E' CASUALE
-    // non sostituirla con altre lettere !
-
-    TabbozProfilo.get("Materie",buf_s,"",STR_MAX);
-    if(buf_s[0]=='\0')  sprintf(buf_s,"CCCCCCCCC");      //BUGFIX partiamo dalla media del 2... 0 è esagerato
-    for (i=1;i<10;i++) {
-        MaterieMem[i].voto=buf_s[i-1] - 65;
-        if ((MaterieMem[i].voto < 2) || (MaterieMem[i].voto > 10)) MaterieMem[i].voto=2;
-    }
-    CalcolaStudio();
-
-    TabbozProfilo.get("Fortuna",buf_i,0);
-    Fortuna=vvc(new_check_i(buf_i));
-
-    TabbozProfilo.get("AttesaSoldi",buf_i,ATTESAMAX);
-    AttesaSoldi=vvc(new_check_i(buf_i));
-
     /* Se non e' gia' settato,setta il compleanno (a caso) */
     TabbozProfilo.get("CompMese",comp_mese,0);
     if (comp_mese < 1) comp_mese=rand() % 12 + 1;
     TabbozProfilo.get("CompGiorno",comp_giorno,0);
     if (comp_giorno < 1) comp_giorno=rand() % InfoMese[comp_mese-1].num_giorni + 1;
 
+    /* carica dati calendario */
     /* Se e' la prima volta che parte il Tabboz Simulator, la data e' impostata al 30 Settembre */
     TabbozProfilo.get("Mese",x_mese,0);
     if (x_mese < 1) x_mese=9;
@@ -471,6 +443,7 @@ static void CaricaTutto(void)
     TabbozProfilo.get("ScadPalMese",buf_i,0);
     scad_pal_mese = vvc(new_check_i(buf_i));
 
+    /* carica dati lavoro */
     TabbozProfilo.get("NumeroDitta",buf_i,0);
     numeroditta = vvc(buf_i);
 
@@ -484,6 +457,7 @@ static void CaricaTutto(void)
     stipendio = new_check_i(buf_i);
     if (stipendio < 0) stipendio=0;
 
+    /* carica dati accessori */
     TabbozProfilo.get("Sigarette",buf_i,0);
     sizze = new_check_i(buf_i);
     if (sizze < 0) sizze=0;
@@ -500,6 +474,7 @@ static void CaricaTutto(void)
     TabbozProfilo.get("Scarpe",buf_i,0);
     current_scarpe = vvc(new_check_i(buf_i));
 
+    /* carica opzioni */
     TabbozProfilo.get("Difficolta",difficolta,5);
     if ((difficolta < 1) || (difficolta > 5)) difficolta=5;
     ApplicaDifficolta();
@@ -529,6 +504,7 @@ static void CaricaTutto(void)
     TabbozProfilo.get("TemaGrafico",tema_grafico,"none",STR_MAX);
     Fl::scheme(tema_grafico);
 
+    /* carica dati scooter */
     ScooterProfilo.get("ID",buf_i,0);
     ScooterData.id = new_check_i(buf_i);
     if (ScooterData.id < 0) ScooterData.id=0;
@@ -573,7 +549,7 @@ static void CaricaTutto(void)
 
     ScooterProfilo.get("Nome",ScooterData.nome,"Nessuno...",STR_MAX);
 
-    /* Cellulare */
+    /* carica dati cellulare */
     CellularProfilo.get("DualOnly",buf_i,-1);
     AbbonamentData.dualonly = new_check_i(buf_i);
 
@@ -609,7 +585,7 @@ static void CaricaTutto(void)
         ResetMe(1);
 
     /* Controllo eventuali errori nella data (o data non settata...) */
-    /* FIXME si potrebbe implementare in vvc, magari overloadato */
+    /* FIXME si potrebbe implementare in vvc */
     if ( (x_giorno < 1) || (x_giorno > 31) )  x_giorno=1;
     if ( (x_mese < 1) || (x_mese > 12) )  x_mese=1;
     if ( (x_giornoset < 1) || (x_giornoset > 7) )  x_giornoset=1;
@@ -647,20 +623,13 @@ void FineProgramma(char const *caller)
         writelog(tmp);
     }
 
-    if (path_profilo[0] == 0) {
-        /* Salva lo stato del tabbozzo */
-        /* 0.8.1pr 29 Novembre 1998 Ora non salva piu' nel WIN.INI con WriteProfileString,
-        ma salva nel registro di configurazione... */
-        //TabbozProfilo.set("Exe", _argv[0]);  FIXME a che serve salvare la commandline?
-
-    }
-
     SalvaTutto();
 }
 
+
 /* Salva i parametri nel profilo utente o in file specificato*/
-static void SalvaTutto(void) {
-    
+static void SalvaTutto(void)
+{
     char tmp[STR_MAX];
     
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
@@ -722,7 +691,6 @@ static void SalvaTutto(void) {
     TabbozProfilo.set("Scarpe", new_check_i(current_scarpe));
 
     /* salva opzioni */
-
     TabbozProfilo.set("Difficolta", difficolta);
     TabbozProfilo.set("Euro", euro);
     TabbozProfilo.set("IntroActive", intro_active);
@@ -772,101 +740,40 @@ static void SalvaTutto(void) {
 /********************************************************************/
 /* About...                                                         */
 /********************************************************************/
-//TAG2015 Schermata about, interessante per la questione cheat ma
-//ovviamente per ora non vitale
-// # pragma argsused
-// BOOL FAR PASCAL About(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//      char          buf[128];
-//      char          tmp[128];
-//      int                  i;
+//FIXME l'unica cosa interessante è il cheat... nel tabboz originale si avvia cliccando 10
+//FIXME volte sull'icona centrale quando il nome/cognome del tabbozzo corrispondono
+//FIXME ai valori indicati sotto...
+//FIXME implementare o no? boh
 
-//      if (message == WM_INITDIALOG) {
-//         sprintf(tmp, "%s", Andrea);
-//         SetDlgItemText(hDlg, 110, tmp);
-//         sprintf(tmp, "%s", Caccia);
-//         SetDlgItemText(hDlg, 111, tmp);
-//         sprintf(tmp, "%s", Daniele);
-//         SetDlgItemText(hDlg, 112, tmp);
+//    "Dino Lucci"
+//        Soldi=Soldi+1000;
+//        Reputazione=random(4);
+//        Fama=random(40);
+//    
+//    "Giulio Lucci"
+//        Soldi=Soldi+1000;
+//        Reputazione=random(30);
+//        Fama=random(5);
+//
+//    "Daniele Gazzarri"
+//        ScooterData=ScooterMem[7];
+//        benzina=850;
+//        Reputazione=100;
+//        
+//    "Emanuele Caccialanza"
+//        Soldi=Soldi+10000;
+//        Fama=100;
+//        
+//    "Andrea Bonomi"
+//        for (i=1;i<10;i++)
+//          MaterieMem[i].voto=10;
+//        CalcolaStudio();
+//        if ( Rapporti > 1 )
+//          Rapporti=100;
+//        impegno=100;
+//        numeroditta=1;
+//        stipendio=5000;
 
-//         sprintf(tmp, "%s, %s", VERSION,__DATE__);
-//         SetDlgItemText(hDlg, 115, tmp);
-
-//         sprintf(tmp, "%s", Obscured);    /* Obscured Truckware (se il nome e' diverso, crash ! ) */
-//         SetDlgItemText(hDlg, 116, tmp);
-
-//         cheat = 0;
-//         return(TRUE);
-
-
-//     } else if (message == WM_COMMAND) {
-//     switch (LOWORD(wParam))
-//     {
-//        case IDOK:
-//           EndDialog(hDlg, TRUE);
-//           return(TRUE);
-//         case IDCANCEL:
-//           EndDialog(hDlg, TRUE);
-//           return(TRUE);
-
-//         case 203:
-//         case 113:
-//         //  Atinom(hDlg);
-//           return(TRUE);
-
-//         case 257:
-//           cheat=cheat+1;
-//           if (cheat >= 10) { /* Lunedi' 13 Aprile 1998 - Ora il trukko viene un attimo modificato... */
-
-//             sprintf(buf,"%s %s",Nome,Cognome);
-
-//             LoadString(hInst, 13, tmp, sizeof(tmp));  /* Dino... */
-//             if (! strcmp(tmp,buf)) {
-//                 Soldi=Soldi+1000;
-//                 Reputazione=random(4);
-//                 Fama=random(40);
-//             }
-
-//             LoadString(hInst, 14, tmp, sizeof(tmp));  /* Fratello di Dino... */
-//             if (! strcmp(tmp,buf)) {
-//                 Soldi=Soldi+1000;
-//                 Reputazione=random(30);
-//                 Fama=random(5);
-//             }
-
-//             if (! strcmp(Daniele,buf)) {    /* Murdock, ti regala una macchinina... */
-//                 ScooterData=ScooterMem[7];
-//                 benzina=850;
-//                 Reputazione=100;
-//             }
-
-//             if (! strcmp(Caccia,buf)) {    /* Caccia fa' aumentare i dindi... */
-//                 Soldi=Soldi+10000;
-//                 Fama=100;
-//             }
-
-
-//             if (! strcmp(Andrea,buf)) {    /* Io porto la scuola e la tipa al 100% */
-//                 for (i=1;i<10;i++)
-//                     MaterieMem[i].voto=10;
-//                 CalcolaStudio();
-//                 if ( Rapporti > 1 )
-//                     Rapporti=100;
-//                 impegno=100;
-//                 numeroditta=1;
-//             stipendio=5000;
-//             }
-
-
-//             cheat = 0;
-//             }
-//         default:
-//         return(TRUE);
-//     }
-//     }
-
-//      return(FALSE);
-// }
 
 /********************************************************************/
 /* Logo...                                                          */
