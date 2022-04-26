@@ -124,8 +124,6 @@ void PagaQualcosa (int scelta)
                 case 17: current_scarpe=scelta-10; break;
             }
 
-            TabbozRedraw = 1;    // E' necessario ridisegnare l' immagine del Tabbozzo...
-
             #ifdef LOGGING
                 sprintf(tmp,"vestiti: Paga %s",MostraSoldi(VestitiMem[scelta].prezzo));
                 writelog(tmp);
@@ -150,7 +148,6 @@ bool OfferteDiNatale(void)
             if(fl_choice(tmp,"No","Si!",0)) {
                 current_gibbotto=19;
                 current_pantaloni=19;
-                TabbozRedraw = 1;    // E' necessario ridisegnare l' immagine del Tabbozzo... FIXME inutile
                 Soldi-=COSTO_VESTITO_NATALIZIO;
                 return TRUE;  //se compriamo il vestito (per far chiudere il launcher negozi)
             }

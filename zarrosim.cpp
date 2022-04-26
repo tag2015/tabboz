@@ -80,7 +80,6 @@ char    Obscured[29];
 int     firsttime;
 int     fase_di_avvio;
 int     ImgSelector;
-int     TabbozRedraw;
 
 /* DOPO LE CARATTERISTIKE... */
 
@@ -162,7 +161,6 @@ static void CalcolaSesso(void)
 void ResetMe(int primavolta)
 {
 
-    TabbozRedraw      =    1;
     Soldi             =   10;
     Paghetta          =   30;
     Reputazione       =    0;

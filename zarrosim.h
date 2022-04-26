@@ -158,7 +158,6 @@ extern  char    Caccia[21];
 extern  char    Daniele[17];
 
 extern  int     ImgSelector;
-extern  int     TabbozRedraw;   // E' necessario ridisegnare il Tabbozzo ??? FIXME inutile?
 
 
 /* DOPO LE CARATTERISTIKE... */

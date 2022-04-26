@@ -110,7 +110,6 @@ void FaiLampada(void)
             fl_message_title("Lampada");
             fl_alert("L'eccessiva esposizione del tuo corpo ai raggi ultravioletti,\nprovoca un avanzato grado di carbonizzazione\ne pure qualche piccola mutazione genetica...");
         }
-        //TabbozRedraw = 1;    // E' necessario ridisegnare l' immagine del Tabbozzo... FIXME inutile?
         if (sound_active) TabbozPlaySound(202);
         Soldi-=PalestraMem[3].prezzo;
         #ifdef LOGGING
