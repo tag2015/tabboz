@@ -25,20 +25,18 @@
 #include <string.h>
 #include <time.h>
 
-
 #include "zarrosim.h"
+#include "sharedimg.h"
+#include "sound.h"
+#include "proteggi.h"
+#include "debug.h"
+
+#include "calendario.h"
 
 #include "scuola.h"
 #include "lavoro.h"
 #include "scooter.h"
 #include "telefono.h"
-
-#include "calendario.h"
-#include "proteggi.h"
-#include "sound.h"
-#include "sharedimg.h"
-
-#include "debug.h"
 
 #include "tabboz.xpm"  // icona
 
@@ -47,6 +45,8 @@
 #include "net.h"
 #endif
 #endif
+
+#include "gui/GUITabboz.h"
 
 /* Header per toolkit FLTK */
 #include <FL/Fl.H>
@@ -59,11 +59,6 @@
 #include <FL/Fl_Pixmap.H>
 
 
-/* Header finestre GUI */
-#include "gui/GUITabboz.h"
-
-
-//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
 static const char *dir_profilo = "TabbozNG";
 static const char *file_profilo = "TabbozNG";
