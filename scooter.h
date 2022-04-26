@@ -19,19 +19,19 @@
 */
 
 
-/* NUOVE INFORMAZIONI SUGLI SCOOTER */
+/* STRUTTURA INFORMAZIONI SUGLI SCOOTER */
 typedef struct tagNEWSTSCOOTER {
-    int         id;             // 00  Identificativo numerico scooter
-    int         speed;          // 01  Velocità (calcolata base + elaborazioni)
-    int         marmitta;       // 02  Marmitta ( +0, +7, +12, +15)
-    int         carburatore;    // 03  Carburatore ( 0 - 4 )
-    int         cc;             // 04  Cilindrata ( 0 - 4 )
-    int         filtro;         // 05  Filtro dell'aria ( +0, +5, +10, +15)
-    int         prezzo;         // 06  Costo dello scooter (modifiche incluse)
-    int         attivita;       // 07  Attività scooter (vedere n_attivita)
-    int         stato;          // 08  Quanto è intero (in percentuale); -100 nessuno scooter
-    char        nome[30];       // 09  Nome dello scooter
-    int         fama;           // 10  Figosità scooter
+    int         id;             // Identificativo numerico scooter
+    int         speed;          // Velocità (calcolata base + elaborazioni)
+    int         marmitta;       // Marmitta ( +0, +7, +12, +15)
+    int         carburatore;    // Carburatore ( 0 - 4 )
+    int         cc;             // Cilindrata ( 0 - 4 )
+    int         filtro;         // Filtro dell'aria ( +0, +5, +10, +15)
+    int         prezzo;         // Costo dello scooter (modifiche incluse)
+    int         attivita;       // Attività scooter (vedere n_attivita)
+    int         stato;          // Quanto è intero (in percentuale); -1000 nessuno scooter
+    char        nome[30];       // Nome dello scooter
+    int         fama;           // Figosità scooter
 } NEWSTSCOOTER;
 
 extern NEWSTSCOOTER ScooterData;        // Dati scooter del tabbozzo
@@ -56,6 +56,3 @@ bool    VendiScooter(void);
 bool    ParcheggiaScooter(void);
 void    FaiBenza(void);
 void    RiparaScooter(void);
-
-
-//char    *MostraSpeed(void);
