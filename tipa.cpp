@@ -19,35 +19,30 @@
 */
 
 #include "os.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
+
+#include "zarrosim.h"
+#include "global.h"
+#include "sound.h"
+#include "debug.h"
+
+#include "eventi.h"
+#include "telefono.h"
+#include "scooter.h"
+
+#include "tipa.h"
+#include "gui/GUITipa.h"
 
 /* Header per toolkit FLTK */
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
-#include "zarrosim.h"
-#include "global.h"
-#include "eventi.h"
-#include "telefono.h"
-#include "scooter.h"
-
-#include "sound.h"
-#include "debug.h"
-
-#include "tipa.h"
-#include "gui/GUITipa.h"
-
-
-// static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
-
 
 const char *DescrizioneTipa(int f);
 const char *DescrizioneTipo(int f);
 int DueDiPicche(void);
-
 
 
 /* Aggiorna Finestra Tipa */
@@ -118,6 +113,36 @@ bool Provaci(void)
     }
 
     return FALSE;
+}
+
+
+/* 2 di picche (la vita e' bella...) - Calcola malus e ritorna un messaggio a caso */
+int DueDiPicche(void)
+{
+
+    DDP++;    // log due di picche...
+    
+    Reputazione-=2;    // decremento reputazione
+    if (Reputazione < 0) Reputazione=0;
+    
+    Fama-=2;    // decremento figosita'
+    if (Fama < 0) Fama=0;
+
+    return (rand() % 20);  // estrae una risposta (0-19)
+
+    //FIXME quand'è che avviene questa condizione?
+    /*
+    switch (wParam) {
+        case 201:
+            i++;
+            if (i > 5) {
+                sprintf(tmp,"Fino ad ora hai preso %d due di picche !\nNon ti preoccupare, capita a tutti di prendere qualche due di picche nella vita ...",DDP);
+                MessageBox( hDlg, tmp, "La vita e' bella...", MB_OK | MB_ICONINFORMATION);
+                i = 0;
+            }
+            return(TRUE);
+    }
+    */
 }
 
 
@@ -445,51 +470,6 @@ const char *DescrizioneTipo(int f)
     else if (f > 45) return "Passabile";
     else if (f > 35) return "Puo' piacere..";
     else             return "Inutile...";
-}
-
-
-/* 2 di picche (la vita e' bella...) - Calcola malus e ritorna un messaggio a caso */
-int DueDiPicche(void)
-{
-    static int i;
-
-    DDP++;    // log due di picche...
-    
-    Reputazione-=2;    // decremento reputazione
-    if (Reputazione < 0) Reputazione=0;
-    
-    Fama-=2;    // decremento figosita'
-    if (Fama < 0) Fama=0;
-
-    i=rand() % 20;  // estrae una risposta (0-19)
-
-    return i;
-
-//FIXME quand'è che avviene questa condizione?
-/*    } else if (message == WM_COMMAND) {
-        switch (wParam)
-        {
-            case 201:
-            i++;
-            if (i > 5) {
-                sprintf(tmp,"Fino ad ora hai preso %d due di picche !\nNon ti preoccupare, capita a tutti di prendere qualche due di picche nella vita ...",DDP);
-                MessageBox( hDlg,
-                    tmp, "La vita e' bella...", MB_OK | MB_ICONINFORMATION);
-                i = 0;
-                }
-            return(TRUE);
-
-            case IDCANCEL:
-            case IDOK:
-                EndDialog(hDlg, TRUE);
-                return(TRUE);
-
-         default:
-                return(TRUE);
-        }
-     }
-
-     return(FALSE); */
 }
 
 

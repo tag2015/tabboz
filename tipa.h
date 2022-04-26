@@ -22,7 +22,7 @@ void AggiornaTipa(void);
 
 void CercaTipa(void);
 bool Provaci(void);
-int DueDiPicche(void);
+int  DueDiPicche(void);
 
 void LasciaTipa(void);
 void TelefonaTipa(void);
