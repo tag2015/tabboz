@@ -44,7 +44,9 @@ extern   STCEL        CellularMem[];
 extern   STABB        AbbonamentData;
 extern   STABB        AbbonamentMem[];
 
-void AggiornaCell();
+
+void AggiornaCell(void);
+
 bool CompraCellulare(int scelta);
-bool VendiCellulare();
+bool VendiCellulare(void);
 bool AbbonaCellulare(int scelta);

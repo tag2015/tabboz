@@ -19,13 +19,14 @@
 */
 
 #include "os.h"
+
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "zarrosim.h"
-#include "calendario.h"
 #include "sound.h"
+
+#include "calendario.h"
 
 #include "telefono.h"
 #include "gui/GUITelefonia.h"
@@ -34,20 +35,21 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
-//static char sccsid[] = "@(#)" __FILE__ " " VERSION " (Andrea Bonomi) " __DATE__;
 
-
+/* Dati cellulare del tabbozzo */
 STCEL CellularData;
 
+/* Elenco cellulari disponibili */
 STCEL CellularMem[] = {
     {0,  2, 100, 290, "Motorolo d170" },
     {0,  7, 100, 590, "Motorolo 8700" },
     {1, 10, 100, 990, "MacroTAC 8900" },
 };
 
-
+/* Dati abbonamento cell del tabbozzo */
 STABB AbbonamentData;
 
+/* Elenco sim disponibili e costi ricarica */
 STABB AbbonamentMem[] = {
     {1,  0,   50,  1,  100,  "Onmitel"},    // Abbonamenti
     {1,  0,   50,  1,  100,  "DIM"},
@@ -61,8 +63,9 @@ STABB AbbonamentMem[] = {
     };
 
 
+
 /* Aggiorna finestra telefonia */
-void AggiornaCell()
+void AggiornaCell(void)
 {
     tel_val_soldi->value(CALCSOLDI(Soldi));
 
@@ -99,7 +102,7 @@ bool CompraCellulare(int scelta)
 
 
 /* Routine per vendere cellulare usato */
-bool VendiCellulare()
+bool VendiCellulare(void)
 {
     char  tmp[128];
     int offerta;
