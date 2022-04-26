@@ -153,12 +153,7 @@ typedef struct tagSTVARIE {
 /* PRIMA LE VARIABILI GENERIKE... */
 
 extern  int     cheat;
-extern  char    Andrea[14];
-extern  char    Caccia[21];
-extern  char    Daniele[17];
-
 extern  int     ImgSelector;
-
 
 /* DOPO LE CARATTERISTIKE... */
 
@@ -203,48 +198,6 @@ extern  int       timer_active;       // Timer avanzamento automatico
 extern  char      tema_grafico[];     // Nome tema grafico di FLTK
 
 
-/* Altri define e prototipi per la vecchia gui */
-#ifdef DEADCODE
-/* POI LE STRONZATE PER LE FINESTRELLE... */
-
-#ifdef TABBOZ_WIN
-extern  HANDLE    hInst;
-extern  HWND      hWndMain;
-extern  HANDLE    hdlgr;
-#endif
-
-/* ED I PROTOTIPI FUNZIONI... */
-
-#ifdef TABBOZ_WIN
-extern  int   PASCAL       WinMain(HANDLE hInstance, HANDLE hPrevInstance,
-               LPSTR lpszCmdLine, int cmdShow);
-extern  BOOL FAR PASCAL MainDlgBoxProc(HWND hDlg, WORD message,
-               WORD wParam, LONG lParam);
-#endif
-
-extern  BOOL FAR PASCAL    About(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Warning(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Disco(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Famiglia(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Compagnia(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Lavoro(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Scuola(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Scooter(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Vestiti(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Configuration(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    PersonalInfo(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Logo(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Tabaccaio(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Palestra(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Setup(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Spegnimi(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Network(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    MostraSalutieBaci(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-extern  BOOL FAR PASCAL    Cellular(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-#endif
-
-
 extern  void  AggiornaPrincipale();
 extern  void  FineProgramma(char const *caller);
 
@@ -252,6 +205,7 @@ extern  void  CalcolaStudio(void);
 extern  char  *MostraSoldi(int i);
 extern  void  nomoney(int tipo);
 extern  void  ApplicaDifficolta(void);
+
 
 /*Se euro disabilitato, calcola le lire moltiplicando x*1000. Altrimenti divide per 2 */
 #define CALCSOLDI(x) ( (!euro) ? x*1000 : x/2 )
