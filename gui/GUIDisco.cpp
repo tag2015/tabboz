@@ -7,70 +7,79 @@
 #include "../disco.h"
 int disco_scelta=0; 
 
+static void add_prezzo(int scelta) {
+  static char buf[80];
+  if(!euro)
+    sprintf(buf, "Ingresso: L. %d",CALCSOLDI(DiscoMem[scelta].costo));
+  else
+    sprintf(buf, "Ingresso: € %d",CALCSOLDI(DiscoMem[scelta].costo));
+  disco_txtbox->add(buf);
+}
+
 Fl_Double_Window *win_disco=(Fl_Double_Window *)0;
 
 static void cb_Splush(Fl_Round_Button*, void*) {
   disco_txtbox->load("res/txt/disco1.txt");
-if(!euro) disco_txtbox->add("Ingresso: 36000 L.",0);
-else disco_txtbox->add("Ingresso: 18 €",0);
 disco_scelta=1;
 disco_btn_ok->activate();
+add_prezzo(disco_scelta);
+win_disco->redraw();
 }
 
 static void cb_QB(Fl_Round_Button*, void*) {
   disco_txtbox->load("res/txt/disco2.txt");
-if(!euro) disco_txtbox->add("Ingresso: 26000 L. con consumazione",0);
-else disco_txtbox->add("Ingresso: 13 € con consumazione",0);
 disco_scelta=2;
 disco_btn_ok->activate();
+add_prezzo(disco_scelta);
+win_disco->redraw();
 }
 
 static void cb_Spoking(Fl_Round_Button*, void*) {
   disco_txtbox->load("res/txt/disco3.txt");
-if(!euro) disco_txtbox->add("Ingresso: 30000 L.",0);
-else disco_txtbox->add("Ingresso: 15 €",0);
 disco_scelta=3;
 disco_btn_ok->activate();
+add_prezzo(disco_scelta);
+win_disco->redraw();
 }
 
 static void cb_Madame(Fl_Round_Button*, void*) {
   disco_txtbox->load("res/txt/disco4.txt");
-if(!euro) disco_txtbox->add("Ingresso: 36000 L.",0);
-else disco_txtbox->add("Ingresso: 18 €",0);
 disco_scelta=4;
 disco_btn_ok->activate();
+add_prezzo(disco_scelta);
+win_disco->redraw();
 }
 
 static void cb_Number(Fl_Round_Button*, void*) {
   disco_txtbox->load("res/txt/disco5.txt");
-if(!euro) disco_txtbox->add("Ingresso: 26000 L.",0);
-else disco_txtbox->add("Ingresso: 13 €",0);
 disco_scelta=5;
 disco_btn_ok->activate();
+add_prezzo(disco_scelta);
+win_disco->redraw();
 }
 
 static void cb_Spuce(Fl_Round_Button*, void*) {
   disco_txtbox->load("res/txt/disco6.txt");
-if(!euro) disco_txtbox->add("Ingresso: 22000 L.",0);
-else disco_txtbox->add("Ingresso: 11 €",0);
 disco_scelta=6;
 disco_btn_ok->activate();
+add_prezzo(disco_scelta);
+win_disco->redraw();
 }
 
 static void cb_Honeywood(Fl_Round_Button*, void*) {
   disco_txtbox->load("res/txt/disco7.txt");
-if(!euro) disco_txtbox->add("Ingresso: 30000 L.",0);
-else disco_txtbox->add("Ingresso: 15 €",0);
 disco_scelta=7;
 disco_btn_ok->activate();
+add_prezzo(disco_scelta);
+win_disco->redraw();
 }
 
 static void cb_Strap(Fl_Round_Button*, void*) {
   disco_txtbox->load("res/txt/disco8.txt");
-if(!euro) disco_txtbox->add("Ingresso: 36000 L.",0);
-else disco_txtbox->add("Ingresso: 18 €",0);
 disco_scelta=8;
 disco_btn_ok->activate();
+add_prezzo(disco_scelta);
+win_disco->redraw();
 }
 
 Fl_Browser *disco_txtbox=(Fl_Browser *)0;
