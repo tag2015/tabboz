@@ -40,12 +40,6 @@
 
 #include "tabboz.xpm"  // icona
 
-#ifdef TABBOZ_WIN
-#ifndef NONETWORK
-#include "net.h"
-#endif
-#endif
-
 #include "gui/GUITabboz.h"
 
 /* Header per toolkit FLTK */
@@ -145,15 +139,6 @@ char    tema_grafico[STR_MAX];
     #define WIN_GRANDE  SW_SHOWNORMAL
 #endif
 
-#ifndef NONETWORK
-    extern  WSADATA      Data;
-    extern  SOCKADDR_IN  serverSockAddr;
-    extern  SOCKADDR_IN  clientSockAddr;
-    extern  SOCKET       serverSocket;
-    extern  SOCKET       clientSocket;
-    extern  int          PortNumber;
-    HANDLE  hModule;
-#endif
 
 static  int  t_random;              // Attesa a random tra i vari eventi timer
 
@@ -245,10 +230,6 @@ void ResetMe(int primavolta)
     AbbonamentData.creditorest = -1;
     CellularData.stato         = -1;
 
-    #ifndef NONETWORK
-        net_enable =  1;
-        PortNumber = 79;
-    #endif
 }
 
 //*******************************************************************
@@ -345,10 +326,6 @@ static void InitTabboz(void)
     tempo_pestaggio=0;
     current_tipa=0;
 
-    #ifndef NONETWORK
-        Data.wVersion=0;
-    #endif
-
     if (LOGGING) {
         openlog();
         sprintf(tmp,"tabboz: Starting Tabboz Simulator %s %s",VERSION,__DATE__);
@@ -368,12 +345,6 @@ static void InitTabboz(void)
 
         //Registra la Classe BMPTipa
         //RegisterBMPTipaClass(hInst);
-
-        #ifndef NONETWORK
-            /* Azzera l' ultima connessione dalla rete */
-            sprintf(lastconnect,"none (Server is Down !)");
-            sprintf(lastneterror,"Network Server is Down");
-        #endif
     #endif
 
     firsttime=0;
@@ -560,13 +531,6 @@ static void CaricaTutto(void)
     TabbozProfilo.get("TemaGrafico",tema_grafico,"none",STR_MAX);
     Fl::scheme(tema_grafico);
 
-    #ifndef NONETWORK
-        net_enable   = atoi (RRKey("NetEnable"));
-        if (net_enable < 0) net_enable=1;
-        PortNumber   = atoi (RRKey("NetPort"));
-        if (PortNumber < 1) PortNumber=79;
-    #endif
-
     ScooterProfilo.get("ID",buf_i,0);
     ScooterData.id = new_check_i(buf_i);
     if (ScooterData.id < 0) ScooterData.id=0;
@@ -685,15 +649,6 @@ void FineProgramma(char const *caller)
         writelog(tmp);
     }
 
-    #ifndef NONETWORK
-        if (net_enable == 1) {
-            WSACleanup();
-            #ifdef TABBOZ_DEBUG
-                writelog("tabboz: WSACleanup()");
-            #endif
-            }
-    #endif
-
     if (path_profilo[0] == 0) {
         /* Salva lo stato del tabbozzo */
         /* 0.8.1pr 29 Novembre 1998 Ora non salva piu' nel WIN.INI con WriteProfileString,
@@ -777,17 +732,9 @@ static void SalvaTutto(void) {
     TabbozProfilo.set("SoundActive", sound_active);
     TabbozProfilo.set("TemaGrafico", tema_grafico);
 
-
-#ifndef NOTABBOZZA
-    TabbozProfilo.set("Sesso", sesso);
-#endif
-
-#ifndef NONETWORK
-    sprintf(tmp,"%d",net_enable);
-    TabbozAddKey("NetEnable", tmp);
-    sprintf(tmp,"%d",PortNumber);
-    TabbozAddKey("NetPort", tmp);
-#endif
+    #ifndef NOTABBOZZA
+        TabbozProfilo.set("Sesso", sesso);
+    #endif
 
     /* salva dati scooter */
     ScooterProfilo.set("ID",new_check_i(ScooterData.id));

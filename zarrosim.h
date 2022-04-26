@@ -30,16 +30,11 @@
 /* Per disattivare la possibilita' di giocare con la tabbozza */
 #define NOTABBOZZA
 
-/* Per disabilitare la rete... NON IMPLEMENTATA, NON ABILITARE*/
-#define NONETWORK
-
 /* Per disattivare gli eventi casuali (e gran parte del divertimento... da usare solo per debug) */
 //#define NORANDOM
 
 /* Abilita parti non più necessarie (e non compilabili) */
 // #define DEADCODE
-
-// static char copyright[] ="@(#) Copyright (c) 1997-2001 Andrea Bonomi, Emanuele Caccialanza, Daniele Gazzarri.\nAll rights reserved.\n";
 
 
 /* Define per la gui originale */
@@ -209,17 +204,7 @@ extern  int       timer_active;       // Timer avanzamento automatico
 extern  char      tema_grafico[];     // Nome tema grafico di FLTK
 
 
-/* Supporto Rete */
-#ifndef NONETWORK
-    extern   int     net_enable;         // Rete Attiva/Disattiva
-    extern   char    lastneterror[255];
-    extern   char    lastconnect[255];
-    extern   int     addrLen;
-    extern   HWND    NEThDlg;            // Punta alla procedura principale...
-    extern   void    TabbozStartNet(HANDLE hDlg);
-#endif
-
-/*Altri define e prototipi per la vecchia gui */
+/* Altri define e prototipi per la vecchia gui */
 #ifdef DEADCODE
 /* POI LE STRONZATE PER LE FINESTRELLE... */
 
