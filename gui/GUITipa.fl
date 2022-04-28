@@ -41,8 +41,8 @@ decl {int fig_nuovatipa;} {public local
 Function {GUITipa()} {open
 } {
   Fl_Window win_tipa {
-    label Tipa open
-    xywh {219 614 425 275} type Double labelfont 1 labelsize 12 hotspot
+    label Tipa
+    xywh {115 532 425 275} type Double labelfont 1 labelsize 12 hotspot
     code0 {AggiornaTipa();} modal size_range {425 275 425 275} visible
   } {
     Fl_Button tipa_btn_cercatipa {
@@ -54,12 +54,12 @@ win_cercatipa->show();}
     Fl_Button {} {
       label {Lascia tipa}
       callback {LasciaTipa();}
-      xywh {220 35 200 30}
+      xywh {220 37 200 30}
     }
     Fl_Button {} {
       label {Telefona alla tipa}
       callback {TelefonaTipa();}
-      xywh {220 85 200 30}
+      xywh {220 83 200 30}
     }
     Fl_Button {} {
       label {Esci con la tipa}
@@ -67,48 +67,55 @@ win_cercatipa->show();}
       xywh {220 115 200 30}
     }
     Fl_Group tipa_grp_stats {open
-      xywh {5 150 415 65} box EMBOSSED_FRAME labelfont 1 labelsize 12
+      xywh {6 150 414 65} box SHADOW_BOX labelfont 1 labelsize 12
     } {
-      Fl_Output tipa_txt_nome {
-        label Nome
-        xywh {80 155 135 25} box FLAT_BOX color 49 labelfont 1 labelsize 12
-        code0 {o->clear_visible_focus();}
-      }
       Fl_Value_Output tipa_val_figosita {
-        label {Figosità}
-        xywh {80 186 35 25} box EMBOSSED_BOX color 7 labelfont 1 labelsize 12 maximum 100 value 100
+        label {Figosità tipa}
+        xywh {130 180 30 25} box EMBOSSED_BOX color 7 labelfont 1 labelsize 12 maximum 100 value 50
+      }
+      Fl_Box {} {
+        label {%}
+        xywh {160 185 15 16} labelfont 1
       }
       Fl_Value_Output tipa_val_rapporti {
         label {Rapporto di coppia}
-        xywh {355 170 35 25} box EMBOSSED_BOX color 7 labelfont 1 labelsize 12 maximum 100 value 100
+        xywh {320 180 30 25} box EMBOSSED_BOX color 7 labelfont 1 labelsize 12 maximum 100
       }
       Fl_Box {} {
         label {%}
-        xywh {115 190 15 16}
+        xywh {350 184 15 16} labelfont 1
       }
-      Fl_Box {} {
-        label {%}
-        xywh {390 175 15 16}
+      Fl_Box tipa_txt_nome {
+        xywh {10 154 400 22}
       }
     }
     Fl_Group {} {open
       xywh {5 220 415 50} box EMBOSSED_FRAME
     } {
       Fl_Value_Output tipa_val_fama {
-        label {Figosità}
+        label {Figosità }
         callback {o->value(Fama);}
-        xywh {80 232 35 25} box EMBOSSED_BOX color 7 labelfont 1 labelsize 12 maximum 100 value 100
+        xywh {115 232 25 25} box FLAT_BOX labelfont 2 labelsize 12 maximum 100 value 100 textfont 1
+      }
+      Fl_Box {} {
+        label {%}
+        xywh {140 236 15 16} labelfont 1
       }
       Fl_Return_Button {} {
         callback {win_principale->activate();
 AggiornaPrincipale();
-win_tipa->hide();} selected
+win_tipa->hide();}
         xywh {355 225 60 40} align 20
         code0 {o->image(ImgExit);}
       }
       Fl_Box {} {
-        label {%}
-        xywh {115 236 15 16}
+        image {icons/tipa.png} xywh {10 225 40 40}
+      }
+      Fl_Value_Output tipa_val_credito {
+        label {Credito cell  L.}
+        callback {tipa_val_credito->value(CALCSOLDI(AbbonamentData.creditorest));}
+        xywh {260 232 80 25} box FLAT_BOX labelfont 2 labelsize 12 align 260 step 1 value 1e+08 textfont 1
+        code0 {if (euro) o->label("Credito cell €");}
       }
     }
     Fl_Box {} {
@@ -121,9 +128,9 @@ Function {GUICercaTipa()} {open
 } {
   Fl_Window win_cercatipa {
     label {Cerca Tipa} open
-    xywh {708 641 340 280} type Double labelfont 1 labelsize 12 hotspot
+    xywh {708 641 340 280} type Double labelfont 1 labelsize 12 hide hotspot
     code0 {CercaTipa();}
-    code1 {if(sesso=='F') o->label("Cerca Tipo");} modal size_range {340 280 340 280} visible
+    code1 {if(sesso=='F') o->label("Cerca Tipo");} modal size_range {340 280 340 280}
   } {
     Fl_Group {} {open
       xywh {5 5 210 270} box EMBOSSED_FRAME labelfont 1 labelsize 12
@@ -138,7 +145,7 @@ Function {GUICercaTipa()} {open
         }
         Fl_Value_Output cercatipa_val_figosita {
           label {Figosità }
-          xywh {70 51 35 25} box FLAT_BOX labelfont 1 labelsize 12 maximum 100 value 100
+          xywh {70 50 35 25} box FLAT_BOX labelfont 1 labelsize 12 maximum 100 value 100
         }
         Fl_Output cercatipa_txt_giudizio {
           label {Giudizio }
@@ -162,6 +169,7 @@ if(Provaci()) {
     Rapporti=30 + (rand() % 15 );
     Fama+= (FigTipa/10); if (Fama > 100) Fama=100;
     Reputazione+= (FigTipa/13); if (Reputazione > 100) Reputazione=100;
+    win_cercatipa->hide();
   }
 } else {
   if (sound_active) TabbozPlaySound(603);
@@ -171,7 +179,7 @@ if(Provaci()) {
   while(win_duedipicche->shown()) Fl::wait();
 }
 Evento();
-AggiornaTipa();}
+AggiornaTipa();} selected
         xywh {10 195 200 35}
       }
       Fl_Button {} {
@@ -189,7 +197,7 @@ AggiornaTipa();}
 Function {GUIDueDiPicche(int messaggio)} {} {
   Fl_Window win_duedipicche {
     label {Oggi è un giorno fortunato} open
-    xywh {539 362 325 155} type Double hotspot modal size_range {325 155 325 155} visible
+    xywh {539 362 325 155} type Double hide hotspot modal size_range {325 155 325 155}
   } {
     Fl_Box {} {
       image {pic/2picche.png} xywh {10 9 65 96}

@@ -55,7 +55,7 @@ void AggiornaTipa(void)
             tipa_btn_cercatipa->label("Cerca Tipo");
 
     tipa_grp_stats->deactivate();
-    tipa_txt_nome->value("Nessuna...");
+    tipa_txt_nome->copy_label("Nessuna...");
     tipa_val_fama->value(0);
     tipa_val_rapporti->value(0);
     
@@ -65,11 +65,12 @@ void AggiornaTipa(void)
         else
             tipa_btn_cercatipa->label("Cerca Nuovo Tipo");
         tipa_grp_stats->activate();
-        tipa_txt_nome->value(Nometipa);
+        tipa_txt_nome->copy_label(Nometipa);
         tipa_val_figosita->value(FigTipa);
         tipa_val_rapporti->value(Rapporti);
     }
     tipa_val_fama->value(Fama);
+    tipa_val_credito->value(CALCSOLDI(AbbonamentData.creditorest));
 }
 
 

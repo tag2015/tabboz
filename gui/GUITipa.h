@@ -11,16 +11,17 @@ extern Fl_Double_Window *win_tipa;
 extern Fl_Button *tipa_btn_cercatipa;
 #include <FL/Fl_Group.H>
 extern Fl_Group *tipa_grp_stats;
-#include <FL/Fl_Output.H>
-extern Fl_Output *tipa_txt_nome;
 #include <FL/Fl_Value_Output.H>
 extern Fl_Value_Output *tipa_val_figosita;
-extern Fl_Value_Output *tipa_val_rapporti;
 #include <FL/Fl_Box.H>
+extern Fl_Value_Output *tipa_val_rapporti;
+extern Fl_Box *tipa_txt_nome;
 extern Fl_Value_Output *tipa_val_fama;
 #include <FL/Fl_Return_Button.H>
+extern Fl_Value_Output *tipa_val_credito;
 Fl_Double_Window* GUITipa();
 extern Fl_Double_Window *win_cercatipa;
+#include <FL/Fl_Output.H>
 extern Fl_Output *cercatipa_txt_nome;
 extern Fl_Value_Output *cercatipa_val_figosita;
 extern Fl_Output *cercatipa_txt_giudizio;
