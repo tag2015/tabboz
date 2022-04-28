@@ -1255,6 +1255,15 @@ void AggiornaPrincipale()
         main_txtbox_tipa->value("Nessuna...");
         main_valbox_rapporti->deactivate();
     }
+    if(euro) {
+        main_valbox_soldi->label("€");
+        main_valbox_paghetta->label("Paghetta  €");
+        main_valbox_stipendio->label("Stipendio  €");
+    } else {
+        main_valbox_soldi->label("L.");
+        main_valbox_paghetta->label("Paghetta  L.");
+        main_valbox_stipendio->label("Stipendio  L.");
+    }
     main_valbox_soldi->value(CALCSOLDI(Soldi));
     main_valbox_paghetta->value(CALCSOLDI(Paghetta));
     main_valbox_stipendio->value(CALCSOLDI(stipendio));
