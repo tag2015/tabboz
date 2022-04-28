@@ -59,8 +59,8 @@ decl {int scelta_gui;} {public local
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
-    label {Tabboz Simulator Next Generation!} open
-    xywh {572 493 475 470} type Double align 5
+    label {Tabboz Simulator Next Generation!} open selected
+    xywh {382 312 475 470} type Double align 5
     code0 {AggiornaPrincipale();} size_range {475 470 475 470} visible
   } {
     Fl_Menu_Bar {} {open
@@ -85,21 +85,21 @@ Function {GUITabboz()} {open
       xywh {10 350 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
     } {
       Fl_Button {} {
-        label Scuola
+        label { Scuola}
         callback {GUITabbozScuola();
 win_scuola->show();
 win_principale->deactivate();}
         image {icons/b_scuola.png} xywh {15 355 135 30} labelfont 2 align 272
       }
       Fl_Button {} {
-        label Lavoro
+        label { Lavoro}
         callback {GUILavoro();
 win_lavoro->show();
 win_principale->deactivate();}
-        xywh {15 390 135 30} labelfont 2
+        image {icons/b_lavoro.png} xywh {15 390 135 30} labelfont 2 align 272
       }
       Fl_Button {} {
-        label Palestra
+        label { Palestra}
         callback {if (x_vacanza != 2) {
   GUITabbozPalestra();
   win_palestra->show();
@@ -108,7 +108,7 @@ win_principale->deactivate();}
   fl_message_title("Palestra chiusa");
   fl_alert("Il tuo fisico da atleta dovrà aspettare...\\nvisto che oggi la palestra è chiusa...");
 }}
-        xywh {15 425 135 30} labelfont 2
+        image {icons/b_palestra.png} xywh {15 425 135 30} labelfont 2 align 272
       }
     }
     Fl_Group {} {
@@ -116,15 +116,15 @@ win_principale->deactivate();}
       xywh {165 350 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
     } {
       Fl_Button {} {
-        label Tipa
+        label { Tipa}
         callback {GUITipa();
 win_tipa->show();
 win_principale->deactivate();}
         image {icons/b_tipa.png} xywh {170 355 135 30} labelfont 2 align 256
-        code0 {if(sesso == 'F') o->label("Tipo");}
+        code0 {if(sesso == 'F') o->label(" Tipo");}
       }
       Fl_Button {} {
-        label Compagnia
+        label { Compagnia}
         callback {GUITabbozCompagnia();
 compa_val_rep->value(Reputazione);
 win_compagnia->show();
@@ -132,7 +132,7 @@ win_principale->deactivate();}
         image {icons/b_compagnia.png} xywh {170 390 135 30} labelfont 2 align 256
       }
       Fl_Button {} {
-        label Famiglia
+        label { Famiglia}
         callback {GUITabbozFamiglia();
 win_famiglia->show();
 win_principale->deactivate();}
@@ -144,28 +144,28 @@ win_principale->deactivate();}
       xywh {320 350 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
     } {
       Fl_Button {} {
-        label Scooter
+        label { Scooter}
         callback {GUIScooter();
 win_scooter->show();
 win_principale->deactivate();}
-        xywh {325 355 135 30} labelfont 2
+        image {icons/b_scooter.png} xywh {325 355 135 30} labelfont 2 align 256
       }
       Fl_Button {} {
-        label Negozi
+        label { Negozi}
         callback {if(!OfferteDiNatale()){  //Costume non acq
   GUINegoziLauncher();
   win_principale->deactivate();
   win_negozi->show();
 } else
   AggiornaPrincipale();}
-        xywh {325 390 135 30} labelfont 2
+        image {icons/b_negozi.png} xywh {325 390 135 30} labelfont 2 align 256
       }
       Fl_Button {} {
-        label Disco
+        label { Disco}
         callback {GUITabbozDisco();
 win_disco->show();
 win_principale->deactivate();}
-        xywh {325 425 135 30} labelfont 2
+        image {icons/b_disco.png} xywh {325 425 135 30} labelfont 2 align 256
       }
     }
     Fl_Box main_box_nome {
@@ -263,27 +263,27 @@ o->value(MEDIAVOTI(Studio,N_MATERIE));}
       xywh {42 56 60 65}
     }
     Fl_Group {} {open
-      xywh {335 35 60 20}
+      xywh {335 35 100 20}
       code0 {if(!TABBOZ_DEBUG) o->hide();}
     } {
       Fl_Button {} {
         label {>>}
         callback {Giorno();
 AggiornaPrincipale();}
-        xywh {335 35 20 20}
+        xywh {375 35 20 20}
       }
       Fl_Button {} {
         label T
         callback {GUITestbed();
 win_testbed->show();
 win_principale->deactivate();}
-        xywh {375 35 20 20}
+        xywh {415 35 20 20}
       }
       Fl_Button {} {
         label {$}
         callback {Soldi+=1000;
 main_valbox_soldi->value(CALCSOLDI(Soldi));}
-        xywh {355 35 20 20}
+        xywh {395 35 20 20}
       }
     }
     Fl_Group main_grp_scooter {
@@ -296,7 +296,7 @@ main_valbox_soldi->value(CALCSOLDI(Soldi));}
         code0 {o->clear_visible_focus();}
       }
       Fl_Value_Output main_valbox_scooterstato {
-        label {Stato } selected
+        label {Stato }
         xywh {405 295 35 25} box SHADOW_BOX color 7 labelsize 12 maximum 0 textfont 1
       }
       Fl_Box {} {
