@@ -17,5 +17,6 @@ extern Fl_Output *sco_txt_benza;
 #include <FL/Fl_Value_Output.H>
 extern Fl_Value_Output *sco_val_soldi;
 #include <FL/Fl_Return_Button.H>
+#include <FL/Fl_Box.H>
 Fl_Double_Window* GUIScooter();
 #endif
