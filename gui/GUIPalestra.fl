@@ -29,7 +29,7 @@ Function {GUITabbozPalestra()} {open
       callback {VaiInPalestra();
 AggiornaPrincipale();
 win_principale->activate();
-win_palestra->hide();}
+win_palestra->hide();} selected
       xywh {260 105 220 25}
     }
     Fl_Group {} {open
@@ -52,17 +52,21 @@ win_palestra->hide();}
       }
       Fl_Value_Output {} {
         label {L. }
-        xywh {403 10 70 20} box FLAT_BOX labelfont 4 textfont 5
+        xywh {395 10 80 20} box FLAT_BOX labelsize 12 textfont 5
         code0 {o->value(CALCSOLDI(PalestraMem[0].prezzo));}
         code1 {if(euro) o->label("€");}
       }
       Fl_Value_Output {} {
-        xywh {395 30 80 20} box FLAT_BOX textfont 5
+        label {L. }
+        xywh {395 30 80 20} box FLAT_BOX labelsize 12 textfont 5
         code0 {o->value(CALCSOLDI(PalestraMem[1].prezzo));}
+        code1 {if(euro) o->label("€");}
       }
       Fl_Value_Output {} {
-        xywh {395 50 80 20} box FLAT_BOX textfont 5
+        label {L. }
+        xywh {395 50 80 20} box FLAT_BOX labelsize 12 textfont 5
         code0 {o->value(CALCSOLDI(PalestraMem[2].prezzo));}
+        code1 {if(euro) o->label("€");}
       }
     }
     Fl_Button {} {
@@ -86,17 +90,24 @@ win_palestra->hide();}
     Fl_Group {} {open
       xywh {5 195 475 50} box EMBOSSED_FRAME
     } {
+      Fl_Box {} {
+        image {icons/palestra2.png} xywh {10 200 40 40}
+      }
       Fl_Value_Output pal_soldi {
-        label {Soldi L.}
+        label {Soldi  L.}
         callback {o->value(CALCSOLDI(Soldi));}
-        xywh {55 207 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+08 textfont 5
+        xywh {120 209 80 25} box FLAT_BOX labelfont 2 labelsize 12 step 1 value 1e+08 textfont 1
         code0 {o->value(CALCSOLDI(Soldi));}
         code1 {if(euro) o->label("Soldi €");}
       }
       Fl_Value_Output pal_fama {
-        label {Figosità}
-        xywh {210 207 35 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 100 value 100
+        label {Figosità }
+        xywh {265 209 25 25} box FLAT_BOX labelfont 2 labelsize 12 maximum 100 value 50 textfont 1
         code0 {o->value(Fama);}
+      }
+      Fl_Box {} {
+        label {%}
+        xywh {287 213 15 16} labelfont 1
       }
       Fl_Return_Button {} {
         callback {win_principale->activate();
@@ -104,10 +115,6 @@ AggiornaPrincipale();
 win_palestra->hide();}
         xywh {415 200 60 40} align 20
         code0 {o->image(ImgExit);}
-      }
-      Fl_Box {} {
-        label {%}
-        xywh {245 212 15 16}
       }
     }
   }
