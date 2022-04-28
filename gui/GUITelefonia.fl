@@ -39,9 +39,9 @@ negcell_txt_prezzocell->label(buf);} {}
 Function {GUITelefonia()} {open
 } {
   Fl_Window win_telefonia {
-    label Telefonia open
-    xywh {247 301 510 225} type Double labelfont 1 labelsize 12 hotspot
-    code0 {AggiornaCell();} modal size_range {510 225 510 225} visible
+    label Telefonia open selected
+    xywh {422 440 455 225} type Double labelfont 1 labelsize 12 hotspot
+    code0 {AggiornaCell();} modal size_range {455 225 455 225} visible
   } {
     Fl_Button {} {
       label {Compra cellulare}
@@ -53,7 +53,7 @@ Function {GUITelefonia()} {open
   fl_message_title("Negozio chiuso");
   fl_alert("Stranamente, in un giorno di vacanza, il negozio è chiuso...");
 }}
-      xywh {10 10 240 35}
+      xywh {10 10 215 35}
     }
     Fl_Button {} {
       label {Vendi cellulare}
@@ -65,7 +65,7 @@ else {
   fl_message_title("Negozio chiuso");
   fl_alert("Stranamente, in un giorno di vacanza, il negozio è chiuso...");
 }}
-      xywh {10 50 240 35}
+      xywh {10 50 215 35}
     }
     Fl_Button {} {
       label Ricarica
@@ -77,41 +77,44 @@ else {
   fl_message_title("Negozio chiuso");
   fl_alert("Stranamente, in un giorno di vacanza, il negozio è chiuso...");
 }}
-      xywh {10 125 240 35}
+      xywh {10 122 215 35}
     }
     Fl_Group {} {open
-      xywh {260 10 240 150} box EMBOSSED_FRAME labelfont 1 labelsize 12
+      xywh {235 10 210 150} box SHADOW_BOX labelfont 1 labelsize 12
     } {
       Fl_Output tel_txt_nome {
         label Telefonino
-        xywh {270 30 220 25} box EMBOSSED_BOX labelfont 1 labelsize 12 align 5
+        xywh {245 30 185 25} box EMBOSSED_BOX labelfont 1 labelsize 12 align 5
         code0 {o->clear_visible_focus();}
       }
       Fl_Output tel_txt_abb {
         label Abbonamento
-        xywh {270 77 220 25} box EMBOSSED_BOX labelfont 1 labelsize 12 align 5
+        xywh {245 77 185 25} box EMBOSSED_BOX labelfont 1 labelsize 12 align 5
         code0 {o->clear_visible_focus();}
       }
       Fl_Output tel_txt_credito {
         label {Credito restante:}
-        xywh {270 125 220 25} box EMBOSSED_BOX labelfont 1 labelsize 12 align 5
+        xywh {245 125 185 25} box EMBOSSED_BOX labelfont 1 labelsize 12 align 5
         code0 {o->clear_visible_focus();}
       }
     }
     Fl_Group {} {open
-      xywh {10 165 490 50} box EMBOSSED_FRAME
+      xywh {10 165 435 50} box EMBOSSED_FRAME
     } {
+      Fl_Box {} {
+        image {icons/telefonia.png} xywh {15 170 40 40}
+      }
       Fl_Value_Output tel_val_soldi {
-        label {Soldi L.}
+        label {Soldi  L.}
         callback {o->value(CALCSOLDI(Soldi));}
-        xywh {65 177 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+08 textfont 5
+        xywh {115 177 80 25} box FLAT_BOX labelfont 2 labelsize 12 step 1 value 1e+08 textfont 1
         code0 {if(euro) o->label("Soldi €");}
       }
       Fl_Return_Button {} {
         callback {win_principale->activate();
 AggiornaPrincipale();
 win_telefonia->hide();}
-        xywh {435 170 60 40} align 20
+        xywh {380 170 60 40} align 20
         code0 {o->image(ImgExit);}
       }
     }
@@ -122,7 +125,7 @@ Function {GUICompraCell()} {open
 } {
   Fl_Window win_compracell {
     label {Compra cellulare} open
-    xywh {181 344 580 290} type Double labelfont 1 labelsize 12 hotspot modal size_range {580 290 580 290} visible
+    xywh {343 251 580 290} type Double labelfont 1 labelsize 12 hotspot modal size_range {580 290 580 290} visible
   } {
     Fl_Group {} {open
       xywh {10 10 560 125}
@@ -164,6 +167,23 @@ negcell_btn_compra->activate();}
     Fl_Group {} {open
       xywh {400 140 170 140} box EMBOSSED_FRAME
     } {
+      Fl_Value_Output {} {
+        label {Soldi  L.}
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {470 145 95 25} box FLAT_BOX selection_color 7 labelfont 2 labelsize 12 step 1 value 1e+08 textfont 1
+        code0 {o->value(CALCSOLDI(Soldi));}
+        code1 {if(euro) o->label("Soldi  €");}
+      }
+      Fl_Value_Output {} {
+        label {Figosità}
+        callback {o->value(Fama);}
+        xywh {470 175 25 25} box FLAT_BOX selection_color 7 labelfont 2 labelsize 12 value 100 textfont 1
+        code0 {o->value(Fama);}
+      }
+      Fl_Box {} {
+        label {%}
+        xywh {494 179 15 16} labelfont 1
+      }
       Fl_Button negcell_btn_compra {
         label {Compra!}
         callback {if(CompraCellulare(scelta_gui)) {
@@ -178,23 +198,6 @@ negcell_btn_compra->activate();}
 win_compracell->hide();}
         xywh {505 235 60 40} align 20
         code0 {o->image(ImgExit);}
-      }
-      Fl_Value_Output {} {
-        label {Soldi L.}
-        callback {o->value(CALCSOLDI(Soldi));}
-        xywh {470 145 80 25} box EMBOSSED_BOX color 7 selection_color 7 labelsize 12 step 1 value 1e+08 textfont 5
-        code0 {o->value(CALCSOLDI(Soldi));}
-        code1 {if(euro) o->label("Soldi  €");}
-      }
-      Fl_Value_Output {} {
-        label {Figosità}
-        callback {o->value(Fama);}
-        xywh {470 175 35 25} box EMBOSSED_BOX color 7 selection_color 7 labelsize 12 value 100
-        code0 {o->value(Fama);}
-      }
-      Fl_Box {} {
-        label {%}
-        xywh {505 179 15 16}
       }
     }
     Fl_Box {} {
@@ -216,7 +219,7 @@ Function {GUIRicaricaCell()} {open
 } {
   Fl_Window win_ricaricacell {
     label {Abbonamento e ricarica} open
-    xywh {381 685 530 235} type Double labelfont 1 labelsize 12 hotspot modal size_range {530 235 530 235} visible
+    xywh {460 742 530 235} type Double labelfont 1 labelsize 12 hotspot modal size_range {530 235 530 235} visible
   } {
     Fl_Group {} {open
       xywh {5 5 520 175}
@@ -319,17 +322,20 @@ negricarica_btn_compra->activate();}
         code0 {o->image(ImgExit);}
       }
       Fl_Value_Output {} {
-        label {Soldi L.}
+        label {Soldi  L.}
         callback {o->value(CALCSOLDI(Soldi));}
-        xywh {60 192 85 25} box EMBOSSED_BOX color 7 selection_color 7 labelsize 12 step 1 value 1e+09 textfont 5
+        xywh {100 192 85 25} box FLAT_BOX selection_color 7 labelfont 2 labelsize 12 step 1 value 1e+09 textfont 1
         code0 {o->value(CALCSOLDI(Soldi));}
         code1 {if(euro) o->label("Soldi  €");}
       }
       Fl_Output {} {
-        label {Operatore attuale:} selected
-        xywh {260 192 115 25} box FLAT_BOX color 49 labelsize 12 textfont 1 textsize 12
+        label {Operatore attuale:}
+        xywh {295 192 90 25} box FLAT_BOX color 49 labelfont 2 labelsize 12 textfont 1 textsize 12
         code0 {if (AbbonamentData.creditorest > -1) o->value(AbbonamentData.nome);}
         code1 {o->clear_visible_focus();}
+      }
+      Fl_Box {} {
+        image {icons/telefonia.png} xywh {10 185 40 40}
       }
     }
   }

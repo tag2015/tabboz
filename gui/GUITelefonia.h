@@ -11,6 +11,7 @@ extern Fl_Double_Window *win_telefonia;
 extern Fl_Output *tel_txt_nome;
 extern Fl_Output *tel_txt_abb;
 extern Fl_Output *tel_txt_credito;
+#include <FL/Fl_Box.H>
 #include <FL/Fl_Value_Output.H>
 extern Fl_Value_Output *tel_val_soldi;
 #include <FL/Fl_Return_Button.H>
@@ -18,7 +19,6 @@ Fl_Double_Window* GUITelefonia();
 extern Fl_Double_Window *win_compracell;
 #include <FL/Fl_Browser.H>
 extern Fl_Button *negcell_btn_compra;
-#include <FL/Fl_Box.H>
 extern Fl_Box *negcell_txt_nomecell;
 extern Fl_Box *negcell_txt_desccell;
 extern Fl_Box *negcell_txt_prezzocell;
