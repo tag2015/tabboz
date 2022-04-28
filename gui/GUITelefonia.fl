@@ -39,8 +39,8 @@ negcell_txt_prezzocell->label(buf);} {}
 Function {GUITelefonia()} {open
 } {
   Fl_Window win_telefonia {
-    label Telefonia open selected
-    xywh {422 440 455 225} type Double labelfont 1 labelsize 12 hotspot
+    label Telefonia open
+    xywh {355 452 455 225} type Double labelfont 1 labelsize 12 hotspot
     code0 {AggiornaCell();} modal size_range {455 225 455 225} visible
   } {
     Fl_Button {} {
@@ -219,7 +219,7 @@ Function {GUIRicaricaCell()} {open
 } {
   Fl_Window win_ricaricacell {
     label {Abbonamento e ricarica} open
-    xywh {460 742 530 235} type Double labelfont 1 labelsize 12 hotspot modal size_range {530 235 530 235} visible
+    xywh {423 625 530 235} type Double labelfont 1 labelsize 12 hotspot modal size_range {530 235 530 235} visible
   } {
     Fl_Group {} {open
       xywh {5 5 520 175}
@@ -230,12 +230,36 @@ Function {GUIRicaricaCell()} {open
         Fl_Box {} {
           image {../res/pic/abbo_0.png} xywh {10 10 160 80}
         }
+        Fl_Box {} {
+          xywh {105 90 65 25} align 24
+          code0 {o->copy_label(MostraSoldi(AbbonamentMem[0].prezzo));}
+        }
+        Fl_Box {} {
+          xywh {105 125 65 25} align 24
+          code0 {o->copy_label(MostraSoldi(AbbonamentMem[3].prezzo));}
+        }
+        Fl_Box {} {
+          xywh {105 145 65 25} align 24
+          code0 {o->copy_label(MostraSoldi(AbbonamentMem[4].prezzo));}
+        }
       }
       Fl_Group {} {open
         xywh {180 5 170 170} box EMBOSSED_FRAME
       } {
         Fl_Box {} {
           image {../res/pic/abbo_1.png} xywh {185 10 160 80}
+        }
+        Fl_Box {} {
+          xywh {280 90 65 25} align 24
+          code0 {o->copy_label(MostraSoldi(AbbonamentMem[2].prezzo));}
+        }
+        Fl_Box {} {
+          xywh {280 125 65 25} align 24
+          code0 {o->copy_label(MostraSoldi(AbbonamentMem[7].prezzo));}
+        }
+        Fl_Box {} {
+          xywh {280 145 65 25} align 24
+          code0 {o->copy_label(MostraSoldi(AbbonamentMem[8].prezzo));}
         }
       }
       Fl_Group {} {open
@@ -244,60 +268,72 @@ Function {GUIRicaricaCell()} {open
         Fl_Box {} {
           image {../res/pic/abbo_2.png} xywh {360 9 160 80}
         }
+        Fl_Box {} {
+          xywh {455 90 65 25} align 24
+          code0 {o->copy_label(MostraSoldi(AbbonamentMem[1].prezzo));}
+        }
+        Fl_Box {} {
+          xywh {455 125 65 25} align 24
+          code0 {o->copy_label(MostraSoldi(AbbonamentMem[5].prezzo));}
+        }
+        Fl_Box {} {selected
+          xywh {455 145 65 25} align 24
+          code0 {o->copy_label(MostraSoldi(AbbonamentMem[6].prezzo));}
+        }
       }
       Fl_Group {} {open
         xywh {10 90 515 85}
       } {
         Fl_Round_Button {} {
-          label {Attivazione  L. 100000}
+          label Attivazione
           callback {scelta_gui=1;
 negricarica_btn_compra->activate();}
           xywh {360 90 160 25} type Radio down_box DIAMOND_UP_BOX
         }
         Fl_Round_Button {} {
-          label {Ricarica      L.   60000}
+          label Ricarica
           callback {scelta_gui=5;
 negricarica_btn_compra->activate();}
           xywh {360 125 160 25} type Radio down_box DIAMOND_UP_BOX
         }
         Fl_Round_Button {} {
-          label {Ricarica      L. 110000}
+          label Ricarica
           callback {scelta_gui=6;
 negricarica_btn_compra->activate();}
           xywh {360 145 160 25} type Radio down_box DIAMOND_UP_BOX
         }
         Fl_Round_Button {} {
-          label {Attivazione  L. 100000}
+          label Attivazione
           callback {scelta_gui=2;
 negricarica_btn_compra->activate();}
           xywh {185 90 160 25} type Radio down_box DIAMOND_UP_BOX
         }
         Fl_Round_Button {} {
-          label {Ricarica      L.   50000}
+          label Ricarica
           callback {scelta_gui=7;
 negricarica_btn_compra->activate();}
           xywh {185 125 160 25} type Radio down_box DIAMOND_UP_BOX
         }
         Fl_Round_Button {} {
-          label {Ricarica      L. 100000}
+          label Ricarica
           callback {scelta_gui=8;
 negricarica_btn_compra->activate();}
           xywh {185 145 160 25} type Radio down_box DIAMOND_UP_BOX
         }
         Fl_Round_Button {} {
-          label {Attivazione  L. 100000}
+          label Attivazione
           callback {scelta_gui=0;
 negricarica_btn_compra->activate();}
           xywh {10 90 160 25} type Radio down_box DIAMOND_UP_BOX
         }
         Fl_Round_Button {} {
-          label {Ricarica      L.   60000}
+          label Ricarica
           callback {scelta_gui=3;
 negricarica_btn_compra->activate();}
           xywh {10 125 160 25} type Radio down_box DIAMOND_UP_BOX
         }
         Fl_Round_Button {} {
-          label {Ricarica      L. 110000}
+          label Ricarica
           callback {scelta_gui=4;
 negricarica_btn_compra->activate();}
           xywh {10 145 160 25} type Radio down_box DIAMOND_UP_BOX

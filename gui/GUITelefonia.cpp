@@ -6298,12 +6298,36 @@ Fl_Double_Window* GUIRicaricaCell() {
         { Fl_Box* o = new Fl_Box(10, 10, 160, 80);
           o->image( image_abbo_0() );
         } // Fl_Box* o
+        { Fl_Box* o = new Fl_Box(105, 90, 65, 25);
+          o->align(Fl_Align(FL_ALIGN_RIGHT|FL_ALIGN_INSIDE));
+          o->copy_label(MostraSoldi(AbbonamentMem[0].prezzo));
+        } // Fl_Box* o
+        { Fl_Box* o = new Fl_Box(105, 125, 65, 25);
+          o->align(Fl_Align(FL_ALIGN_RIGHT|FL_ALIGN_INSIDE));
+          o->copy_label(MostraSoldi(AbbonamentMem[3].prezzo));
+        } // Fl_Box* o
+        { Fl_Box* o = new Fl_Box(105, 145, 65, 25);
+          o->align(Fl_Align(FL_ALIGN_RIGHT|FL_ALIGN_INSIDE));
+          o->copy_label(MostraSoldi(AbbonamentMem[4].prezzo));
+        } // Fl_Box* o
         o->end();
       } // Fl_Group* o
       { Fl_Group* o = new Fl_Group(180, 5, 170, 170);
         o->box(FL_EMBOSSED_FRAME);
         { Fl_Box* o = new Fl_Box(185, 10, 160, 80);
           o->image( image_abbo_1() );
+        } // Fl_Box* o
+        { Fl_Box* o = new Fl_Box(280, 90, 65, 25);
+          o->align(Fl_Align(FL_ALIGN_RIGHT|FL_ALIGN_INSIDE));
+          o->copy_label(MostraSoldi(AbbonamentMem[2].prezzo));
+        } // Fl_Box* o
+        { Fl_Box* o = new Fl_Box(280, 125, 65, 25);
+          o->align(Fl_Align(FL_ALIGN_RIGHT|FL_ALIGN_INSIDE));
+          o->copy_label(MostraSoldi(AbbonamentMem[7].prezzo));
+        } // Fl_Box* o
+        { Fl_Box* o = new Fl_Box(280, 145, 65, 25);
+          o->align(Fl_Align(FL_ALIGN_RIGHT|FL_ALIGN_INSIDE));
+          o->copy_label(MostraSoldi(AbbonamentMem[8].prezzo));
         } // Fl_Box* o
         o->end();
       } // Fl_Group* o
@@ -6312,50 +6336,62 @@ Fl_Double_Window* GUIRicaricaCell() {
         { Fl_Box* o = new Fl_Box(360, 9, 160, 80);
           o->image( image_abbo_2() );
         } // Fl_Box* o
+        { Fl_Box* o = new Fl_Box(455, 90, 65, 25);
+          o->align(Fl_Align(FL_ALIGN_RIGHT|FL_ALIGN_INSIDE));
+          o->copy_label(MostraSoldi(AbbonamentMem[1].prezzo));
+        } // Fl_Box* o
+        { Fl_Box* o = new Fl_Box(455, 125, 65, 25);
+          o->align(Fl_Align(FL_ALIGN_RIGHT|FL_ALIGN_INSIDE));
+          o->copy_label(MostraSoldi(AbbonamentMem[5].prezzo));
+        } // Fl_Box* o
+        { Fl_Box* o = new Fl_Box(455, 145, 65, 25);
+          o->align(Fl_Align(FL_ALIGN_RIGHT|FL_ALIGN_INSIDE));
+          o->copy_label(MostraSoldi(AbbonamentMem[6].prezzo));
+        } // Fl_Box* o
         o->end();
       } // Fl_Group* o
       { Fl_Group* o = new Fl_Group(10, 90, 515, 85);
-        { Fl_Round_Button* o = new Fl_Round_Button(360, 90, 160, 25, "Attivazione  L. 100000");
+        { Fl_Round_Button* o = new Fl_Round_Button(360, 90, 160, 25, "Attivazione");
           o->type(102);
           o->down_box(FL_DIAMOND_UP_BOX);
           o->callback((Fl_Callback*)cb_Attivazione);
         } // Fl_Round_Button* o
-        { Fl_Round_Button* o = new Fl_Round_Button(360, 125, 160, 25, "Ricarica      L.   60000");
+        { Fl_Round_Button* o = new Fl_Round_Button(360, 125, 160, 25, "Ricarica");
           o->type(102);
           o->down_box(FL_DIAMOND_UP_BOX);
           o->callback((Fl_Callback*)cb_Ricarica1);
         } // Fl_Round_Button* o
-        { Fl_Round_Button* o = new Fl_Round_Button(360, 145, 160, 25, "Ricarica      L. 110000");
+        { Fl_Round_Button* o = new Fl_Round_Button(360, 145, 160, 25, "Ricarica");
           o->type(102);
           o->down_box(FL_DIAMOND_UP_BOX);
           o->callback((Fl_Callback*)cb_Ricarica2);
         } // Fl_Round_Button* o
-        { Fl_Round_Button* o = new Fl_Round_Button(185, 90, 160, 25, "Attivazione  L. 100000");
+        { Fl_Round_Button* o = new Fl_Round_Button(185, 90, 160, 25, "Attivazione");
           o->type(102);
           o->down_box(FL_DIAMOND_UP_BOX);
           o->callback((Fl_Callback*)cb_Attivazione1);
         } // Fl_Round_Button* o
-        { Fl_Round_Button* o = new Fl_Round_Button(185, 125, 160, 25, "Ricarica      L.   50000");
+        { Fl_Round_Button* o = new Fl_Round_Button(185, 125, 160, 25, "Ricarica");
           o->type(102);
           o->down_box(FL_DIAMOND_UP_BOX);
           o->callback((Fl_Callback*)cb_Ricarica3);
         } // Fl_Round_Button* o
-        { Fl_Round_Button* o = new Fl_Round_Button(185, 145, 160, 25, "Ricarica      L. 100000");
+        { Fl_Round_Button* o = new Fl_Round_Button(185, 145, 160, 25, "Ricarica");
           o->type(102);
           o->down_box(FL_DIAMOND_UP_BOX);
           o->callback((Fl_Callback*)cb_Ricarica4);
         } // Fl_Round_Button* o
-        { Fl_Round_Button* o = new Fl_Round_Button(10, 90, 160, 25, "Attivazione  L. 100000");
+        { Fl_Round_Button* o = new Fl_Round_Button(10, 90, 160, 25, "Attivazione");
           o->type(102);
           o->down_box(FL_DIAMOND_UP_BOX);
           o->callback((Fl_Callback*)cb_Attivazione2);
         } // Fl_Round_Button* o
-        { Fl_Round_Button* o = new Fl_Round_Button(10, 125, 160, 25, "Ricarica      L.   60000");
+        { Fl_Round_Button* o = new Fl_Round_Button(10, 125, 160, 25, "Ricarica");
           o->type(102);
           o->down_box(FL_DIAMOND_UP_BOX);
           o->callback((Fl_Callback*)cb_Ricarica5);
         } // Fl_Round_Button* o
-        { Fl_Round_Button* o = new Fl_Round_Button(10, 145, 160, 25, "Ricarica      L. 110000");
+        { Fl_Round_Button* o = new Fl_Round_Button(10, 145, 160, 25, "Ricarica");
           o->type(102);
           o->down_box(FL_DIAMOND_UP_BOX);
           o->callback((Fl_Callback*)cb_Ricarica6);

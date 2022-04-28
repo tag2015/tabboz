@@ -151,7 +151,7 @@ bool AbbonaCellulare(int scelta)
             
         } else {
             fl_message_title("Telefonino");
-            fl_alert("Oh, che  te ne fai di una ricarica se non hai la sim ???");
+            fl_alert("Oh, che te ne fai di una ricarica se non hai la sim ???");
             return FALSE;
         }
     }
