@@ -8,7 +8,7 @@ decl {\#include "GUITabboz.h"} {private global
 decl {\#include "../zarrosim.h"} {private global
 }
 
-decl {\#include "../sharedimg.h"} {selected private global
+decl {\#include "../sharedimg.h"} {private global
 }
 
 decl {\#include "../famiglia.h"} {private global
@@ -17,43 +17,45 @@ decl {\#include "../famiglia.h"} {private global
 Function {GUITabbozFamiglia()} {open
 } {
   Fl_Window win_famiglia {
-    label Famiglia open
-    xywh {434 318 415 330} type Double box BORDER_BOX hotspot modal size_range {415 330 415 330} visible
+    label Famiglia open selected
+    xywh {726 508 400 330} type Double box BORDER_BOX hotspot modal size_range {400 330 400 330} visible
   } {
     Fl_Box {} {
-      label {immagine casa}
-      xywh {10 10 395 140} box EMBOSSED_FRAME
+      image {pic/famiglia.png} xywh {10 5 380 145}
     }
     Fl_Button {} {
       label {Chiedi aumento paghetta}
       callback {ChiediAumentoPaghetta();}
-      xywh {10 155 395 30}
+      xywh {10 155 380 30}
     }
     Fl_Button {} {
       label {Chiedi soldi extra}
       callback {ChiediSoldiExtra();}
-      xywh {10 190 395 30}
+      xywh {10 190 380 30}
     }
     Fl_Button {} {
       label {Papà, mi dai 100.000 lire?}
       callback {ChiediSoldiPapa();}
-      xywh {10 225 395 30}
+      xywh {10 225 380 30}
       code0 {if(euro) o->label("Papà, mi dai 50€ ?");}
     }
     Fl_Group {} {open
-      xywh {10 265 395 50} box EMBOSSED_FRAME labelsize 10 align 5
+      xywh {10 265 380 50} box EMBOSSED_FRAME labelsize 10 align 5
     } {
+      Fl_Box {} {
+        image {icons/famiglia.png} xywh {15 270 40 40}
+      }
       Fl_Value_Output fam_val_soldi {
         label {Soldi  L.}
         callback {o->value(CALCSOLDI(Soldi));}
-        xywh {65 277 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+06 textfont 5
+        xywh {110 277 75 25} box FLAT_BOX labelfont 2 labelsize 12 step 1 value 1e+08 textfont 1
         code0 {o->value(CALCSOLDI(Soldi));}
         code1 {if(euro) o->label("Soldi  €");}
       }
       Fl_Value_Output fam_val_paghetta {
         label {Paghetta  L.}
         callback {o->value(CALCSOLDI(Paghetta));}
-        xywh {230 277 70 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+06 textfont 5
+        xywh {260 277 55 25} box FLAT_BOX labelfont 2 labelsize 12 step 1 value 100000 textfont 1
         code0 {o->value(CALCSOLDI(Paghetta));}
         code1 {if(euro) o->label("Paghetta  €");}
       }
@@ -61,7 +63,7 @@ Function {GUITabbozFamiglia()} {open
         callback {win_principale->activate();
 AggiornaPrincipale();
 win_famiglia->hide();}
-        xywh {340 270 60 40} align 20
+        xywh {325 270 60 40} align 20
         code0 {o->image(ImgExit);}
       }
     }
