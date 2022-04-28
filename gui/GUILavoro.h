@@ -13,6 +13,7 @@ extern Fl_Value_Output *lavoro_val_impegno;
 extern Fl_Value_Output *lavoro_val_soldi;
 extern Fl_Value_Output *lavoro_val_stipendio;
 #include <FL/Fl_Return_Button.H>
+extern Fl_Box *lavoro_val_impegno_percent;
 #include <FL/Fl_Output.H>
 extern Fl_Output *lavoro_txt_ditta;
 Fl_Double_Window* GUILavoro();

@@ -51,7 +51,7 @@ Function {GUILavoro()} {open
 } {
   Fl_Window win_lavoro {
     label Lavoro open
-    xywh {345 650 512 246} type Double labelfont 1 labelsize 12 hotspot
+    xywh {281 648 512 246} type Double labelfont 1 labelsize 12 hotspot
     code0 {AggiornaLavoro();} modal size_range {512 246 512 246} visible
   } {
     Fl_Group {} {open
@@ -76,7 +76,7 @@ win_cercalavoro->show();}
       Fl_Button {} {
         label Licenziati
         callback {Licenziati();}
-        xywh {330 30 175 25}
+        xywh {330 31 175 25}
       }
       Fl_Button {} {
         label Lavora
@@ -87,7 +87,7 @@ win_cercalavoro->show();}
 }
 
 Lavora();}
-        xywh {330 75 175 25}
+        xywh {330 72 175 25}
       }
       Fl_Button {} {
         label {Fai il leccaculo}
@@ -98,7 +98,7 @@ Lavora();}
 }
 
 FaiIlLeccaculo();}
-        xywh {330 100 175 25}
+        xywh {330 98 175 25}
         code0 {if(sesso=='F') o->label("Fai la leccaculo");}
       }
       Fl_Button {} {
@@ -110,7 +110,7 @@ FaiIlLeccaculo();}
 }
 
 ChiediAumento();}
-        xywh {330 125 175 25}
+        xywh {330 124 175 25}
       }
       Fl_Button {} {
         label Sciopera
@@ -131,19 +131,19 @@ Sciopera();} selected
       xywh {5 180 500 60} box EMBOSSED_FRAME
     } {
       Fl_Value_Output lavoro_val_impegno {
-        label Impegno
-        xywh {100 210 35 25} box EMBOSSED_BOX color 7 labelsize 12 maximum 100 value 100
+        label {Impegno }
+        xywh {130 210 25 25} box FLAT_BOX labelfont 2 labelsize 12 maximum 100 value 100 textfont 1
       }
       Fl_Value_Output lavoro_val_soldi {
-        label {Soldi L.}
+        label {Soldi L. }
         callback {o->value(CALCSOLDI(Soldi));}
-        xywh {310 185 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+08 textfont 5
+        xywh {320 185 80 25} box FLAT_BOX labelfont 2 labelsize 12 step 1 value 1e+08 textfont 5
         code0 {if (euro) o->label("Soldi  €");}
       }
       Fl_Value_Output lavoro_val_stipendio {
-        label {Stipendio L.}
+        label {Stipendio L. }
         callback {o->value(CALCSOLDI(stipendio));}
-        xywh {310 210 80 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+08 textfont 5
+        xywh {320 210 80 25} box FLAT_BOX labelfont 2 labelsize 12 step 1 value 1e+08 textfont 5
         code0 {if (euro) o->label("Stipendio  €");}
       }
       Fl_Return_Button {} {
@@ -153,14 +153,17 @@ win_lavoro->hide();}
         xywh {435 190 60 40} align 20
         code0 {o->image(ImgExit);}
       }
-      Fl_Box {} {
+      Fl_Box lavoro_val_impegno_percent {
         label {%}
-        xywh {140 214 15 16}
+        xywh {152 214 15 16} labelfont 1
       }
       Fl_Output lavoro_txt_ditta {
         label Ditta
-        xywh {100 185 165 25} box FLAT_BOX color 49 labelsize 12 textfont 1 textsize 12
+        xywh {105 185 140 25} box FLAT_BOX color 49 labelfont 2 labelsize 12 textfont 1 textsize 12
         code0 {o->clear_visible_focus();}
+      }
+      Fl_Box {} {
+        image {icons/lavoro.png} xywh {15 190 40 40}
       }
     }
   }

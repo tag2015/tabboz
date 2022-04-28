@@ -75,6 +75,7 @@ void AggiornaLavoro(void)
         lavoro_val_stipendio->deactivate();
         lavoro_val_impegno->value(0);
         lavoro_val_impegno->deactivate();
+        lavoro_val_impegno_percent->deactivate();
     } else {
         lavoro_txt_ditta->value(LavoroMem[numeroditta].nome);
         lavoro_val_stipendio->activate();
