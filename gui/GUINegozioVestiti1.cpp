@@ -209,27 +209,28 @@ Fl_Double_Window* GUINegozioVestiti_1() {
         o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
         o->image(ImgExit);
       } // Fl_Return_Button* o
-      { Fl_Value_Output* o = new Fl_Value_Output(470, 170, 80, 25, "Soldi L.");
-        o->box(FL_EMBOSSED_BOX);
-        o->color(FL_BACKGROUND2_COLOR);
+      { Fl_Value_Output* o = new Fl_Value_Output(470, 170, 95, 25, "Soldi  L.");
+        o->box(FL_FLAT_BOX);
         o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(2);
         o->labelsize(12);
         o->step(1);
-        o->textfont(5);
+        o->textfont(1);
         o->callback((Fl_Callback*)cb_Soldi);
         o->value(CALCSOLDI(Soldi));
         if(euro) o->label("Soldi  €");
       } // Fl_Value_Output* o
-      { Fl_Value_Output* o = new Fl_Value_Output(470, 200, 35, 25, "Figosit\303\240");
-        o->box(FL_EMBOSSED_BOX);
-        o->color(FL_BACKGROUND2_COLOR);
-        o->selection_color(FL_BACKGROUND2_COLOR);
+      { Fl_Value_Output* o = new Fl_Value_Output(470, 200, 25, 25, "Figosit\303\240 ");
+        o->box(FL_FLAT_BOX);
+        o->labelfont(2);
         o->labelsize(12);
         o->value(100);
+        o->textfont(1);
         o->callback((Fl_Callback*)cb_Figosit);
         o->value(Fama);
       } // Fl_Value_Output* o
-      { new Fl_Box(505, 204, 15, 16, "%");
+      { Fl_Box* o = new Fl_Box(493, 204, 15, 16, "%");
+        o->labelfont(1);
       } // Fl_Box* o
       o->end();
     } // Fl_Group* o
