@@ -18,7 +18,7 @@ Function {GUITabbozCompagnia()} {open
 } {
   Fl_Window win_compagnia {
     label Compagnia open selected
-    xywh {472 407 310 360} type Double hotspot modal size_range {310 360 310 360} visible
+    xywh {167 601 310 360} type Double hotspot modal size_range {310 360 310 360} visible
   } {
     Fl_Box {} {
       image {pic/compagnia.png} xywh {10 0 290 190} box BORDER_FRAME
@@ -50,14 +50,17 @@ win_compagnia->hide();}
     Fl_Group {} {open
       xywh {10 300 290 50} box EMBOSSED_FRAME labelsize 10 align 5
     } {
+      Fl_Box {} {
+        image {icons/compagnia.png} xywh {15 305 40 40}
+      }
       Fl_Value_Output compa_val_rep {
-        label Reputazione
-        xywh {95 312 35 25} box EMBOSSED_BOX color 7 labelsize 12 value 100
+        label {Reputazione }
+        xywh {160 312 25 25} box FLAT_BOX labelfont 2 labelsize 12 value 50 textfont 1
         code0 {o->value(Reputazione);}
       }
       Fl_Box {} {
         label {%}
-        xywh {130 316 15 16}
+        xywh {183 316 15 16} labelfont 1
       }
       Fl_Return_Button {} {
         callback {win_principale->activate();
