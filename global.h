@@ -23,7 +23,7 @@
 
 #define NUM_STRADE  50
 #define NUM_TIPE    65
-#define NUM_TIPI    20
+#define NUM_TIPI    50
 
 
 /* "Indici" per l'array di stringhe degli eventi */
