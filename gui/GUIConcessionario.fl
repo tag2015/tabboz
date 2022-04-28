@@ -36,18 +36,19 @@ conce_txt_prezzo->value(buf);} {}
 
 Function {GUIConcessionario()} {open
 } {
-  Fl_Window win_conce {open
-    xywh {275 368 575 485} type Double hotspot modal size_range {575 485 575 485} visible
+  Fl_Window win_conce {
+    label Concessionario open
+    xywh {436 414 575 485} type Double hotspot modal size_range {575 485 575 485} visible
   } {
-    Fl_Tabs {} {open
+    Fl_Tabs {} {open selected
       xywh {5 5 565 420} box UP_BOX
     } {
       Fl_Group {} {
-        label Malagutty open
-        xywh {5 40 565 385} box EMBOSSED_FRAME
+        label Malagutty
+        xywh {5 40 565 385}
       } {
         Fl_Group {} {
-          label tasti open
+          label tasti
           xywh {10 50 560 150} labeltype NO_LABEL
         } {
           Fl_Button {} {
@@ -114,13 +115,16 @@ conce_btn_compra->activate();}
         xywh {5 40 565 385} box EMBOSSED_FRAME color 54 hide
       } {}
     }
-    Fl_Group {} {open selected
+    Fl_Group {} {open
       xywh {5 430 565 50} box EMBOSSED_FRAME
     } {
+      Fl_Box {} {
+        image {icons/negozi.png} xywh {10 435 40 40}
+      }
       Fl_Value_Output conce_soldi {
         label {Soldi L.}
         callback {o->value(CALCSOLDI(Soldi));}
-        xywh {155 445 95 25} box EMBOSSED_BOX color 7 labelsize 12 step 1 value 1e+10 textfont 5
+        xywh {110 442 95 25} box FLAT_BOX labelfont 2 labelsize 12 step 1 value 1e+10 textfont 1
         code0 {o->value(CALCSOLDI(Soldi));}
         code1 {if(euro) o->label("Soldi  €");}
       }
