@@ -9,6 +9,7 @@ extern Fl_Double_Window *win_disco;
 #include <FL/Fl_Round_Button.H>
 #include <FL/Fl_Browser.H>
 extern Fl_Browser *disco_txtbox;
+#include <FL/Fl_Box.H>
 #include <FL/Fl_Value_Output.H>
 extern Fl_Value_Output *disco_val_soldi;
 #include <FL/Fl_Button.H>

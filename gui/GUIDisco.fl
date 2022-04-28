@@ -31,7 +31,7 @@ Function {GUITabbozDisco()} {open
 } {
   Fl_Window win_disco {
     label Disco open
-    xywh {432 492 485 290} type Double hotspot modal size_range {485 290 485 290} visible
+    xywh {309 525 485 290} type Double hotspot modal size_range {485 290 485 290} visible
   } {
     Fl_Group {} {open
       xywh {5 5 160 225} box EMBOSSED_FRAME
@@ -116,10 +116,13 @@ win_disco->redraw();}
     Fl_Group {} {open
       xywh {5 235 475 50} box EMBOSSED_FRAME labelsize 10 align 5
     } {
+      Fl_Box {} {
+        image {icons/disco.png} xywh {10 240 40 40}
+      }
       Fl_Value_Output disco_val_soldi {
-        label {Soldi L. }
-        callback {o->value(CALCSOLDI(Soldi));} selected
-        xywh {65 247 80 25} box EMBOSSED_BOX color 7 selection_color 7 labelsize 12 maximum 0 step 1 value 1e+08 textfont 5
+        label {Soldi  L.}
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {110 247 80 25} box FLAT_BOX selection_color 7 labelfont 2 labelsize 12 maximum 0 step 1 value 1e+08 textfont 1
         code0 {o->value(CALCSOLDI(Soldi));}
         code1 {if(euro) o->label("Soldi  €");}
       }
@@ -129,7 +132,7 @@ win_disco->redraw();}
 win_principale->activate();
 AggiornaPrincipale();
 win_disco->hide();
-disco_scelta=0;}
+disco_scelta=0;} selected
         xywh {345 240 60 40}
         code0 {if(!disco_scelta) o->deactivate();}
       }
