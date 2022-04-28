@@ -20,10 +20,10 @@ decl {int materia_selezionata;} {private global
 Function {GUITabbozScuola()} {open
 } {
   Fl_Window win_scuola {
-    label Scuola
-    xywh {-32000 -32000 540 350} type Double hide hotspot
+    label Scuola open
+    xywh {170 593 540 350} type Double hotspot
     code0 {materia_selezionata=1;}
-    code1 {AggiornaScuola();} modal size_range {540 350 540 350}
+    code1 {AggiornaScuola();} modal size_range {540 350 540 350} visible
   } {
     Fl_Group {} {open
       xywh {10 10 245 275} box SHADOW_BOX color 7
@@ -74,7 +74,7 @@ Function {GUITabbozScuola()} {open
         callback {materia_selezionata=9;}
         xywh {12 215 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
-      Fl_Group grp_voti {
+      Fl_Group grp_voti {open
         xywh {185 15 60 215}
       } {
         Fl_Value_Output val_voto1 {
@@ -119,7 +119,7 @@ Function {GUITabbozScuola()} {open
     }
     Fl_Button {} {
       label Studia
-      callback {StudiaMateria(materia_selezionata);}
+      callback {StudiaMateria(materia_selezionata);} selected
       xywh {260 185 270 30}
     }
     Fl_Button {} {
@@ -135,23 +135,26 @@ Function {GUITabbozScuola()} {open
     Fl_Group grp_barrastato {open
       xywh {10 290 520 50} box EMBOSSED_FRAME labelsize 10 align 5
     } {
+      Fl_Box {} {
+        image {icons/scuola.png} xywh {15 295 40 40}
+      }
       Fl_Value_Output scuola_val_soldi {
         label {Soldi  L.}
         callback {scuola_val_soldi->value(CALCSOLDI(Soldi));}
-        xywh {65 302 80 25} box EMBOSSED_BOX color 7 labelsize 12 align 260 step 1 value 1e+08 textfont 5
+        xywh {120 305 80 25} box FLAT_BOX labelfont 2 labelsize 12 align 260 step 1 value 1e+08 textfont 1
         code0 {if (euro) o->label("Soldi  €");}
       }
       Fl_Value_Output scuola_val_rep {
-        label Reputazione
-        xywh {270 302 35 25} box EMBOSSED_BOX color 7 labelsize 12 value 100
+        label {Reputazione }
+        xywh {290 305 25 25} box FLAT_BOX labelfont 2 labelsize 12 value 50 textfont 1
       }
       Fl_Box {} {
         label {%}
-        xywh {305 307 15 16}
+        xywh {313 309 15 16} labelfont 1
       }
       Fl_Value_Output scuola_val_studio {
         label Studio
-        xywh {370 300 35 30} color 7 labelsize 12 hide
+        xywh {415 300 35 30} color 7 labelsize 12 hide
       }
       Fl_Return_Button {} {
         callback {win_principale->activate();
@@ -168,7 +171,7 @@ Function {GUIPagella()} {open
 } {
   Fl_Window win_pagella {
     label {Pagella!} open
-    xywh {554 564 540 325} type Double hotspot modal size_range {540 325 540 325} visible
+    xywh {554 564 540 325} type Double hide hotspot modal size_range {540 325 540 325}
   } {
     Fl_Group pag_materie {open
       xywh {10 10 245 305} box SHADOW_BOX color 7
@@ -241,7 +244,7 @@ Function {GUIPagella()} {open
         }
       }
       Fl_Round_Button {} {
-        label {Condotta................} selected
+        label {Condotta................}
         xywh {12 245 213 15} type Radio box FLAT_BOX down_box FLAT_BOX color 7 selection_color 7 labelfont 5
       }
       Fl_Value_Output pag_condotta {
