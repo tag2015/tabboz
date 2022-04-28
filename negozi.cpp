@@ -110,7 +110,7 @@ void PagaQualcosa (int scelta)
                 case 3:
                 case 4:
                 case 5:
-                case 6:  current_gibbotto=scelta; break;   //FIXME cambiare i check
+                case 6:  current_giubbotto=scelta; break;   //FIXME cambiare i check
                 case 7:
                 case 8:
                 case 9:
@@ -142,11 +142,11 @@ bool OfferteDiNatale(void)
     char tmp[128];
 
     if ((x_mese == 12) && (Soldi >= COSTO_VESTITO_NATALIZIO)) {
-        if ((x_giorno > 14) && ( x_giorno < 25) && ( current_gibbotto!=19) && (current_pantaloni!=19)) {
+        if ((x_giorno > 14) && ( x_giorno < 25) && ( current_giubbotto!=19) && (current_pantaloni!=19)) {
             sprintf(tmp,"Vuoi comperare, per %s, un meraviglioso vestito da Babbo Natale ?",MostraSoldi(COSTO_VESTITO_NATALIZIO));
             fl_message_title("Offerte Natalizie...");
             if(fl_choice(tmp,"No","Si!",0)) {
-                current_gibbotto=19;
+                current_giubbotto=19;
                 current_pantaloni=19;
                 Soldi-=COSTO_VESTITO_NATALIZIO;
                 return TRUE;  //se compriamo il vestito (per far chiudere il launcher negozi)

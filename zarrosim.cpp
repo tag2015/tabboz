@@ -104,7 +104,7 @@ char    un_una[4];
 /* Accessori */
 
 int     current_testa;
-int     current_gibbotto;
+int     current_giubbotto;
 int     current_pantaloni;
 int     current_scarpe;
 int     current_tipa;
@@ -202,7 +202,7 @@ void ResetMe(int primavolta)
 
     sizze             =  0;
     current_testa     =  0;
-    current_gibbotto  =  0;
+    current_giubbotto  =  0;
     current_pantaloni =  0;
     current_scarpe    =  0;
 
@@ -466,7 +466,7 @@ static void CaricaTutto(void)
     current_testa = vvc(new_check_i(buf_i));
 
     TabbozProfilo.get("Giubbotto",buf_i,0);
-    current_gibbotto = vvc(new_check_i(buf_i));
+    current_giubbotto = vvc(new_check_i(buf_i));
 
     TabbozProfilo.get("Pantaloni",buf_i,0);
     current_pantaloni = vvc(new_check_i(buf_i));
@@ -686,7 +686,7 @@ static void SalvaTutto(void)
     /* salva dati accessori */
     TabbozProfilo.set("Sigarette", new_check_i(sizze));
     TabbozProfilo.set("Testa", new_check_i(current_testa));
-    TabbozProfilo.set("Giubbotto", new_check_i(current_gibbotto));
+    TabbozProfilo.set("Giubbotto", new_check_i(current_giubbotto));
     TabbozProfilo.set("Pantaloni", new_check_i(current_pantaloni));
     TabbozProfilo.set("Scarpe", new_check_i(current_scarpe));
 
@@ -1273,7 +1273,7 @@ void AggiornaPrincipale()
         main_valbox_stipendio->deactivate();
     main_fig_scarpe->image(ImgScarpe[current_scarpe]);   // Disegna immagine del tabbozzo/a
     main_fig_panta->image(ImgPantaloni[current_pantaloni]);
-    main_fig_giub->image(ImgGiubbotto[current_gibbotto]);
+    main_fig_giub->image(ImgGiubbotto[current_giubbotto]);
     main_fig_testa->image(ImgTesta[current_testa]);
 
     if(ScooterData.stato!=-1000) {

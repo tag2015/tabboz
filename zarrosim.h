@@ -183,7 +183,7 @@ extern  char      un_una[];         // articolo in funzione del sesso (un/una)
 
 /* Accessori */
 extern  int       current_testa;      // Grado di abbronzatura del tabbozzo
-extern  int       current_gibbotto;   // Giubbotto attuale del tabbozzo
+extern  int       current_giubbotto;  // Giubbotto attuale del tabbozzo
 extern  int       current_pantaloni;  // Pantaloni attuali del tabbozzo
 extern  int       current_scarpe;     // Scarpe attuali del tabbozzo
 extern  int       current_tipa;       // Abbigliamento della tipa (nella finestra tipa)

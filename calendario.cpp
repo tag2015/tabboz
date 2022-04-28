@@ -233,7 +233,7 @@ void Giorno(void)
                     if (Rapporti > 0 ) current_tipa=1; /* Tipa vestita da Babbo Natale... */
                 }
                 if (x_giorno == 25) {  /* Natale */
-                    if ((current_pantaloni == 19) && (current_gibbotto == 19)) {
+                    if ((current_pantaloni == 19) && (current_giubbotto == 19)) {
                         fl_message_title("Natale...");
                         fl_message("Con il tuo vestito da Babbo Natale riesci a stupire tutti...");
                         Fama+=20;
@@ -244,7 +244,7 @@ void Giorno(void)
                         auguri_tipa = TRUE;
                     }
                 }
-                if ((x_giorno == 28) && ((current_pantaloni == 19) || (current_gibbotto == 19))) {
+                if ((x_giorno == 28) && ((current_pantaloni == 19) || (current_giubbotto == 19))) {
                     fl_message_title("Natale...");
                     fl_message("Natale è già passato... Togliti quel dannato vestito...");
                     Fama-=5;
