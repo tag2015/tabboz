@@ -33,8 +33,14 @@ static void InitVars() {
 
 Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
 
+static void cb_win_principale(Fl_Double_Window* o, void*) {
+  fl_message_title("Uscita");
+if(fl_choice("Vuoi uscire dal magico mondo del tabbozzo\ne tornare alla Realtà?","Non ancora","Sì",0))
+  o->hide();
+}
+
 static void cb_Salva(Fl_Menu_*, void*) {
-  win_principale->hide();
+  win_principale->do_callback();
 }
 
 static void cb_Opzioni(Fl_Menu_*, void*) {
@@ -706,6 +712,7 @@ win_principale->deactivate();
 
 Fl_Double_Window* GUITabboz() {
   { win_principale = new Fl_Double_Window(475, 470, "Tabboz Simulator Next Generation!");
+    win_principale->callback((Fl_Callback*)cb_win_principale);
     win_principale->align(Fl_Align(FL_ALIGN_TOP_LEFT));
     { Fl_Menu_Bar* o = new Fl_Menu_Bar(0, 0, 475, 20);
       o->labeltype(FL_NO_LABEL);
