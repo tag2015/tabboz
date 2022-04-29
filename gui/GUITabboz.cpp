@@ -33,11 +33,28 @@ static void InitVars() {
 
 Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
 
+static void cb_Salva(Fl_Menu_*, void*) {
+  win_principale->hide();
+}
+
+static void cb_Opzioni(Fl_Menu_*, void*) {
+  GUIConfig();
+win_config->show();
+}
+
+static void cb_About(Fl_Menu_*, void*) {
+  GUIAbout();
+win_about->show();
+}
+
 Fl_Menu_Item menu_[] = {
  {"Gioco", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
- {"Esci", 0,  0, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {"Nuova partita", 0,  0, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {"Salva ed esci", 0,  (Fl_Callback*)cb_Salva, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
  {0,0,0,0,0,0,0,0,0},
- {"Opzioni", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {"Varie", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {"Opzioni...", 0,  (Fl_Callback*)cb_Opzioni, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {"About...", 0,  (Fl_Callback*)cb_About, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
  {0,0,0,0,0,0,0,0,0},
  {0,0,0,0,0,0,0,0,0}
 };
@@ -681,6 +698,12 @@ static Fl_Image *image_b_opzioni() {
   return image;
 }
 
+static void cb_Carta(Fl_Button*, void*) {
+  GUICartaID(FALSE);
+win_cartaid->show();
+win_principale->deactivate();
+}
+
 Fl_Double_Window* GUITabboz() {
   { win_principale = new Fl_Double_Window(475, 470, "Tabboz Simulator Next Generation!");
     win_principale->align(Fl_Align(FL_ALIGN_TOP_LEFT));
@@ -688,8 +711,6 @@ Fl_Double_Window* GUITabboz() {
       o->labeltype(FL_NO_LABEL);
       o->labelsize(12);
       o->textsize(12);
-      o->hide();
-      o->deactivate();
       o->menu(menu_);
     } // Fl_Menu_Bar* o
     { Fl_Group* o = new Fl_Group(10, 350, 145, 110, "Sbatti...");
@@ -940,6 +961,11 @@ Fl_Double_Window* GUITabboz() {
       o->tooltip("Opzioni");
       o->image( image_b_opzioni() );
       o->callback((Fl_Callback*)cb_2);
+    } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(10, 30, 135, 295, "Carta ID");
+      o->box(FL_NO_BOX);
+      o->labeltype(FL_NO_LABEL);
+      o->callback((Fl_Callback*)cb_Carta);
     } // Fl_Button* o
     AggiornaPrincipale();
     InitVars();

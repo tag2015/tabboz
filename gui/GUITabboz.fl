@@ -62,7 +62,7 @@ decl {bool debug_gui;} {public local
 decl {bool timer_gui;} {public local
 }
 
-Function {InitVars()} {open private
+Function {InitVars()} {private
 } {
   code {\#ifdef TABBOZ_DEBUG
   debug_gui = TRUE;
@@ -75,31 +75,49 @@ Function {InitVars()} {open private
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
-    label {Tabboz Simulator Next Generation!} open selected
-    xywh {419 331 475 470} type Double align 5
+    label {Tabboz Simulator Next Generation!} open
+    xywh {713 357 475 470} type Double align 5
     code0 {AggiornaPrincipale();}
     code1 {InitVars();}
     code2 {if(!debug_gui) main_grp_debug->hide();} size_range {475 470 475 470} visible
   } {
-    Fl_Menu_Bar {} {
-      xywh {0 0 475 20} labeltype NO_LABEL labelsize 12 textsize 12 hide deactivate
+    Fl_Menu_Bar {} {open
+      xywh {0 0 475 20} labeltype NO_LABEL labelsize 12 textsize 12
     } {
       Submenu {} {
         label Gioco open
         xywh {0 0 62 20} labelsize 12
       } {
         MenuItem {} {
-          label Esci
+          label {Nuova partita}
+          xywh {5 5 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label {Salva ed esci}
+          callback {win_principale->hide();}
           xywh {5 5 100 20} labelsize 12
         }
       }
       Submenu {} {
-        label Opzioni open
+        label Varie open
         xywh {0 0 62 20} labelsize 12
-      } {}
+      } {
+        MenuItem {} {
+          label {Opzioni...}
+          callback {GUIConfig();
+win_config->show();}
+          xywh {0 0 30 20} labelsize 12
+        }
+        MenuItem {} {
+          label {About...}
+          callback {GUIAbout();
+win_about->show();} selected
+          xywh {0 0 30 20} labelsize 12
+        }
+      }
     }
     Fl_Group {} {
-      label {Sbatti...} open
+      label {Sbatti...}
       xywh {10 350 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
     } {
       Fl_Button {} {
@@ -325,6 +343,13 @@ main_valbox_soldi->value(CALCSOLDI(Soldi));}
       callback {GUIConfig();
 win_config->show();}
       tooltip Opzioni image {icons/b_opzioni.png} xywh {438 33 25 25}
+    }
+    Fl_Button {} {
+      label {Carta ID}
+      callback {GUICartaID(FALSE);
+win_cartaid->show();
+win_principale->deactivate();}
+      xywh {10 30 135 295} box NO_BOX labeltype NO_LABEL
     }
   }
 }
