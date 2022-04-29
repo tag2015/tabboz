@@ -8,8 +8,9 @@
 #include "GUITabboz.h"
 #include "../zarrosim.h"
 #include "../global.h"
-#include "../eventi.h"
 #include "../sound.h"
+#include "../debug.h"
+#include "../eventi.h"
 #include "../sharedimg.h"
 const char *tema_corr; 
 int diff_nuova; 
@@ -84,6 +85,8 @@ else
 
 euro = cfg_euro->value();
 sound_active = cfg_suono->value();
+logging = cfg_log->value();
+if(logging) openlog();
 
 win_principale->activate();
 AggiornaPrincipale();
@@ -165,20 +168,22 @@ to/licenziato e la\nfrequenza degli eventi casuali");
         o->value(euro);
       } // Fl_Check_Button* cfg_euro
       { Fl_Check_Button* o = cfg_timer = new Fl_Check_Button(265, 90, 220, 25, "Timer");
-        cfg_timer->tooltip("NON IMPLEMENTATO\nSe attivato, i giorni avanzano automaticamente\n anche se l\
-\'utente non effettua azioni");
+        cfg_timer->tooltip("Se attivato, i giorni avanzano automaticamente\nanche se l\'utente non effett\
+ua azioni");
         cfg_timer->down_box(FL_DOWN_BOX);
-        cfg_timer->deactivate();
         o->value(timer_active);
+        if(!timer_gui) o->deactivate();
       } // Fl_Check_Button* cfg_timer
       { Fl_Check_Button* o = cfg_suono = new Fl_Check_Button(265, 115, 220, 25, "Effetti sonori");
         cfg_suono->tooltip("Abilita effetti sonori (solo per Windows)");
         cfg_suono->down_box(FL_DOWN_BOX);
         o->value(sound_active);
       } // Fl_Check_Button* cfg_suono
-      { cfg_log = new Fl_Check_Button(265, 140, 220, 25, "File di log (zarrosim.log)");
+      { Fl_Check_Button* o = cfg_log = new Fl_Check_Button(265, 140, 220, 25, "File di log (zarrosim.log)");
         cfg_log->tooltip("Scrive gli eventi principali in un file di log\nnel profilo dell\'utente");
         cfg_log->down_box(FL_DOWN_BOX);
+        o->value(logging);
+        if(debug_gui) o->deactivate();
       } // Fl_Check_Button* cfg_log
       o->end();
     } // Fl_Group* o

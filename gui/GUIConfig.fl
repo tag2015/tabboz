@@ -23,10 +23,13 @@ decl {\#include "../zarrosim.h"} {private global
 decl {\#include "../global.h"} {private global
 }
 
-decl {\#include "../eventi.h"} {private global
+decl {\#include "../sound.h"} {private global
 }
 
-decl {\#include "../sound.h"} {private global
+decl {\#include "../debug.h"} {private global
+}
+
+decl {\#include "../eventi.h"} {private global
 }
 
 decl {\#include "../sharedimg.h"} {private global
@@ -42,7 +45,7 @@ Function {GUIConfig()} {open
 } {
   Fl_Window win_config {
     label Configurazione open
-    xywh {217 476 505 215} type Double hotspot
+    xywh {57 674 505 215} type Double hotspot
     code0 {tema_corr = Fl::scheme();} modal size_range {505 215 505 215} visible
   } {
     Fl_Group {} {
@@ -120,10 +123,10 @@ frequenza degli eventi casuali} xywh {10 25 240 145} box EMBOSSED_FRAME labelfon
       }
       Fl_Check_Button cfg_timer {
         label Timer
-        tooltip {NON IMPLEMENTATO
-Se attivato, i giorni avanzano automaticamente
- anche se l'utente non effettua azioni} xywh {265 90 220 25} down_box DOWN_BOX deactivate
+        tooltip {Se attivato, i giorni avanzano automaticamente
+anche se l'utente non effettua azioni} xywh {265 90 220 25} down_box DOWN_BOX
         code0 {o->value(timer_active);}
+        code1 {if(!timer_gui) o->deactivate();}
       }
       Fl_Check_Button cfg_suono {
         label {Effetti sonori}
@@ -134,6 +137,8 @@ Se attivato, i giorni avanzano automaticamente
         label {File di log (zarrosim.log)}
         tooltip {Scrive gli eventi principali in un file di log
 nel profilo dell'utente} xywh {265 140 220 25} down_box DOWN_BOX
+        code0 {o->value(logging);}
+        code1 {if(debug_gui) o->deactivate();}
       }
     }
     Fl_Button {} {
@@ -153,10 +158,12 @@ else
 
 euro = cfg_euro->value();
 sound_active = cfg_suono->value();
+logging = cfg_log->value();
+if(logging) openlog();
 
 win_principale->activate();
 AggiornaPrincipale();
-win_config->hide();}
+win_config->hide();} selected
       xywh {345 180 70 25}
     }
     Fl_Button {} {
@@ -182,7 +189,7 @@ win_about->show();}
 Function {GUIAbout()} {open
 } {
   Fl_Window win_about {
-    label {A proposito di Tabboz Simulator NG} open selected
+    label {A proposito di Tabboz Simulator NG} open
     xywh {617 408 405 195} type Double hotspot modal size_range {405 195 405 195} visible
   } {
     Fl_Box {} {
