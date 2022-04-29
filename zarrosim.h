@@ -22,7 +22,7 @@
 #define VERSION "NG-pre20220418"
 
 /* Per attivare il Debug... */
-//#define TABBOZ_DEBUG
+#define TABBOZ_DEBUG
 
 /* Per disattivare la possibilita' di giocare con la tabbozza */
 #define NOTABBOZZA
