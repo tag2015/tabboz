@@ -85,8 +85,6 @@ int     comp_giorno;
 int     comp_mese;
 char    Nometipa[30];
 char    City[50];       // Citta' di nascita
-char    Residenza[50];  // Citta' dove vive
-char    Street[50];     // Dove sto' tipo abita
 int     FigTipa;
 int     Rapporti;
 int     Stato;
@@ -160,15 +158,8 @@ void ResetMe(int primavolta)
     scad_pal_giorno   =    0;
     scad_pal_mese     =    0;
 
-    strcpy(Residenza,"Milano");
-
     Nometipa[0] =   0;
     FigTipa     =   0;
-
-//FIXME Carica random di città/via dalla lista stringhe
-//   LoadString(hInst, (400 + random(22) ), City, (sizeof(City)-1));
-//    LoadString(hInst, (450 + random(50) ), tmp, (sizeof(tmp)-1));
-//    sprintf(Street,"%s n. %d",tmp,(1 + random(150)));
 
     for (int i=1;i<10;i++)
         MaterieMem[i].voto=2;   //BUGFIX partiamo dalla media del 2
@@ -192,8 +183,8 @@ void ResetMe(int primavolta)
         sound_active        =  1;
         euro                =  0;
         sesso               = 'M';
-        strcpy(Nome,"Tizio");
-        strcpy(Cognome,"Caio");
+        strcpy(Nome,"TIZIO");
+        strcpy(Cognome,"CAIO");
         CalcolaSesso();
     }
 
@@ -411,14 +402,10 @@ static void CaricaTutto(void)
     TabbozProfilo.get("Cognome",Cognome,"",STR_MAX);
     TabbozProfilo.get("Nometipa",Nometipa,"",STR_MAX);
     TabbozProfilo.get("City",City,"",STR_MAX);
-    //if(City[0] == '\0')
-    //    firsttime=1;
 
-    TabbozProfilo.get("Residenza",Residenza,"",STR_MAX);   //TAG2015 FIXME temporaneo usiamo residenza per controllo fistrun
-    if(Residenza[0] == '\0')
+    TabbozProfilo.get("SoftCheck",buf_i,0);  // Consideriamo che se il checksum è a 0 è il primo avvio
+    if(!buf_i)
         firsttime=1;
-
-    TabbozProfilo.get("Street",Street,"",STR_MAX);
 
     /* Se non e' gia' settato,setta il compleanno (a caso) */
     TabbozProfilo.get("CompMese",comp_mese,0);
@@ -674,8 +661,6 @@ static void SalvaTutto(void)
     TabbozProfilo.set("Cognome", Cognome);
     TabbozProfilo.set("Nometipa", Nometipa);
     TabbozProfilo.set("City", City);
-    TabbozProfilo.set("Residenza", Residenza);
-    TabbozProfilo.set("Street", Street);
     TabbozProfilo.set("CompMese", comp_mese);
     TabbozProfilo.set("CompGiorno", comp_giorno);
 
