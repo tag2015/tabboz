@@ -4,6 +4,8 @@
 #define GUITabboz_h
 #include <FL/Fl.H>
 extern int scelta_gui; 
+extern bool debug_gui; 
+extern bool timer_gui; 
 #include <FL/Fl_Double_Window.H>
 extern Fl_Double_Window *win_principale;
 #include <FL/Fl_Menu_Bar.H>
@@ -27,6 +29,7 @@ extern Fl_Box *main_fig_scarpe;
 extern Fl_Box *main_fig_panta;
 extern Fl_Box *main_fig_giub;
 extern Fl_Box *main_fig_testa;
+extern Fl_Group *main_grp_debug;
 extern Fl_Group *main_grp_scooter;
 extern Fl_Output *main_txtbox_scooter;
 extern Fl_Value_Output *main_valbox_scooterstato;

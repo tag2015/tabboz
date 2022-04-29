@@ -56,14 +56,32 @@ decl {\#include "GUITestbed.h"} {private global
 decl {int scelta_gui;} {public local
 }
 
+decl {bool debug_gui;} {public local
+}
+
+decl {bool timer_gui;} {public local
+}
+
+Function {InitVars()} {open private
+} {
+  code {\#ifdef TABBOZ_DEBUG
+  debug_gui = TRUE;
+\#endif
+\#ifdef NOTIMER
+  timer_gui = FALSE;
+\#endif} {}
+}
+
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
     label {Tabboz Simulator Next Generation!} open selected
-    xywh {382 312 475 470} type Double align 5
-    code0 {AggiornaPrincipale();} size_range {475 470 475 470} visible
+    xywh {419 331 475 470} type Double align 5
+    code0 {AggiornaPrincipale();}
+    code1 {InitVars();}
+    code2 {if(!debug_gui) main_grp_debug->hide();} size_range {475 470 475 470} visible
   } {
-    Fl_Menu_Bar {} {open
+    Fl_Menu_Bar {} {
       xywh {0 0 475 20} labeltype NO_LABEL labelsize 12 textsize 12 hide deactivate
     } {
       Submenu {} {
@@ -262,9 +280,8 @@ o->value(MEDIAVOTI(Studio,N_MATERIE));}
     Fl_Box main_fig_testa {
       xywh {42 56 60 65}
     }
-    Fl_Group {} {open
+    Fl_Group main_grp_debug {open
       xywh {335 35 100 20}
-      code0 {if(!TABBOZ_DEBUG) o->hide();}
     } {
       Fl_Button {} {
         label {>>}

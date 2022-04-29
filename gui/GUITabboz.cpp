@@ -19,6 +19,17 @@
 #include "GUIDisco.h"
 #include "GUITestbed.h"
 int scelta_gui; 
+bool debug_gui; 
+bool timer_gui; 
+
+static void InitVars() {
+  #ifdef TABBOZ_DEBUG
+    debug_gui = TRUE;
+  #endif
+  #ifdef NOTIMER
+    timer_gui = FALSE;
+  #endif
+}
 
 Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
 
@@ -592,6 +603,8 @@ Fl_Box *main_fig_giub=(Fl_Box *)0;
 
 Fl_Box *main_fig_testa=(Fl_Box *)0;
 
+Fl_Group *main_grp_debug=(Fl_Group *)0;
+
 static void cb_(Fl_Button*, void*) {
   Giorno();
 AggiornaPrincipale();
@@ -885,7 +898,7 @@ Fl_Double_Window* GUITabboz() {
     } // Fl_Box* main_fig_giub
     { main_fig_testa = new Fl_Box(42, 56, 60, 65);
     } // Fl_Box* main_fig_testa
-    { Fl_Group* o = new Fl_Group(335, 35, 100, 20);
+    { main_grp_debug = new Fl_Group(335, 35, 100, 20);
       { Fl_Button* o = new Fl_Button(375, 35, 20, 20, ">>");
         o->callback((Fl_Callback*)cb_);
       } // Fl_Button* o
@@ -895,9 +908,8 @@ Fl_Double_Window* GUITabboz() {
       { Fl_Button* o = new Fl_Button(395, 35, 20, 20, "$");
         o->callback((Fl_Callback*)cb_1);
       } // Fl_Button* o
-      if(!TABBOZ_DEBUG) o->hide();
-      o->end();
-    } // Fl_Group* o
+      main_grp_debug->end();
+    } // Fl_Group* main_grp_debug
     { main_grp_scooter = new Fl_Group(160, 290, 305, 35, "Scooter");
       main_grp_scooter->box(FL_EMBOSSED_FRAME);
       main_grp_scooter->labelfont(1);
@@ -930,6 +942,8 @@ Fl_Double_Window* GUITabboz() {
       o->callback((Fl_Callback*)cb_2);
     } // Fl_Button* o
     AggiornaPrincipale();
+    InitVars();
+    if(!debug_gui) main_grp_debug->hide();
     win_principale->size_range(475, 470, 475, 470);
     win_principale->end();
   } // Fl_Double_Window* win_principale
