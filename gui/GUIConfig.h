@@ -19,4 +19,20 @@ extern Fl_Menu_Item menu_Tema[];
 extern Fl_Double_Window *win_about;
 #include <FL/Fl_Box.H>
 Fl_Double_Window* GUIAbout();
+extern Fl_Double_Window *win_cartaid;
+#include <FL/Fl_Input.H>
+extern Fl_Input *cid_in_cognome;
+extern Fl_Input *cid_in_nome;
+#include <FL/Fl_Output.H>
+extern Fl_Output *cid_out_sesso;
+extern Fl_Choice *cid_in_sesso;
+#include <FL/Fl_Value_Output.H>
+extern Fl_Value_Output *cid_out_gcomp;
+#include <FL/Fl_Spinner.H>
+extern Fl_Spinner *cid_in_gcomp;
+extern Fl_Choice *cid_in_mcomp;
+extern Fl_Output *cid_out_mcomp;
+Fl_Double_Window* GUICartaID(bool avvio);
+extern Fl_Menu_Item menu_cid_in_sesso[];
+extern Fl_Menu_Item menu_cid_in_mcomp[];
 #endif

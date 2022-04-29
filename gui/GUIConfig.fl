@@ -29,10 +29,16 @@ decl {\#include "../sound.h"} {private global
 decl {\#include "../debug.h"} {private global
 }
 
+decl {\#include "../lavoro.h"} {private global
+}
+
 decl {\#include "../eventi.h"} {private global
 }
 
 decl {\#include "../sharedimg.h"} {private global
+}
+
+decl {\#include "../calendario.h"} {private global
 }
 
 decl {const char *tema_corr;} {private global
@@ -41,15 +47,14 @@ decl {const char *tema_corr;} {private global
 decl {int diff_nuova;} {private global
 }
 
-Function {GUIConfig()} {open
-} {
+Function {GUIConfig()} {} {
   Fl_Window win_config {
-    label Configurazione open
-    xywh {57 674 505 215} type Double hotspot
-    code0 {tema_corr = Fl::scheme();} modal size_range {505 215 505 215} visible
+    label Configurazione
+    xywh {57 674 505 215} type Double hide hotspot
+    code0 {tema_corr = Fl::scheme();} modal size_range {505 215 505 215}
   } {
     Fl_Group {} {
-      label {Difficoltà} open
+      label {Difficoltà}
       tooltip {Difficoltà inferiori riducono la probabilità
  di essere lasciato/licenziato e la
 frequenza degli eventi casuali} xywh {10 25 240 145} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
@@ -84,7 +89,7 @@ frequenza degli eventi casuali} xywh {10 25 240 145} box EMBOSSED_FRAME labelfon
       }
     }
     Fl_Group {} {
-      label Opzioni open
+      label Opzioni
       xywh {255 25 240 145} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
     } {
       Fl_Choice {} {
@@ -163,7 +168,7 @@ if(logging) openlog();
 
 win_principale->activate();
 AggiornaPrincipale();
-win_config->hide();} selected
+win_config->hide();}
       xywh {345 180 70 25}
     }
     Fl_Button {} {
@@ -186,11 +191,10 @@ win_about->show();}
   }
 }
 
-Function {GUIAbout()} {open
-} {
+Function {GUIAbout()} {} {
   Fl_Window win_about {
-    label {A proposito di Tabboz Simulator NG} open
-    xywh {617 408 405 195} type Double hotspot modal size_range {405 195 405 195} visible
+    label {A proposito di Tabboz Simulator NG}
+    xywh {617 408 405 195} type Double hide hotspot modal size_range {405 195 405 195}
   } {
     Fl_Box {} {
       label {Tabboz Simulator Next Generation}
@@ -217,6 +221,182 @@ fl_message("Il biglietto è valido solo dopo la convalida.\\nIl biglietto deve e
       label OK
       callback {win_about->hide();}
       xywh {330 165 70 25}
+    }
+  }
+}
+
+Function {GUICartaID(bool avvio)} {open
+} {
+  code {char buf[80];
+Fl_Shared_Image *sh_img = Fl_Shared_Image::get("foto.png");} {}
+  Fl_Window win_cartaid {
+    label {Carta d'Identità} open
+    xywh {233 508 520 295} type Double hotspot modal size_range {520 295 520 295} visible
+  } {
+    Fl_Group {} {open
+      xywh {5 5 255 285} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+    } {
+      Fl_Input cid_in_cognome {
+        label {Cognome }
+        xywh {90 15 160 25} labelfont 2 labelsize 12 textfont 5
+        code0 {if(!avvio){ o->clear_visible_focus(); o->box(FL_FLAT_BOX);}}
+        code1 {o->value(Cognome);}
+      }
+      Fl_Input cid_in_nome {
+        label {Nome }
+        xywh {90 45 160 25} labelfont 2 labelsize 12 textfont 5
+        code0 {if(!avvio){ o->clear_visible_focus(); o->box(FL_FLAT_BOX);}}
+        code1 {o->value(Nome);}
+      }
+      Fl_Output cid_out_sesso {
+        label Sesso
+        xywh {90 80 45 25} box FLAT_BOX labelfont 2 labelsize 12 textfont 5 hide
+        code0 {if(!avvio) o->show();}
+        code1 {o->clear_visible_focus();}
+        code2 {if(sesso=='M') o->value("M"); else o->value("F");}
+      }
+      Fl_Choice cid_in_sesso {
+        label {Sesso }
+        xywh {90 80 45 25} down_box BORDER_BOX labelfont 2 labelsize 12 textfont 5
+        code0 {if(!avvio) o->hide();}
+      } {
+        MenuItem {} {
+          label M
+          xywh {0 0 30 20} labelfont 5
+        }
+        MenuItem {} {
+          label F
+          xywh {0 0 30 20}
+        }
+      }
+      Fl_Value_Output cid_out_gcomp {
+        label {Nato il }
+        xywh {90 115 45 25} box FLAT_BOX color 7 labelfont 2 labelsize 12 minimum 1 maximum 31 textfont 5 hide
+        code0 {if(!avvio) o->show();}
+        code1 {o->value(comp_giorno);}
+      }
+      Fl_Spinner cid_in_gcomp {
+        label {Nato il  }
+        xywh {90 115 45 25} labelfont 2 labelsize 12 maximum 31 textfont 5
+        code0 {if(!avvio) o->hide();}
+        code1 {o->value(comp_giorno);}
+      }
+      Fl_Choice cid_in_mcomp {
+        label Mese
+        xywh {145 115 105 25} down_box BORDER_BOX labeltype NO_LABEL textfont 5
+        code0 {if(!avvio) o->hide();}
+        code1 {o->value(comp_mese);}
+      } {
+        MenuItem {} {
+          label GENNAIO
+          xywh {0 0 30 20} labelfont 5
+        }
+        MenuItem {} {
+          label FEBBRAIO
+          xywh {0 0 30 20} labelfont 5
+        }
+        MenuItem {} {
+          label MARZO
+          xywh {0 0 30 20} labelfont 5
+        }
+        MenuItem {} {
+          label APRILE
+          xywh {0 0 30 20} labelfont 5
+        }
+        MenuItem {} {
+          label MAGGIO
+          xywh {0 0 30 20} labelfont 5
+        }
+        MenuItem {} {
+          label GIUGNO
+          xywh {0 0 30 20} labelfont 5
+        }
+        MenuItem {} {
+          label LUGLIO
+          xywh {0 0 30 20} labelfont 5
+        }
+        MenuItem {} {
+          label AGOSTO
+          xywh {0 0 30 20} labelfont 5
+        }
+        MenuItem {} {
+          label SETTEMBRE
+          xywh {0 0 30 20} labelfont 5
+        }
+        MenuItem {} {
+          label OTTOBRE
+          xywh {0 0 30 20} labelfont 5
+        }
+        MenuItem {} {
+          label NOVEMBRE
+          xywh {0 0 30 20} labelfont 5
+        }
+        MenuItem {} {
+          label DICEMBRE
+          xywh {0 0 30 20} labelfont 5
+        }
+      }
+      Fl_Output cid_out_mcomp {
+        xywh {145 115 105 25} box FLAT_BOX labeltype NO_LABEL labelfont 2 labelsize 12 textfont 5 hide
+        code0 {if(!avvio) o->show();}
+        code1 {o->clear_visible_focus();}
+        code2 {o->value(InfoMese[comp_mese-1].nome);}
+      }
+      Fl_Input {} {
+        label {a }
+        xywh {90 145 160 25} labelfont 2 labelsize 12 textfont 5
+        code0 {if(!avvio){ o->clear_visible_focus(); o->box(FL_FLAT_BOX);}}
+      }
+      Fl_Output {} {
+        label {Residenza  }
+        xywh {90 185 160 25} box FLAT_BOX labelfont 2 labelsize 12 textfont 5
+        code0 {o->value("Milano");}
+        code1 {o->clear_visible_focus();}
+      }
+      Fl_Output {} {
+        label {Stato civile  }
+        xywh {90 220 160 25} box FLAT_BOX labelfont 2 labelsize 12 textfont 5
+        code0 {o->value("Stato libero");}
+        code1 {o->clear_visible_focus();}
+      }
+      Fl_Output {} {
+        label {Professione  }
+        xywh {90 255 160 25} box FLAT_BOX labelfont 2 labelsize 12 textfont 5
+        code0 {if((!numeroditta) && (sesso=='M')) o->value("Studente");}
+        code1 {if((!numeroditta) && (sesso=='F')) o->value("Studentessa");}
+        code2 {if(numeroditta) { sprintf(buf,"Sfruttat%c",ao); o->value(buf); }}
+        code3 {o->clear_visible_focus();}
+      }
+    }
+    Fl_Group {} {open
+      xywh {260 5 255 285} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+    } {
+      Fl_Box {} {selected
+        xywh {325 15 125 125} box SHADOW_BOX color 7
+        code0 {o->image(sh_img);}
+      }
+      Fl_Box {} {
+        label {Sostituisci il file foto.png per 
+ personalizzare la fototessera!}
+        xywh {275 144 215 32} labelsize 10
+      }
+      Fl_Box {} {
+        xywh {270 190 235 3} box FLAT_BOX color 33
+      }
+      Fl_Box {} {
+        image {icons/milano.png} xywh {280 220 50 50} box FLAT_BOX
+      }
+      Fl_Button {} {
+        label OK
+        callback {win_principale->activate();
+win_cartaid->hide();}
+        xywh {440 260 70 25}
+      }
+      Fl_Button {} {
+        label Random
+        xywh {355 260 70 25}
+        code0 {if(!avvio) o->hide();}
+      }
     }
   }
 }
