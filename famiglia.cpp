@@ -76,10 +76,10 @@ void ChiediSoldiExtra(void)
                 fl_message("E va bene, possiamo darti %d L. ...",CALCSOLDI(10));
             else
                 fl_message("E va bene, possiamo darti %d € ...",CALCSOLDI(10));
-            #ifdef LOGGING
+            if (logging) {
                 sprintf(tmp,"famiglia: paghetta extra (%s)",MostraSoldi(10));
                 writelog(tmp);
-            #endif
+            }
             Evento();
         } else {
             fl_message_title("Non te li diamo");

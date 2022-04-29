@@ -20,6 +20,7 @@
 
 
 extern  FILE  *debugfile;         // file di log
+extern  char  log_buf[];          // buffer per messaggi log
 
 void   openlog(void);             // Apre file di log
 void   closelog(void);            // Chiude file di log

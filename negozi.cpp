@@ -97,8 +97,6 @@ STVARIE SizzeMem[] = {
 /* Routine per il pagamento di qualunque cosa... */
 void PagaQualcosa (int scelta)
 {
-    char    tmp[128];
-
     if (scelta != 0) {
         if (VestitiMem[scelta].prezzo > Soldi) {
             nomoney(VESTITI);
@@ -124,10 +122,10 @@ void PagaQualcosa (int scelta)
                 case 17: current_scarpe=scelta-10; break;
             }
 
-            #ifdef LOGGING
-                sprintf(tmp,"vestiti: Paga %s",MostraSoldi(VestitiMem[scelta].prezzo));
-                writelog(tmp);
-            #endif
+            if (logging) {
+                sprintf(log_buf,"negozi: Paga %s",MostraSoldi(VestitiMem[scelta].prezzo));
+                writelog(log_buf);
+            }
             Fama+=VestitiMem[scelta].fama_inc;  // FIXME bisognerebbe rendere i bonus permanenti
             if (Fama > 100) Fama=100;
         }

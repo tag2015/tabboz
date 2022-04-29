@@ -167,7 +167,6 @@ void CalcolaVelocita(bool scooter_nuovo)
 /* Routine controllo soldi e incentivi rottamazione */
 void AcquistaScooter(int scelta)
 {
-    char tmp[80];
     int  incentivo = 0;
 
     if (ScooterData.stato != -1000) {  //BUGFIX check cambiato, perchè prima rottamava anche se poi non bastavano i soldi x comprare quello nuovo...
@@ -183,14 +182,14 @@ void AcquistaScooter(int scelta)
     } else {
         Soldi+=incentivo;
         Soldi-=ScooterMem[scelta].prezzo;
-        #ifdef LOGGING
+        if (logging) {
             if(incentivo) {
-                sprintf(tmp,"scooter: Incentivo rottamazione %s",MostraSoldi(1000));
-                writelog(tmp);
+                sprintf(log_buf,"scooter: Incentivo rottamazione %s",MostraSoldi(1000));
+                writelog(log_buf);
             }
-            sprintf(tmp,"scooter: Acquista uno scooter per %s",MostraSoldi(ScooterMem[scelta].prezzo));
-            writelog(tmp);
-        #endif
+            sprintf(log_buf,"scooter: Acquista uno scooter per %s",MostraSoldi(ScooterMem[scelta].prezzo));
+            writelog(log_buf);
+        }
         ScooterData=ScooterMem[scelta];
         benzina=20;
         fl_message_title("Scooter nuovo!");
@@ -231,8 +230,6 @@ bool ParcheggiaScooter(void)
 /* Routine per rifornire lo scooter */
 void FaiBenza(void)
 {
-    char tmp[128];
-
     fl_message_title("Fai benza");
     if (ScooterData.stato == -1000) {
         fl_alert("Mi spieghi come fai a far benzina allo scooter se non lo hai ???");
@@ -254,9 +251,9 @@ void FaiBenza(void)
                     break;
                 }
                 Soldi-=10;
-                #ifdef LOGGING
-                    sprintf(tmp,"scooter: Paga benzina (%s)",MostraSoldi(10));
-                    writelog(tmp);
+                #ifdef TABBOZ_DEBUG
+                    sprintf(log_buf,"scooter: Paga benzina (%s)",MostraSoldi(10));
+                    writelog(log_buf);
                 #endif
                 benzina=50;    // 5 litri, il massimo che puo' contenere...
                 if (ScooterData.cc == 5) benzina = 850;  // 85 litri, x la macchinina un po' figa...
@@ -297,10 +294,10 @@ void RiparaScooter(void)
                                 ScooterData.stato=20;
                                 Soldi-=1000;
                                 CalcolaVelocita(FALSE);
-                                #ifdef LOGGING
-                                    sprintf(tmp,"scooter: Paga riparazione emergenza (%s)",MostraSoldi(1000));
-                                    writelog(tmp);
-                                #endif
+                                if (logging) {
+                                    sprintf(log_buf,"scooter: Paga riparazione emergenza (%s)",MostraSoldi(1000));
+                                    writelog(log_buf);
+                                }
                             }
                             Evento();  //avanziamo il calendario solo se accettiamo
                         }
@@ -319,10 +316,10 @@ void RiparaScooter(void)
                                 ScooterData.cc = ScooterMem[ScooterData.id].cc;
                                 Soldi-=500;
                                 CalcolaVelocita(FALSE);
-                                #ifdef LOGGING
-                                    sprintf(tmp,"scooter: Paga ripristino (%s)",MostraSoldi(500));
-                                    writelog(tmp);
-                                #endif
+                                if (logging) {
+                                    sprintf(log_buf,"scooter: Paga ripristino (%s)",MostraSoldi(500));
+                                    writelog(log_buf);
+                                }
                             }
                             Evento();  //avanziamo il calendario solo se accettiamo
                         }
@@ -343,10 +340,10 @@ void RiparaScooter(void)
                                 ScooterData.stato=100;
                                 Soldi-=costo;
                                 CalcolaVelocita(FALSE);
-                                #ifdef LOGGING
-                                    sprintf(tmp,"scooter: Paga riparazione (%s)",MostraSoldi(costo));
-                                    writelog(tmp);
-                                #endif
+                                if (logging) {
+                                    sprintf(log_buf,"scooter: Paga riparazione (%s)",MostraSoldi(costo));
+                                    writelog(log_buf);
+                                }
                             }
                             Evento();  //avanziamo il calendario solo se accettiamo
                         }
@@ -393,10 +390,10 @@ bool VendiScooter(void)
         ScooterData.stato = -1000;
         ScooterData.attivita = 0;
         Soldi += offerta;
-        #ifdef LOGGING
-            sprintf(tmp,"scooter: Vendi lo scooter per %s",MostraSoldi(offerta));
-            writelog(tmp);
-        #endif
+        if (logging) {
+            sprintf(log_buf,"scooter: Vendi lo scooter per %s",MostraSoldi(offerta));
+            writelog(log_buf);
+        }
         return TRUE;
     }
 return FALSE;

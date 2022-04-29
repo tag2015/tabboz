@@ -153,10 +153,10 @@ void Giorno(void)
             fl_message("Visto che sei stat%c %s brav%c dipendente sottomess%c, ora ti arriva il tuo misero stipendio di %s",ao, un_una, ao, ao, MostraSoldi(totale_stipendio));
             Soldi+=totale_stipendio;
 
-            #ifdef LOGGING
-                sprintf(tmp,"giorno: Stipendio (%s)",MostraSoldi(totale_stipendio));
-                writelog(tmp);
-            #endif
+            if(logging) {
+                sprintf(log_buf,"calendario: Stipendio (%s)",MostraSoldi(totale_stipendio));
+                writelog(log_buf);
+            }
         }
     }
 
@@ -168,10 +168,9 @@ void Giorno(void)
             fl_message("E' appena scaduto il tuo abbonamento della palestra...");
             scad_pal_giorno = 0;
             scad_pal_mese = 0;
-            #ifdef LOGGING
-                writelog("giorno: E' scaduto l'abbonamento alla palestra");
-            #endif
-            }
+            if(logging)
+                writelog("calendario: Scaduto abbonamento alla palestra");
+        }
 
 
     x_vacanza=0;     // 0 = giorno lavorativo
@@ -271,11 +270,15 @@ void Giorno(void)
     }
         
 
-    #ifdef LOGGING
+    #ifdef TABBOZ_DEBUG
         /* Mostra data e soldi */
-        sprintf(tmp, "giorno: %s %d %s, %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome,MostraSoldi(Soldi));
-        writelog(tmp);
+        sprintf(log_buf, "calendario: %s %d %s, %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome,MostraSoldi(Soldi));
+        writelog(log_buf);
     #endif
+
+    if(logging && x_giornoset==1) {
+        writelog("calendario: Nuova settimana...");  // se non debug, logghiamo solo l'inizio di ogni settimana...
+    }
 
     /* Aggiorna il calendario sulla finestra principale */
     if(win_principale) {   // Controlla che sia inizializzata altrimenti crasha tutto

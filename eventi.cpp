@@ -104,17 +104,16 @@ void Evento(void)
 
         if (Studio >= 45) {
             Soldi+=Paghetta;
-            #ifdef TABBOZ_DEBUG
-                sprintf(tmp,"eventi: Paghetta (%s)",MostraSoldi(Paghetta));
-                writelog(tmp);
-            #endif
+            if(logging) {
+                sprintf(log_buf,"eventi: Paghetta (%s)",MostraSoldi(Paghetta));
+                writelog(log_buf);
+            }
 
             if (Studio >= 80) {
                 if (sound_active) TabbozPlaySound(1100);
                 Soldi+=Paghetta;
-                #ifdef TABBOZ_DEBUG
+                if (logging)
                     writelog("eventi: Paghetta doppia !!!");
-                #endif
                 fl_message_title("Paghetta settimanale");
                 fl_message("Visto che vai bene a scuola, ti diamo il doppio della paghetta...");
             }
@@ -122,10 +121,10 @@ void Evento(void)
         } else {  // Studio < 45
             if (sound_active) TabbozPlaySound(1200);
             Soldi+=(Paghetta / 2);
-            #ifdef TABBOZ_DEBUG
-                sprintf(tmp,"eventi: Meta' paghetta (%s)...",MostraSoldi(Paghetta));
-                writelog(tmp);
-            #endif
+            if (logging) {
+                sprintf(log_buf,"eventi: Mezza paghetta (%s)...",MostraSoldi(Paghetta));
+                writelog(log_buf);
+            }
             fl_message_title("Paghetta settimanale");
             fl_message("Finchè non andrai bene a scuola, ti daremo solo metà della paghetta...");
         }
@@ -138,41 +137,39 @@ void Evento(void)
         i=rand() % 5 - 3;      // peggioramento random dei rapporti
         if (i > 0) {
             Rapporti--;
-            #ifdef LOGGING
-                sprintf(tmp,"Evento: Peggioramento random rapporti (-1) i=%d",i);
+            #ifdef TABBOZ_DEBUG
+                sprintf(tmp,"eventi: Peggioramento random rapporti (-1) i=%d",i);
                 writelog(tmp);
             #endif
         }
     }
 
-    if (Rapporti > 0)
-        if (Rapporti < 98) {
-            i=rand() % (((Rapporti + Fortuna + Fama )* 3) + 1);
-            if (i < 10) {                    /* da 1 a 10, la donna ti molla... */
-                if (sound_active) TabbozPlaySound(603);
-                Rapporti=0;
-                FigTipa=0;
-                if (sesso == 'M') {
-                    fl_message_title("La tipa ti molla...");
-                    fl_alert(StrEventi[MSG_TIPA+i]);  // 0<i<9, 10 possibili messaggi
-                
-                } else {
-                    fl_message_title("Vieni mollata...");
-                    fl_alert(StrEventi[MSG_TIPO+i]);  // 0<i<9, 10 possibili messaggi
+    if ((Rapporti > 0) && (Rapporti < 98)) {
+        i=rand() % (((Rapporti + Fortuna + Fama )* 3) + 1);
+        if (i < 10) {                    /* da 1 a 10, la donna ti molla... */
+            if (sound_active) TabbozPlaySound(603);
+            Rapporti=0;
+            FigTipa=0;
+            if (sesso == 'M') {
+                fl_message_title("La tipa ti molla...");
+                fl_alert(StrEventi[MSG_TIPA+i]);  // 0<i<9, 10 possibili messaggi
+            } else {
+                fl_message_title("Vieni mollata...");
+                fl_alert(StrEventi[MSG_TIPO+i]);  // 0<i<9, 10 possibili messaggi
             }
-            Reputazione-=(10 - i);    // quelle con numero piu' basso, sono peggiori...
-            if (Reputazione < 0) Reputazione = 0;
         }
+        Reputazione-=(10 - i);    // quelle con numero piu' basso, sono peggiori...
+        if (Reputazione < 0) Reputazione = 0;
     }
-
+    
 
 /* Lavoro ----------------------------------------------------------- */
     if (impegno > 3) {
         i= (rand() % 7) - 3;       // peggioramento random dell'impegno
         if (i > 0) {
             impegno--;
-            #ifdef LOGGING
-                sprintf(tmp,"Evento: Peggioramento random impegno (-1) i=%d",i);
+            #ifdef TABBOZ_DEBUG
+                sprintf(tmp,"eventi: Peggioramento random impegno (-1) i=%d",i);
                 writelog(tmp);
             #endif
         }
@@ -180,8 +177,8 @@ void Evento(void)
 
     if (numeroditta > 0) {
         i = rand() % (impegno * 2 + Fortuna * 3);
-        #ifdef LOGGING
-            sprintf(tmp,"Evento:Licenziamento random (se i<2) i=%d",i);
+        #ifdef TABBOZ_DEBUG
+            sprintf(tmp,"eventi: Licenziamento random (se i<2) i=%d",i);
             writelog(tmp);
         #endif
         if (i < 2) {           // perdi il lavoro
@@ -230,10 +227,10 @@ void Evento(void)
                     FinestraEvento(i,i,"Rissa con un metallaro",TRUE);  //metallari
                 else
                     FinestraEvento(i,i,"Rissa con un manovale",FALSE);  //manovale
-                #ifdef TABBOZ_DEBUG
-                    sprintf(tmp,"eventi: Metallaro n. %d",i);
-                    writelog(tmp);
-                #endif
+                if (logging) {
+                    sprintf(log_buf,"eventi: Rissa con metallaro/manovale n. %d",i);
+                    writelog(log_buf);
+                }
                 tempo_pestaggio=5;
                 break;;
 
@@ -262,17 +259,16 @@ void Evento(void)
                     if (caso < 15) {  // Camionista - ( caso 11-14) BUGFIX visto che danneggia + del muro, abbasssato di 2 i possibili casi
                         ScooterData.stato-=35;
                         FinestraEvento(6,6,"Fai incazzare un camionista",FALSE);  //camionista
-                        #ifdef TABBOZ_DEBUG
-                            writelog("eventi: Scooter - Camionista...");
-                        #endif
+                        if(logging)
+                            writelog("eventi: Scooter - Ciocco con camionista...");
                     
                     } else {  // Muro ! ( caso 15 - 20) -------------------
                         ScooterData.stato-=20;
                         FinestraEvento(7,7,"Incidente",FALSE);  //muro
-                        #ifdef TABBOZ_DEBUG
-                            writelog("eventi: Scooter - Muro...");
-                        #endif
+                        if(logging)
+                            writelog("eventi: Scooter - A muro...");
                     }
+
                     Reputazione-=2;
                     if (Reputazione < 0) Reputazione = 0;
                     if (ScooterData.stato <= 0) {
@@ -280,9 +276,8 @@ void Evento(void)
                         fl_alert("Quando ti rialzi ti accorgi che il tuo scooter è ormai ridotto ad un ammasso di rottami.");
                         ScooterData.stato = 0;
                         ScooterData.attivita=0;  //anziche azzerare lo scooter, lo incidentiamo
-                        #ifdef TABBOZ_DEBUG
-                            writelog("eventi: Lo scooter si e' completamente distrutto...");
-                        #endif
+                        if(logging)
+                            writelog("eventi: Scooter distrutto (stato <=0)");
                     }
                 }
                 break;;
@@ -304,9 +299,8 @@ void Evento(void)
             fl_alert(StrEventi[MSG_SFIGHE+(caso - 21)]);  // togliamo 21 da caso per renderlo 0-9
             Fama-=2;
             if (Fama < 0) Fama = 0;
-            #ifdef TABBOZ_DEBUG
+            if(logging)
                 writelog("eventi: Evento riguardante la figosita'...");
-            #endif
             break;;
 
 // -------------- Skuola --------------------------------------------------------------------------
@@ -332,9 +326,8 @@ void Evento(void)
                 MaterieMem[i].voto-=2;
                 if(MaterieMem[i].voto < 2) MaterieMem[i].voto=2;
                 CalcolaStudio();
-                #ifdef TABBOZ_DEBUG
-                    writelog("eventi: Evento riguardante la scuola");
-                #endif
+                if(logging)
+                    writelog("eventi: Evento riguardante la scuola...");
             }
             break;;
 
@@ -437,7 +430,7 @@ void Evento(void)
         case 47:
         case 48:
             #ifdef TABBOZ_DEBUG
-            writelog("eventi: Evento riguardante la tipa//o (da fare...)");
+                writelog("eventi: Evento riguardante la tipa/o (NON IMPLEMENTATO)");
             #endif
             break;;
 
@@ -450,9 +443,8 @@ void Evento(void)
                 if (CellularData.stato < 0 ) CellularData.stato=0;
                 fl_message_title("Telefonino");
                 fl_alert("Il telefonino ti cade di tasca e vola per terra...");
-                #ifdef TABBOZ_DEBUG
+                if(logging)
                     writelog("eventi: Telefonino - Cade...");
-                #endif
             }
             break;;
 
@@ -461,7 +453,6 @@ void Evento(void)
         }
     }
 #endif
-
 }
 
 
@@ -479,9 +470,8 @@ void EventiPalestra(void)
     if (Reputazione > 10)
         Reputazione-=4;
     
-    #ifdef TABBOZ_DEBUG
+    if (logging)
         writelog("eventi: Evento riguardante la palestra");
-    #endif
 }
 
 

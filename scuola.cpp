@@ -119,9 +119,9 @@ void CorrompiProf(int scelta)
         case 0: { // Si
                 if (Soldi >= i) {
                     Soldi-=i;
-                    #ifdef LOGGING
-                        sprintf(tmp,"scuola: Corrompi un professore per %s",MostraSoldi(i));
-                        writelog(tmp);
+                    #ifdef TABBOZ_DEBUG
+                        sprintf(log_buf,"scuola: Corrompi un professore per %s",MostraSoldi(i));
+                        writelog(log_buf);
                     #endif
                     MaterieMem[scelta].voto+=3;
                     if (MaterieMem[scelta].voto > 10 )
@@ -225,21 +225,20 @@ bool MostraPagella(void)
         pag_giudizio->copy_label(tmp);
 		pag_giudizio->labelcolor(FL_RED);
 		pag_btn->copy_label("Ma vaff...");
-		#ifdef TABBOZ_DEBUG
-        	writelog("giorno: Pagella... Bocciato !!!");
-        #endif
-		while(win_pagella->shown()) Fl::wait();   //attende chiusura
+		if(logging)
+        	writelog("calendario: Pagella... Bocciato !!!");
+        while(win_pagella->shown()) Fl::wait();   //attende chiusura
 		return FALSE;
-    } else {
+    
+	} else {
 		if (sound_active) TabbozPlaySound(1100);
         sprintf(tmp, "AMMESS%c",toupper(ao));        /* promosso/a */
         pag_giudizio->copy_label(tmp);
 		pag_giudizio->labelcolor(FL_BLACK);
 		pag_btn->copy_label("Vacanze!!!");
-		#ifdef TABBOZ_DEBUG
-        	writelog("giorno: Pagella... Promosso...");
-        #endif
-		while(win_pagella->shown()) Fl::wait();   //attende chiusura
+		if(logging)
+        	writelog("calendario: Pagella... Promosso...");
+        while(win_pagella->shown()) Fl::wait();   //attende chiusura
 		return TRUE;
 	}
 }

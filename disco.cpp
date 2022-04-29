@@ -99,10 +99,10 @@ void PagaDisco(int scelta)
         } else {
             if (sound_active) TabbozPlaySound(303 + rand() % 3);  // suoni: 0303 -> 0305
             Soldi-= prezzo;
-            #ifdef LOGGING
-                sprintf(tmp,"discoteca: Paga %s",MostraSoldi(DiscoMem[scelta].costo));
+            if(logging) {
+                sprintf(tmp,"discoteca: Paga ingresso %s",MostraSoldi(prezzo));
                 writelog(tmp);
-            #endif
+            }
             Fama+=DiscoMem[scelta].fama_inc;  //BUGFIX qui incrementava con la fama della disco anzichè il bonus
             Reputazione+=DiscoMem[scelta].rep_inc;
             if (Fama > 100) Fama=100;

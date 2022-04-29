@@ -93,7 +93,6 @@ void VaiInPalestra(void)
 void FaiLampada(void)
 {
     int     i;
-    char    tmp[128];
 
     if (PalestraMem[3].prezzo > Soldi) {
         nomoney(PALESTRA);
@@ -112,9 +111,9 @@ void FaiLampada(void)
         }
         if (sound_active) TabbozPlaySound(202);
         Soldi-=PalestraMem[3].prezzo;
-        #ifdef LOGGING
-            sprintf(tmp,"lampada: Paga %s",MostraSoldi(PalestraMem[3].prezzo));
-            writelog(tmp);
+        #ifdef TABBOZ_DEBUG
+            sprintf(log_buf,"palestra: Lampada - paga %s",MostraSoldi(PalestraMem[3].prezzo));
+            writelog(log_buf);
         #endif
     }
     i=rand() % (5 + Fortuna);
@@ -126,8 +125,6 @@ void FaiLampada(void)
 /* Per sottoscrivere un abbonamento alla palestra */
 void CompraAbbonamento(int scelta)
 {
-    char tmp[128];
-
     if (scad_pal_giorno > 0 ) {
         fl_message_title("Palestra");
         fl_message("Hai già un abbonamento, perchè te ne serve un altro ???");
@@ -138,10 +135,10 @@ void CompraAbbonamento(int scelta)
         return;
     } else {
         Soldi-= PalestraMem[scelta].prezzo;
-        #ifdef LOGGING
-            sprintf(tmp,"palestra: Paga %s",MostraSoldi(PalestraMem[scelta].prezzo));
-            writelog(tmp);
-        #endif
+        if(logging) {
+            sprintf(log_buf,"palestra: Nuovo abbonamento (Paga %s)",MostraSoldi(PalestraMem[scelta].prezzo));
+            writelog(log_buf);
+        }
         switch(scelta) {
             
             case 0: // UN MESE

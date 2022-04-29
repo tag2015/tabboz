@@ -119,10 +119,12 @@ int     sound_active;
 int     intro_active;       // Visualizza schermata introduttiva
 int     difficolta;
 char    tema_grafico[STR_MAX];
+int     logging;
 
 
-
-static  int  t_random;              // Attesa a random tra i vari eventi timer
+#ifndef NOTIMER
+    static  int  t_random;              // Attesa a random tra i vari eventi timer
+#endif
 
 static  char boolean_shutdown;
 
@@ -273,8 +275,6 @@ void ResetMe(int primavolta)
 
 static void InitTabboz(void)
 {
-    char tmp[128];
-    
     path_profilo[0]=0;
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
@@ -309,13 +309,16 @@ static void InitTabboz(void)
     fase_di_avvio=1;
     tempo_pestaggio=0;
     current_tipa=0;
+    logging=FALSE;
 
-    if (LOGGING) {
+    /* Se il debug è attivo, abilita sempre il logging... */
+    #ifdef TABBOZ_DEBUG
+        logging = TRUE;
         openlog();
-        sprintf(tmp,"tabboz: Starting Tabboz Simulator %s %s",VERSION,__DATE__);
-        writelog(tmp);
-    }
-  
+        sprintf(log_buf,"tabboz: Starting Tabboz Simulator %s %s",VERSION,__DATE__);
+        writelog(log_buf);
+    #endif
+    
     firsttime=0;
     CaricaTutto();
     #ifdef TABBOZ_WIN
@@ -504,6 +507,15 @@ static void CaricaTutto(void)
     TabbozProfilo.get("TemaGrafico",tema_grafico,"none",STR_MAX);
     Fl::scheme(tema_grafico);
 
+    #ifndef TABBOZ_DEBUG
+        TabbozProfilo.get("Logging",logging,FALSE);
+        if(logging <= 0)
+            logging=FALSE;
+        else
+            logging=TRUE;
+    #endif
+    if(logging) openlog();
+
     /* carica dati scooter */
     ScooterProfilo.get("ID",buf_i,0);
     ScooterData.id = new_check_i(buf_i);
@@ -572,11 +584,11 @@ static void CaricaTutto(void)
     if(CellularData.nome==0) CellularData.stato = -1;
 
     #ifdef TABBOZ_DEBUG
-        sprintf(buf_s,"tabboz: (R) new_counter %d", new_counter);
-        writelog(buf_s);
+        sprintf(log_buf,"tabboz: (R) new_counter %d", new_counter);
+        writelog(log_buf);
         TabbozProfilo.get("SoftCheck",buf_i,0);
-        sprintf(buf_s,"tabboz: (R) read_counter %d", buf_i );
-        writelog(buf_s);
+        sprintf(log_buf,"tabboz: (R) read_counter %d", buf_i );
+        writelog(log_buf);
         if(firsttime)
             writelog("firsttime=1, first run or empty savefile");
     #endif
@@ -615,13 +627,11 @@ static void CaricaTutto(void)
 //*******************************************************************
 void FineProgramma(char const *caller)
 {
-    char tmp[128];
-    Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
-    if(LOGGING) {
-        sprintf(tmp,"tabboz: FineProgramma chiamato da <%s>",caller);
-        writelog(tmp);
-    }
+    #ifdef TABBOZ_DEBUG
+        sprintf(log_buf,"tabboz: FineProgramma chiamato da <%s>",caller);
+        writelog(log_buf);
+    #endif
 
     SalvaTutto();
 }
@@ -697,6 +707,7 @@ static void SalvaTutto(void)
     TabbozProfilo.set("TimerActive", timer_active);
     TabbozProfilo.set("SoundActive", sound_active);
     TabbozProfilo.set("TemaGrafico", tema_grafico);
+    TabbozProfilo.set("Logging",logging);
 
     #ifndef NOTABBOZZA
         TabbozProfilo.set("Sesso", sesso);
@@ -729,8 +740,8 @@ static void SalvaTutto(void)
     TabbozProfilo.set("Version", VERSION);
 
 #ifdef TABBOZ_DEBUG
-    sprintf(tmp,"tabboz: (W) new_counter %d", new_counter);
-    writelog(tmp);
+    sprintf(log_buf,"tabboz: (W) new_counter %d", new_counter);
+    writelog(log_buf);
 #endif
 
 }
@@ -1833,10 +1844,11 @@ int main(int argc, char **argv)
     // }
 
     FineProgramma("main"); // Salvataggio partita...
-    if (LOGGING) {
+    #ifdef TABBOZ_DEBUG
         writelog("tabboz: end (standard exit)");
-        closelog();
-    }
+    #endif
+
+    closelog();
     return 0;
 }
 

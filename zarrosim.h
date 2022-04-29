@@ -22,10 +22,7 @@
 #define VERSION "NG-pre20220418"
 
 /* Per attivare il Debug... */
-#define TABBOZ_DEBUG 1
-
-/* Per attivare il logging */
-#define LOGGING 1
+//#define TABBOZ_DEBUG
 
 /* Per disattivare la possibilita' di giocare con la tabbozza */
 #define NOTABBOZZA
@@ -33,7 +30,10 @@
 /* Per disattivare gli eventi casuali (e gran parte del divertimento... da usare solo per debug) */
 //#define NORANDOM
 
-/* Abilita parti non più necessarie (e non compilabili) */
+/* Per disattivare il timer di avanzamento automatico */
+#define NOTIMER
+
+/* Per abilitare parti non più necessarie (e non compilabili) */
 // #define DEADCODE
 
 
@@ -196,6 +196,7 @@ extern  int       euro;               // Usa euro anzichè lire
 extern  int       difficolta;         // Livello difficoltà 1-5
 extern  int       timer_active;       // Timer avanzamento automatico
 extern  char      tema_grafico[];     // Nome tema grafico di FLTK
+extern  int       logging;            // Scrive eventi in file di log
 
 
 extern  void  AggiornaPrincipale();

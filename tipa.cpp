@@ -150,8 +150,6 @@ int DueDiPicche(void)
 /* Telefona tipa consumando credito del cell o soldi */
 void TelefonaTipa(void)
 {
-    char tmp[128];
-
     if (Rapporti <= 0)  {
         fl_message_title("Non sei molto intelligente...");
         if (sesso == 'M')
@@ -172,9 +170,9 @@ void TelefonaTipa(void)
             AbbonamentData.creditorest-=2;
         else
             Soldi-=5;
-        #ifdef LOGGING
-            sprintf(tmp,"tipa: Telefona alla tipa/o (%s)",MostraSoldi(5));
-            writelog(tmp);
+        #ifdef TABBOZ_DEBUG
+            sprintf(log_buf,"tipa: Telefona alla tipa/o (%s)",MostraSoldi(5));
+            writelog(log_buf);
         #endif
     }
     AggiornaTipa();
@@ -184,8 +182,6 @@ void TelefonaTipa(void)
 /* Esce con tipa se disponibile scooter e sufficienti soldi */
 void EsciConTipa(void)
 {
-    char tmp[128];
-
     if (Rapporti <= 0)  {
         fl_message_title("Non sei molto intelligente...");
         if (sesso == 'M')
@@ -238,9 +234,9 @@ void EsciConTipa(void)
     benzina-=3;
     if (benzina < 1) benzina = 0;
 
-    #ifdef LOGGING
-        sprintf(tmp,"tipa: Esci con la tipa/o (%s)",MostraSoldi(15));
-        writelog(tmp);
+    #ifdef TABBOZ_DEBUG
+        sprintf(log_buf,"tipa: Esci con la tipa/o (%s)",MostraSoldi(15));
+        writelog(log_buf);
     #endif
 
     CalcolaVelocita(FALSE);

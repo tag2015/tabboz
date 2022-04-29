@@ -25,6 +25,7 @@
 
 #include "zarrosim.h"
 #include "sound.h"
+#include "debug.h"
 
 #include "calendario.h"
 
@@ -97,6 +98,9 @@ bool CompraCellulare(int scelta)
     CellularData=CellularMem[scelta];
     Fama+=CellularMem[scelta].fama;
     if (Fama > 100) Fama=100;
+
+    if(logging)
+        writelog("telefono: Compra cellulare");
     return TRUE;
 }
 

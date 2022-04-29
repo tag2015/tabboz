@@ -23,7 +23,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "zarrosim.h"
+#include "debug.h"
+
 #include "sound.h"
+
 
 
 /* Inizia la riproduzione di un suono */
@@ -34,6 +38,10 @@ void TabbozPlaySound(int number)
     sprintf_s(filename, (sizeof(filename)/sizeof(char)), "tabs%04d.wav", number);
     #ifdef TABBOZ_WIN
         PlaySoundA(filename, NULL, SND_FILENAME | SND_ASYNC);
+        #ifdef TABBOZ_DEBUG
+            sprintf(log_buf,"Riproduci suono: %s",filename);
+            writelog(log_buf);
+        #endif
     #endif
 };
 
