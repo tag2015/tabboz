@@ -150,9 +150,17 @@ typedef struct tagSTVARIE {
   } STVARIE;
 
 
+/* Tipi di uscita dal gioco da usare nella gui */
+
+#define NOEXIT    0
+#define NEWGAME   1
+#define SAVEGAME  2
+
 /* PRIMA LE VARIABILI GENERIKE... */
 
 extern  int     cheat;
+extern  bool    firsttime;
+extern  int     chiusura;           // 0: Non uscire 1: Nuova partita 2: Salva ed esci
 extern  int     ImgSelector;
 
 /* DOPO LE CARATTERISTIKE... */
@@ -166,6 +174,7 @@ extern  char      Nome[30];         // Nome del Tabbozzo
 extern  char      Cognome[30];      // Cognome del Tabbozzo
 extern  int       comp_giorno;      // giorno del compleanno
 extern  int       comp_mese;        // mese del compleanno
+extern  char      City[50];         // città di nascita
 extern  char      Nometipa[30];     // Nome della tua tipa/o (se ce l'hai...)
 extern  int       FigTipa;          // Figosità tipa/o (1-100)
 extern  int       Rapporti;         // Stabilità relazione con tipa/o (1-100)
