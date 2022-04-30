@@ -41,6 +41,7 @@
 #include "tabboz.xpm"  // icona
 
 #include "gui/GUITabboz.h"
+#include "gui/GUIConfig.h"
 
 /* Header per toolkit FLTK */
 #include <FL/Fl.H>
@@ -68,9 +69,9 @@ static void     CaricaTutto(void);
 /* PRIMA LE VARIABILI GENERIKE... */
 
 int     cheat;
-int     firsttime;
+bool    firsttime;
+int     chiusura;
 int     fase_di_avvio;
-int     ImgSelector;
 
 /* DOPO LE CARATTERISTIKE... */
 
@@ -83,8 +84,8 @@ char    Nome[30];
 char    Cognome[30];
 int     comp_giorno;
 int     comp_mese;
-char    Nometipa[30];
 char    City[50];       // Citta' di nascita
+char    Nometipa[30];
 int     FigTipa;
 int     Rapporti;
 int     Stato;
@@ -123,8 +124,6 @@ int     logging;
 #ifndef NOTIMER
     static  int  t_random;              // Attesa a random tra i vari eventi timer
 #endif
-
-static  char boolean_shutdown;
 
 
 /* Calcola Sesso - Maschietto o Femminuccia */
@@ -172,10 +171,6 @@ void ResetMe(int primavolta)
     x_anno_bisesto =  0;
     x_vacanza      =  0;
 
-    comp_mese      = rand() % 12 + 1;
-    comp_giorno    = rand() % InfoMese[comp_mese-1].num_giorni + 1;
-
-
     if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
         difficolta          =  5;
         intro_active        =  1;
@@ -183,8 +178,11 @@ void ResetMe(int primavolta)
         sound_active        =  1;
         euro                =  0;
         sesso               = 'M';
+        comp_mese           = rand() % 12 + 1;
+        comp_giorno         = rand() % InfoMese[comp_mese-1].num_giorni + 1;
         strcpy(Nome,"TIZIO");
         strcpy(Cognome,"CAIO");
+        strcpy(City,"Milano");
         CalcolaSesso();
     }
 
@@ -193,11 +191,11 @@ void ResetMe(int primavolta)
         strcpy(Cognome,"In Particolare");
     }
 
-    sizze             =  0;
-    current_testa     =  0;
+    sizze              =  0;
+    current_testa      =  0;
     current_giubbotto  =  0;
-    current_pantaloni =  0;
-    current_scarpe    =  0;
+    current_pantaloni  =  0;
+    current_scarpe     =  0;
 
     ScooterData = ScooterMem[0];
 
@@ -267,7 +265,6 @@ void ResetMe(int primavolta)
 static void InitTabboz(void)
 {
     path_profilo[0]=0;
-    Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
 
     /* Carica immagini shared */
     fl_register_images();
@@ -290,12 +287,10 @@ static void InitTabboz(void)
     srand(time(NULL));
 
     /* Inizializza un po' di variabile... */
-    boolean_shutdown=0;               /* 0=resta dentro, 1=uscita, 2=shutdown */
+    chiusura=0;                       // 0=resta dentro, 1=resetta, 2=salva ed esci
 
     Fortuna=0;                        // Uguale a me...
-    ScooterData=ScooterMem[0];        // nessuno scooter
     AttesaSoldi=ATTESAMAX;            // attesa per avere soldi...
-    ImgSelector=0;                    // W l' arte di arrangiarsi... FIXME inutile
     timer_active=0;
     fase_di_avvio=1;
     tempo_pestaggio=0;
@@ -310,8 +305,8 @@ static void InitTabboz(void)
         writelog(log_buf);
     #endif
     
-    firsttime=0;
-    CaricaTutto();
+    firsttime=FALSE;
+
     #ifdef TABBOZ_WIN
         /* Parametro 'config' sulla linea di comando */
         //TAG2015 per ora commentiamo tutto sto pezzo ma è da controllare
@@ -405,7 +400,7 @@ static void CaricaTutto(void)
 
     TabbozProfilo.get("SoftCheck",buf_i,0);  // Consideriamo che se il checksum è a 0 è il primo avvio
     if(!buf_i)
-        firsttime=1;
+        firsttime=TRUE;
 
     /* Se non e' gia' settato,setta il compleanno (a caso) */
     TabbozProfilo.get("CompMese",comp_mese,0);
@@ -1800,37 +1795,39 @@ int main(int argc, char **argv)
     /* Inizializza il programma */
     InitTabboz();
 
+    /* Carica dati */
+    CaricaTutto();
+
     /* Finestra principale */
-    win_principale = GUITabboz();
-    win_principale->show(argc, argv);
-    Fl::run();
-
-    /* Chiusura */
-    //TAG2015 Lasciamo perdere lo shutdown per ora
-    // Nuova chiusura - 19 Giugno 1999, speriamo che ora non crashi piu'...
-    // if (boolean_shutdown == 2) {
-    //     FineProgramma("shutdown"); // Salvataggio partita...
-    //     #ifdef TABBOZ_DEBUG
-    //         if (debug_active) {
-    //             writelog("tabboz: end (exit + shutdown)");
-    //             closelog();
-    //         }
-    //     #endif
-    //     ExitWindows(0, 0);
-
-    // } else {
-    //     FineProgramma("main"); // Salvataggio partita...
-    //     #ifdef TABBOZ_DEBUG
-    //         if (debug_active) {
-    //             writelog("tabboz: end (standard exit)");
-    //             closelog();
-    //         }
-    //     #endif
-    // }
+    do {
+        win_principale = GUITabboz();
+        win_principale->position( (Fl::w() - win_principale->w() ) / 2, (Fl::h() - win_principale->h() ) / 2);   // centra finestra
+        win_principale->show(argc, argv);
+        if(firsttime) {
+            win_principale->hide();     //Al primo avvio, nascondiamo la principale e apriamo la finestra anagrafica
+            GUICartaID(TRUE);
+            win_cartaid->position( (Fl::w() - win_cartaid->w() ) / 2, (Fl::h() - win_cartaid->h() ) / 2);   // centra finestra
+            win_cartaid->show();
+            fl_message_title("A new tabboz is born");
+            fl_message("Benvenuto in Tabboz Simulator NG!\nIn questa finestra puoi personalizzare\nil personaggio (o accettare i valori di default...)");
+            while(win_cartaid->shown()) Fl::wait();
+            win_principale->show();
+        }
+        Fl::run();
+        if(chiusura == NEWGAME) {   // nuova partita (resetta e ricomincia)
+            #ifdef TABBOZ_DEBUG
+                writelog("tabboz: new game (reset)");
+            #endif
+            ResetMe(0);
+            firsttime = TRUE;
+            chiusura = NOEXIT;
+        }
+    }
+    while(chiusura != SAVEGAME);   // uscita normale (salva)
 
     FineProgramma("main"); // Salvataggio partita...
     #ifdef TABBOZ_DEBUG
-        writelog("tabboz: end (standard exit)");
+        writelog("tabboz: standard exit (save & quit)");
     #endif
 
     closelog();
