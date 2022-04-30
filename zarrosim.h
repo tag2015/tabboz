@@ -19,7 +19,7 @@
 */
 
 /* Versione gioco... */
-#define VERSION "NG-pre20220418"
+#define VERSION "NG-pre20220501"
 
 /* Per attivare il Debug... */
 #define TABBOZ_DEBUG
@@ -81,7 +81,6 @@
 #endif
 
 /* DIALOG (identificativi finestre, molti non usati) */
-
 #define MAIN            1
 #define ABOUT           2
 #define WARNING         3
@@ -126,11 +125,16 @@
 #define CELLULRABBONAM  123
 
 
-// Attesa per soldi dai genitori (1 settimana)
+/* Attesa per soldi dai genitori (1 settimana) */
 #define ATTESAMAX         6
 
-// Lunghezza stringhe massima
+/* Lunghezza stringhe massima */
 #define STR_MAX          80
+
+/* Tipi di uscita dal gioco da usare nella gui */
+#define NOEXIT    0
+#define NEWGAME   1
+#define SAVEGAME  2
 
 //typedef unsigned long   u_long;
 
@@ -150,21 +154,13 @@ typedef struct tagSTVARIE {
   } STVARIE;
 
 
-/* Tipi di uscita dal gioco da usare nella gui */
-
-#define NOEXIT    0
-#define NEWGAME   1
-#define SAVEGAME  2
-
-/* PRIMA LE VARIABILI GENERIKE... */
-
-extern  int     cheat;
-extern  bool    firsttime;
+/* Variabili generiche */
+extern  int     cheat;              // NON USATO
+extern  bool    firsttime;          // 0: File profilo presente 1: Primo avvio o nuova partita
 extern  int     chiusura;           // 0: Non uscire 1: Nuova partita 2: Salva ed esci
-extern  int     ImgSelector;
 
-/* DOPO LE CARATTERISTIKE... */
 
+/* Caratteristiche tabbozzo */
 extern  int       Fama;             // Figosità (1-100)
 extern  int       Reputazione;      // Reputazione (1-100)
 extern  int       Studio;           // Quanto vai bene a scuola (1 - 100)
@@ -203,14 +199,12 @@ extern  int       sizze;              // Numero di sigarette
 extern  int       sound_active;       // Abilita i suoni
 extern  int       euro;               // Usa euro anzichè lire
 extern  int       difficolta;         // Livello difficoltà 1-5
-extern  int       timer_active;       // Timer avanzamento automatico
+extern  int       timer_active;       // Abilita il timer
 extern  char      tema_grafico[];     // Nome tema grafico di FLTK
 extern  int       logging;            // Scrive eventi in file di log
 
 
-extern  void  AggiornaPrincipale();
-extern  void  FineProgramma(char const *caller);
-
+extern  void  AggiornaPrincipale(void);
 extern  void  CalcolaStudio(void);
 extern  char  *MostraSoldi(int i);
 extern  void  nomoney(int tipo);
