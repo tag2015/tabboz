@@ -59,27 +59,46 @@ decl {int scelta_gui;} {public local
 decl {bool debug_gui;} {public local
 }
 
+decl {bool tabbozza_gui;} {public local
+}
+
 decl {bool timer_gui;} {public local
 }
 
-Function {InitVars()} {private
+Function {InitVars()} {open private
 } {
   code {\#ifdef TABBOZ_DEBUG
   debug_gui = TRUE;
 \#endif
 \#ifdef NOTIMER
   timer_gui = FALSE;
-\#endif} {}
+\#endif
+\#ifdef NOTABBOZZA
+  tabbozza_gui = FALSE;
+\#endif} {selected
+  }
 }
 
 Function {GUITabboz()} {open
 } {
   Fl_Window win_principale {
     label {Tabboz Simulator Next Generation!}
-    callback {fl_message_title("Uscita");
-if(fl_choice("Vuoi uscire dal magico mondo del tabbozzo\\ne tornare alla Realtà?","Non ancora","Sì",0))
-  o->hide();} open selected
-    xywh {713 357 475 470} type Double align 5
+    callback {if(chiusura != NEWGAME) {
+  fl_message_title("Uscita");
+  if(fl_choice("Vuoi uscire dal magico mondo del tabbozzo\\ne tornare alla Realtà?","Non ancora","Sì",0)){
+    chiusura = SAVEGAME;
+    o->hide();
+  }
+  else
+    chiusura = NOEXIT;
+} else {
+  fl_message_title("Nuova partita");
+  if(fl_choice("Vuoi sopprimere questo tabbozzo e ricominciare?","No!","Sì",0))
+    o->hide();
+  else
+    chiusura = NOEXIT;
+}} open
+    xywh {508 412 475 470} type Double align 5
     code0 {AggiornaPrincipale();}
     code1 {InitVars();}
     code2 {if(!debug_gui) main_grp_debug->hide();} size_range {475 470 475 470} visible
@@ -93,11 +112,14 @@ if(fl_choice("Vuoi uscire dal magico mondo del tabbozzo\\ne tornare alla Realtà
       } {
         MenuItem {} {
           label {Nuova partita}
+          callback {chiusura = NEWGAME;
+win_principale->do_callback();}
           xywh {5 5 100 20} labelsize 12
         }
         MenuItem {} {
           label {Salva ed esci}
-          callback {win_principale->do_callback();}
+          callback {chiusura = SAVEGAME;
+win_principale->do_callback();}
           xywh {5 5 100 20} labelsize 12
         }
       }
@@ -301,7 +323,7 @@ o->value(MEDIAVOTI(Studio,N_MATERIE));}
     Fl_Box main_fig_testa {
       xywh {42 56 60 65}
     }
-    Fl_Group main_grp_debug {open
+    Fl_Group main_grp_debug {
       xywh {335 35 100 20}
     } {
       Fl_Button {} {
@@ -325,7 +347,7 @@ main_valbox_soldi->value(CALCSOLDI(Soldi));}
       }
     }
     Fl_Group main_grp_scooter {
-      label Scooter open
+      label Scooter
       xywh {160 290 305 35} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
     } {
       Fl_Output main_txtbox_scooter {

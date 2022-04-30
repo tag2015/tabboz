@@ -20,6 +20,7 @@
 #include "GUITestbed.h"
 int scelta_gui; 
 bool debug_gui; 
+bool tabbozza_gui; 
 bool timer_gui; 
 
 static void InitVars() {
@@ -29,18 +30,39 @@ static void InitVars() {
   #ifdef NOTIMER
     timer_gui = FALSE;
   #endif
+  #ifdef NOTABBOZZA
+    tabbozza_gui = FALSE;
+  #endif
 }
 
 Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
 
 static void cb_win_principale(Fl_Double_Window* o, void*) {
+  if(chiusura != NEWGAME) {
   fl_message_title("Uscita");
-if(fl_choice("Vuoi uscire dal magico mondo del tabbozzo\ne tornare alla Realtà?","Non ancora","Sì",0))
-  o->hide();
+  if(fl_choice("Vuoi uscire dal magico mondo del tabbozzo\ne tornare alla Realtà?","Non ancora","Sì",0)){
+    chiusura = SAVEGAME;
+    o->hide();
+  }
+  else
+    chiusura = NOEXIT;
+} else {
+  fl_message_title("Nuova partita");
+  if(fl_choice("Vuoi sopprimere questo tabbozzo e ricominciare?","No!","Sì",0))
+    o->hide();
+  else
+    chiusura = NOEXIT;
+};
+}
+
+static void cb_Nuova(Fl_Menu_*, void*) {
+  chiusura = NEWGAME;
+win_principale->do_callback();
 }
 
 static void cb_Salva(Fl_Menu_*, void*) {
-  win_principale->do_callback();
+  chiusura = SAVEGAME;
+win_principale->do_callback();
 }
 
 static void cb_Opzioni(Fl_Menu_*, void*) {
@@ -55,7 +77,7 @@ win_about->show();
 
 Fl_Menu_Item menu_[] = {
  {"Gioco", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
- {"Nuova partita", 0,  0, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {"Nuova partita", 0,  (Fl_Callback*)cb_Nuova, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
  {"Salva ed esci", 0,  (Fl_Callback*)cb_Salva, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
  {0,0,0,0,0,0,0,0,0},
  {"Varie", 0,  0, 0, 64, (uchar)FL_NORMAL_LABEL, 0, 12, 0},

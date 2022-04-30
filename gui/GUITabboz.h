@@ -5,6 +5,7 @@
 #include <FL/Fl.H>
 extern int scelta_gui; 
 extern bool debug_gui; 
+extern bool tabbozza_gui; 
 extern bool timer_gui; 
 #include <FL/Fl_Double_Window.H>
 extern Fl_Double_Window *win_principale;
