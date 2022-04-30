@@ -292,6 +292,8 @@ Fl_Menu_Item menu_cid_in_mcomp[] = {
 
 Fl_Output *cid_out_mcomp=(Fl_Output *)0;
 
+Fl_Input *cid_in_city=(Fl_Input *)0;
+
 #include <FL/Fl_Image.H>
 static const unsigned char idata_milano[] =
 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -648,7 +650,14 @@ static Fl_Image *image_milano() {
 }
 
 static void cb_OK2(Fl_Button*, void*) {
-  win_principale->activate();
+  strcpy(Cognome,cid_in_cognome->value());
+strcpy(Nome,cid_in_nome->value());
+strcpy(City,cid_in_city->value());
+comp_giorno = cid_in_gcomp->value();
+comp_mese = cid_in_mcomp->value()+1;
+
+main_box_nome->copy_label(Nome);
+win_principale->activate();
 win_cartaid->hide();
 }
 
@@ -693,6 +702,7 @@ Fl_Double_Window* GUICartaID(bool avvio) {
         cid_in_sesso->textfont(5);
         cid_in_sesso->menu(menu_cid_in_sesso);
         if(!avvio) o->hide();
+        if(!tabbozza_gui) o->deactivate();
       } // Fl_Choice* cid_in_sesso
       { Fl_Value_Output* o = cid_out_gcomp = new Fl_Value_Output(90, 115, 45, 25, "Nato il ");
         cid_out_gcomp->box(FL_FLAT_BOX);
@@ -720,7 +730,7 @@ Fl_Double_Window* GUICartaID(bool avvio) {
         cid_in_mcomp->textfont(5);
         cid_in_mcomp->menu(menu_cid_in_mcomp);
         if(!avvio) o->hide();
-        o->value(comp_mese);
+        o->value(comp_mese-1);
       } // Fl_Choice* cid_in_mcomp
       { Fl_Output* o = cid_out_mcomp = new Fl_Output(145, 115, 105, 25);
         cid_out_mcomp->box(FL_FLAT_BOX);
@@ -733,12 +743,13 @@ Fl_Double_Window* GUICartaID(bool avvio) {
         o->clear_visible_focus();
         o->value(InfoMese[comp_mese-1].nome);
       } // Fl_Output* cid_out_mcomp
-      { Fl_Input* o = new Fl_Input(90, 145, 160, 25, "a ");
-        o->labelfont(2);
-        o->labelsize(12);
-        o->textfont(5);
+      { Fl_Input* o = cid_in_city = new Fl_Input(90, 145, 160, 25, "a ");
+        cid_in_city->labelfont(2);
+        cid_in_city->labelsize(12);
+        cid_in_city->textfont(5);
         if(!avvio){ o->clear_visible_focus(); o->box(FL_FLAT_BOX);}
-      } // Fl_Input* o
+        o->value(City);
+      } // Fl_Input* cid_in_city
       { Fl_Output* o = new Fl_Output(90, 185, 160, 25, "Residenza  ");
         o->box(FL_FLAT_BOX);
         o->labelfont(2);
@@ -792,6 +803,7 @@ Fl_Double_Window* GUICartaID(bool avvio) {
         o->callback((Fl_Callback*)cb_OK2);
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(355, 260, 70, 25, "Random");
+        o->deactivate();
         if(!avvio) o->hide();
       } // Fl_Button* o
       o->end();

@@ -50,11 +50,11 @@ decl {int diff_nuova;} {private global
 Function {GUIConfig()} {} {
   Fl_Window win_config {
     label Configurazione
-    xywh {57 674 505 215} type Double hide hotspot
-    code0 {tema_corr = Fl::scheme();} modal size_range {505 215 505 215}
+    xywh {57 674 505 215} type Double hotspot
+    code0 {tema_corr = Fl::scheme();} modal size_range {505 215 505 215} visible
   } {
     Fl_Group {} {
-      label {Difficoltà}
+      label {Difficoltà} open
       tooltip {Difficoltà inferiori riducono la probabilità
  di essere lasciato/licenziato e la
 frequenza degli eventi casuali} xywh {10 25 240 145} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
@@ -191,7 +191,8 @@ win_about->show();}
   }
 }
 
-Function {GUIAbout()} {} {
+Function {GUIAbout()} {open
+} {
   Fl_Window win_about {
     label {A proposito di Tabboz Simulator NG}
     xywh {617 408 405 195} type Double hide hotspot modal size_range {405 195 405 195}
@@ -231,7 +232,7 @@ Function {GUICartaID(bool avvio)} {open
 Fl_Shared_Image *sh_img = Fl_Shared_Image::get("foto.png");} {}
   Fl_Window win_cartaid {
     label {Carta d'Identità} open
-    xywh {233 508 520 295} type Double hotspot modal size_range {520 295 520 295} visible
+    xywh {520 472 520 295} type Double hotspot modal size_range {520 295 520 295} visible
   } {
     Fl_Group {} {open
       xywh {5 5 255 285} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
@@ -256,9 +257,10 @@ Fl_Shared_Image *sh_img = Fl_Shared_Image::get("foto.png");} {}
         code2 {if(sesso=='M') o->value("M"); else o->value("F");}
       }
       Fl_Choice cid_in_sesso {
-        label {Sesso }
+        label {Sesso } selected
         xywh {90 80 45 25} down_box BORDER_BOX labelfont 2 labelsize 12 textfont 5
         code0 {if(!avvio) o->hide();}
+        code1 {if(!tabbozza_gui) o->deactivate();}
       } {
         MenuItem {} {
           label M
@@ -285,7 +287,7 @@ Fl_Shared_Image *sh_img = Fl_Shared_Image::get("foto.png");} {}
         label Mese
         xywh {145 115 105 25} down_box BORDER_BOX labeltype NO_LABEL textfont 5
         code0 {if(!avvio) o->hide();}
-        code1 {o->value(comp_mese);}
+        code1 {o->value(comp_mese-1);}
       } {
         MenuItem {} {
           label GENNAIO
@@ -342,10 +344,11 @@ Fl_Shared_Image *sh_img = Fl_Shared_Image::get("foto.png");} {}
         code1 {o->clear_visible_focus();}
         code2 {o->value(InfoMese[comp_mese-1].nome);}
       }
-      Fl_Input {} {
+      Fl_Input cid_in_city {
         label {a }
         xywh {90 145 160 25} labelfont 2 labelsize 12 textfont 5
         code0 {if(!avvio){ o->clear_visible_focus(); o->box(FL_FLAT_BOX);}}
+        code1 {o->value(City);}
       }
       Fl_Output {} {
         label {Residenza  }
@@ -371,7 +374,7 @@ Fl_Shared_Image *sh_img = Fl_Shared_Image::get("foto.png");} {}
     Fl_Group {} {open
       xywh {260 5 255 285} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
     } {
-      Fl_Box {} {selected
+      Fl_Box {} {
         xywh {325 15 125 125} box SHADOW_BOX color 7
         code0 {o->image(sh_img);}
       }
@@ -388,13 +391,20 @@ Fl_Shared_Image *sh_img = Fl_Shared_Image::get("foto.png");} {}
       }
       Fl_Button {} {
         label OK
-        callback {win_principale->activate();
+        callback {strcpy(Cognome,cid_in_cognome->value());
+strcpy(Nome,cid_in_nome->value());
+strcpy(City,cid_in_city->value());
+comp_giorno = cid_in_gcomp->value();
+comp_mese = cid_in_mcomp->value()+1;
+
+main_box_nome->copy_label(Nome);
+win_principale->activate();
 win_cartaid->hide();}
         xywh {440 260 70 25}
       }
       Fl_Button {} {
         label Random
-        xywh {355 260 70 25}
+        xywh {355 260 70 25} deactivate
         code0 {if(!avvio) o->hide();}
       }
     }

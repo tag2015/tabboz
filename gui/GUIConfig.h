@@ -32,6 +32,7 @@ extern Fl_Value_Output *cid_out_gcomp;
 extern Fl_Spinner *cid_in_gcomp;
 extern Fl_Choice *cid_in_mcomp;
 extern Fl_Output *cid_out_mcomp;
+extern Fl_Input *cid_in_city;
 Fl_Double_Window* GUICartaID(bool avvio);
 extern Fl_Menu_Item menu_cid_in_sesso[];
 extern Fl_Menu_Item menu_cid_in_mcomp[];
