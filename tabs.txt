@@ -1,0 +1,36 @@
+Elenco suoni (tabs####.wav)
+
+0000 Generali: Intro
+0001 Generali: Ha-Ha
+0101 Meccanico: ?
+0102 Meccanico: Ripara
+0201 Palestra: Pesi
+0202 Palestra: Lampada
+0203 Negozi: Tabacchi
+0204 Negozi: Vestiti M
+0205 Negozi: Vestiti F
+0302 Disco: Rimbalzato
+0303 Disco: Techno1
+0304 Disco: Techno2
+0305 Disco: Techno3
+0400 Scuola: Promosso (Alleluia)
+0401 Scuola: Bocciato (Fail)
+0402 Scuola: Prof (minaccia)
+0501 Lavoro: Cantiere
+0502 Lavoro: Scioperanti
+0503 Lavoro: Lecchino
+0504 Lavoro: Non assunto
+0505 Lavoro: Assunto (tada)
+0602 Tipa: Telefono
+0603 Tipa: 2 picche (schiaffo)
+0604 Tipa: Palpata (porco)
+0701 Compagnia: Scooter
+0801 Famiglia: Chiedi soldi (no!)
+0900 Eventi: Mollato (schiaffo)
+1200 Eventi: Mezza paghetta (uff)
+1201 Eventi: Doppia paghetta (tada)
+1300 Eventi: Manovale?
+1400 Eventi: Metallaro (pugno)
+1401 Eventi: Scooter (ciocco)
+1500 ? (cesso)
+1501 ? (telefono occupato)
