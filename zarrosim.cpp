@@ -54,6 +54,7 @@
 #include <FL/Fl_Pixmap.H>
 
 
+
 /* Variabili generiche */
 int     cheat;
 bool    firsttime;
@@ -115,19 +116,91 @@ static const char *file_profilo = "TabbozNG";
 char              path_profilo[STR_MAX]="dummy.tbz";  // FIXME Path e file dove salvare (per ora non usato)
 
 
-int vvc(int i);
+static void    InitTabboz(void);
+static void    ResetMe(int);
+static void    SalvaTutto(void);
+static void    CaricaTutto(void);
+int            vvc(int i);
 
-static void     CalcolaSesso(void);
 
-static void     InitTabboz(void);
-static void     ResetMe(int);
-static void     SalvaTutto(void);
-static void     CaricaTutto(void);
 
+/* Aggiorna Finestra Principale */
+void AggiornaPrincipale(void)
+{
+    char tmp[128];
+     
+    sprintf(tmp, "  %s %d %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome);  // Calendario
+    main_box_giorno->copy_label(tmp);
+    main_valbox_rep->value(Reputazione);
+    main_valbox_fama->value(Fama);
+    main_valbox_studio->precision(1);
+    main_valbox_studio->value(MEDIAVOTI(Studio,N_MATERIE));
+    if(Rapporti) {
+        main_txtbox_tipa->value(Nometipa);
+        main_valbox_rapporti->value(Rapporti);
+        main_valbox_rapporti->activate();
+    }
+    else {
+        main_txtbox_tipa->value("Nessuna...");
+        main_valbox_rapporti->deactivate();
+    }
+    if(euro) {
+        main_valbox_soldi->label("€");
+        main_valbox_paghetta->label("Paghetta  €");
+        main_valbox_stipendio->label("Stipendio  €");
+    } else {
+        main_valbox_soldi->label("L.");
+        main_valbox_paghetta->label("Paghetta  L.");
+        main_valbox_stipendio->label("Stipendio  L.");
+    }
+    main_valbox_soldi->value(CALCSOLDI(Soldi));
+    main_valbox_paghetta->value(CALCSOLDI(Paghetta));
+    main_valbox_stipendio->value(CALCSOLDI(stipendio));
+    if(stipendio)
+        main_valbox_stipendio->activate();
+    else
+        main_valbox_stipendio->deactivate();
+    main_fig_scarpe->image(ImgScarpe[current_scarpe]);   // Disegna immagine del tabbozzo/a
+    main_fig_panta->image(ImgPantaloni[current_pantaloni]);
+    main_fig_giub->image(ImgGiubbotto[current_giubbotto]);
+    main_fig_testa->image(ImgTesta[current_testa]);
+
+    if(ScooterData.stato!=-1000) {
+        main_valbox_scooterstato->activate();
+        if(ScooterData.attivita == 1)
+            sprintf(tmp,"%s (in uso)",ScooterData.nome);
+        else
+            sprintf(tmp,"%s (%s)",ScooterData.nome,n_attivita[ScooterData.attivita]);
+        main_txtbox_scooter->value(tmp);
+        main_valbox_scooterstato->value(ScooterData.stato);
+    } else {
+        main_txtbox_scooter->value("--");
+        main_valbox_scooterstato->value(0);
+        main_valbox_scooterstato->deactivate();
+    }
+    win_principale->redraw();
+}
+
+
+/* Calcola parametro "Studio" sommando i voti di tutte le materie
+* moltiplicando x 10 e dividendo per n.ro materie */
+void CalcolaStudio(void)
+{
+    int i,i2;
+    div_t x;
+
+    i2=0;
+    for (i=1;i<10;i++)
+        i2+=MaterieMem[i].voto;
+
+    i2=i2*10;
+    x = div(i2,9);
+    Studio=x.quot;
+}
 
 
 /* Calcola Sesso - Maschietto o Femminuccia */
-static void CalcolaSesso(void)
+void CalcolaSesso(void)
 {
     if ( sesso == 'M' ) {
         ao='o';
@@ -139,125 +212,117 @@ static void CalcolaSesso(void)
 }
 
 
-/* ResetMe - Reset del Tabboz Simulator */
-static void ResetMe(int primavolta)
+/* Converte la variabile soldi (in "millini") in stringa aggiungendo zeri
+*  se è abilitato l'euro, semplicemente divide per 2 */
+char *MostraSoldi(int i)
 {
+    static char tmp[128];
 
-    Soldi             =   10;
-    Paghetta          =   30;
-    Reputazione       =    0;
-    Fama              =    0;
-    Rapporti          =    0;
-    Stato             =  100;
-    impegno           =    0;
-    giorni_di_lavoro  =    0;
-    numeroditta       =    0;
-    stipendio         =    0;
-    AttesaSoldi       =  ATTESAMAX;
-    scad_pal_giorno   =    0;
-    scad_pal_mese     =    0;
+    if (euro)
+        sprintf(tmp, "%d €", (i / 2) );
+    else if (i == 0)
+            sprintf(tmp, "0 L.");
+        else
+            sprintf(tmp, "%d000 L.", i);
 
-    Nometipa[0] =   0;
-    FigTipa     =   0;
-
-    for (int i=1;i<10;i++)
-        MaterieMem[i].voto=2;   //BUGFIX partiamo dalla media del 2
-
-    CalcolaStudio();
-
-    x_mese         =  9;
-    x_giorno       = 30;
-    x_giornoset    =  1;
-    x_anno_bisesto =  0;
-    x_vacanza      =  0;
-
-    if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
-        difficolta          =  5;
-        intro_active        =  1;
-        timer_active        =  0;
-        sound_active        =  1;
-        euro                =  0;
-        sesso               = 'M';
-        comp_mese           = rand() % 12 + 1;
-        comp_giorno         = rand() % InfoMese[comp_mese-1].num_giorni + 1;
-        strcpy(Nome,"TIZIO");
-        strcpy(Cognome,"CAIO");
-        strcpy(City,"Milano");
-        CalcolaSesso();
-    }
-
-    if (sesso == 'F') {
-        strcpy(Nome,"Nessuna");
-        strcpy(Cognome,"In Particolare");
-    }
-
-    sizze              =  0;
-    current_testa      =  0;
-    current_giubbotto  =  0;
-    current_pantaloni  =  0;
-    current_scarpe     =  0;
-
-    ScooterData = ScooterMem[0];
-
-    AbbonamentData.creditorest = -1;
-    CellularData.stato         = -1;
-
+    return tmp;
 }
 
 
-//*******************************************************************
-// Formattazione iniziale Tabbozzo (scelta sesso, nome...) 14-01-2000
-//*******************************************************************
-//TAG2015 Questa routine usa una finestra simile al format di windows x creare un nuovo tabbozzo/a
-//TAG2015 carino esteticamente ma sarebbe meglio creare una specie di wizard x scegliere nome cognome
-//TAG2015 compleanno (non random) sesso residenza e le opzioni (difficolta suono etc)
-// #pragma argsused
-// BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//     static char tmpsesso;
+/* Routine che gestisce diverse situazioni quando i soldi sono < di quelli richiesti */
+void nomoney(int tipo)
+{
+    switch (tipo) {
+        
+        case DISCO:
+            fl_message_title("Bella figura");
+            fl_alert("Appena entrat%c ti accorgi di non avere abbastanza soldi per pagare il biglietto.\nUn energumeno buttafuori ti deposita gentilmente in un cassonetto della spazzatura poco distante dalla discoteca.",ao);
+            if (Reputazione > 3 )
+                Reputazione--;
+            break;;
+        
+        case VESTITI:
+            fl_message_title("Bella figura");
+            fl_alert("Con cosa avresti intenzione di pagare, stronzett%c ???\nCaramelle ???",ao);
+            if (Fama > 12 )
+                Fama-=3;
+            if (Reputazione > 4 )
+                Reputazione-=2;
+            break;;
 
-//     if (message == WM_INITDIALOG) {
-//         if (firsttime == 1) EnableWindow( GetDlgItem(hDlg,2), 0);
+        case PALESTRA:
+            if (sesso == 'M') {
+                fl_message_title("Non hai abbastanza soldi...");
+                fl_alert("L'enorme istruttore di bodybulding ultra-palestrato ti suona come una zampogna\ne ti scaraventa fuori dalla palestra.");
+            } else {
+                fl_message_title("Non hai abbastanza soldi...");
+                fl_alert("L'enorme istruttore di bodybulding ultra-palestrato ti scaraventa fuori dalla palestra.");
+            }
+            if (Fama > 14 )
+                Fama-=4;
+            if (Reputazione > 18 )
+                Reputazione-=4;
+            break;;
+        
+        case SCOOTER:
+            if (sesso == 'M') {
+                fl_message_title("Non hai abbastanza soldi...");
+                fl_alert("L'enorme meccanico ti afferra con una sola mano, ti riempe di pugni,\ne non esita a scaraventare te ed il tuo motorino fuori dall'officina.");
+                if (Reputazione > 7 )
+                    Reputazione-=5;
+                if (ScooterData.stato > 7 )
+                    ScooterData.stato-=5;
+            } else {
+                fl_message_title("Non hai abbastanza soldi...");
+                fl_alert("Con un sonoro calcio nel culo, vieni buttata fuori dall'officina.");
+                if (Reputazione > 6 )
+                    Reputazione-=4;
+                if (Fama > 3 )
+                    Fama-=2;
+            }
+            break;;
+        
+        case TABACCAIO:
+            fl_message_title("Non hai abbastanza soldi...");
+            fl_alert("Fai fuori dal mio locale, brut%c pezzente!\nEsclama il tabaccaio con un AK 47 in mano...",ao);
+            if (Fama > 2)
+                Fama-=1;
+            break;;
+    
+        case CELLULRABBONAM:
+            fl_message_title("Non hai abbastanza soldi...");
+            fl_alert("Forse non ti sei accorto di non avere abbastanza soldi, stronzett%c...",ao);
+            if (Fama > 2)
+                Fama-=1;
+            break;
+    }
+}
 
-//         SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, TRUE, 0L);
-//         if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
 
-//         //sprintf(buf,"prova");
-//         //SendMessage(GetDlgItem(hDlg, 110), CB_ADDSTRING, 0, t);
+/* Legge il valore settato di difficolta e modifica i valori correlati */
+void  ApplicaDifficolta(void)
+{
+    switch(difficolta) {
+        case 1:     // per ora l'unico parametro influenzato è la fortuna
+                Fortuna = 20;
+                break;
+        case 2:
+                Fortuna = 15;
+                break;
+        case 3:
+                Fortuna = 10;
+                break;
+        case 4:
+                Fortuna = 5;
+                break;
+        case 5:
+                Fortuna = 0;
+    }
+}
 
-//         return(TRUE);
-//         }
 
-//     if (message == WM_COMMAND) {
-//         switch (LOWORD(wParam))    {
-//             case 100: tmpsesso = 'M';
-//                       break;
-//             case 101: tmpsesso = 'F';
-//                       break;
-//             case 102: if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
-//                       break;
-//             case IDOK:
-//                       ResetMe(0);
-//                       sesso=tmpsesso;
-//                       CalcolaSesso();
-//                       EndDialog(hDlg, TRUE);
-//                       return(TRUE);
-//             case IDCANCEL:
-//                            if (firsttime == 1) {
-//                                sesso=tmpsesso;
-//                                CalcolaSesso();
-//                                EndDialog(hDlg, TRUE);
-//                            }
-//                            EndDialog(hDlg, TRUE);
-//                            return(TRUE);
 
-//             default: return(TRUE);
-//         }
-//     }
-
-//     return(FALSE);
-// }
-
+/****************** PROCEDURE LOCALI *******************/
 
 /* Inizializza grafica e parametri di base */
 static void InitTabboz(void)
@@ -325,6 +390,72 @@ static void InitTabboz(void)
         //     FreeProcInstance(lpproc);
         // }
     #endif
+}
+
+
+/* ResetMe - Reset del Tabboz Simulator */
+static void ResetMe(int primavolta)
+{
+
+    Soldi             =   10;
+    Paghetta          =   30;
+    Reputazione       =    0;
+    Fama              =    0;
+    Rapporti          =    0;
+    Stato             =  100;
+    impegno           =    0;
+    giorni_di_lavoro  =    0;
+    numeroditta       =    0;
+    stipendio         =    0;
+    AttesaSoldi       =  ATTESAMAX;
+    scad_pal_giorno   =    0;
+    scad_pal_mese     =    0;
+
+    Nometipa[0] =   0;
+    FigTipa     =   0;
+
+    for (int i=1;i<10;i++)
+        MaterieMem[i].voto=2;   //BUGFIX partiamo dalla media del 2
+
+    CalcolaStudio();
+
+    x_mese         =  9;
+    x_giorno       = 30;
+    x_giornoset    =  1;
+    x_anno_bisesto =  0;
+    x_vacanza      =  0;
+
+    if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
+        difficolta          =  5;
+        intro_active        =  1;
+        timer_active        =  0;
+        sound_active        =  1;
+        euro                =  0;
+        sesso               = 'M';
+        comp_mese           = rand() % 12 + 1;
+        comp_giorno         = rand() % InfoMese[comp_mese-1].num_giorni + 1;
+        strcpy(Nome,"TIZIO");
+        strcpy(Cognome,"CAIO");
+        strcpy(City,"Milano");
+        CalcolaSesso();
+    }
+
+    if (sesso == 'F') {
+        strcpy(Nome,"Nessuna");
+        strcpy(Cognome,"In Particolare");
+    }
+
+    sizze              =  0;
+    current_testa      =  0;
+    current_giubbotto  =  0;
+    current_pantaloni  =  0;
+    current_scarpe     =  0;
+
+    ScooterData = ScooterMem[0];
+
+    AbbonamentData.creditorest = -1;
+    CellularData.stato         = -1;
+
 }
 
 
@@ -602,19 +733,6 @@ static void CaricaTutto(void)
 }
 
 
-/* Logga fine programma e salva tutto */
-void FineProgramma(char const *caller)
-{
-
-    #ifdef TABBOZ_DEBUG
-        sprintf(log_buf,"tabboz: FineProgramma chiamato da <%s>",caller);
-        writelog(log_buf);
-    #endif
-
-    SalvaTutto();
-}
-
-
 /* Salva i parametri nel profilo utente o in file specificato*/
 static void SalvaTutto(void)
 {
@@ -723,38 +841,88 @@ static void SalvaTutto(void)
 }
 
 
-/* Ex Schermata About */
-//FIXME l'unica cosa interessante è il cheat... nel tabboz originale si avvia cliccando 10
-//FIXME volte sull'icona centrale quando il nome/cognome del tabbozzo corrispondono
-//FIXME ai valori indicati sotto...
-//    "Dino Lucci"
-//        Soldi=Soldi+1000;
-//        Reputazione=random(4);
-//        Fama=random(40);
-//    
-//    "Giulio Lucci"
-//        Soldi=Soldi+1000;
-//        Reputazione=random(30);
-//        Fama=random(5);
-//
-//    "Daniele Gazzarri"
-//        ScooterData=ScooterMem[7];
-//        benzina=850;
-//        Reputazione=100;
-//        
-//    "Emanuele Caccialanza"
-//        Soldi=Soldi+10000;
-//        Fama=100;
-//        
-//    "Andrea Bonomi"
-//        for (i=1;i<10;i++)
-//          MaterieMem[i].voto=10;
-//        CalcolaStudio();
-//        if ( Rapporti > 1 )
-//          Rapporti=100;
-//        impegno=100;
-//        numeroditta=1;
-//        stipendio=5000;
+/* Verifica Valori Chiave (se tra min e max) */
+int vvc(int i)
+{
+    if ( i < 0)
+        return 0;
+    else
+        if ( i > 100)
+            return 100;
+        else
+            return (i);
+}
+
+
+//*******************************************************************
+// Formattazione iniziale Tabbozzo (scelta sesso, nome...) 14-01-2000
+//*******************************************************************
+//TAG2015 Questa routine usa una finestra simile al format di windows x creare un nuovo tabbozzo/a
+//TAG2015 carino esteticamente ma sarebbe meglio creare una specie di wizard x scegliere nome cognome
+//TAG2015 compleanno (non random) sesso residenza e le opzioni (difficolta suono etc)
+// #pragma argsused
+// BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+// {
+//     static char tmpsesso;
+
+//     if (message == WM_INITDIALOG) {
+//         if (firsttime == 1) EnableWindow( GetDlgItem(hDlg,2), 0);
+
+//         SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, TRUE, 0L);
+//         if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
+
+//         //sprintf(buf,"prova");
+//         //SendMessage(GetDlgItem(hDlg, 110), CB_ADDSTRING, 0, t);
+
+//         return(TRUE);
+//         }
+
+//     if (message == WM_COMMAND) {
+//         switch (LOWORD(wParam))    {
+//             case 100: tmpsesso = 'M';
+//                       break;
+//             case 101: tmpsesso = 'F';
+//                       break;
+//             case 102: if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
+//                       break;
+//             case IDOK:
+//                       ResetMe(0);
+//                       sesso=tmpsesso;
+//                       CalcolaSesso();
+//                       EndDialog(hDlg, TRUE);
+//                       return(TRUE);
+//             case IDCANCEL:
+//                            if (firsttime == 1) {
+//                                sesso=tmpsesso;
+//                                CalcolaSesso();
+//                                EndDialog(hDlg, TRUE);
+//                            }
+//                            EndDialog(hDlg, TRUE);
+//                            return(TRUE);
+
+//             default: return(TRUE);
+//         }
+//     }
+
+//     return(FALSE);
+// }
+
+
+
+
+/* Logga fine programma e salva tutto */
+void FineProgramma(char const *caller)
+{
+
+    #ifdef TABBOZ_DEBUG
+        sprintf(log_buf,"tabboz: FineProgramma chiamato da <%s>",caller);
+        writelog(log_buf);
+    #endif
+
+    SalvaTutto();
+}
+
+
 
 
 /********************************************************************/
@@ -1082,76 +1250,6 @@ static void SalvaTutto(void)
 // }
 
 
-/* Routine che gestisce diverse situazioni quando i soldi sono < di quelli richiesti */
-void nomoney(int tipo)
-{
-    switch (tipo) {
-        
-        case DISCO:
-            fl_message_title("Bella figura");
-            fl_alert("Appena entrat%c ti accorgi di non avere abbastanza soldi per pagare il biglietto.\nUn energumeno buttafuori ti deposita gentilmente in un cassonetto della spazzatura poco distante dalla discoteca.",ao);
-            if (Reputazione > 3 )
-                Reputazione--;
-            break;;
-        
-        case VESTITI:
-            fl_message_title("Bella figura");
-            fl_alert("Con cosa avresti intenzione di pagare, stronzett%c ???\nCaramelle ???",ao);
-            if (Fama > 12 )
-                Fama-=3;
-            if (Reputazione > 4 )
-                Reputazione-=2;
-            break;;
-
-        case PALESTRA:
-            if (sesso == 'M') {
-                fl_message_title("Non hai abbastanza soldi...");
-                fl_alert("L'enorme istruttore di bodybulding ultra-palestrato ti suona come una zampogna\ne ti scaraventa fuori dalla palestra.");
-            } else {
-                fl_message_title("Non hai abbastanza soldi...");
-                fl_alert("L'enorme istruttore di bodybulding ultra-palestrato ti scaraventa fuori dalla palestra.");
-            }
-            if (Fama > 14 )
-                Fama-=4;
-            if (Reputazione > 18 )
-                Reputazione-=4;
-            break;;
-        
-        case SCOOTER:
-            if (sesso == 'M') {
-                fl_message_title("Non hai abbastanza soldi...");
-                fl_alert("L'enorme meccanico ti afferra con una sola mano, ti riempe di pugni,\ne non esita a scaraventare te ed il tuo motorino fuori dall'officina.");
-                if (Reputazione > 7 )
-                    Reputazione-=5;
-                if (ScooterData.stato > 7 )
-                    ScooterData.stato-=5;
-            } else {
-                fl_message_title("Non hai abbastanza soldi...");
-                fl_alert("Con un sonoro calcio nel culo, vieni buttata fuori dall'officina.");
-                if (Reputazione > 6 )
-                    Reputazione-=4;
-                if (Fama > 3 )
-                    Fama-=2;
-            }
-            break;;
-        
-        case TABACCAIO:
-            fl_message_title("Non hai abbastanza soldi...");
-            fl_alert("Fai fuori dal mio locale, brut%c pezzente!\nEsclama il tabaccaio con un AK 47 in mano...",ao);
-            if (Fama > 2)
-                Fama-=1;
-            break;;
-    
-        case CELLULRABBONAM:
-            fl_message_title("Non hai abbastanza soldi...");
-            fl_alert("Forse non ti sei accorto di non avere abbastanza soldi, stronzett%c...",ao);
-            if (Fama > 2)
-                Fama-=1;
-            break;
-    }
-}
-
-
 #ifdef DEADCODE
 //*******************************************************************
 // Aggiorna la finestra principale
@@ -1215,64 +1313,6 @@ void AggiornaPrincipale(HWND parent)
 
 }
 #endif
-
-
-/* Aggiorna Finestra Principale */
-void AggiornaPrincipale(void)
-{
-    char tmp[128];
-     
-    sprintf(tmp, "  %s %d %s",InfoSettimana[x_giornoset-1].nome,x_giorno,InfoMese[x_mese-1].nome);  // Calendario
-    main_box_giorno->copy_label(tmp);
-    main_valbox_rep->value(Reputazione);
-    main_valbox_fama->value(Fama);
-    main_valbox_studio->precision(1);
-    main_valbox_studio->value(MEDIAVOTI(Studio,N_MATERIE));
-    if(Rapporti) {
-        main_txtbox_tipa->value(Nometipa);
-        main_valbox_rapporti->value(Rapporti);
-        main_valbox_rapporti->activate();
-    }
-    else {
-        main_txtbox_tipa->value("Nessuna...");
-        main_valbox_rapporti->deactivate();
-    }
-    if(euro) {
-        main_valbox_soldi->label("€");
-        main_valbox_paghetta->label("Paghetta  €");
-        main_valbox_stipendio->label("Stipendio  €");
-    } else {
-        main_valbox_soldi->label("L.");
-        main_valbox_paghetta->label("Paghetta  L.");
-        main_valbox_stipendio->label("Stipendio  L.");
-    }
-    main_valbox_soldi->value(CALCSOLDI(Soldi));
-    main_valbox_paghetta->value(CALCSOLDI(Paghetta));
-    main_valbox_stipendio->value(CALCSOLDI(stipendio));
-    if(stipendio)
-        main_valbox_stipendio->activate();
-    else
-        main_valbox_stipendio->deactivate();
-    main_fig_scarpe->image(ImgScarpe[current_scarpe]);   // Disegna immagine del tabbozzo/a
-    main_fig_panta->image(ImgPantaloni[current_pantaloni]);
-    main_fig_giub->image(ImgGiubbotto[current_giubbotto]);
-    main_fig_testa->image(ImgTesta[current_testa]);
-
-    if(ScooterData.stato!=-1000) {
-        main_valbox_scooterstato->activate();
-        if(ScooterData.attivita == 1)
-            sprintf(tmp,"%s (in uso)",ScooterData.nome);
-        else
-            sprintf(tmp,"%s (%s)",ScooterData.nome,n_attivita[ScooterData.attivita]);
-        main_txtbox_scooter->value(tmp);
-        main_valbox_scooterstato->value(ScooterData.stato);
-    } else {
-        main_txtbox_scooter->value("--");
-        main_valbox_scooterstato->value(0);
-        main_valbox_scooterstato->deactivate();
-    }
-    win_principale->redraw();
-}
 
 
 //*******************************************************************
@@ -1710,76 +1750,7 @@ void AggiornaPrincipale(void)
 // }
 
 
-/* Calcola parametro "Studio" sommando i voti di tutte le materie
-* moltiplicando x 10 e dividendo per n.ro materie */
-void CalcolaStudio()
-{
-    int i,i2;
-    div_t x;
-
-    i2=0;
-    for (i=1;i<10;i++)
-        i2+=MaterieMem[i].voto;
-
-    i2=i2*10;
-    x = div(i2,9);
-    Studio=x.quot;
-}
-
-
-/* Converte la variabile soldi (in "millini") in stringa aggiungendo zeri
-*  se è abilitato l'euro, semplicemente divide per 2 */
-char *MostraSoldi(int i)
-{
-    static char tmp[128];
-
-    if (euro)
-        sprintf(tmp, "%d €", (i / 2) );
-    else if (i == 0)
-            sprintf(tmp, "0 L.");
-        else
-            sprintf(tmp, "%d000 L.", i);
-
-    return tmp;
-}
-
-
-/* Verifica Valori Chiave (se tra min e max) */
-int vvc(int i)
-{
-    if ( i < 0)
-        return 0;
-    else
-        if ( i > 100)
-            return 100;
-        else
-            return (i);
-}
-
-
-/* Legge il valore settato di difficolta e modifica i valori correlati */
-void  ApplicaDifficolta(void)
-{
-    switch(difficolta) {
-        case 1:     // per ora l'unico parametro influenzato è la fortuna
-                Fortuna = 20;
-                break;
-        case 2:
-                Fortuna = 15;
-                break;
-        case 3:
-                Fortuna = 10;
-                break;
-        case 4:
-                Fortuna = 5;
-                break;
-        case 5:
-                Fortuna = 0;
-    }
-}
-
-
-/* PROCEDURA PRINCIPALE */
+/* PROCEDURA PRINCIPALE (MAIN) */
 int main(int argc, char **argv)
 {
 
@@ -1883,3 +1854,39 @@ void SaveFileDlg(HWND hwnd)
   }
 }
 #endif
+
+
+/* Ex Schermata About */
+/*
+FIXME l'unica cosa interessante è il cheat... nel tabboz originale si avvia cliccando 10
+FIXME volte sull'icona centrale quando il nome/cognome del tabbozzo corrispondono
+FIXME ai valori indicati sotto...
+   "Dino Lucci"
+       Soldi=Soldi+1000;
+       Reputazione=random(4);
+       Fama=random(40);
+   
+   "Giulio Lucci"
+       Soldi=Soldi+1000;
+       Reputazione=random(30);
+       Fama=random(5);
+
+   "Daniele Gazzarri"
+       ScooterData=ScooterMem[7];
+       benzina=850;
+       Reputazione=100;
+       
+   "Emanuele Caccialanza"
+       Soldi=Soldi+10000;
+       Fama=100;
+       
+   "Andrea Bonomi"
+       for (i=1;i<10;i++)
+         MaterieMem[i].voto=10;
+       CalcolaStudio();
+       if ( Rapporti > 1 )
+         Rapporti=100;
+       impegno=100;
+       numeroditta=1;
+       stipendio=5000;
+*/
