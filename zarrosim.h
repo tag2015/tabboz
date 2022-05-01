@@ -206,6 +206,7 @@ extern  int       logging;            // Scrive eventi in file di log
 
 extern  void  AggiornaPrincipale(void);
 extern  void  CalcolaStudio(void);
+extern  void  CalcolaSesso(void);
 extern  char  *MostraSoldi(int i);
 extern  void  nomoney(int tipo);
 extern  void  ApplicaDifficolta(void);
