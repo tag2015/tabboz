@@ -54,27 +54,12 @@
 #include <FL/Fl_Pixmap.H>
 
 
-
-static const char *dir_profilo = "TabbozNG";
-static const char *file_profilo = "TabbozNG";
-char              path_profilo[STR_MAX]="dummy.tbz";  // FIXME Path e file dove salvare (per ora non usato)
-
-
-int vvc(int i);
-
-static void     SalvaTutto(void);
-static void     CaricaTutto(void);
-
-
-/* PRIMA LE VARIABILI GENERIKE... */
-
+/* Variabili generiche */
 int     cheat;
 bool    firsttime;
 int     chiusura;
-int     fase_di_avvio;
 
-/* DOPO LE CARATTERISTIKE... */
-
+/* Caratteristiche tabbozzo */
 int     Fama;
 int     Reputazione;
 int     Studio;
@@ -84,7 +69,7 @@ char    Nome[30];
 char    Cognome[30];
 int     comp_giorno;
 int     comp_mese;
-char    City[50];       // Citta' di nascita
+char    City[50];
 char    Nometipa[30];
 int     FigTipa;
 int     Rapporti;
@@ -101,7 +86,6 @@ char    un_una[4];
 
 
 /* Accessori */
-
 int     current_testa;
 int     current_giubbotto;
 int     current_pantaloni;
@@ -111,11 +95,9 @@ int     sizze;
 
 
 /* Opzioni */
-
 int     euro;
-int     timer_active;       // Abilita il timer
+int     timer_active;
 int     sound_active;
-int     intro_active;       // Visualizza schermata introduttiva
 int     difficolta;
 char    tema_grafico[STR_MAX];
 int     logging;
@@ -124,6 +106,24 @@ int     logging;
 #ifndef NOTIMER
     static  int  t_random;              // Attesa a random tra i vari eventi timer
 #endif
+int     fase_di_avvio;      // FIXME per il timer... inutile?
+int     intro_active;       // Visualizza schermata introduttiva
+
+
+static const char *dir_profilo = "TabbozNG";
+static const char *file_profilo = "TabbozNG";
+char              path_profilo[STR_MAX]="dummy.tbz";  // FIXME Path e file dove salvare (per ora non usato)
+
+
+int vvc(int i);
+
+static void     CalcolaSesso(void);
+
+static void     InitTabboz(void);
+static void     ResetMe(int);
+static void     SalvaTutto(void);
+static void     CaricaTutto(void);
+
 
 
 /* Calcola Sesso - Maschietto o Femminuccia */
@@ -140,7 +140,7 @@ static void CalcolaSesso(void)
 
 
 /* ResetMe - Reset del Tabboz Simulator */
-void ResetMe(int primavolta)
+static void ResetMe(int primavolta)
 {
 
     Soldi             =   10;
@@ -258,10 +258,8 @@ void ResetMe(int primavolta)
 //     return(FALSE);
 // }
 
-//*******************************************************************
-// InitTabboz
-//*******************************************************************
 
+/* Inizializza grafica e parametri di base */
 static void InitTabboz(void)
 {
     path_profilo[0]=0;
@@ -604,9 +602,7 @@ static void CaricaTutto(void)
 }
 
 
-//*******************************************************************
-//      Fine Programma
-//*******************************************************************
+/* Logga fine programma e salva tutto */
 void FineProgramma(char const *caller)
 {
 
@@ -727,15 +723,10 @@ static void SalvaTutto(void)
 }
 
 
-
-/********************************************************************/
-/* About...                                                         */
-/********************************************************************/
+/* Ex Schermata About */
 //FIXME l'unica cosa interessante è il cheat... nel tabboz originale si avvia cliccando 10
 //FIXME volte sull'icona centrale quando il nome/cognome del tabbozzo corrispondono
 //FIXME ai valori indicati sotto...
-//FIXME implementare o no? boh
-
 //    "Dino Lucci"
 //        Soldi=Soldi+1000;
 //        Reputazione=random(4);
@@ -1226,8 +1217,8 @@ void AggiornaPrincipale(HWND parent)
 #endif
 
 
-/* Aggiorna Finestra Principale*/
-void AggiornaPrincipale()
+/* Aggiorna Finestra Principale */
+void AggiornaPrincipale(void)
 {
     char tmp[128];
      
@@ -1814,6 +1805,7 @@ int main(int argc, char **argv)
             win_principale->show();
         }
         Fl::run();
+
         if(chiusura == NEWGAME) {   // nuova partita (resetta e ricomincia)
             #ifdef TABBOZ_DEBUG
                 writelog("tabboz: new game (reset)");
