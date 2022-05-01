@@ -854,58 +854,6 @@ int vvc(int i)
 }
 
 
-//*******************************************************************
-// Formattazione iniziale Tabbozzo (scelta sesso, nome...) 14-01-2000
-//*******************************************************************
-//TAG2015 Questa routine usa una finestra simile al format di windows x creare un nuovo tabbozzo/a
-//TAG2015 carino esteticamente ma sarebbe meglio creare una specie di wizard x scegliere nome cognome
-//TAG2015 compleanno (non random) sesso residenza e le opzioni (difficolta suono etc)
-// #pragma argsused
-// BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//     static char tmpsesso;
-
-//     if (message == WM_INITDIALOG) {
-//         if (firsttime == 1) EnableWindow( GetDlgItem(hDlg,2), 0);
-
-//         SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, TRUE, 0L);
-//         if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
-
-//         //sprintf(buf,"prova");
-//         //SendMessage(GetDlgItem(hDlg, 110), CB_ADDSTRING, 0, t);
-
-//         return(TRUE);
-//         }
-
-//     if (message == WM_COMMAND) {
-//         switch (LOWORD(wParam))    {
-//             case 100: tmpsesso = 'M';
-//                       break;
-//             case 101: tmpsesso = 'F';
-//                       break;
-//             case 102: if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
-//                       break;
-//             case IDOK:
-//                       ResetMe(0);
-//                       sesso=tmpsesso;
-//                       CalcolaSesso();
-//                       EndDialog(hDlg, TRUE);
-//                       return(TRUE);
-//             case IDCANCEL:
-//                            if (firsttime == 1) {
-//                                sesso=tmpsesso;
-//                                CalcolaSesso();
-//                                EndDialog(hDlg, TRUE);
-//                            }
-//                            EndDialog(hDlg, TRUE);
-//                            return(TRUE);
-
-//             default: return(TRUE);
-//         }
-//     }
-
-//     return(FALSE);
-// }
 
 
 /********************************************************************/
@@ -1038,264 +986,6 @@ int vvc(int i)
 //      return(FALSE);
 // }
 
-
-//FIXME implementata in gui, manca il reset
-
-/********************************************************************/
-/* Configuration...                                                 */
-/********************************************************************/
-// # pragma argsused
-// BOOL FAR PASCAL Configuration(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//     FARPROC  lpproc;
-// #ifdef TABBOZ_DEBUG
-// static    int    temp_debug;
-// #endif
-//      if (message == WM_INITDIALOG) {
-// #ifdef TABBOZ_DEBUG
-//         temp_debug=debug_active;
-// #endif
-
-//         if (intro_active)
-//             SendMessage(GetDlgItem(hDlg, 106), BM_SETCHECK, TRUE, 0L);
-//         if (euro)
-//             SendMessage(GetDlgItem(hDlg, 107), BM_SETCHECK, TRUE, 0L);
-//         if (timer_active)
-//             SendMessage(GetDlgItem(hDlg, 108), BM_SETCHECK, TRUE, 0L);
-
-// #ifdef TABBOZ_DEBUG
-//         if (debug_active)
-//             SendMessage(GetDlgItem(hDlg, 109), BM_SETCHECK, TRUE, 0L);
-// #endif
-
-//         if (sound_active)
-//             SendMessage(GetDlgItem(hDlg, 110), BM_SETCHECK, TRUE, 0L);
-
-//         if ( Fortuna >= 20 ) SendMessage(GetDlgItem(hDlg, 101), BM_SETCHECK, TRUE, 0L); else
-//         if ( Fortuna >= 15 ) SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, TRUE, 0L); else
-//         if ( Fortuna >= 10 ) SendMessage(GetDlgItem(hDlg, 103), BM_SETCHECK, TRUE, 0L); else
-//         if ( Fortuna >=  5 ) SendMessage(GetDlgItem(hDlg, 104), BM_SETCHECK, TRUE, 0L); else
-//         SendMessage(GetDlgItem(hDlg, 105), BM_SETCHECK, TRUE, 0L);
-
-//         return(TRUE);
-//     }
-//     else if (message == WM_COMMAND)
-//     {
-
-//     switch (LOWORD(wParam))
-//     {
-//         case 101: Fortuna=20; return(TRUE);    /* Livelli di Difficolta' */
-//         case 102: Fortuna=15; return(TRUE);
-//         case 103: Fortuna=10; return(TRUE);
-//         case 104: Fortuna= 5; return(TRUE);
-//         case 105: Fortuna= 0; return(TRUE);
-//         case 106:
-//             intro_active=!intro_active;
-//             return(TRUE);
-//         case 107:
-//             euro=!euro;
-//             return(TRUE);
-//         case 108:
-//             timer_active=!timer_active;
-//             return(TRUE);
-// #ifdef TABBOZ_DEBUG
-//         case 109:
-//             debug_active=!debug_active;
-//             return(TRUE);
-// #endif
-//         case 110:
-//             sound_active=!sound_active;
-//             return(TRUE);
-
-//         case 203:    // Reset - 26 Marzo 1999
-//             EndDialog(hDlg, TRUE);
-
-//             // Se il tabboz e' chiamato con il parametro "config", hWndMain NON ESITE !
-//             if (hWndMain != 0)
-//                 ShowWindow(hWndMain, WIN_PICCOLO);
-
-//             lpproc = MakeProcInstance(FormatTabboz, hInst);
-//             DialogBox(hInst,
-//                     MAKEINTRESOURCE(15),
-//                     hDlg,
-//                     lpproc);
-//             FreeProcInstance(lpproc);
-
-//             return(TRUE);
-
-//         case IDOK:
-//         case IDCANCEL:
-// #ifdef TABBOZ_DEBUG
-//             if (debug_active != temp_debug) {
-//               if (debug_active) {
-//                  openlog();
-//                  writelog("tabboz: Start logging...");
-//               } else {
-//                  writelog("tabboz: Stop logging...");
-//                  closelog();
-//               }
-//             }
-// #endif
-//             EndDialog(hDlg, TRUE);
-//             return(TRUE);
-//         default:
-//             return(TRUE);
-//     }
-//      }
-
-//      return(FALSE);
-// }
-
-
-//FIXME Schermata info tabbozzo, verrà implementata in futuro
-//dato che non serve a nulla
-/********************************************************************/
-/* Personal Information...                                          */
-/********************************************************************/
-// # pragma argsused
-// BOOL FAR PASCAL PersonalInfo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//      char          tmp[128];
-
-//      if (message == WM_INITDIALOG) {
-//         sprintf(tmp, " %d %s", comp_giorno,InfoMese[comp_mese-1].nome);
-//         SetDlgItemText(hDlg, 103, tmp);            // Data di nascita
-//         sprintf(tmp, "%d", (comp_giorno * 13 + comp_mese * 3 + 6070));
-//         SetDlgItemText(hDlg, 104, tmp);            // Numero documento di nascita (inutile ma da' spessore...)
-
-//         if (numeroditta < 1) {        // Professione
-//             if (sesso == 'M')
-//                 sprintf(tmp,"Studente");
-//             else
-//                 sprintf(tmp,"Studentessa");
-//         } else
-//             sprintf(tmp,"Sfruttat%c",ao);
-
-//         SetDlgItemText(hDlg, 108, tmp);
-
-//         sprintf(tmp,"Nat%c il", ao); SetDlgItemText(hDlg, 109, tmp); // Nata/o il
-//         if (sesso == 'M') SetDlgItemText(hDlg, 110, "Celibe"); else SetDlgItemText(hDlg, 110, "Libera");
-
-//         SetDlgItemText(hDlg, 111, Residenza);        // Residenza
-//         SetFocus(GetDlgItem(hDlg, 111));
-
-//         SetDlgItemText(hDlg, 107, Street);            // Indirizzo (inutile ma da' spessore...)
-//         SetFocus(GetDlgItem(hDlg, 107));
-
-//         SetDlgItemText(hDlg, 105, City);                // Citta' di nascita (inutile ma da' spessore...)
-//         SetFocus(GetDlgItem(hDlg, 105));
-
-//         SetDlgItemText(hDlg, 101, Cognome);            // Cognome
-//         SetFocus(GetDlgItem(hDlg, 101));
-
-//         SetDlgItemText(hDlg, QX_NOME, Nome);        // Nome
-//         SetFocus(GetDlgItem(hDlg, QX_NOME));
-
-//         return(TRUE);
-//     }
-
-//     else if (message == WM_COMMAND)
-//     {
-
-//       switch (LOWORD(wParam))
-//       {
-//          case 111:
-//             GetDlgItemText(hDlg, wParam, Residenza, sizeof(Residenza));
-//             break;
-
-//          case 107:
-//             GetDlgItemText(hDlg, wParam, Street, sizeof(Street));
-//             break;
-
-//          case 105:
-//             GetDlgItemText(hDlg, wParam, City, sizeof(City));
-//             break;
-
-//          case 101:                  /* Cognome del tabbozzo */
-//             GetDlgItemText(hDlg, wParam, Cognome, sizeof(Cognome));
-//             break;
-
-//          case QX_NOME:              /* Nome del tabbozzo */
-//             GetDlgItemText(hDlg, wParam, Nome, sizeof(Nome));
-//             break;
-
-//          case IDOK:
-//          case IDCANCEL:
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
-
-//          default:
-//         return(TRUE);
-//     }
-//      }
-
-//     return(FALSE);
-// }
-
-
-#ifdef DEADCODE
-//*******************************************************************
-// Aggiorna la finestra principale
-//*******************************************************************
-void AggiornaPrincipale(HWND parent)
-{
-    char tmp[128];
-
-    ShowWindow(parent, WIN_GRANDE);
-
-    sprintf(tmp, "%s %s",Nome,Cognome);
-    SetDlgItemText(parent, QX_NOME, tmp);
-
-    SetDlgItemText(parent, QX_SOLDI, MostraSoldi(Soldi));
-
-    sprintf(tmp, "%d/100", Fama);        // Figosita'
-    SetDlgItemText(parent, 151, tmp);
-
-    sprintf(tmp, "%d/100", Reputazione);    // Reputazione
-    SetDlgItemText(parent, 152, tmp);
-
-    sprintf(tmp, "%d/100", Studio);        // Profitto scolastico
-    SetDlgItemText(parent, 153, tmp);
-
-    if ( Rapporti != 0 ) {
-        sprintf(tmp, "%s", Nometipa);    // Nometipa
-        SetDlgItemText(parent, 155, tmp);
-        sprintf(tmp, "%d/100", Rapporti);    // Rapporti con la tipa
-        SetDlgItemText(parent, 154, tmp);
-    } else {
-        sprintf(tmp, " ");            // Nometipa
-        SetDlgItemText(parent, 155, tmp);
-        SetDlgItemText(parent, 154, tmp);
-    }
-
-
-    if (ScooterData.stato != -1) {
-        sprintf(tmp, "%s", ScooterData.nome);
-        SetDlgItemText(parent, 150, tmp);    // Nomescooter
-        sprintf(tmp, "%d/100", ScooterData.stato);
-        SetDlgItemText(parent, 156, tmp);    // Stato scooter
-    } else {
-        sprintf(tmp, " ");
-        SetDlgItemText(parent, 150, tmp);    // Nomescooter
-        SetDlgItemText(parent, 156, tmp);    // Stato scooter
-    }
-
-    SetDlgItemText(parent, 157, tmp);
-
-    if ( sesso == 'M' )    {// Non usare la variabile "ao" xche' qui e' necessario
-         DeleteMenu(GetMenu(parent), QX_TIPA, MF_BYCOMMAND);
-         AppendMenu( GetSubMenu(GetMenu(parent),1), MF_STRING, QX_TIPA, "&Tipa...");
-         SetDlgItemText(parent, 133, "Tipa"); // che ci sia scritto Tipa x il maschietto e
-         SetDlgItemText(parent, 170, "Rapporto con la tipa");
-    } else {                              //    Tipo x la femminuccia...
-         DeleteMenu( GetMenu(parent), QX_TIPA, MF_BYCOMMAND);
-         AppendMenu( GetSubMenu(GetMenu(parent),1), MF_STRING, QX_TIPA, "&Tipo...");
-         SetDlgItemText(parent, 133, "Tipo");
-         SetDlgItemText(parent, 170, "Rapporto con il tipo");
-    }
-
-}
-#endif
 
 
 //*******************************************************************
@@ -1837,6 +1527,59 @@ void SaveFileDlg(HWND hwnd)
   }
 }
 #endif
+
+//*******************************************************************
+// Formattazione iniziale Tabbozzo (scelta sesso, nome...) 14-01-2000
+//*******************************************************************
+//TAG2015 Questa routine usa una finestra simile al format di windows x creare un nuovo tabbozzo/a
+//TAG2015 carino esteticamente ma sarebbe meglio creare una specie di wizard x scegliere nome cognome
+//TAG2015 compleanno (non random) sesso residenza e le opzioni (difficolta suono etc)
+// #pragma argsused
+// BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+// {
+//     static char tmpsesso;
+
+//     if (message == WM_INITDIALOG) {
+//         if (firsttime == 1) EnableWindow( GetDlgItem(hDlg,2), 0);
+
+//         SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, TRUE, 0L);
+//         if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
+
+//         //sprintf(buf,"prova");
+//         //SendMessage(GetDlgItem(hDlg, 110), CB_ADDSTRING, 0, t);
+
+//         return(TRUE);
+//         }
+
+//     if (message == WM_COMMAND) {
+//         switch (LOWORD(wParam))    {
+//             case 100: tmpsesso = 'M';
+//                       break;
+//             case 101: tmpsesso = 'F';
+//                       break;
+//             case 102: if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
+//                       break;
+//             case IDOK:
+//                       ResetMe(0);
+//                       sesso=tmpsesso;
+//                       CalcolaSesso();
+//                       EndDialog(hDlg, TRUE);
+//                       return(TRUE);
+//             case IDCANCEL:
+//                            if (firsttime == 1) {
+//                                sesso=tmpsesso;
+//                                CalcolaSesso();
+//                                EndDialog(hDlg, TRUE);
+//                            }
+//                            EndDialog(hDlg, TRUE);
+//                            return(TRUE);
+
+//             default: return(TRUE);
+//         }
+//     }
+
+//     return(FALSE);
+// }
 
 
 /* Ex Schermata About */
