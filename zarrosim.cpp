@@ -724,7 +724,7 @@ static void CaricaTutto(void)
     TabbozProfilo.get("SoftCheck",buf_i,0);
     if ((new_counter - buf_i) != 0) {
         if(!firsttime) {
-            if(sound_active) TabbozPlaySound(1600);
+            if(sound_active) TabbozPlaySound(0001);
             fl_message_title("Ma cazz...");
             fl_alert("Visto che ti sei divertito a pasticciare con il salvataggio,\ni parametri verranno resettati!");
         }
