@@ -855,139 +855,6 @@ int vvc(int i)
 
 
 
-
-/********************************************************************/
-/* Logo...                                                          */
-/********************************************************************/
-//TAG2015 più che il logo è lo splash screen. Verrà implementata
-//direttamente nella gui
-// # pragma argsused
-
-// BOOL FAR PASCAL Logo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-// int    x,y,w,h;
-
-//     if (message == WM_INITDIALOG) {
-
-//     if (sound_active) TabbozPlaySound(0);
-
-//     /* [[[ Posiziona il logo a centro dello schermo ]]] Veneedi' 17 Aprile 1998 */
-//     /* GetWindowRect(hDlg, (LPRECT) &wrect);                                    */
-//     /* w = wrect.right - wrect.left;                                            */
-//     /* h = wrect.bottom - wrect.top;                        */
-
-//     w = 522; /* dimensioni dell' immagine del logo */
-//     h = 402;
-
-//     x=GetSystemMetrics(SM_CXSCREEN);
-//     y=GetSystemMetrics(SM_CYSCREEN);
-
-//     x= (x - w) / 2;
-//     y= (y - h) / 2;
-
-//     MoveWindow(hDlg, x, y, w, h, 1);
-
-//     if ( fase_di_avvio == 1)
-//         SetTimer(hDlg, WM_TIMER, 10000, NULL);    /* 10 Secondi */
-
-//     return(TRUE);
-//     }
-
-//     if (message == WM_TIMER) {
-//     if ( fase_di_avvio == 1) {
-//         KillTimer(hDlg, WM_TIMER);         /* Distrugge il timer... */
-//         EndDialog(hDlg, TRUE);
-//         }
-//     }
-
-//      if (message == WM_COMMAND) {
-//     switch (LOWORD(wParam))
-//     {
-//          case IDOK:
-//          case 202:
-//          case 203:
-//         if ( fase_di_avvio == 1) {
-//             KillTimer(hDlg, WM_TIMER);
-//             }
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
-//          default:
-//         return(TRUE);
-//     }
-//      }
-
-//      return(FALSE);
-// }
-
-/********************************************************************/
-/* Spegnimi... 11 giugno 1998                                       */
-/********************************************************************/
-// //TAG2015 shutdown disabilitato, dubito sia portabile 'sta roba
-// # pragma argsused
-// BOOL FAR PASCAL Spegnimi(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-// int     x,y,w,h;
-// static RECT   wrect;
-
-//      if (message == WM_INITDIALOG) {
-//         /* Centra la finestra... */
-//         GetWindowRect(hDlg, (LPRECT) &wrect);
-//         w = wrect.right - wrect.left;
-//         h = wrect.bottom - wrect.top;
-
-//         x=GetSystemMetrics(SM_CXSCREEN);
-//         y=GetSystemMetrics(SM_CYSCREEN);
-
-//         x= (x - w) / 2;
-//         y= (y - h) / 2;
-
-//         MoveWindow(hDlg, x, y, w, h, 1);
-//         boolean_shutdown=1; // Uscita normale...
-
-//         SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, FALSE, 0L);
-//         SendMessage(GetDlgItem(hDlg, 101), BM_SETCHECK, TRUE, 0L);
-//         return(TRUE);
-
-//     } else if (message == WM_COMMAND) {
-
-//         switch (LOWORD(wParam)) {
-
-//         case 101: // Un bug nella v 0.8.51pr impediva l' uscita corretta...
-//             boolean_shutdown=1; // 1=uscita
-//             return(TRUE);
-
-//         case 102:
-//             boolean_shutdown=2; // 2=shutdown
-//             return(TRUE);
-
-//         case 110:
-//             MessageBox( hDlg,
-//              "'Spegni il computer ed esci di casa'\n\nPubblicita' Progresso per il recupero dei giovani disadattati a causa dei computer sponsorizzata da Obscured Truckware.",
-//              "Guida del Tabboz Simulator", MB_OK );
-//             return(TRUE);
-
-//         case IDOK:
-// #ifdef TABBOZ32
-//             SpegniISuoni();
-// #endif
-//             EndDialog(hDlg, TRUE);
-//             return(TRUE);
-
-//         case IDCANCEL:
-//             boolean_shutdown=0; // non e' proprio un boolean, ma va bene lo stesso...
-//             EndDialog(hDlg, TRUE);
-//             return(TRUE);
-
-//         default:
-//             return(TRUE);
-//         }
-//      }
-
-//      return(FALSE);
-// }
-
-
-
 //*******************************************************************
 // MainDlgBoxProc - handle Main dialog messages (modeless)
 //
@@ -1528,58 +1395,64 @@ void SaveFileDlg(HWND hwnd)
 }
 #endif
 
-//*******************************************************************
-// Formattazione iniziale Tabbozzo (scelta sesso, nome...) 14-01-2000
-//*******************************************************************
-//TAG2015 Questa routine usa una finestra simile al format di windows x creare un nuovo tabbozzo/a
-//TAG2015 carino esteticamente ma sarebbe meglio creare una specie di wizard x scegliere nome cognome
-//TAG2015 compleanno (non random) sesso residenza e le opzioni (difficolta suono etc)
-// #pragma argsused
-// BOOL FAR PASCAL FormatTabboz(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//     static char tmpsesso;
 
-//     if (message == WM_INITDIALOG) {
-//         if (firsttime == 1) EnableWindow( GetDlgItem(hDlg,2), 0);
+/* FIXME Splash screen, implementare in futuro */
+/* BOOL FAR PASCAL Logo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+{
+    int x,y,w,h;
 
-//         SendMessage(GetDlgItem(hDlg, 102), BM_SETCHECK, TRUE, 0L);
-//         if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
+    if (message == WM_INITDIALOG) {
 
-//         //sprintf(buf,"prova");
-//         //SendMessage(GetDlgItem(hDlg, 110), CB_ADDSTRING, 0, t);
+        if (sound_active) TabbozPlaySound(0);
 
-//         return(TRUE);
-//         }
+        GetWindowRect(hDlg, (LPRECT) &wrect);    // Posiziona il logo a centro dello schermo
+        w = wrect.right - wrect.left;
+        h = wrect.bottom - wrect.top;
 
-//     if (message == WM_COMMAND) {
-//         switch (LOWORD(wParam))    {
-//             case 100: tmpsesso = 'M';
-//                       break;
-//             case 101: tmpsesso = 'F';
-//                       break;
-//             case 102: if (random(2) == 1) tmpsesso='M'; else tmpsesso='F';
-//                       break;
-//             case IDOK:
-//                       ResetMe(0);
-//                       sesso=tmpsesso;
-//                       CalcolaSesso();
-//                       EndDialog(hDlg, TRUE);
-//                       return(TRUE);
-//             case IDCANCEL:
-//                            if (firsttime == 1) {
-//                                sesso=tmpsesso;
-//                                CalcolaSesso();
-//                                EndDialog(hDlg, TRUE);
-//                            }
-//                            EndDialog(hDlg, TRUE);
-//                            return(TRUE);
+        w = 522;    // dimensioni dell' immagine del logo
+        h = 402;
 
-//             default: return(TRUE);
-//         }
-//     }
+        x=GetSystemMetrics(SM_CXSCREEN);
+        y=GetSystemMetrics(SM_CYSCREEN);
 
-//     return(FALSE);
-// }
+        x= (x - w) / 2;
+        y= (y - h) / 2;
+
+        MoveWindow(hDlg, x, y, w, h, 1);
+
+        if ( fase_di_avvio == 1)
+            SetTimer(hDlg, WM_TIMER, 10000, NULL);    // 10 Secondi
+
+        return(TRUE);
+    }
+
+    if (message == WM_TIMER) {
+        if ( fase_di_avvio == 1) {
+            KillTimer(hDlg, WM_TIMER);         // Distrugge il timer...
+            EndDialog(hDlg, TRUE);
+        }
+    }
+
+    if (message == WM_COMMAND) {
+        switch (LOWORD(wParam))
+        {
+            case IDOK:
+            case 202:
+            case 203:
+                if ( fase_di_avvio == 1) {
+                    KillTimer(hDlg, WM_TIMER);
+                }
+                EndDialog(hDlg, TRUE);
+                return(TRUE);
+            
+            default:
+                return(TRUE);
+        }
+    }
+
+    return(FALSE);
+}
+*/
 
 
 /* Ex Schermata About */
