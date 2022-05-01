@@ -231,7 +231,7 @@ bool MostraPagella(void)
 		return FALSE;
     
 	} else {
-		if (sound_active) TabbozPlaySound(1100);
+        if (sound_active) TabbozPlaySound(400);
         sprintf(tmp, "AMMESS%c",toupper(ao));        /* promosso/a */
         pag_giudizio->copy_label(tmp);
 		pag_giudizio->labelcolor(FL_BLACK);

@@ -110,7 +110,7 @@ void Evento(void)
             }
 
             if (Studio >= 80) {
-                if (sound_active) TabbozPlaySound(1100);
+                if (sound_active) TabbozPlaySound(1201);
                 Soldi+=Paghetta;
                 if (logging)
                     writelog("eventi: Paghetta doppia !!!");

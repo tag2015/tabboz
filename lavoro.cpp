@@ -121,6 +121,8 @@ void ControllaRisposte(int n_ditta, int n_scheda)
         stipendio=1000 + ( (rand() % 10) * 100);    // stipendio random tra 1 mil e 1.9 mil
         numeroditta=n_ditta + 1;  //nelle dialog l'indice parte da zero
 
+        if (sound_active) TabbozPlaySound(505);
+
         fl_message_title("Hai trovato lavoro!");
         if (sesso == 'M')
             fl_alert("SEI STATO ASSUNTO!\nOra sei un felice dipendente della %s !", LavoroMem[numeroditta].nome);
@@ -128,6 +130,7 @@ void ControllaRisposte(int n_ditta, int n_scheda)
             fl_alert("SEI STATA ASSUNTA!\nOra sei una felice dipendente della %s !", LavoroMem[numeroditta].nome);
 
     } else {
+        if (sound_active) TabbozPlaySound(504);
         fl_message_title("Niente da fare...");
         if (sesso == 'M')
             fl_alert("Mi dispiace ragazzo, ma non sei riuscito a superare il test...\nOra puoi anche portare la tua brutta faccia fuori dal mio ufficio,\nprima che ti faccia buttare fuori a calci... Grazie e arrivederci...");
