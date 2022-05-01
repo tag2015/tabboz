@@ -908,23 +908,6 @@ int vvc(int i)
 // }
 
 
-
-
-/* Logga fine programma e salva tutto */
-void FineProgramma(char const *caller)
-{
-
-    #ifdef TABBOZ_DEBUG
-        sprintf(log_buf,"tabboz: FineProgramma chiamato da <%s>",caller);
-        writelog(log_buf);
-    #endif
-
-    SalvaTutto();
-}
-
-
-
-
 /********************************************************************/
 /* Logo...                                                          */
 /********************************************************************/
@@ -1788,7 +1771,7 @@ int main(int argc, char **argv)
     }
     while(chiusura != SAVEGAME);   // uscita normale (salva)
 
-    FineProgramma("main"); // Salvataggio partita...
+    SalvaTutto();
     #ifdef TABBOZ_DEBUG
         writelog("tabboz: standard exit (save & quit)");
     #endif
