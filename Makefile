@@ -1,2 +1,44 @@
-tabboz: zarrosim.cpp proteggi.cpp debug.cpp scuola.cpp famiglia.cpp compagnia.cpp calendario.cpp disco.cpp global.cpp eventi.cpp sound.cpp palestra.cpp negozi.cpp sharedimg.cpp scooter.cpp lavoro.cpp telefono.cpp gui/GUITabboz.cpp gui/GUIScuola.cpp gui/GUIFamiglia.cpp gui/GUICompagnia.cpp gui/GUIDisco.cpp gui/GUITestbed.cpp gui/GUINegoziLauncher.cpp gui/GUINegozioVestiti1.cpp gui/GUIPalestra.cpp gui/GUIScooter.cpp gui/GUIConcessionario.cpp gui/GUIEvento.cpp gui/GUILavoro.cpp gui/GUITelefonia.cpp 
-	g++ -Wall -I/mingw64/include -mwindows -DWIN32 -DUSE_OPENGL32 -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -o 'tabbozng.exe' 'zarrosim.cpp' 'proteggi.cpp' 'debug.cpp' 'scuola.cpp' 'famiglia.cpp' 'compagnia.cpp' 'calendario.cpp' 'disco.cpp' global.cpp eventi.cpp sound.cpp palestra.cpp negozi.cpp sharedimg.cpp scooter.cpp lavoro.cpp telefono.cpp gui/GUITabboz.cpp gui/GUIScuola.cpp gui/GUIFamiglia.cpp gui/GUICompagnia.cpp gui/GUIDisco.cpp gui/GUITestbed.cpp gui/GUINegoziLauncher.cpp gui/GUINegozioVestiti1.cpp gui/GUIPalestra.cpp gui/GUIScooter.cpp gui/GuiConcessionario.cpp gui/GUIEvento.cpp gui/GUILavoro.cpp gui/GUITelefonia.cpp -mwindows /mingw64/lib/libfltk.a /mingw64/lib/libfltk_images.a -lpng -ljpeg -lole32 -luuid -lcomctl32 -lwinmm
+# TABBOZ-NG MAKEFILE PRINCIPALE
+
+# Rileva OS
+ifeq ($(OS),Windows_NT)     # Windows_NT su XP, 2000, 7, Vista, 10...
+    DETECTED_OS := WIN
+else
+    DETECTED_OS := $(shell uname)  # Unix-like
+endif
+
+.PHONY: gui
+.SILENT: gui all
+
+GUI_DIR = gui
+
+CPPFILES = $(wildcard *.cpp)
+OBJFILES = $(CPPFILES:.cpp=.o)
+GUIOBJFILES = $(wildcard $(GUI_DIR)/*.o )
+
+COMPILER = $(shell fltk-config  --use-images --cxx --cxxflags --optim)
+LINK = $(shell fltk-config  --use-images --ldflags)
+ifeq ($(DETECTED_OS),WIN)   #per i suoni
+	LINK += -lwinmm
+endif
+
+all: common gui
+	echo;
+	echo "Run 'make tabbozng' to build executable"
+
+
+common:	$(OBJFILES)
+
+%.o: %.cpp
+	$(COMPILER) -c $< -o $@
+
+gui:
+	echo;
+	echo "=== making gui ===";
+	(cd $(GUI_DIR); $(MAKE) $(MFLAGS)) || exit 1;
+
+clean:
+	rm *.o
+
+tabbozng: $(OBJFILES) $(GUIOBJFILES)
+	$(COMPILER) $^ $(LINK) -o $@
