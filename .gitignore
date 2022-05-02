@@ -8,3 +8,4 @@
 tabboz.exe
 tabbozng.exe
 *.log
+.vscode/launch.json
