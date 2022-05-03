@@ -2,7 +2,7 @@
 version 1.0308
 header_name {.h}
 code_name {.cpp}
-decl {\#include <FL/Fl.H>} {selected private global
+decl {\#include <FL/Fl.H>} {private global
 }
 
 decl {\#include <FL/fl_ask.H>} {private global
@@ -117,9 +117,8 @@ else {
         code0 {if(euro) o->label("Soldi €");}
       }
       Fl_Return_Button {} {
-        callback {win_principale->activate();
-AggiornaPrincipale();
-win_telefonia->hide();}
+        callback {AggiornaPrincipale();
+win_telefonia->hide();} selected
         xywh {380 170 60 40} align 20
         code0 {o->image(ImgExit);}
       }

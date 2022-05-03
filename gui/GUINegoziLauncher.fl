@@ -35,7 +35,7 @@ decl {\#include "../calendario.h"} {private global
 decl {\#include "../negozi.h"} {private global
 }
 
-Function {GUINegoziLauncher()} {open selected
+Function {GUINegoziLauncher()} {open
 } {
   Fl_Window win_negozi {
     label Negozi open
@@ -56,7 +56,6 @@ win_negozi->hide();}
         callback {if (x_vacanza != 2) {
   GUINegoziVestiti_1();
   win_vestiti_1->show();
-  win_negozi->hide();
   if(sound_active) TabbozPlaySound(204);
 }else {
   MsgIcona(ICONA_AVVISO);
@@ -107,8 +106,7 @@ win_negozi->hide();}
       Fl_Button {} {
         label Telefonia
         callback {GUITelefonia();
-win_telefonia->show();
-win_negozi->hide();}
+win_telefonia->show();} selected
         xywh {210 65 170 30}
       }
     }

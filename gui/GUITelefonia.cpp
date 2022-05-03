@@ -214,8 +214,7 @@ static void cb_tel_val_soldi(Fl_Value_Output* o, void*) {
 }
 
 static void cb_(Fl_Return_Button*, void*) {
-  win_principale->activate();
-AggiornaPrincipale();
+  AggiornaPrincipale();
 win_telefonia->hide();
 }
 

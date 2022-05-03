@@ -24,7 +24,6 @@ static void cb_Bau(Fl_Button*, void*) {
   if (x_vacanza != 2) {
   GUINegoziVestiti_1();
   win_vestiti_1->show();
-  win_negozi->hide();
   if(sound_active) TabbozPlaySound(204);
 }else {
   MsgIcona(ICONA_AVVISO);
@@ -49,7 +48,6 @@ static void cb_Tabaccaio(Fl_Button*, void*) {
 static void cb_Telefonia(Fl_Button*, void*) {
   GUITelefonia();
 win_telefonia->show();
-win_negozi->hide();
 }
 
 Fl_Double_Window* GUINegoziLauncher() {
