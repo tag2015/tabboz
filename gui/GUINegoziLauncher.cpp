@@ -4,7 +4,7 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 #include "GUITabboz.h"
-#include "GUINegozioVestiti1.h"
+#include "GUINegoziVestiti.h"
 #include "GUITelefonia.h"
 #include "../zarrosim.h"
 #include "../dialogs.h"
@@ -22,7 +22,7 @@ win_negozi->hide();
 
 static void cb_Bau(Fl_Button*, void*) {
   if (x_vacanza != 2) {
-  GUINegozioVestiti_1();
+  GUINegoziVestiti_1();
   win_vestiti_1->show();
   win_negozi->hide();
   if(sound_active) TabbozPlaySound(204);

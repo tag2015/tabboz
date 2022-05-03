@@ -11,7 +11,7 @@ decl {\#include <FL/fl_ask.H>} {private global
 decl {\#include "GUITabboz.h"} {private global
 }
 
-decl {\#include "GUINegozioVestiti1.h"} {private global
+decl {\#include "GUINegoziVestiti.h"} {private global
 }
 
 decl {\#include "GUITelefonia.h"} {private global
@@ -32,10 +32,10 @@ decl {\#include "../sharedimg.h"} {private global
 decl {\#include "../calendario.h"} {private global
 }
 
-decl {\#include "../negozi.h"} {selected private global
+decl {\#include "../negozi.h"} {private global
 }
 
-Function {GUINegoziLauncher()} {open
+Function {GUINegoziLauncher()} {open selected
 } {
   Fl_Window win_negozi {
     label Negozi open
@@ -54,7 +54,7 @@ win_negozi->hide();}
       Fl_Button {} {
         label {Bau House}
         callback {if (x_vacanza != 2) {
-  GUINegozioVestiti_1();
+  GUINegoziVestiti_1();
   win_vestiti_1->show();
   win_negozi->hide();
   if(sound_active) TabbozPlaySound(204);
