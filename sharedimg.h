@@ -46,5 +46,10 @@ extern Fl_Shared_Image *ImgDitte[];
 
 extern Fl_Shared_Image *ImgExit;
 
+extern Fl_Shared_Image *ImgInfo;
+extern Fl_Shared_Image *ImgDomanda;
+extern Fl_Shared_Image *ImgAvviso;
+extern Fl_Shared_Image *ImgStop;
+extern Fl_Shared_Image *ImgCool;
 
 void CaricaSharedImgs();

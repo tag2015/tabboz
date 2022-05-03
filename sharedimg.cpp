@@ -37,6 +37,12 @@ Fl_Shared_Image *ImgDitte[N_DITTE];
 
 Fl_Shared_Image *ImgExit;
 
+Fl_Shared_Image *ImgInfo;
+Fl_Shared_Image *ImgDomanda;
+Fl_Shared_Image *ImgAvviso;
+Fl_Shared_Image *ImgStop;
+Fl_Shared_Image *ImgCool;
+
 
 /* Carica da file le immagini condivise (usate in più finestre) */
 void CaricaSharedImgs()
@@ -71,4 +77,11 @@ void CaricaSharedImgs()
     }
 
     ImgExit = Fl_Shared_Image::get("gui/icons/b_exit.png");
+
+    ImgInfo = Fl_Shared_Image::get("gui/icons/msg_info.png");
+    ImgDomanda = Fl_Shared_Image::get("gui/icons/msg_question.png");
+    ImgAvviso = Fl_Shared_Image::get("gui/icons/msg_warn.png");
+    ImgStop = Fl_Shared_Image::get("gui/icons/msg_error.png");
+    ImgCool = Fl_Shared_Image::get("gui/icons/msg_cool.png");
+
 }
