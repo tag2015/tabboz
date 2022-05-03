@@ -5,16 +5,13 @@
 #include <FL/Fl.H>
 #include <FL/Fl_Double_Window.H>
 extern Fl_Double_Window *win_testbed;
-#include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Box.H>
 extern Fl_Box *box_1;
-extern Fl_Box *box_2;
-extern Fl_Box *box_3;
 #include <FL/Fl_Button.H>
 #include <FL/Fl_Group.H>
-extern Fl_Button *but_essenza;
-extern Fl_Button *but_essenza2;
-extern Fl_Button *but_essenza3;
+extern Fl_Button *but_1;
+extern Fl_Button *but_2;
+extern Fl_Button *but_3;
 #include <FL/Fl_Value_Input.H>
 Fl_Double_Window* GUITestbed();
 #endif
