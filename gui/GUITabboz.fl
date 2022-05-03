@@ -8,6 +8,9 @@ decl {\#include <FL/fl_ask.H>} {private global
 decl {\#include "../zarrosim.h"} {private global
 }
 
+decl {\#include "../dialogs.h"} {private global
+}
+
 decl {\#include "../calendario.h"} {private global
 }
 
@@ -75,8 +78,7 @@ Function {InitVars()} {open private
 \#endif
 \#ifdef NOTABBOZZA
   tabbozza_gui = FALSE;
-\#endif} {selected
-  }
+\#endif} {}
 }
 
 Function {GUITabboz()} {open
@@ -84,6 +86,7 @@ Function {GUITabboz()} {open
   Fl_Window win_principale {
     label {Tabboz Simulator Next Generation!}
     callback {if(chiusura != NEWGAME) {
+  MsgIcona(ICONA_DOMANDA);
   fl_message_title("Uscita");
   if(fl_choice("Vuoi uscire dal magico mondo del tabbozzo\\ne tornare alla Realtà?","Non ancora","Sì",0)){
     chiusura = SAVEGAME;
@@ -92,6 +95,7 @@ Function {GUITabboz()} {open
   else
     chiusura = NOEXIT;
 } else {
+  MsgIcona(ICONA_DOMANDA);
   fl_message_title("Nuova partita");
   if(fl_choice("Vuoi sopprimere questo tabbozzo e ricominciare?","No!","Sì",0))
     o->hide();
@@ -142,7 +146,7 @@ win_about->show();}
       }
     }
     Fl_Group {} {
-      label {Sbatti...}
+      label {Sbatti...} open
       xywh {10 350 145 110} box EMBOSSED_FRAME labeltype NO_LABEL labelsize 12
     } {
       Fl_Button {} {
@@ -166,9 +170,10 @@ win_principale->deactivate();}
   win_palestra->show();
   win_principale->deactivate();
 }else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Palestra chiusa");
   fl_alert("Il tuo fisico da atleta dovrà aspettare...\\nvisto che oggi la palestra è chiusa...");
-}}
+}} selected
         image {icons/b_palestra.png} xywh {15 425 135 30} labelfont 2 align 272
       }
     }

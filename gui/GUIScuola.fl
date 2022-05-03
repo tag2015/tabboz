@@ -119,7 +119,7 @@ Function {GUITabbozScuola()} {open
     }
     Fl_Button {} {
       label Studia
-      callback {StudiaMateria(materia_selezionata);} selected
+      callback {StudiaMateria(materia_selezionata);}
       xywh {260 185 270 30}
     }
     Fl_Button {} {
@@ -159,8 +159,8 @@ Function {GUITabbozScuola()} {open
       Fl_Return_Button {} {
         callback {win_principale->activate();
 AggiornaPrincipale();
-win_scuola->hide();}
-        xywh {465 295 60 40} align 20
+win_scuola->hide();} selected
+        xywh {465 295 60 40} shortcut 0xff1b align 20
         code0 {o->image(ImgExit);}
       }
     }

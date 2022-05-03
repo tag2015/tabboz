@@ -20,16 +20,19 @@ decl {\#include "GUITelefonia.h"} {private global
 decl {\#include "../zarrosim.h"} {private global
 }
 
-decl {\#include "../sharedimg.h"} {selected private global
+decl {\#include "../dialogs.h"} {private global
+}
+
+decl {\#include "../sound.h"} {private global
+}
+
+decl {\#include "../sharedimg.h"} {private global
 }
 
 decl {\#include "../calendario.h"} {private global
 }
 
-decl {\#include "../negozi.h"} {private global
-}
-
-decl {\#include "../sound.h"} {private global
+decl {\#include "../negozi.h"} {selected private global
 }
 
 Function {GUINegoziLauncher()} {open
@@ -56,6 +59,7 @@ win_negozi->hide();}
   win_negozi->hide();
   if(sound_active) TabbozPlaySound(204);
 }else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Negozio chiuso");
   fl_alert("Oh, tip%c... i negozi sono chiusi di festa...",ao);
 }}
@@ -89,16 +93,16 @@ win_negozi->hide();}
       Fl_Button {} {
         label Tabaccaio
         callback {if (x_vacanza != 2) {
-//  if(!win_vestiti_1)
-//    GUINegozioVestiti_1();
+//  GUINegozioVestiti_1();
 //  win_vestiti_1->show();
 //  win_negozi->hide();
-  if(sound_active) TabbozPlaySound(204);
+//  if(sound_active) TabbozPlaySound(204);
 }else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Tabaccaio chiuso");
   fl_alert("Rimani fiss%c a guardare la saracinesca del tabaccaio irrimediabilmente chiusa...",ao);
 }}
-        xywh {210 30 170 30}
+        xywh {210 30 170 30} deactivate
       }
       Fl_Button {} {
         label Telefonia

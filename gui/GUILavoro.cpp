@@ -7,8 +7,9 @@
 #include <FL/Fl_PNG_Image.H>
 #include "GUITabboz.h"
 #include "../zarrosim.h"
-#include "../calendario.h"
 #include "../global.h"
+#include "../dialogs.h"
+#include "../calendario.h"
 #include "../sharedimg.h"
 #include "../sound.h"
 #include "../scooter.h"
@@ -21,11 +22,13 @@ Fl_Double_Window *win_lavoro=(Fl_Double_Window *)0;
 
 static void cb_Cerca(Fl_Button*, void*) {
   if (numeroditta > 0)  {
+  MsgIcona(ICONA_INFO);
   fl_message_title("Cerca Lavoro (ancora?)");
   fl_alert("Forse non ti ricordi che hai già un lavoro...");
   return;
 }
 if ( (x_vacanza == 2) || (x_giornoset == 6) )  {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Cerca Lavoro");
   fl_alert("Arrivat%c davanti ai cancelli della ditta li trovi irrimediabilmente chiusi...",ao);
   return;
@@ -40,6 +43,7 @@ static void cb_Licenziati(Fl_Button*, void*) {
 
 static void cb_Lavora(Fl_Button*, void*) {
   if((LavoroMem[numeroditta].fuoriporta == 1 ) && (ScooterData.attivita != 1)) {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Lavoro fuori porta");
   fl_alert("Senza scooter non puoi andare al lavoro!");
   return;
@@ -50,6 +54,7 @@ Lavora();
 
 static void cb_Fai(Fl_Button*, void*) {
   if((LavoroMem[numeroditta].fuoriporta == 1 ) && (ScooterData.attivita != 1)) {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Lavoro fuori porta");
   fl_alert("Senza scooter non puoi andare al lavoro!");
   return;
@@ -60,6 +65,7 @@ FaiIlLeccaculo();
 
 static void cb_Chiedi(Fl_Button*, void*) {
   if((LavoroMem[numeroditta].fuoriporta == 1 ) && (ScooterData.attivita != 1)) {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Lavoro fuori porta");
   fl_alert("Senza scooter non puoi andare al lavoro!");
   return;
@@ -70,6 +76,7 @@ ChiediAumento();
 
 static void cb_Sciopera(Fl_Button*, void*) {
   if((LavoroMem[numeroditta].fuoriporta == 1 ) && (ScooterData.attivita != 1)) {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Lavoro fuori porta");
   fl_alert("Senza scooter non puoi andare al lavoro!");
   return;
@@ -7920,6 +7927,7 @@ Fl_Button *lav_btn_ok=(Fl_Button *)0;
 
 static void cb_lav_btn_ok(Fl_Button*, void*) {
   if((LavoroMem[(num_ditta+1)].fuoriporta == 1 ) && (ScooterData.attivita != 1)) {
+  MsgIcona(ICONA_INFO);
   fl_message_title("Lavoro fuori porta");
   fl_message("Senza uno scooter funzionante non puoi raggiungere questa ditta...");
   return;
@@ -7933,7 +7941,8 @@ win_cercalavoro->hide();
 Fl_Button *lav_btn_back=(Fl_Button *)0;
 
 static void cb_lav_btn_back(Fl_Button*, void*) {
-  fl_message_title("Cerca lavoro");
+  MsgIcona(ICONA_AVVISO);
+fl_message_title("Cerca lavoro");
 fl_alert("Allora sparisci...");
 win_lavoro->activate();
 win_cercalavoro->hide();

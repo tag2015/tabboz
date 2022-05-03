@@ -7,10 +7,11 @@
 #include "GUINegozioVestiti1.h"
 #include "GUITelefonia.h"
 #include "../zarrosim.h"
+#include "../dialogs.h"
+#include "../sound.h"
 #include "../sharedimg.h"
 #include "../calendario.h"
 #include "../negozi.h"
-#include "../sound.h"
 
 Fl_Double_Window *win_negozi=(Fl_Double_Window *)0;
 
@@ -26,6 +27,7 @@ static void cb_Bau(Fl_Button*, void*) {
   win_negozi->hide();
   if(sound_active) TabbozPlaySound(204);
 }else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Negozio chiuso");
   fl_alert("Oh, tip%c... i negozi sono chiusi di festa...",ao);
 };
@@ -33,12 +35,12 @@ static void cb_Bau(Fl_Button*, void*) {
 
 static void cb_Tabaccaio(Fl_Button*, void*) {
   if (x_vacanza != 2) {
-//  if(!win_vestiti_1)
-//    GUINegozioVestiti_1();
+//  GUINegozioVestiti_1();
 //  win_vestiti_1->show();
 //  win_negozi->hide();
-  if(sound_active) TabbozPlaySound(204);
+//  if(sound_active) TabbozPlaySound(204);
 }else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Tabaccaio chiuso");
   fl_alert("Rimani fiss%c a guardare la saracinesca del tabaccaio irrimediabilmente chiusa...",ao);
 };
@@ -89,6 +91,7 @@ Fl_Double_Window* GUINegoziLauncher() {
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
       { Fl_Button* o = new Fl_Button(210, 30, 170, 30, "Tabaccaio");
         o->callback((Fl_Callback*)cb_Tabaccaio);
+        o->deactivate();
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(210, 65, 170, 30, "Telefonia");
         o->callback((Fl_Callback*)cb_Telefonia);

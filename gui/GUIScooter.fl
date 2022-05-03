@@ -2,7 +2,7 @@
 version 1.0308
 header_name {.h}
 code_name {.cpp}
-decl {\#include <FL/Fl.H>} {private global
+decl {\#include <FL/Fl.H>} {selected private global
 }
 
 decl {\#include <FL/fl_ask.H>} {private global
@@ -17,13 +17,16 @@ decl {\#include "GUIConcessionario.h"} {private global
 decl {\#include "../zarrosim.h"} {private global
 }
 
+decl {\#include "../dialogs.h"} {private global
+}
+
+decl {\#include "../sound.h"} {private global
+}
+
 decl {\#include "../sharedimg.h"} {private global
 }
 
 decl {\#include "../calendario.h"} {private global
-}
-
-decl {\#include "../sound.h"} {private global
 }
 
 decl {\#include "../scooter.h"} {private global
@@ -32,7 +35,7 @@ decl {\#include "../scooter.h"} {private global
 Function {GUIScooter()} {open
 } {
   Fl_Window win_scooter {
-    label Scooter open selected
+    label Scooter open
     xywh {368 380 510 240} type Double labelfont 1 labelsize 12 hotspot
     code0 {AggiornaScooter();} modal size_range {510 240 510 240} visible
   } {
@@ -43,6 +46,7 @@ Function {GUIScooter()} {open
   win_conce->show();
   win_scooter->deactivate();
 }else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Concessionario chiuso");
   fl_alert("Oh, tip%c... oggi il concessionario è chiuso...",ao);
 }}

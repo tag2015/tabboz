@@ -23,6 +23,9 @@ decl {\#include "../zarrosim.h"} {private global
 decl {\#include "../global.h"} {private global
 }
 
+decl {\#include "../dialogs.h"} {private global
+}
+
 decl {\#include "../sound.h"} {private global
 }
 
@@ -47,9 +50,10 @@ decl {const char *tema_corr;} {private global
 decl {int diff_nuova;} {private global
 }
 
-Function {GUIConfig()} {} {
+Function {GUIConfig()} {open
+} {
   Fl_Window win_config {
-    label Configurazione
+    label Configurazione open
     xywh {57 674 505 215} type Double hotspot
     code0 {tema_corr = Fl::scheme();} modal size_range {505 215 505 215} visible
   } {
@@ -194,8 +198,8 @@ win_about->show();}
 Function {GUIAbout()} {open
 } {
   Fl_Window win_about {
-    label {A proposito di Tabboz Simulator NG}
-    xywh {617 408 405 195} type Double hide hotspot modal size_range {405 195 405 195}
+    label {A proposito di Tabboz Simulator NG} open
+    xywh {617 408 405 195} type Double hotspot modal size_range {405 195 405 195} visible
   } {
     Fl_Box {} {
       label {Tabboz Simulator Next Generation}
@@ -214,8 +218,18 @@ Basato sul progetto originale copyright 1997-2000 by Andrea Bonomi, Emanuele Cac
     }
     Fl_Button {} {
       label {Norme di utilizzo}
-      callback {fl_message_title("Norme di utilizzo");
-fl_message("Il biglietto è valido solo dopo la convalida.\\nIl biglietto deve essere conservato per tutta la durata del viaggio.\\nIl diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto.\\nIl passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile,\\no comunque non valido, verrà abbattuto.\\nLa notifica del decesso verrà inviata ai parenti solo previo pagamento delle spese postali.");}
+      callback {MsgIcona(ICONA_INFO);
+fl_message_font(FL_HELVETICA, 10);
+fl_message_title("Norme di utilizzo");
+fl_message("Il biglietto è valido solo dopo la convalida.\\n\\
+Il biglietto deve essere conservato per tutta la durata del viaggio.\\n\\
+Il diritto a viaggiare cessa al termine della tratta corrispondente al \\
+valore del biglietto.\\nIl passeggero che al controllo non fosse in grado \\
+di presentare il biglietto o lo presentasse irriconoscibile,\\no comunque \\
+non valido, verrà abbattuto.\\n\\
+La notifica del decesso verrà inviata ai parenti solo previo pagamento \\
+delle spese postali.");
+fl_message_font(FL_HELVETICA, 14);} selected
       xywh {5 175 90 15} labelsize 10
     }
     Fl_Button {} {
@@ -257,7 +271,7 @@ Fl_Shared_Image *sh_img = Fl_Shared_Image::get("foto.png");} {}
         code2 {if(sesso=='M') o->value("M"); else o->value("F");}
       }
       Fl_Choice cid_in_sesso {
-        label {Sesso } selected
+        label {Sesso }
         xywh {90 80 45 25} down_box BORDER_BOX labelfont 2 labelsize 12 textfont 5
         code0 {if(!avvio) o->hide();}
         code1 {if(!tabbozza_gui) o->deactivate();}

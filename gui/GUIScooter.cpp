@@ -6,9 +6,10 @@
 #include "GUITabboz.h"
 #include "GUIConcessionario.h"
 #include "../zarrosim.h"
+#include "../dialogs.h"
+#include "../sound.h"
 #include "../sharedimg.h"
 #include "../calendario.h"
-#include "../sound.h"
 #include "../scooter.h"
 
 Fl_Double_Window *win_scooter=(Fl_Double_Window *)0;
@@ -19,6 +20,7 @@ static void cb_Concessionario(Fl_Button*, void*) {
   win_conce->show();
   win_scooter->deactivate();
 }else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Concessionario chiuso");
   fl_alert("Oh, tip%c... oggi il concessionario è chiuso...",ao);
 };

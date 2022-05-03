@@ -2,7 +2,7 @@
 version 1.0308
 header_name {.h}
 code_name {.cpp}
-decl {\#include <FL/Fl.H>} {private global
+decl {\#include <FL/Fl.H>} {selected private global
 }
 
 decl {\#include <FL/fl_ask.H>} {private global
@@ -14,13 +14,16 @@ decl {\#include "GUITabboz.h"} {private global
 decl {\#include "../zarrosim.h"} {private global
 }
 
-decl {\#include "../calendario.h"} {private global
+decl {\#include "../dialogs.h"} {private global
+}
+
+decl {\#include "../sound.h"} {private global
 }
 
 decl {\#include "../sharedimg.h"} {private global
 }
 
-decl {\#include "../sound.h"} {private global
+decl {\#include "../calendario.h"} {private global
 }
 
 decl {\#include "../telefono.h"} {private global
@@ -40,7 +43,7 @@ Function {GUITelefonia()} {open
 } {
   Fl_Window win_telefonia {
     label Telefonia open
-    xywh {355 452 455 225} type Double labelfont 1 labelsize 12 hotspot
+    xywh {616 479 455 225} type Double labelfont 1 labelsize 12 hotspot
     code0 {AggiornaCell();} modal size_range {455 225 455 225} visible
   } {
     Fl_Button {} {
@@ -50,6 +53,7 @@ Function {GUITelefonia()} {open
   win_compracell->show();
 
 }else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Negozio chiuso");
   fl_alert("Stranamente, in un giorno di vacanza, il negozio è chiuso...");
 }}
@@ -62,6 +66,7 @@ Function {GUITelefonia()} {open
    AggiornaCell();
 }
 else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Negozio chiuso");
   fl_alert("Stranamente, in un giorno di vacanza, il negozio è chiuso...");
 }}
@@ -74,6 +79,7 @@ else {
   win_ricaricacell->show();
 }
 else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Negozio chiuso");
   fl_alert("Stranamente, in un giorno di vacanza, il negozio è chiuso...");
 }}
@@ -276,7 +282,7 @@ Function {GUIRicaricaCell()} {open
           xywh {455 125 65 25} align 24
           code0 {o->copy_label(MostraSoldi(AbbonamentMem[5].prezzo));}
         }
-        Fl_Box {} {selected
+        Fl_Box {} {
           xywh {455 145 65 25} align 24
           code0 {o->copy_label(MostraSoldi(AbbonamentMem[6].prezzo));}
         }

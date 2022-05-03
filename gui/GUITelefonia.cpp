@@ -5,9 +5,10 @@
 #include <FL/fl_ask.H>
 #include "GUITabboz.h"
 #include "../zarrosim.h"
-#include "../calendario.h"
-#include "../sharedimg.h"
+#include "../dialogs.h"
 #include "../sound.h"
+#include "../sharedimg.h"
+#include "../calendario.h"
 #include "../telefono.h"
 
 static void add_prezzo(int scelta) {
@@ -27,6 +28,7 @@ static void cb_Compra(Fl_Button*, void*) {
   win_compracell->show();
 
 }else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Negozio chiuso");
   fl_alert("Stranamente, in un giorno di vacanza, il negozio è chiuso...");
 };
@@ -38,6 +40,7 @@ static void cb_Vendi(Fl_Button*, void*) {
    AggiornaCell();
 }
 else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Negozio chiuso");
   fl_alert("Stranamente, in un giorno di vacanza, il negozio è chiuso...");
 };
@@ -49,6 +52,7 @@ static void cb_Ricarica(Fl_Button*, void*) {
   win_ricaricacell->show();
 }
 else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Negozio chiuso");
   fl_alert("Stranamente, in un giorno di vacanza, il negozio è chiuso...");
 };

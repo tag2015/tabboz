@@ -6211,6 +6211,7 @@ Fl_Double_Window* GUITabbozScuola() {
         scuola_val_studio->hide();
       } // Fl_Value_Output* scuola_val_studio
       { Fl_Return_Button* o = new Fl_Return_Button(465, 295, 60, 40);
+        o->shortcut(0xff1b);
         o->callback((Fl_Callback*)cb_);
         o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
         o->image(ImgExit);

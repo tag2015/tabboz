@@ -3,6 +3,7 @@
 #include "GUITabboz.h"
 #include <FL/fl_ask.H>
 #include "../zarrosim.h"
+#include "../dialogs.h"
 #include "../calendario.h"
 #include "../scuola.h"
 #include "../lavoro.h"
@@ -39,6 +40,7 @@ Fl_Double_Window *win_principale=(Fl_Double_Window *)0;
 
 static void cb_win_principale(Fl_Double_Window* o, void*) {
   if(chiusura != NEWGAME) {
+  MsgIcona(ICONA_DOMANDA);
   fl_message_title("Uscita");
   if(fl_choice("Vuoi uscire dal magico mondo del tabbozzo\ne tornare alla Realtà?","Non ancora","Sì",0)){
     chiusura = SAVEGAME;
@@ -47,6 +49,7 @@ static void cb_win_principale(Fl_Double_Window* o, void*) {
   else
     chiusura = NOEXIT;
 } else {
+  MsgIcona(ICONA_DOMANDA);
   fl_message_title("Nuova partita");
   if(fl_choice("Vuoi sopprimere questo tabbozzo e ricominciare?","No!","Sì",0))
     o->hide();
@@ -193,6 +196,7 @@ static void cb_Palestra(Fl_Button*, void*) {
   win_palestra->show();
   win_principale->deactivate();
 }else {
+  MsgIcona(ICONA_AVVISO);
   fl_message_title("Palestra chiusa");
   fl_alert("Il tuo fisico da atleta dovrà aspettare...\nvisto che oggi la palestra è chiusa...");
 };

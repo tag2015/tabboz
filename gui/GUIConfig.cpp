@@ -8,6 +8,7 @@
 #include "GUITabboz.h"
 #include "../zarrosim.h"
 #include "../global.h"
+#include "../dialogs.h"
 #include "../sound.h"
 #include "../debug.h"
 #include "../lavoro.h"
@@ -209,8 +210,18 @@ ua azioni");
 Fl_Double_Window *win_about=(Fl_Double_Window *)0;
 
 static void cb_Norme(Fl_Button* o, void*) {
-  fl_message_title("Norme di utilizzo");
-fl_message("Il biglietto è valido solo dopo la convalida.\nIl biglietto deve essere conservato per tutta la durata del viaggio.\nIl diritto a viaggiare cessa al termine della tratta corrispondente al valore del biglietto.\nIl passeggero che al controllo non fosse in grado di presentare il biglietto o lo presentasse irriconoscibile,\no comunque non valido, verrà abbattuto.\nLa notifica del decesso verrà inviata ai parenti solo previo pagamento delle spese postali.");
+  MsgIcona(ICONA_INFO);
+fl_message_font(FL_HELVETICA, 10);
+fl_message_title("Norme di utilizzo");
+fl_message("Il biglietto è valido solo dopo la convalida.\n\
+Il biglietto deve essere conservato per tutta la durata del viaggio.\n\
+Il diritto a viaggiare cessa al termine della tratta corrispondente al \
+valore del biglietto.\nIl passeggero che al controllo non fosse in grado \
+di presentare il biglietto o lo presentasse irriconoscibile,\no comunque \
+non valido, verrà abbattuto.\n\
+La notifica del decesso verrà inviata ai parenti solo previo pagamento \
+delle spese postali.");
+fl_message_font(FL_HELVETICA, 14);
 }
 
 static void cb_OK1(Fl_Button*, void*) {
