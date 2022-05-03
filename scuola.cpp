@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "zarrosim.h"
+#include "dialogs.h"
 #include "sound.h"
 #include "debug.h"
 
@@ -112,7 +113,8 @@ void CorrompiProf(int scelta)
 
     if (!CheckVacanza()) {
         i=30 + (rand() % 30 * 2);   //I valori dei soldi e' meglio che siano sempre pari, in modo da facilitare la divisione x gli euro...
-        sprintf(tmp,"Mah... forse per %s potrei dimenticare i tuoi ultimi compiti in classe...",MostraSoldi(i) );
+	    MsgIcona(ICONA_DOMANDA);
+		sprintf(tmp,"Mah... forse per %s potrei dimenticare i tuoi ultimi compiti in classe...",MostraSoldi(i) );
 		fl_message_title("Corrompi il professore?");
         si_no=fl_choice(tmp, "Ok...", "No", 0);
     switch(si_no){
@@ -131,7 +133,8 @@ void CorrompiProf(int scelta)
                         MaterieMem[scelta].voto-=2;
                     else
                         MaterieMem[scelta].voto=2;       // BUGFIX negli altri casi limita a 2
-                    fl_message_title("Errore Critico");
+                    MsgIcona(ICONA_STOP);
+					fl_message_title("Errore Critico");
                     fl_alert("Cosa ??? Prima cerchi di corrompermi, poi si scopre che non hai abbastanza soldi !!!");
  				}
                 break;
@@ -147,6 +150,8 @@ void CorrompiProf(int scelta)
 /* Minaccia o Seduci prof. della materia selezionata */
 void MinacciaSeduciProf(int scelta)
 {
+    MsgIcona(ICONA_STOP);
+
     if (!CheckVacanza()) {
         if (sesso == 'M') { // Maschietto - minaccia prof.
             if ((Reputazione >= 30) || (rand() % 10 < 1)) {    //TAG2015 rep>30 è sufficiente per minacciare?
@@ -265,6 +270,8 @@ void ScriviVoti(void)
 /* Controlla se è un giorno di vacanza (feste programmate e estate) */
 bool CheckVacanza(void)
 {
+    MsgIcona(ICONA_AVVISO);
+
     if ( x_vacanza != 0 ) {
         fl_message_title("Scuola chiusa...");
 		fl_alert("Non puoi andare a scuola in un giorno di vacanza!");

@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "zarrosim.h"
+#include "dialogs.h"
 #include "sound.h"
 #include "debug.h"
 
@@ -76,6 +77,7 @@ void AggiornaPalestra(void)
 void VaiInPalestra(void)
 {
     if (scad_pal_giorno < 1) {
+        MsgIcona(ICONA_AVVISO);
         fl_message_title("Palestra");
         fl_message("Prima di poter venire in palestra devi fare un abbonamento!");
     } else {
@@ -98,7 +100,7 @@ void FaiLampada(void)
         nomoney(PALESTRA);
     } else {
         if (current_testa < 3) {
-            current_testa++; // Grado di abbronzatura
+            current_testa++;    // Grado di abbronzatura
             if (Fama < 20) Fama++;    // Da 0 a 3 punti in piu' di fama
             if (Fama < 45) Fama++;    // ( secondo quanta se ne ha gia')
             if (Fama < 96) Fama++;
@@ -106,6 +108,7 @@ void FaiLampada(void)
             current_testa=4; // Carbonizzato...
             if (Fama > 8) Fama-=8;
             if (Reputazione > 5) Reputazione-=5;
+            MsgIcona(ICONA_STOP);
             fl_message_title("Lampada");
             fl_alert("L'eccessiva esposizione del tuo corpo ai raggi ultravioletti,\nprovoca un avanzato grado di carbonizzazione\ne pure qualche piccola mutazione genetica...");
         }
@@ -126,6 +129,7 @@ void FaiLampada(void)
 void CompraAbbonamento(int scelta)
 {
     if (scad_pal_giorno > 0 ) {
+        MsgIcona(ICONA_INFO);
         fl_message_title("Palestra");
         fl_message("Hai già un abbonamento, perchè te ne serve un altro ???");
         return;

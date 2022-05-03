@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "zarrosim.h"
+#include "dialogs.h"
 #include "debug.h"
 
 #include "scuola.h"
@@ -109,6 +110,7 @@ void Giorno(void)
     x_giorno++;
     if (x_giorno > InfoMese[x_mese-1].num_giorni) {
         if ((x_mese == 2) && (x_anno_bisesto == 0) && (x_giorno == 29)) {
+            MsgIcona(ICONA_INFO);
             fl_message_title("Anno Bisestile");
             fl_message("Anno bisesto, anno funesto...");
         } else {
@@ -149,6 +151,7 @@ void Giorno(void)
 
             giorni_di_lavoro=1;
 
+            MsgIcona(ICONA_COOL);
             fl_message_title("Stipendio!");
             fl_message("Visto che sei stat%c %s brav%c dipendente sottomess%c, ora ti arriva il tuo misero stipendio di %s",ao, un_una, ao, ao, MostraSoldi(totale_stipendio));
             Soldi+=totale_stipendio;
@@ -164,6 +167,7 @@ void Giorno(void)
     /* ---------------> P A L E S T R A <---------------  */
     if (scad_pal_mese == x_mese)
         if (scad_pal_giorno == x_giorno) {
+            MsgIcona(ICONA_AVVISO);
             fl_message_title("Palestra");
             fl_message("E' appena scaduto il tuo abbonamento della palestra...");
             scad_pal_giorno = 0;
@@ -186,17 +190,20 @@ void Giorno(void)
 
         case 6: /* Giugno ---------------------------------------------------------- */
                 if (x_giorno == 15) {
+                    MsgIcona(ICONA_COOL);
                     fl_message_title("Ultimo giorno di scuola");
                     fl_message("Da domani iniziano le vacanza estive!");
                 }
                 if ((x_giorno == 22) && (win_principale)) {  /* Mostra pagella (controlla se inizializzato)*/
                     if(MostraPagella()) {
+                        MsgIcona(ICONA_COOL);
                         fl_message_title("Studiare paga...");
                         fl_message("Visto che sei stato promosso,\nti diamo un po' di mancia...");
                         Soldi+=200;
                         if(Paghetta<30)     // Se è inferiore, riporta al valore standard
                             Paghetta=30;
                     } else {
+                        MsgIcona(ICONA_STOP);
                         fl_message_title("Too cool for school");
                         fl_message("Visto che ti sei fatto bocciare,\npaghetta dimezzata!!!");
                         Paghetta/=2;
@@ -218,6 +225,7 @@ void Giorno(void)
         case 9: /* Settembre ------------------------------------------------------- */
                 if (x_giorno < 15) x_vacanza=1;   /* Vacanze Estive */
                 if (x_giorno == 15) {
+                    MsgIcona(ICONA_INFO);
                     fl_message_title("Primo giorno di scuola");
                     fl_message("Questa mattina devi tornare a scuola...");
                     for (int i=1;i<10;i++)    /* Azzera le materie... */
@@ -233,6 +241,7 @@ void Giorno(void)
                 }
                 if (x_giorno == 25) {  /* Natale */
                     if ((current_pantaloni == 19) && (current_giubbotto == 19)) {
+                        MsgIcona(ICONA_COOL);
                         fl_message_title("Natale...");
                         fl_message("Con il tuo vestito da Babbo Natale riesci a stupire tutti...");
                         Fama+=20;
@@ -244,6 +253,7 @@ void Giorno(void)
                     }
                 }
                 if ((x_giorno == 28) && ((current_pantaloni == 19) || (current_giubbotto == 19))) {
+                    MsgIcona(ICONA_AVVISO);
                     fl_message_title("Natale...");
                     fl_message("Natale è già passato... Togliti quel dannato vestito...");
                     Fama-=5;
@@ -262,6 +272,7 @@ void Giorno(void)
         if (InfoVacanze[i].mese == x_mese)
             if (InfoVacanze[i].giorno == x_giorno) {
                 if(auguri_tipa)  break; // se già visualizzato "buon natale", usciamo dal ciclo
+                MsgIcona(ICONA_INFO);
                 fl_message_title(InfoVacanze[i].nome);
                 fl_message(InfoVacanze[i].descrizione);
                 x_vacanza=2;        /* 2 = sono chiusi anche i negozi... */

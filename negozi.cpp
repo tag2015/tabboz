@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "zarrosim.h"
+#include "dialogs.h"
 #include "debug.h"
 
 #include "calendario.h"
@@ -142,6 +143,7 @@ bool OfferteDiNatale(void)
     if ((x_mese == 12) && (Soldi >= COSTO_VESTITO_NATALIZIO)) {
         if ((x_giorno > 14) && ( x_giorno < 25) && ( current_giubbotto!=19) && (current_pantaloni!=19)) {
             sprintf(tmp,"Vuoi comperare, per %s, un meraviglioso vestito da Babbo Natale ?",MostraSoldi(COSTO_VESTITO_NATALIZIO));
+            MsgIcona(ICONA_DOMANDA);
             fl_message_title("Offerte Natalizie...");
             if(fl_choice(tmp,"No","Si!",0)) {
                 current_giubbotto=19;

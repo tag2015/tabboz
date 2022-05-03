@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "zarrosim.h"
+#include "dialogs.h"
 #include "sound.h"
 #include "debug.h"
 
@@ -45,16 +46,19 @@ void ChiediAumentoPaghetta(void)
     if (Studio > 40) {
         if (((Studio - Paghetta +  Fortuna) > ( 75 + rand() % 50)) && (Paghetta < 96) ) {  //BUGFIX qui c'era & anzichè &&. Cmq la prob è irrisoria andrebbe modificato
             sprintf(tmp,"Va bene... ti daremo %s di paghetta in più...",MostraSoldi(5));
+            MsgIcona(ICONA_COOL);
             fl_message_title("Aumento paghetta !");
             fl_message(tmp);
             Paghetta+=5;
             Evento();
         } else {
+            MsgIcona(ICONA_AVVISO);
             fl_message_title("Errore irrecuperabile");
             fl_alert("Vedi di scordartelo...\nDovrà passare molto tempo prima che ti venga aumentata la paghetta...");
             Evento();
         }
     } else {
+        MsgIcona(ICONA_AVVISO);
         fl_message_title("Errore irrecuperabile");
         fl_alert("Quando andrai meglio a scuola, forse...");
     }
@@ -71,6 +75,7 @@ void ChiediSoldiExtra(void)
         if (AttesaSoldi == 0) {
             AttesaSoldi=ATTESAMAX+1;
             Soldi+=10;
+            MsgIcona(ICONA_COOL);
             fl_message_title("Soldi extra!");
             if (!euro)
                 fl_message("E va bene, possiamo darti %d L. ...",CALCSOLDI(10));
@@ -82,11 +87,13 @@ void ChiediSoldiExtra(void)
             }
             Evento();
         } else {
+            MsgIcona(ICONA_AVVISO);
             fl_message_title("Non te li diamo");
             fl_alert("Ma insomma! Non puoi continuamente chiedere soldi!\nAspetta ancora qualche giorno. Fai qualche cosa di economico nel frattempo...");
             Evento();
         }
     } else {
+        MsgIcona(ICONA_AVVISO);
         sprintf(tmp,"Quando andrai meglio a scuola potrai tornare a chiederci dei soldi, non ora.\nMa non lo sai che per la tua vita è importante studiare, e dovresti impegnarti\ndi più, perchè quando ti impegni i risultati si vedono, solo che sei svogliat%c\ne non fai mai nulla, mi ricordo che quando ero giovane io era tutta un'altra cosa...\nallora sì che i giovani studiavano...",ao);
         fl_message_title("Errore irrecuperabile");
         fl_alert(tmp);
@@ -99,6 +106,7 @@ void ChiediSoldiExtra(void)
 void ChiediSoldiPapa(void)
 {
     if (sound_active) TabbozPlaySound(801);
+    MsgIcona(ICONA_STOP);
     fl_message_title("Errore irrecuperabile");
     fl_alert("Non pensarci neanche lontanamente...");
     Evento();

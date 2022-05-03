@@ -25,6 +25,7 @@
 
 #include "zarrosim.h"
 #include "global.h"
+#include "dialogs.h"
 #include "sound.h"
 #include "debug.h"
 
@@ -99,6 +100,7 @@ void CercaTipa(void)
 bool Provaci(void)
 {
 
+    MsgIcona(ICONA_COOL);
     // Calcola se ce la fa o meno con la tipa...
     if ( ((fig_nuovatipa * 2) + ( rand() % 50)) <= ( Fama + Reputazione + (rand() % 30)) )  {
     
@@ -151,6 +153,7 @@ int DueDiPicche(void)
 void TelefonaTipa(void)
 {
     if (Rapporti <= 0)  {
+        MsgIcona(ICONA_DOMANDA);
         fl_message_title("Non sei molto intelligente...");
         if (sesso == 'M')
             fl_alert("Scusa, che ragazza vorresti chiamare ???");
@@ -160,6 +163,7 @@ void TelefonaTipa(void)
     }
 //FIXME questo check è sbagliato, bisogna separare i due casi (pochi soldi e nocell, oppure cell ma abbo basso)
     if ((Soldi <= 5) && ((AbbonamentData.creditorest < 2) && (CellularData.stato < 0) )) {
+        MsgIcona(ICONA_AVVISO);
         fl_message_title("Non toccare quel telefono...");
         fl_alert("<< Sei fai ancora una telefonata, ti spezzo le gambe... >>\n disse tuo padre con una accetta in mano...");
     
@@ -183,6 +187,7 @@ void TelefonaTipa(void)
 void EsciConTipa(void)
 {
     if (Rapporti <= 0)  {
+        MsgIcona(ICONA_DOMANDA);
         fl_message_title("Non sei molto intelligente...");
         if (sesso == 'M')
             fl_alert("Scusa, con che tipa vorresti uscire ???");
@@ -190,6 +195,8 @@ void EsciConTipa(void)
             fl_alert("Scusa, ma con chi vorresti uscire ???");
         return;
     }
+
+    MsgIcona(ICONA_AVVISO);
 
     if ((ScooterData.stato == -1000 ) && (sesso == 'M')) {
         fl_message_title("Compra uno scooter!");
@@ -249,6 +256,7 @@ void LasciaTipa(void)
 {
     char tmp[128];
 
+    MsgIcona(ICONA_DOMANDA);
     if (Rapporti <= 0)  {
         if (sesso == 'M') {
             fl_message_title("Lascia Tipa");
@@ -276,6 +284,7 @@ void LasciaTipa(void)
         
         // se molli una figa perdi rep...
         if ((FigTipa >= 79) && (sesso == 'M')) {
+            MsgIcona(ICONA_STOP);
             fl_message_title("Idiota...");
             fl_message("Appena vengono a sapere quello che hai fatto, i tuoi amici ti prendono a scarpate.\nQualcuno, più furbo di te, va a consolarla...");
             Reputazione-=8;

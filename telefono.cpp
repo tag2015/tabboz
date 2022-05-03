@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "zarrosim.h"
+#include "dialogs.h"
 #include "sound.h"
 #include "debug.h"
 
@@ -111,17 +112,21 @@ bool VendiCellulare(void)
     char  tmp[128];
     int offerta;
 
+    fl_message_title("Vendi Telefonino");
     if (CellularData.stato > -1) {
         offerta=CellularData.prezzo/2 + 15;
+        MsgIcona(ICONA_DOMANDA);
         sprintf(tmp,"Ti posso dare %s per il tuo telefonino... vuoi vendermelo ?",MostraSoldi(offerta));
-        fl_message_title("Vendi Telefonino");
         if( ! fl_choice(tmp,"Ok","No",0) ) {
             CellularData.stato=-1;
             Soldi+=offerta;
             return TRUE;
-        } else
+        } else {
+            MsgIcona(ICONA_AVVISO);
             fl_alert("Allora vai a farti fottere, pirletta!");
+        }
     } else {
+        MsgIcona(ICONA_DOMANDA);
         fl_alert("Che telefonino vuoi vendere, pirletta?");
     }
 
@@ -154,6 +159,7 @@ bool AbbonaCellulare(int scelta)
             return TRUE;
             
         } else {
+            MsgIcona(ICONA_DOMANDA);
             fl_message_title("Telefonino");
             fl_alert("Oh, che te ne fai di una ricarica se non hai la sim ???");
             return FALSE;

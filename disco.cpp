@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "zarrosim.h"
+#include "dialogs.h"
 #include "sound.h"
 #include "debug.h"
 
@@ -70,6 +71,7 @@ void PagaDisco(int scelta)
     int prezzo;
 
     if ( (DiscoMem[scelta].fuoriporta) && (ScooterData.attivita != 1) ) {
+        MsgIcona(ICONA_AVVISO);
         fl_message_title("Discoteca fuori porta");
         fl_alert("Senza uno scooter funzionante non puoi andare nelle discoteche fuori porta...");
         Evento();
@@ -77,6 +79,7 @@ void PagaDisco(int scelta)
     }
     
     if (DiscoMem[scelta].g_chiusura == x_giornoset) {
+        MsgIcona(ICONA_AVVISO);
         fl_message_title("Giorno di chiusura");
         fl_alert("Un cartello recita che oggi è il giorno di chiusura settimanale...");
         return;
@@ -92,6 +95,7 @@ void PagaDisco(int scelta)
     else
         if ((DiscoMem[scelta].fama > Fama) && (sesso == 'M')) {    // check selezione all'ingresso
             if (sound_active) TabbozPlaySound(302);
+            MsgIcona(ICONA_STOP);
             fl_message_title("Selezione all'ingresso");
             fl_alert("Mi dispiace signore, conciato così, qui non può entrare...\nVenga vestito meglio la prossima volta, signore.");
             if (Reputazione > 2) Reputazione--;

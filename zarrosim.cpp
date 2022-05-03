@@ -27,6 +27,7 @@
 
 #include "zarrosim.h"
 #include "sharedimg.h"
+#include "dialogs.h"
 #include "sound.h"
 #include "proteggi.h"
 #include "debug.h"
@@ -59,6 +60,8 @@
 int     cheat;
 bool    firsttime;
 int     chiusura;
+
+
 
 /* Caratteristiche tabbozzo */
 int     Fama;
@@ -232,6 +235,7 @@ char *MostraSoldi(int i)
 /* Routine che gestisce diverse situazioni quando i soldi sono < di quelli richiesti */
 void nomoney(int tipo)
 {
+    MsgIcona(ICONA_STOP);
     switch (tipo) {
         
         case DISCO:
@@ -341,10 +345,11 @@ static void InitTabboz(void)
     Fl_RGB_Image *icona = new Fl_RGB_Image(icona_xpm);
     Fl_Window::default_icon(icona);
     
-    /* Etichette dei pulsanti per fl_message, fl_alert... */
+    /* Imposta le etichette dei pulsanti per fl_message, fl_alert e cancella l'icona */
     fl_close = "Chiudi";
     fl_cancel = "Annulla";
     fl_yes = "Sì";
+    MsgInit();
 
     /* Inizializzazione dei numeri casuali... */
     srand(time(NULL));
@@ -725,6 +730,7 @@ static void CaricaTutto(void)
     if ((new_counter - buf_i) != 0) {
         if(!firsttime) {
             if(sound_active) TabbozPlaySound(0001);
+            MsgIcona(ICONA_STOP);
             fl_message_title("Ma cazz...");
             fl_alert("Visto che ti sei divertito a pasticciare con il salvataggio,\ni parametri verranno resettati!");
         }
@@ -1310,6 +1316,7 @@ int main(int argc, char **argv)
             GUICartaID(TRUE);
             win_cartaid->position( (Fl::w() - win_cartaid->w() ) / 2, (Fl::h() - win_cartaid->h() ) / 2);   // centra finestra
             win_cartaid->show();
+            MsgIcona(ICONA_INFO);
             fl_message_title("A new tabboz is born");
             fl_message("Benvenuto in Tabboz Simulator NG!\nIn questa finestra puoi personalizzare\nil personaggio (o accettare i valori di default...)");
             while(win_cartaid->shown()) Fl::wait();

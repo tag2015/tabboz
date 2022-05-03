@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "zarrosim.h"
+#include "dialogs.h"
 #include "sound.h"
 
 #include "calendario.h"
@@ -102,6 +103,7 @@ void ControllaRisposte(int n_ditta, int n_scheda)
     }
 
     if (Rcheck != 111) {    // + di una crocetta per risposta o nessuna risposta...
+        MsgIcona(ICONA_STOP);
         if (sesso == 'M') {
             fl_message_title("Sei un po' stupido...");
             fl_alert("Mi spieghi perchè dovremmo assumere qualcuno che non è neanche in grado di mettere delle crocette su un foglio ???");
@@ -122,7 +124,7 @@ void ControllaRisposte(int n_ditta, int n_scheda)
         numeroditta=n_ditta + 1;  //nelle dialog l'indice parte da zero
 
         if (sound_active) TabbozPlaySound(505);
-
+        MsgIcona(ICONA_COOL);
         fl_message_title("Hai trovato lavoro!");
         if (sesso == 'M')
             fl_alert("SEI STATO ASSUNTO!\nOra sei un felice dipendente della %s !", LavoroMem[numeroditta].nome);
@@ -131,6 +133,7 @@ void ControllaRisposte(int n_ditta, int n_scheda)
 
     } else {
         if (sound_active) TabbozPlaySound(504);
+        MsgIcona(ICONA_STOP);
         fl_message_title("Niente da fare...");
         if (sesso == 'M')
             fl_alert("Mi dispiace ragazzo, ma non sei riuscito a superare il test...\nOra puoi anche portare la tua brutta faccia fuori dal mio ufficio,\nprima che ti faccia buttare fuori a calci... Grazie e arrivederci...");
@@ -152,6 +155,7 @@ void Licenziati(void)
     if (!GiornoDiLavoro("Licenziati"))
         return;  //se è festa o disoccupato
 
+    MsgIcona(ICONA_DOMANDA);
     fl_message_title("Mi licenzio!");
     sprintf(tmp,"Sei proprio sicur%c di voler dare le dimissioni dalla %s ?",ao,LavoroMem[numeroditta].nome);
     if(! fl_choice(tmp,"Sì, mi sono rotto","Ci ho ripensato...", 0)) {
@@ -214,6 +218,7 @@ void ChiediAumento(void)
 
     if (impegno > 90) {
         if ((30 + Fortuna) > (30 + rand() % 50)) {
+            MsgIcona(ICONA_COOL);
             fl_message("Forse per questa volta potremmo darti qualcosina in più...");
             if (sound_active) TabbozPlaySound(1100);
 
@@ -223,6 +228,7 @@ void ChiediAumento(void)
             impegno-=30;
             Evento();
         } else {
+            MsgIcona(ICONA_AVVISO);
             if (sesso == 'M' )  // visto che l'impegno è >90, sfanculata politically correct
                 fl_alert("Siamo soddisfatti del tuo rendimento, ma attualmente\nnon possiamo applicare variazioni agli emolumenti per i dipendenti.");
             else
@@ -230,9 +236,10 @@ void ChiediAumento(void)
             impegno-=20;
             Evento();
         }
-    } else
+    } else {
+        MsgIcona(ICONA_STOP);
         fl_alert("Che cosa vorresti??? SCORDATELO!!!!");
-    
+    }    
     AggiornaLavoro();
 }
 
@@ -331,7 +338,7 @@ bool GiornoDiLavoro(const char *titolo_dialog)
 {
 
     fl_message_title(titolo_dialog);
-
+    MsgIcona(ICONA_AVVISO);
     if (numeroditta < 1)  {
         fl_alert("Forse non ti ricordi che sei disokkupat%c...",ao);
         return FALSE;

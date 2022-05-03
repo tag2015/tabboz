@@ -24,6 +24,7 @@
 #include <stdlib.h>
 
 #include "zarrosim.h"
+#include "dialogs.h"
 #include "sound.h"
 #include "debug.h"
 
@@ -157,6 +158,7 @@ void CalcolaVelocita(bool scooter_nuovo)
         if (benzina < 1) ScooterData.attivita = 6;    // A secco
 
         if (ScooterData.attivita != 1) {
+            MsgIcona(ICONA_AVVISO);
             fl_message_title("Attenzione");
             fl_alert("Il tuo scooter è %s!", n_attivita[ScooterData.attivita]);
         }
@@ -171,10 +173,12 @@ void AcquistaScooter(int scelta)
 
     if (ScooterData.stato != -1000) {  //BUGFIX check cambiato, perchè prima rottamava anche se poi non bastavano i soldi x comprare quello nuovo...
         incentivo=1000;
+        MsgIcona(ICONA_INFO);
         fl_message_title("Incentivi");
         fl_message("Per il tuo vecchio scooter da rottamare,\nti diamo %s di supervalutazione...",MostraSoldi(1000));
     }
     if (ScooterMem[scelta].prezzo > (Soldi+incentivo)) {
+        MsgIcona(ICONA_STOP);
         fl_message_title("Non hai abbastanza soldi!");
         fl_alert("Ti piacerebbe comprare lo scooter, vero?\nPurtroppo, non hai abbastanza soldi...");
         if (Reputazione > 3 )
@@ -192,6 +196,7 @@ void AcquistaScooter(int scelta)
         }
         ScooterData=ScooterMem[scelta];
         benzina=20;
+        MsgIcona(ICONA_COOL);
         fl_message_title("Scooter nuovo!");
         fl_message("Fai un giro del quartiere per farti vedere con lo scooter nuovo...");
         Reputazione+=4;
@@ -205,10 +210,10 @@ void AcquistaScooter(int scelta)
 /* Routine per parcheggiare/riprendere lo scooter */
 bool ParcheggiaScooter(void)
 {
-
     fl_message_title("Parcheggia lo scooter");
 
     if (ScooterData.stato == -1000) {
+        MsgIcona(ICONA_DOMANDA);
         fl_alert("Mi spieghi come fai a parcheggiare lo scooter se non lo hai ???");
         return FALSE;
         }
@@ -221,6 +226,7 @@ bool ParcheggiaScooter(void)
             ScooterData.attivita = 1;
             return FALSE;
         default:
+            MsgIcona(ICONA_AVVISO);
             fl_alert("Mi spieghi come fai a parcheggiare lo scooter visto che è %s ???",n_attivita[ScooterData.attivita]);
     };
     return FALSE;
@@ -232,6 +238,7 @@ void FaiBenza(void)
 {
     fl_message_title("Fai benza");
     if (ScooterData.stato == -1000) {
+        MsgIcona(ICONA_DOMANDA);
         fl_alert("Mi spieghi come fai a far benzina allo scooter se non lo hai ???");
         return;
     }
@@ -242,10 +249,12 @@ void FaiBenza(void)
         case 3:
         case 6:
                 if (Soldi < 10) {
+                    MsgIcona(ICONA_AVVISO);
                     fl_alert("Al distributore automatico puoi fare un minimo di %s di benzina...",MostraSoldi(10));
                     break;
                 }
                 if (benzina == 50) {
+                    MsgIcona(ICONA_AVVISO);
                     fl_message_title("Un genio");
                     fl_alert("Arrivato dal benzinaio,\nti accorgi che il serbatoio è già pieno...");
                     break;
@@ -258,10 +267,12 @@ void FaiBenza(void)
                 benzina=50;    // 5 litri, il massimo che puo' contenere...
                 if (ScooterData.cc == 5) benzina = 850;  // 85 litri, x la macchinina un po' figa...
                 CalcolaVelocita(FALSE);
+                MsgIcona(ICONA_INFO);
                 fl_message("Fai %s di benzina e riempi lo scooter...",MostraSoldi(10));
                 break;
 
-        default: fl_message("Mi spieghi come fai a far benzina allo scooter visto che è %s ???",n_attivita[ScooterData.attivita]);
+        default:MsgIcona(ICONA_AVVISO);
+                fl_message("Mi spieghi come fai a far benzina allo scooter visto che è %s ???",n_attivita[ScooterData.attivita]);
     };
     AggiornaScooter();
 }
@@ -274,6 +285,7 @@ void RiparaScooter(void)
     char tmp[128];
     int costo;  // Importante lo static !!! FIXME e perché visto che lo ricalcola sempre?
 
+    MsgIcona(ICONA_DOMANDA);
     fl_message_title("Ripara Scooter");    
     if (ScooterData.stato != -1000) {
         if (ScooterData.stato == 100)
@@ -350,11 +362,15 @@ void RiparaScooter(void)
                         break;
                 }
                 AggiornaScooter();
-            } else
+            } else {
+                MsgIcona(ICONA_AVVISO);
                 fl_alert("Oh, tip%c... oggi il meccanico è chiuso...",ao);
+            }
         }
-    } else
+    } else {
+        MsgIcona(ICONA_DOMANDA);
         fl_message("Mi spieghi come fai a farti riparare lo scooter se non lo hai ???");
+    }
 }
 
 
@@ -372,6 +388,7 @@ bool VendiScooter(void)
     fl_message_title("Vendi scooter");
 
     if (ScooterData.attivita == 0) { // Scooter incidentato
+        MsgIcona(ICONA_AVVISO);
         fl_alert("Non ritiriamo scooter incidentati!\nRiparalo, prima... oppure te lo supervalutiamo se ne compri uno nuovo");
         return FALSE;
     }
@@ -383,6 +400,7 @@ bool VendiScooter(void)
 
     if (offerta < 50) offerta = 50;  //se vale meno di 50.000, viene pagato 50.000 (condizione che non serve a nulla)
 
+    MsgIcona(ICONA_DOMANDA);
     sprintf(tmp,"Per il tuo scooter possiamo darti %s ... va bene?",MostraSoldi(offerta));
     if(!fl_choice(tmp, "Ok", "No!", 0)) {
         ScooterData = ScooterMem[0];  // nessuno scooter
