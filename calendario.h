@@ -18,6 +18,9 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_CALENDARIO_H
+#define TABBOZ_CALENDARIO_H
+
 typedef struct tagMESI {
     char        nome[20];       // nome del mese o giorno
     int         num_giorni;     // giorni del mese o festivo si/no
@@ -38,3 +41,5 @@ extern   int  scad_pal_mese;
 
 
 void  Giorno(void);
+
+#endif

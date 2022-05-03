@@ -18,6 +18,9 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_TIPA_H
+#define TABBOZ_TIPA_H
+
 void AggiornaTipa(void);
 
 void CercaTipa(void);
@@ -27,3 +30,5 @@ int  DueDiPicche(void);
 void LasciaTipa(void);
 void TelefonaTipa(void);
 void EsciConTipa(void);
+
+#endif

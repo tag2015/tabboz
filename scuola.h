@@ -18,6 +18,9 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_SCUOLA_H
+#define TABBOZ_SCUOLA_H
+
 /* Numero di materie nella struttura */
 #define N_MATERIE  9
 
@@ -39,3 +42,5 @@ void CorrompiProf(int scelta);
 void MinacciaSeduciProf(int scelta);
 
 bool MostraPagella(void);
+
+#endif

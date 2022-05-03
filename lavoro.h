@@ -18,6 +18,9 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_LAVORO_H
+#define TABBOZ_LAVORO_H
+
 /* Numero di ditte */
 #define NUM_DITTE 8
 
@@ -44,3 +47,5 @@ void Lavora(void);
 void FaiIlLeccaculo(void);
 void ChiediAumento(void);
 void Sciopera(void);
+
+#endif

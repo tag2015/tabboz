@@ -18,8 +18,12 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_EVENTI_H
+#define TABBOZ_EVENTI_H
 
 void Evento(void);
 void EventiPalestra(void);
 
 void FinestraEvento(int n_evento, int n_testo, const char *titolo, bool verticale);
+
+#endif

@@ -18,6 +18,8 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_SCOOTER_H
+#define TABBOZ_SCOOTER_H
 
 /* STRUTTURA INFORMAZIONI SUGLI SCOOTER */
 typedef struct tagNEWSTSCOOTER {
@@ -56,3 +58,5 @@ bool    VendiScooter(void);
 bool    ParcheggiaScooter(void);
 void    FaiBenza(void);
 void    RiparaScooter(void);
+
+#endif

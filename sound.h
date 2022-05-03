@@ -18,5 +18,10 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_SOUND_H
+#define TABBOZ_SOUND_H
+
 void TabbozPlaySound(int number);
 void SpegniISuoni(void);
+
+#endif

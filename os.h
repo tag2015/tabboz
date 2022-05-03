@@ -18,6 +18,8 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_OS_H
+#define TABBOZ_OS_H
 
 /* Definizioni specifiche per i vari sistemi operativi... */
 
@@ -26,4 +28,6 @@
     #include <windows.h>  // per PlaySoundA
 #else
     #define TABBOZ_LINUX
+#endif
+
 #endif

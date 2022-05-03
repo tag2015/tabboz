@@ -18,6 +18,8 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_GLOBAL_H
+#define TABBOZ_GLOBAL_H
 
 /* Numero di elementi per ogni array di stringhe */
 
@@ -50,3 +52,5 @@ extern const char *StrNomiTipi[];               // Elenco nomi tipi
 
 extern const char *StrRisposteTipe[];           // Stringhe due di picche (dalle tipe)
 extern const char *StrRisposteTipi[];           // Stringhe due di picche (dai tipi)
+
+#endif

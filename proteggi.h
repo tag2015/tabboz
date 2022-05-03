@@ -18,9 +18,13 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_PROTEGGI_H
+#define TABBOZ_PROTEGGI_H
 
 extern int      new_counter;
 
 
 void new_reset_check(void);
 int  new_check_i(int i);
+
+#endif

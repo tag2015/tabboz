@@ -18,6 +18,8 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_DEBUG_H
+#define TABBOZ_DEBUG_H
 
 extern  FILE  *debugfile;         // file di log
 extern  char  log_buf[];          // buffer per messaggi log
@@ -25,3 +27,5 @@ extern  char  log_buf[];          // buffer per messaggi log
 void   openlog(void);             // Apre file di log
 void   closelog(void);            // Chiude file di log
 void   writelog(char const *s);   // Aggiunge stringa a file di log
+
+#endif

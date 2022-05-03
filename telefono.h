@@ -18,6 +18,8 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_TELEFONO_H
+#define TABBOZ_TELEFONO_H
 
 /* INFORMAZIONI SUI TELEFONINI */
 typedef struct tagCEL {
@@ -50,3 +52,5 @@ void AggiornaCell(void);
 bool CompraCellulare(int scelta);
 bool VendiCellulare(void);
 bool AbbonaCellulare(int scelta);
+
+#endif

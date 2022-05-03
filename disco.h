@@ -18,6 +18,9 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_DISCO_H
+#define TABBOZ_DISCO_H
+
 typedef struct tagSTDISCO {
     bool        fuoriporta;     // raggiungibile solo con scooter
     int         fama;           // figosita' minima x entrare (selezione all' ingresso)
@@ -31,3 +34,5 @@ typedef struct tagSTDISCO {
 extern const STDISCO  DiscoMem[];
 
 void PagaDisco(int scelta);
+
+#endif

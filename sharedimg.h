@@ -18,6 +18,9 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_SHAREDIMG_H
+#define TABBOZ_SHAREDIMG_H
+
 /* Header per toolkit FLTK */
 #include <FL/Fl.H>
 #include <FL/Fl_Shared_Image.H>
@@ -53,3 +56,5 @@ extern Fl_Shared_Image *ImgStop;
 extern Fl_Shared_Image *ImgCool;
 
 void CaricaSharedImgs();
+
+#endif

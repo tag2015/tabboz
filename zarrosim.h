@@ -18,6 +18,9 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_ZARROSIM_H
+#define TABBOZ_ZARROSIM_H
+
 /* Versione gioco... */
 #define VERSION "NG-pre20220501"
 
@@ -217,3 +220,5 @@ extern  void  ApplicaDifficolta(void);
 
 /*Calcola media voti passando totale e n.ro materie*/
 #define MEDIAVOTI(tot,n) ( (float) tot / (n+1) )
+
+#endif

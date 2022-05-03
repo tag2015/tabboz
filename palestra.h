@@ -18,6 +18,8 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_PALESTRA_H
+#define TABBOZ_PALESTRA_H
 
 extern STVARIE PalestraMem[];
 
@@ -27,3 +29,5 @@ void AggiornaPalestra(void);
 void CompraAbbonamento(int scelta);
 void VaiInPalestra(void);
 void FaiLampada(void);
+
+#endif

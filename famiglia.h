@@ -18,7 +18,11 @@
     along with Tabboz Simulator.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef TABBOZ_FAMIGLIA_H
+#define TABBOZ_FAMIGLIA_H
 
 void ChiediAumentoPaghetta(void);
 void ChiediSoldiExtra(void);
 void ChiediSoldiPapa(void);
+
+#endif
