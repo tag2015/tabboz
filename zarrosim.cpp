@@ -363,17 +363,17 @@ static void InitTabboz(void)
     fase_di_avvio=1;
     tempo_pestaggio=0;
     current_tipa=0;
-    logging=FALSE;
+    logging=false;
 
     /* Se il debug è attivo, abilita sempre il logging... */
     #ifdef TABBOZ_DEBUG
-        logging = TRUE;
+        logging = true;
         openlog();
         sprintf(log_buf,"tabboz: Starting Tabboz Simulator %s %s",VERSION,__DATE__);
         writelog(log_buf);
     #endif
     
-    firsttime=FALSE;
+    firsttime=false;
 
     #ifdef TABBOZ_WIN
         /* Parametro 'config' sulla linea di comando */
@@ -534,7 +534,7 @@ static void CaricaTutto(void)
 
     TabbozProfilo.get("SoftCheck",buf_i,0);  // Consideriamo che se il checksum è a 0 è il primo avvio
     if(!buf_i)
-        firsttime=TRUE;
+        firsttime=true;
 
     /* Se non e' gia' settato,setta il compleanno (a caso) */
     TabbozProfilo.get("CompMese",comp_mese,0);
@@ -624,11 +624,11 @@ static void CaricaTutto(void)
     Fl::scheme(tema_grafico);
 
     #ifndef TABBOZ_DEBUG
-        TabbozProfilo.get("Logging",logging,FALSE);
+        TabbozProfilo.get("Logging",logging,false);
         if(logging <= 0)
-            logging=FALSE;
+            logging=false;
         else
-            logging=TRUE;
+            logging=true;
     #endif
     if(logging) openlog();
 
@@ -1313,7 +1313,7 @@ int main(int argc, char **argv)
         win_principale->show(argc, argv);
         if(firsttime) {
             win_principale->hide();     //Al primo avvio, nascondiamo la principale e apriamo la finestra anagrafica
-            GUICartaID(TRUE);
+            GUICartaID(true);
             win_cartaid->position( (Fl::w() - win_cartaid->w() ) / 2, (Fl::h() - win_cartaid->h() ) / 2);   // centra finestra
             win_cartaid->show();
             MsgIcona(ICONA_INFO);
@@ -1329,7 +1329,7 @@ int main(int argc, char **argv)
                 writelog("tabboz: new game (reset)");
             #endif
             ResetMe(0);
-            firsttime = TRUE;
+            firsttime = true;
             chiusura = NOEXIT;
         }
     }

@@ -90,7 +90,7 @@ void GareggiaScooter(void)
     }
     benzina-=5;
     if (benzina < 1) benzina = 0;
-    CalcolaVelocita(FALSE);
+    CalcolaVelocita(false);
     Evento();
 }
 

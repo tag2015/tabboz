@@ -105,7 +105,7 @@ void Giorno(void)
 {
     
     char tmp[255];
-    bool auguri_tipa = FALSE;
+    bool auguri_tipa = false;
 
     x_giorno++;
     if (x_giorno > InfoMese[x_mese-1].num_giorni) {
@@ -248,8 +248,8 @@ void Giorno(void)
                         if (Fama > 100) Fama=100;
                     }
                     if (Rapporti > 30) { /* Buon Natale dalla tipa */
-                        FinestraEvento(8,8,"Tanti Auguri",FALSE);
-                        auguri_tipa = TRUE;
+                        FinestraEvento(8,8,"Tanti Auguri",false);
+                        auguri_tipa = true;
                     }
                 }
                 if ((x_giorno == 28) && ((current_pantaloni == 19) || (current_giubbotto == 19))) {

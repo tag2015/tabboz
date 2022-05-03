@@ -341,15 +341,15 @@ bool GiornoDiLavoro(const char *titolo_dialog)
     MsgIcona(ICONA_AVVISO);
     if (numeroditta < 1)  {
         fl_alert("Forse non ti ricordi che sei disokkupat%c...",ao);
-        return FALSE;
+        return false;
     }
 
     if ( ( x_vacanza == 2 ) || (x_giornoset == 6) ) {  // BUGFIX le ditte sono chiuse al sabato...
         fl_alert("Arrivat%c davanti ai cancelli della ditta li trovi irrimediabilmente chiusi...",ao);
-        return FALSE;
+        return false;
         }
 
-    return TRUE;
+    return true;
 }
 
 

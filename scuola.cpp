@@ -22,6 +22,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "zarrosim.h"
 #include "dialogs.h"
@@ -233,7 +234,7 @@ bool MostraPagella(void)
 		if(logging)
         	writelog("calendario: Pagella... Bocciato !!!");
         while(win_pagella->shown()) Fl::wait();   //attende chiusura
-		return FALSE;
+		return false;
     
 	} else {
         if (sound_active) TabbozPlaySound(400);
@@ -244,7 +245,7 @@ bool MostraPagella(void)
 		if(logging)
         	writelog("calendario: Pagella... Promosso...");
         while(win_pagella->shown()) Fl::wait();   //attende chiusura
-		return TRUE;
+		return true;
 	}
 }
 

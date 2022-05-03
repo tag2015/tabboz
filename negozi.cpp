@@ -149,11 +149,11 @@ bool OfferteDiNatale(void)
                 current_giubbotto=19;
                 current_pantaloni=19;
                 Soldi-=COSTO_VESTITO_NATALIZIO;
-                return TRUE;  //se compriamo il vestito (per far chiudere il launcher negozi)
+                return true;  //se compriamo il vestito (per far chiudere il launcher negozi)
             }
         }
     }
-    return FALSE;  //in tutti gli altri casi
+    return false;  //in tutti gli altri casi
 }
 
 

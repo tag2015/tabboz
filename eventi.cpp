@@ -235,9 +235,9 @@ void Evento(void)
 
                 i=rand() % 6;    /* estrae un metallaro a caso 0-5 */
                 if(i<=4)
-                    FinestraEvento(i,i,"Rissa con un metallaro",TRUE);  //metallari
+                    FinestraEvento(i,i,"Rissa con un metallaro",true);  //metallari
                 else
-                    FinestraEvento(i,i,"Rissa con un manovale",FALSE);  //manovale
+                    FinestraEvento(i,i,"Rissa con un manovale",false);  //manovale
                 if (logging) {
                     sprintf(log_buf,"eventi: Rissa con metallaro/manovale n. %d",i);
                     writelog(log_buf);
@@ -269,13 +269,13 @@ void Evento(void)
 
                     if (caso < 15) {  // Camionista - ( caso 11-14) BUGFIX visto che danneggia + del muro, abbasssato di 2 i possibili casi
                         ScooterData.stato-=35;
-                        FinestraEvento(6,6,"Fai incazzare un camionista",FALSE);  //camionista
+                        FinestraEvento(6,6,"Fai incazzare un camionista",false);  //camionista
                         if(logging)
                             writelog("eventi: Scooter - Ciocco con camionista...");
                     
                     } else {  // Muro ! ( caso 15 - 20) -------------------
                         ScooterData.stato-=20;
-                        FinestraEvento(7,7,"Incidente",FALSE);  //muro
+                        FinestraEvento(7,7,"Incidente",false);  //muro
                         if(logging)
                             writelog("eventi: Scooter - A muro...");
                     }

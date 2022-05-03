@@ -112,10 +112,10 @@ bool Provaci(void)
             fl_message_title("Qualcuno ti caga...");
             fl_message("Ora non ti puoi più lamentare di essere sola...");
         }
-    return TRUE;
+    return true;
     }
 
-    return FALSE;
+    return false;
 }
 
 
@@ -246,7 +246,7 @@ void EsciConTipa(void)
         writelog(log_buf);
     #endif
 
-    CalcolaVelocita(FALSE);
+    CalcolaVelocita(false);
     AggiornaTipa();
 }
 

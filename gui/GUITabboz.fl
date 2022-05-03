@@ -71,13 +71,13 @@ decl {bool timer_gui;} {public local
 Function {InitVars()} {open private
 } {
   code {\#ifdef TABBOZ_DEBUG
-  debug_gui = TRUE;
+  debug_gui = true;
 \#endif
 \#ifdef NOTIMER
-  timer_gui = FALSE;
+  timer_gui = false;
 \#endif
 \#ifdef NOTABBOZZA
-  tabbozza_gui = FALSE;
+  tabbozza_gui = false;
 \#endif} {}
 }
 
@@ -102,7 +102,7 @@ Function {GUITabboz()} {open
   else
     chiusura = NOEXIT;
 }} open
-    xywh {508 412 475 470} type Double align 5
+    xywh {662 388 475 470} type Double align 5
     code0 {AggiornaPrincipale();}
     code1 {InitVars();}
     code2 {if(!debug_gui) main_grp_debug->hide();} size_range {475 470 475 470} visible
@@ -111,7 +111,7 @@ Function {GUITabboz()} {open
       xywh {0 0 475 20} labeltype NO_LABEL labelsize 12 textsize 12
     } {
       Submenu {} {
-        label Gioco open
+        label Gioco open selected
         xywh {0 0 62 20} labelsize 12
       } {
         MenuItem {} {
@@ -173,7 +173,7 @@ win_principale->deactivate();}
   MsgIcona(ICONA_AVVISO);
   fl_message_title("Palestra chiusa");
   fl_alert("Il tuo fisico da atleta dovrà aspettare...\\nvisto che oggi la palestra è chiusa...");
-}} selected
+}}
         image {icons/b_palestra.png} xywh {15 425 135 30} labelfont 2 align 272
       }
     }
@@ -376,7 +376,7 @@ win_config->show();}
     }
     Fl_Button {} {
       label {Carta ID}
-      callback {GUICartaID(FALSE);
+      callback {GUICartaID(false);
 win_cartaid->show();
 win_principale->deactivate();}
       xywh {10 30 135 295} box NO_BOX labeltype NO_LABEL

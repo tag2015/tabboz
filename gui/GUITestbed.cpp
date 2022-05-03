@@ -56,11 +56,11 @@ static void cb_Evento(Fl_Value_Input* o, void*) {
 }
 
 static void cb_RunH(Fl_Button*, void*) {
-  FinestraEvento(num_evento,num_evento,"",FALSE);
+  FinestraEvento(num_evento,num_evento,"",false);
 }
 
 static void cb_RunV(Fl_Button*, void*) {
-  FinestraEvento(num_evento,num_evento,"",TRUE);
+  FinestraEvento(num_evento,num_evento,"",true);
 }
 
 static void cb_Tema(Fl_Button*, void*) {

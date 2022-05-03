@@ -201,7 +201,7 @@ void AcquistaScooter(int scelta)
         fl_message("Fai un giro del quartiere per farti vedere con lo scooter nuovo...");
         Reputazione+=4;
         if (Reputazione > 100) Reputazione=100;
-        CalcolaVelocita(TRUE);    
+        CalcolaVelocita(true);    
     }
     Evento();
 }
@@ -215,21 +215,21 @@ bool ParcheggiaScooter(void)
     if (ScooterData.stato == -1000) {
         MsgIcona(ICONA_DOMANDA);
         fl_alert("Mi spieghi come fai a parcheggiare lo scooter se non lo hai ???");
-        return FALSE;
+        return false;
         }
 
     switch (ScooterData.attivita) {
         case 1: 
             ScooterData.attivita = 4;
-            return TRUE;
+            return true;
         case 4:
             ScooterData.attivita = 1;
-            return FALSE;
+            return false;
         default:
             MsgIcona(ICONA_AVVISO);
             fl_alert("Mi spieghi come fai a parcheggiare lo scooter visto che è %s ???",n_attivita[ScooterData.attivita]);
     };
-    return FALSE;
+    return false;
 }
 
 
@@ -266,7 +266,7 @@ void FaiBenza(void)
                 #endif
                 benzina=50;    // 5 litri, il massimo che puo' contenere...
                 if (ScooterData.cc == 5) benzina = 850;  // 85 litri, x la macchinina un po' figa...
-                CalcolaVelocita(FALSE);
+                CalcolaVelocita(false);
                 MsgIcona(ICONA_INFO);
                 fl_message("Fai %s di benzina e riempi lo scooter...",MostraSoldi(10));
                 break;
@@ -305,7 +305,7 @@ void RiparaScooter(void)
                                 if (sound_active) TabbozPlaySound(102);
                                 ScooterData.stato=20;
                                 Soldi-=1000;
-                                CalcolaVelocita(FALSE);
+                                CalcolaVelocita(false);
                                 if (logging) {
                                     sprintf(log_buf,"scooter: Paga riparazione emergenza (%s)",MostraSoldi(1000));
                                     writelog(log_buf);
@@ -327,7 +327,7 @@ void RiparaScooter(void)
                                 ScooterData.carburatore = ScooterMem[ScooterData.id].carburatore;
                                 ScooterData.cc = ScooterMem[ScooterData.id].cc;
                                 Soldi-=500;
-                                CalcolaVelocita(FALSE);
+                                CalcolaVelocita(false);
                                 if (logging) {
                                     sprintf(log_buf,"scooter: Paga ripristino (%s)",MostraSoldi(500));
                                     writelog(log_buf);
@@ -351,7 +351,7 @@ void RiparaScooter(void)
                                 if (sound_active) TabbozPlaySound(102);
                                 ScooterData.stato=100;
                                 Soldi-=costo;
-                                CalcolaVelocita(FALSE);
+                                CalcolaVelocita(false);
                                 if (logging) {
                                     sprintf(log_buf,"scooter: Paga riparazione (%s)",MostraSoldi(costo));
                                     writelog(log_buf);
@@ -390,7 +390,7 @@ bool VendiScooter(void)
     if (ScooterData.attivita == 0) { // Scooter incidentato
         MsgIcona(ICONA_AVVISO);
         fl_alert("Non ritiriamo scooter incidentati!\nRiparalo, prima... oppure te lo supervalutiamo se ne compri uno nuovo");
-        return FALSE;
+        return false;
     }
 
     if ( (ScooterData.attivita == 1) || (ScooterData.attivita == 4) || (ScooterData.attivita == 6))
@@ -412,9 +412,9 @@ bool VendiScooter(void)
             sprintf(log_buf,"scooter: Vendi lo scooter per %s",MostraSoldi(offerta));
             writelog(log_buf);
         }
-        return TRUE;
+        return true;
     }
-return FALSE;
+return false;
 }
 
 

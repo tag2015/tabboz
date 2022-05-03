@@ -92,7 +92,7 @@ bool CompraCellulare(int scelta)
 {
     if (Soldi < CellularMem[scelta].prezzo) { // Controlla se ha abbastanza soldi...
         nomoney(CELLULRABBONAM);
-        return FALSE;
+        return false;
     }
 
     Soldi-=CellularMem[scelta].prezzo;
@@ -102,7 +102,7 @@ bool CompraCellulare(int scelta)
 
     if(logging)
         writelog("telefono: Compra cellulare");
-    return TRUE;
+    return true;
 }
 
 
@@ -120,7 +120,7 @@ bool VendiCellulare(void)
         if( ! fl_choice(tmp,"Ok","No",0) ) {
             CellularData.stato=-1;
             Soldi+=offerta;
-            return TRUE;
+            return true;
         } else {
             MsgIcona(ICONA_AVVISO);
             fl_alert("Allora vai a farti fottere, pirletta!");
@@ -130,7 +130,7 @@ bool VendiCellulare(void)
         fl_alert("Che telefonino vuoi vendere, pirletta?");
     }
 
-    return FALSE;
+    return false;
 }
 
 
@@ -142,28 +142,28 @@ bool AbbonaCellulare(int scelta)
 {
     if (Soldi < AbbonamentMem[scelta].prezzo) {    // Controlla se ha abbastanza soldi...
         nomoney(CELLULRABBONAM);
-        return FALSE;
+        return false;
     }
 
     if (AbbonamentMem[scelta].abbonamento == 1) {    // Abbonamento, no problem...
         Soldi-=AbbonamentMem[scelta].prezzo;
         AbbonamentData=AbbonamentMem[scelta];
         if ((sound_active) && (CellularData.stato > -1)) TabbozPlaySound(602);
-        return TRUE;
+        return true;
     
     } else {    // Ricarica...
         if (( AbbonamentData.creditorest > -1) && ( !strcmp(AbbonamentData.nome,AbbonamentMem[scelta].nome))) {
             Soldi-=AbbonamentMem[scelta].prezzo;
             AbbonamentData.creditorest+=AbbonamentMem[scelta].creditorest;
             if ((sound_active) && (CellularData.stato > -1)) TabbozPlaySound(602);
-            return TRUE;
+            return true;
             
         } else {
             MsgIcona(ICONA_DOMANDA);
             fl_message_title("Telefonino");
             fl_alert("Oh, che te ne fai di una ricarica se non hai la sim ???");
-            return FALSE;
+            return false;
         }
     }
-    return FALSE;
+    return false;
 }

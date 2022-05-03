@@ -26,13 +26,13 @@ bool timer_gui;
 
 static void InitVars() {
   #ifdef TABBOZ_DEBUG
-    debug_gui = TRUE;
+    debug_gui = true;
   #endif
   #ifdef NOTIMER
-    timer_gui = FALSE;
+    timer_gui = false;
   #endif
   #ifdef NOTABBOZZA
-    tabbozza_gui = FALSE;
+    tabbozza_gui = false;
   #endif
 }
 
@@ -731,7 +731,7 @@ static Fl_Image *image_b_opzioni() {
 }
 
 static void cb_Carta(Fl_Button*, void*) {
-  GUICartaID(FALSE);
+  GUICartaID(false);
 win_cartaid->show();
 win_principale->deactivate();
 }
