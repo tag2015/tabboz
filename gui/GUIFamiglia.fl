@@ -18,7 +18,7 @@ Function {GUITabbozFamiglia()} {open
 } {
   Fl_Window win_famiglia {
     label Famiglia open selected
-    xywh {726 508 400 330} type Double box BORDER_BOX hotspot modal size_range {400 330 400 330} visible
+    xywh {726 508 400 330} type Double hotspot modal size_range {400 330 400 330} visible
   } {
     Fl_Box {} {
       image {pic/famiglia.png} xywh {10 5 380 145}

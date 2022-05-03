@@ -5303,7 +5303,6 @@ win_famiglia->hide();
 
 Fl_Double_Window* GUITabbozFamiglia() {
   { win_famiglia = new Fl_Double_Window(400, 330, "Famiglia");
-    win_famiglia->box(FL_BORDER_BOX);
     win_famiglia->hotspot(win_famiglia);
     { Fl_Box* o = new Fl_Box(10, 5, 380, 145);
       o->image( image_famiglia() );
