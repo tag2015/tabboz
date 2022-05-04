@@ -459,7 +459,7 @@ static void ResetMe(int primavolta)
     ScooterData = ScooterMem[0];
 
     AbbonamentData.creditorest = -1;
-    CellularData.stato         = -1;
+    CellularData.stato         = -100;
 
 }
 
@@ -697,7 +697,7 @@ static void CaricaTutto(void)
     CellularData.prezzo = new_check_i(buf_i);
 
     CellularProfilo.get("Nome",CellularData.nome,0,STR_MAX);
-    if(CellularData.nome==0) CellularData.stato = -1;
+    if(CellularData.nome==0) CellularData.stato = -100;
 
     #ifdef TABBOZ_DEBUG
         sprintf(log_buf,"tabboz: (R) new_counter %d", new_counter);

@@ -71,7 +71,7 @@ void AggiornaCell(void)
 {
     tel_val_soldi->value(CALCSOLDI(Soldi));
 
-    if (CellularData.stato > -1)
+    if (CellularData.stato > 0)
         tel_txt_nome->value(CellularData.nome);
     else
         tel_txt_nome->value("-- nessuno --");
@@ -113,12 +113,12 @@ bool VendiCellulare(void)
     int offerta;
 
     fl_message_title("Vendi Telefonino");
-    if (CellularData.stato > -1) {
+    if (CellularData.stato > 0) {
         offerta=CellularData.prezzo/2 + 15;
         MsgIcona(ICONA_DOMANDA);
         sprintf(tmp,"Ti posso dare %s per il tuo telefonino... vuoi vendermelo ?",MostraSoldi(offerta));
         if( ! fl_choice(tmp,"Ok","No",0) ) {
-            CellularData.stato=-1;
+            CellularData.stato=-100;
             Soldi+=offerta;
             return true;
         } else {
@@ -148,16 +148,16 @@ bool AbbonaCellulare(int scelta)
     if (AbbonamentMem[scelta].abbonamento == 1) {    // Abbonamento, no problem...
         Soldi-=AbbonamentMem[scelta].prezzo;
         AbbonamentData=AbbonamentMem[scelta];
-        if ((sound_active) && (CellularData.stato > -1)) TabbozPlaySound(602);
+        if ((sound_active) && (CellularData.stato > 0)) TabbozPlaySound(602);
         return true;
-    
+
     } else {    // Ricarica...
         if (( AbbonamentData.creditorest > -1) && ( !strcmp(AbbonamentData.nome,AbbonamentMem[scelta].nome))) {
             Soldi-=AbbonamentMem[scelta].prezzo;
             AbbonamentData.creditorest+=AbbonamentMem[scelta].creditorest;
-            if ((sound_active) && (CellularData.stato > -1)) TabbozPlaySound(602);
+            if ((sound_active) && (CellularData.stato > 0)) TabbozPlaySound(602);
             return true;
-            
+
         } else {
             MsgIcona(ICONA_DOMANDA);
             fl_message_title("Telefonino");

@@ -43,10 +43,6 @@
 #include <FL/Fl.H>
 #include <FL/fl_ask.H>
 
-//FIXME implementare 2 donne
-//extern    BOOL FAR PASCAL DueDonne(HWND hDlg, WORD message, WORD wParam, LONG lParam);
-
-
 static char txt_finestra[256];  // stringa per le finestre metallari/scooter/camion
 
 
@@ -83,7 +79,7 @@ void Evento(void)
 
 
 /* Cellulare ---------------------------------------------------- */
-    if ((AbbonamentData.creditorest > 0) && (CellularData.stato > -1)) {
+    if ((AbbonamentData.creditorest > 0) && (CellularData.stato > 0)) {
         AbbonamentData.creditorest-=1;
         if (Fama < 55) Fama++;
         if (AbbonamentData.creditorest == 0) {
@@ -97,8 +93,8 @@ void Evento(void)
         }
     }
 
-    if (CellularData.stato == 1) { //FIXME: sarebbe meglio mettere tutti gli stati "nulli" a -100, per evitare sti casini 
-        CellularData.stato=-1;
+    if ((CellularData.stato <= 0) && (CellularData.stato != -100)) {
+        CellularData.stato=-100;
         MsgIcona(ICONA_STOP);
         fl_message_title("Telefonino KO");
         fl_alert("Dopo una vita di duro lavoro, a furia di prendere botte,\nil tuo cellulare si spacca...");
@@ -260,9 +256,9 @@ void Evento(void)
             case 20:
                 if ((ScooterData.stato > -1000) && (ScooterData.attivita == 1)) {  //BUGFIX & mancante
         
-                    if (CellularData.stato > -1) {                    //incidente danneggia anche il cell
+                    if (CellularData.stato > 0) {                    //incidente danneggia anche il cell
                         CellularData.stato-=rand() % 8;
-                        // 0 = 'morente', -1 = 'morto'
+                        // impostando a 0 lo rileva come rotto al prossimo evento
                         if (CellularData.stato < 0 ) CellularData.stato=0;  //FIXME rivedere condizioni 0 o -1
                     }
 
@@ -382,25 +378,7 @@ void Evento(void)
             // scelta SI
             // Controlla che tu non abbia gia' una tipa -------------------------
             if (Rapporti > 0) { // hai gia' una tipa..<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                //FIXME Qui chiama le dialog 92 o 192, per decidere se cambiare tipa o no
-                //FIXME workaround
-                //lpproc = MakeProcInstance(DueDonne, hInst);
-                //if (sesso == 'M')
-                //    DialogBox(hInst,
-                //        MAKEINTRESOURCE(92),
-                //        hInstance,
-                //        lpproc);
-                //else
-                //    DialogBox(hInst,
-                //        MAKEINTRESOURCE(192),
-                //        hInstance,
-                //        lpproc);
-                //FreeProcInstance(lpproc);
-//                MsgIcona(ICONA_STOP);
-//                fl_message_title("Te piacerebbe");
-//                fl_alert("La modalità Casanova non è stata ancora implementata!\nLascia la tipa prima di cercarne altre!");
-                GUICasanova(i_nomeTemp,figTemp);
-                //FIXME workaround
+                GUICasanova(i_nomeTemp,figTemp);  // FIXME completare per la tabbozza
                 break;
             } else { // bravo, non hai una tipa...<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 if (sesso == 'M')
@@ -465,8 +443,8 @@ void Evento(void)
 
         case 49:
         case 50:
-            if (CellularData.stato > -1) {
-                CellularData.stato -= (rand() % 8);    // 0 = 'morente', -1 = 'morto'
+            if (CellularData.stato > 0) {
+                CellularData.stato -= (rand() % 8);    // 0 = 'morente', <0 = 'morto'
                 if (CellularData.stato < 0 ) CellularData.stato=0;
                 MsgIcona(ICONA_AVVISO);
                 fl_message_title("Telefonino");
