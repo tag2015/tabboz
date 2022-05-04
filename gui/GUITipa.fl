@@ -17,6 +17,9 @@ decl {\#include "../zarrosim.h"} {private global
 decl {\#include "../global.h"} {private global
 }
 
+decl {\#include "../dialogs.h"} {private global
+}
+
 decl {\#include "../eventi.h"} {private global
 }
 
@@ -41,9 +44,9 @@ decl {int fig_nuovatipa;} {public local
 Function {GUITipa()} {open
 } {
   Fl_Window win_tipa {
-    label Tipa
-    xywh {115 532 425 275} type Double labelfont 1 labelsize 12 hotspot
-    code0 {AggiornaTipa();} modal size_range {425 275 425 275} visible
+    label Tipa open
+    xywh {430 459 425 275} type Double labelfont 1 labelsize 12 hide hotspot
+    code0 {AggiornaTipa();} modal size_range {425 275 425 275}
   } {
     Fl_Button tipa_btn_cercatipa {
       label {Cerca tipa}
@@ -128,9 +131,9 @@ Function {GUICercaTipa()} {open
 } {
   Fl_Window win_cercatipa {
     label {Cerca Tipa} open
-    xywh {708 641 340 280} type Double labelfont 1 labelsize 12 hide hotspot
+    xywh {708 641 340 280} type Double labelfont 1 labelsize 12 hotspot
     code0 {CercaTipa();}
-    code1 {if(sesso=='F') o->label("Cerca Tipo");} modal size_range {340 280 340 280}
+    code1 {if(sesso=='F') o->label("Cerca Tipo");} modal size_range {340 280 340 280} visible
   } {
     Fl_Group {} {open
       xywh {5 5 210 270} box EMBOSSED_FRAME labelfont 1 labelsize 12
@@ -161,8 +164,12 @@ Function {GUICercaTipa()} {open
         label {Ci provo!}
         callback {int msg;
 if(Provaci()) {
-  if(Rapporti > 0){}  // controllo se gia con tipa
-//    DueDonne();
+  if(Rapporti > 0){  // controllo se gia con tipa
+    GUICasanova(n_nuovatipa,fig_nuovatipa);
+    win_duetipe->show();
+    win_cercatipa->hide();
+    while(win_duetipe->shown()) Fl::wait();
+  }
   else {
     strcpy(Nometipa,cercatipa_txt_nome->value());
     FigTipa=fig_nuovatipa;
@@ -179,7 +186,7 @@ if(Provaci()) {
   while(win_duedipicche->shown()) Fl::wait();
 }
 Evento();
-AggiornaTipa();} selected
+AggiornaTipa();}
         xywh {10 195 200 35}
       }
       Fl_Button {} {
@@ -194,10 +201,11 @@ AggiornaTipa();} selected
   }
 }
 
-Function {GUIDueDiPicche(int messaggio)} {} {
+Function {GUIDueDiPicche(int messaggio)} {open
+} {
   Fl_Window win_duedipicche {
     label {Oggi è un giorno fortunato} open
-    xywh {539 362 325 155} type Double hide hotspot modal size_range {325 155 325 155}
+    xywh {539 362 325 155} type Double hotspot modal size_range {325 155 325 155} visible
   } {
     Fl_Box {} {
       image {pic/2picche.png} xywh {10 9 65 96}
@@ -211,6 +219,79 @@ Function {GUIDueDiPicche(int messaggio)} {} {
       callback {win_duedipicche->hide();
 win_cercatipa->hide();}
       xywh {195 115 120 30}
+    }
+  }
+}
+
+Function {GUICasanova(int i_nome_nuovatipa, int figosita_nuovatipa)} {open
+} {
+  code {n_nuovatipa = i_nome_nuovatipa;
+fig_nuovatipa = figosita_nuovatipa;} {}
+  Fl_Window win_duetipe {
+    label {Troppe donne...} open
+    xywh {711 419 325 260} type Double labelfont 1 labelsize 12 hotspot modal size_range {325 260 325 260} visible
+  } {
+    Fl_Box {} {
+      label {   Ti trovi nell'imbarazzante (?) situazione di avere due ragazze... che cosa fai???}
+      image {icons/tipa.png} xywh {5 5 305 65} align 384
+    }
+    Fl_Group {} {open
+      xywh {5 70 315 51} box EMBOSSED_FRAME
+    } {
+      Fl_Box {} {
+        label {Viva l'abbondanza!}
+        xywh {5 70 315 25}
+      }
+      Fl_Button {} {
+        label {Le voglio tutte e due!}
+        callback {Rapporti=0;
+Reputazione-=8;
+if (Reputazione < 0) Reputazione=0;
+Fama-=4;
+if (Fama < 0) Fama=0;
+
+MsgIcona(ICONA_STOP);
+fl_message_title("La vita è bella");
+if (sesso == 'M')
+  fl_alert("Mentre sei appartato con %s, arriva la tua ragazza, %s,\\n\\
+ti tira uno schiaffo e ti lascia.\\n\\
+Capendo finalmente di che pasta sei fatto, anche %s si allontana...",StrNomiTipe[n_nuovatipa],Nometipa,StrNomiTipe[n_nuovatipa]);
+else
+  fl_alert("%s viene a sapere di %s, gli spacca la faccia e ti molla...\\n\\
+Dopo questa tragica esperienza anche %s sparisce...",Nometipa,StrNomiTipi[n_nuovatipa],StrNomiTipi[n_nuovatipa]);
+
+win_duetipe->hide();}
+        xywh {7 95 312 25}
+      }
+    }
+    Fl_Group {} {open
+      xywh {5 135 315 120} box EMBOSSED_FRAME labelfont 1 labelsize 12
+    } {
+      Fl_Box {} {
+        label {Purtroppo avere due ragazze è troppo
+anche per uno stallone come il
+sottoscritto...}
+        xywh {5 145 315 50} align 17
+      }
+      Fl_Button {} {
+        label {Resto fedele...}
+        callback {win_duetipe->hide();}
+        xywh {7 200 312 25} shortcut 0xff1b
+      }
+      Fl_Button {} {
+        label {Meglio cambiare!}
+        callback {if(sesso == 'M')
+  strcpy(Nometipa,StrNomiTipe[n_nuovatipa]);
+else
+  strcpy(Nometipa,StrNomiTipi[n_nuovatipa]);
+FigTipa=fig_nuovatipa;
+Rapporti=30 + (rand() % 15 );
+Fama+= (FigTipa/10); if (Fama > 100) Fama=100;
+Reputazione+= (FigTipa/13);
+if (Reputazione > 100) Reputazione=100;
+win_duetipe->hide();} selected
+        xywh {7 230 312 25}
+      }
     }
   }
 }

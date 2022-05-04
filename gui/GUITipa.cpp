@@ -6,6 +6,7 @@
 #include "GUITabboz.h"
 #include "../zarrosim.h"
 #include "../global.h"
+#include "../dialogs.h"
 #include "../eventi.h"
 #include "../sound.h"
 #include "../sharedimg.h"
@@ -3537,8 +3538,12 @@ Fl_Output *cercatipa_txt_giudizio=(Fl_Output *)0;
 static void cb_Ci(Fl_Button*, void*) {
   int msg;
 if(Provaci()) {
-  if(Rapporti > 0){}  // controllo se gia con tipa
-//    DueDonne();
+  if(Rapporti > 0){  // controllo se gia con tipa
+    GUICasanova(n_nuovatipa,fig_nuovatipa);
+    win_duetipe->show();
+    win_cercatipa->hide();
+    while(win_duetipe->shown()) Fl::wait();
+  }
   else {
     strcpy(Nometipa,cercatipa_txt_nome->value());
     FigTipa=fig_nuovatipa;
@@ -8675,4 +8680,88 @@ Fl_Double_Window* GUIDueDiPicche(int messaggio) {
     win_duedipicche->end();
   } // Fl_Double_Window* win_duedipicche
   return win_duedipicche;
+}
+
+Fl_Double_Window *win_duetipe=(Fl_Double_Window *)0;
+
+static void cb_Le(Fl_Button*, void*) {
+  Rapporti=0;
+Reputazione-=8;
+if (Reputazione < 0) Reputazione=0;
+Fama-=4;
+if (Fama < 0) Fama=0;
+
+MsgIcona(ICONA_STOP);
+fl_message_title("La vita è bella");
+if (sesso == 'M')
+  fl_alert("Mentre sei appartato con %s, arriva la tua ragazza, %s,\n\
+ti tira uno schiaffo e ti lascia.\n\
+Capendo finalmente di che pasta sei fatto, anche %s si allontana...",StrNomiTipe[n_nuovatipa],Nometipa,StrNomiTipe[n_nuovatipa]);
+else
+  fl_alert("%s viene a sapere di %s, gli spacca la faccia e ti molla...\n\
+Dopo questa tragica esperienza anche %s sparisce...",Nometipa,StrNomiTipi[n_nuovatipa],StrNomiTipi[n_nuovatipa]);
+
+win_duetipe->hide();
+}
+
+static void cb_Resto(Fl_Button*, void*) {
+  win_duetipe->hide();
+}
+
+static void cb_Meglio(Fl_Button*, void*) {
+  if(sesso == 'M')
+  strcpy(Nometipa,StrNomiTipe[n_nuovatipa]);
+else
+  strcpy(Nometipa,StrNomiTipi[n_nuovatipa]);
+FigTipa=fig_nuovatipa;
+Rapporti=30 + (rand() % 15 );
+Fama+= (FigTipa/10); if (Fama > 100) Fama=100;
+Reputazione+= (FigTipa/13);
+if (Reputazione > 100) Reputazione=100;
+win_duetipe->hide();
+}
+
+Fl_Double_Window* GUICasanova(int i_nome_nuovatipa, int figosita_nuovatipa) {
+  n_nuovatipa = i_nome_nuovatipa;
+  fig_nuovatipa = figosita_nuovatipa;
+  { win_duetipe = new Fl_Double_Window(325, 260, "Troppe donne...");
+    win_duetipe->labelfont(1);
+    win_duetipe->labelsize(12);
+    win_duetipe->hotspot(win_duetipe);
+    { Fl_Box* o = new Fl_Box(5, 5, 305, 65, "   Ti trovi nell\'imbarazzante (?) situazione di avere due ragazze... che cos\
+a fai?\?\?");
+      o->image( image_tipa() );
+      o->align(Fl_Align(384));
+    } // Fl_Box* o
+    { Fl_Group* o = new Fl_Group(5, 70, 315, 51);
+      o->box(FL_EMBOSSED_FRAME);
+      { new Fl_Box(5, 70, 315, 25, "Viva l\'abbondanza!");
+      } // Fl_Box* o
+      { Fl_Button* o = new Fl_Button(7, 95, 312, 25, "Le voglio tutte e due!");
+        o->callback((Fl_Callback*)cb_Le);
+      } // Fl_Button* o
+      o->end();
+    } // Fl_Group* o
+    { Fl_Group* o = new Fl_Group(5, 135, 315, 120);
+      o->box(FL_EMBOSSED_FRAME);
+      o->labelfont(1);
+      o->labelsize(12);
+      { Fl_Box* o = new Fl_Box(5, 145, 315, 50, "Purtroppo avere due ragazze \303\250 troppo\nanche per uno stallone come il\n\
+sottoscritto...");
+        o->align(Fl_Align(FL_ALIGN_TOP|FL_ALIGN_INSIDE));
+      } // Fl_Box* o
+      { Fl_Button* o = new Fl_Button(7, 200, 312, 25, "Resto fedele...");
+        o->shortcut(0xff1b);
+        o->callback((Fl_Callback*)cb_Resto);
+      } // Fl_Button* o
+      { Fl_Button* o = new Fl_Button(7, 230, 312, 25, "Meglio cambiare!");
+        o->callback((Fl_Callback*)cb_Meglio);
+      } // Fl_Button* o
+      o->end();
+    } // Fl_Group* o
+    win_duetipe->set_modal();
+    win_duetipe->size_range(325, 260, 325, 260);
+    win_duetipe->end();
+  } // Fl_Double_Window* win_duetipe
+  return win_duetipe;
 }

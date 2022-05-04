@@ -29,4 +29,6 @@ Fl_Double_Window* GUICercaTipa();
 extern Fl_Double_Window *win_duedipicche;
 extern Fl_Box *ddp_box;
 Fl_Double_Window* GUIDueDiPicche(int messaggio);
+extern Fl_Double_Window *win_duetipe;
+Fl_Double_Window* GUICasanova(int i_nome_nuovatipa, int figosita_nuovatipa);
 #endif
