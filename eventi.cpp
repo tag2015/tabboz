@@ -37,6 +37,7 @@
 
 #include "eventi.h"
 #include "gui/GUIEvento.h"
+#include "gui/GUITipa.h"
 
 /* Header per toolkit FLTK */
 #include <FL/Fl.H>
@@ -353,16 +354,17 @@ void Evento(void)
             if (Fama < 35) break; // Figosita' < 35 = nessuna speranza...
 
             int     figTemp;
-            char    nomeTemp[30];
+            int     i_nomeTemp;
+//            char    nomeTemp[30];
             
             figTemp = (rand() % (Fama-30) ) + 30;   // Figosita' minima tipa = 30...
 
             if (sesso == 'M') {
-                strcpy(nomeTemp, StrNomiTipe[ (rand() % NUM_TIPE) ]);    // pesca il nome di una tipa
-                sprintf(tmp,"Una tipa, di nome %s (Figosità %d/100), ci prova con te...\nCi stai ???",nomeTemp,figTemp);
+                i_nomeTemp = rand() % NUM_TIPE;    // pesca il nome di una tipa
+                sprintf(tmp,"Una tipa, di nome %s (Figosità %d/100), ci prova con te...\nCi stai ???",StrNomiTipe[i_nomeTemp],figTemp);
             } else {
-                strcpy(nomeTemp, StrNomiTipi[ (rand() % NUM_TIPI) ]);    // pesca il nome di un tipo
-                sprintf(tmp,"Un tipo, di nome %s (Figosità %d/100), ci prova con te...\nCi stai ???",nomeTemp,figTemp);
+                i_nomeTemp = rand() % NUM_TIPI;    // pesca il nome di un tipo
+                sprintf(tmp,"Un tipo, di nome %s (Figosità %d/100), ci prova con te...\nCi stai ???",StrNomiTipi[i_nomeTemp],figTemp);
             }
 
             MsgIcona(ICONA_DOMANDA);
@@ -394,18 +396,22 @@ void Evento(void)
                 //        hInstance,
                 //        lpproc);
                 //FreeProcInstance(lpproc);
-                MsgIcona(ICONA_STOP);
-                fl_message_title("Te piacerebbe");
-                fl_alert("La modalità Casanova non è stata ancora implementata!\nLascia la tipa prima di cercarne altre!");
+//                MsgIcona(ICONA_STOP);
+//                fl_message_title("Te piacerebbe");
+//                fl_alert("La modalità Casanova non è stata ancora implementata!\nLascia la tipa prima di cercarne altre!");
+                GUICasanova(i_nomeTemp,figTemp);
                 //FIXME workaround
                 break;
             } else { // bravo, non hai una tipa...<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                sprintf(Nometipa,"%s",nomeTemp);
+                if (sesso == 'M')
+                    sprintf(Nometipa,"%s",StrNomiTipe[i_nomeTemp]);
+                else
+                    sprintf(Nometipa,"%s",StrNomiTipi[i_nomeTemp]);
                 FigTipa=figTemp;
                 Rapporti=45 + (rand() % 15);
                 Fama+= (FigTipa / 10);
                 if (Fama > 100) Fama=100;
-                Reputazione+= FigTipa / 13;
+                Reputazione+= (FigTipa / 13);
                 if (Reputazione > 100) Reputazione=100;
             }
 
