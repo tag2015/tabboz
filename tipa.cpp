@@ -95,19 +95,17 @@ void CercaTipa(void)
         cercatipa_txt_giudizio->value(DescrizioneTipo(fig_nuovatipa));
     }
     cercatipa_val_figosita->value(fig_nuovatipa);
-//    win_cercatipa->redraw();
 }
 
 
 /* Check per vedere se riesce a rimorchiare la tipa/o */
 bool Provaci(void)
 {
-
-    MsgIcona(ICONA_COOL);
     // Calcola se ce la fa o meno con la tipa...
     if ( ((fig_nuovatipa * 2) + ( rand() % 50)) <= ( Fama + Reputazione + (rand() % 30)) )  {
     
         // E' andata bene...
+        MsgIcona(ICONA_COOL);
         if (sesso == 'M') {
             fl_message_title("E' andata bene!");
             fl_message("Con il tuo fascino nascosto da tabbozzo, seduci la tipa e ti ci metti insieme.");
@@ -125,7 +123,6 @@ bool Provaci(void)
 /* 2 di picche (la vita e' bella...) - Calcola malus e ritorna un messaggio a caso */
 int DueDiPicche(void)
 {
-
     DDP++;    // log due di picche...
     
     Reputazione-=2;    // decremento reputazione
@@ -135,20 +132,6 @@ int DueDiPicche(void)
     if (Fama < 0) Fama=0;
 
     return (rand() % 20);  // estrae una risposta (0-19)
-
-    //FIXME quand'è che avviene questa condizione?
-    /*
-    switch (wParam) {
-        case 201:
-            i++;
-            if (i > 5) {
-                sprintf(tmp,"Fino ad ora hai preso %d due di picche !\nNon ti preoccupare, capita a tutti di prendere qualche due di picche nella vita ...",DDP);
-                MessageBox( hDlg, tmp, "La vita e' bella...", MB_OK | MB_ICONINFORMATION);
-                i = 0;
-            }
-            return(TRUE);
-    }
-    */
 }
 
 
@@ -305,153 +288,6 @@ void LasciaTipa(void)
 }
 
 
-// ------------------------------------------------------------------------------------------
-// Tipa...
-// ------------------------------------------------------------------------------------------
-
-// # pragma argsused
-// BOOL FAR PASCAL        Tipa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//          char          buf[128];
-//          char               tmp[128];
-//          FARPROC              lpproc;
-//          int                lasciaoraddoppia;
-
-//      if (message == WM_INITDIALOG) {
-//         if (sesso == 'M') spostamento=0; else spostamento=100;
-//         AggiornaTipa(hDlg);
-//         tipahDlg=hDlg;
-//         return(TRUE);
-//         }
-
-//      else if (message == WM_COMMAND)
-//      {
-//     switch (wParam)
-//     {
-//          case 110:            // Cerca tipa
-//             lpproc = MakeProcInstance(CercaTipa, hInst);
-//             DialogBox(hInst,
-//                     MAKEINTRESOURCE(CERCATIPA + spostamento),
-//                     hDlg,
-//                     lpproc);
-//             FreeProcInstance(lpproc);
-
-//             AggiornaTipa(hDlg);
-//         return(TRUE);
-
-
-
-
-// ------------------------------------------------------------------------------------------
-// Due Donne - 22 Aprile 1999
-// ------------------------------------------------------------------------------------------
-/*
-# pragma argsused
-BOOL FAR PASCAL DueDonne(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-     char          tmp[255];
-
-     if (message == WM_INITDIALOG) {
-            sprintf(tmp, "Resto con %s", Nometipa);
-            SetDlgItemText(hDlg, 2, tmp);
-            if (!strcmp(Nometipa,nomeTemp)) { // Se le tipe si chiamano tutte e due con lo stesso nome
-                if (sesso == 'M') sprintf(tmp, "Preferisco quella nuova");
-                else sprintf(tmp, "Preferisco quello nuovo");
-            } else
-                sprintf(tmp, "Preferisco %s", nomeTemp);
-            SetDlgItemText(hDlg, 102, tmp);
-            return(TRUE);
-
-     } else if (message == WM_COMMAND) {
-            switch (wParam)
-            {
-            case 101:        // Ottima scelta...
-              if (sesso == 'M')
-                    sprintf(tmp,"Mentre sei appartato con la %s, arriva la tua ragazza, %s, ti tira uno schiaffo e ti lascia.\
-Capendo finalmente di che pasta sei fatto, anche la %s si allontana...",nomeTemp,Nometipa,nomeTemp);
-              else
-                    sprintf(tmp,"%s viene a sapere che di %s, gli spacca la faccia e ti molla...\
-Dopo questa tragica esperienza anche %s sparisce...",Nometipa,nomeTemp,nomeTemp);
-
-              Rapporti=0;
-              Reputazione-=8;
-              if (Reputazione < 0) Reputazione=0;
-              Fama-=4;
-              if (Fama < 0) Fama=0;
-
-              MessageBox( hDlg,
-                tmp ,
-                "La vita e' bella", MB_OK | MB_ICONSTOP);
-              EndDialog(hDlg, TRUE);
-              return(TRUE);
-
-            case 102:       // Preferisci quella nuova...
-                sprintf(Nometipa,"%s",nomeTemp);
-                FigTipa=figTemp;
-                Rapporti=30+random(15);
-                Fama+=FigTipa / 10; if (Fama > 100) Fama=100;
-                Reputazione+= FigTipa / 13; if (Reputazione > 100) Reputazione=100;
-                EndDialog(hDlg, TRUE);
-                return(TRUE);
-
-            case IDCANCEL: // Resti con la tua vecchia ragazza, bravo...
-            default:
-                EndDialog(hDlg, TRUE);
-                return(TRUE);
-            }
-     }
-
-     return(FALSE);
-}*/
-
-
-
-
-
-/*FIXME controllo 2 tipe da fare in gui */
-
-//                 // ...ma comunque controlla che tu non abbia gia' una tipa -------------------------
-//                 if (Rapporti > 0) { // hai gia' una tipa..
-//                     FARPROC lpproc = MakeProcInstance(DueDonne, hInst);
-//                     DialogBox(hInst,
-//                     MAKEINTRESOURCE(92 + spostamento),
-//                     hDlg,
-//                     lpproc);
-//                 FreeProcInstance(lpproc);
-//                 } else { // bravo, no hai una tipa...
-//                     sprintf(Nometipa,"%s",nomeTemp);
-//                     FigTipa=figTemp;
-//                     Rapporti=30+random(15);
-//                     Fama+=FigTipa / 10; if (Fama > 100) Fama=100;
-//                     Reputazione+= FigTipa / 13; if (Reputazione > 100) Reputazione=100;
-//             }
-//             } else {
-//                 FARPROC lpproc;
-
-//                 // 2 di picche... -------------------------------------------------------
-//                 if (sound_active) TabbozPlaySound(601);
-
-//                 lpproc = MakeProcInstance(DueDiPicche, hInst);
-//                 DialogBox(hInst,
-//                     MAKEINTRESOURCE(95),
-//                     hDlg,
-//                     lpproc);
-//                 FreeProcInstance(lpproc);
-
-//             }
-//             Evento(hDlg);
-//             EndDialog(hDlg, TRUE);
-//             return(TRUE);
-
-//          default:
-//             return(TRUE);
-//         }
-//      }
-
-//      return(FALSE);
-// }
-
-
 /* Abbina una descrizione (breve) alla figosita' di una tipa */
 const char *DescrizioneTipa(int f)
 {
@@ -480,88 +316,3 @@ const char *DescrizioneTipo(int f)
     else if (f > 35) return "Puo' piacere..";
     else             return "Inutile...";
 }
-
-
-#ifdef DEADCODE
-/* 2 di picche (la vita e' bella...) */
-BOOL FAR PASCAL DueDiPicche(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-     char          tmp[1024];
-     static int      i;
-
-     if (message == WM_INITDIALOG) {    // un giorno fortunato...
-        DDP++;                // log due di picche...
-        Reputazione-=2;                 // decremento reputazione
-        if (Reputazione < 0) Reputazione=0;
-
-        Fama-=2;            // decremento figosita'
-        if (Fama < 0) Fama=0;
-
-    // IN QUESTA PARTE C'ERA UN BUG CHE FACEVA CRASCIARE IL TABBOZ SIMULATOR...
-
-        if (sesso == 'M' )
-            i=300+random(20);        // 300 -> 319 [sfighe varie]
-        else
-            i=1300+random(20);        // 300 -> 319 [sfighe varie]
-
-        LoadString(hInst, i, (LPSTR)tmp, 1024);
-        SetDlgItemText(hDlg, 105, tmp);
-
-        i=0;
-
-        return(TRUE);
-    } else if (message == WM_COMMAND) {
-        switch (wParam)
-        {
-            case 201:
-            i++;
-            if (i > 5) {
-                sprintf(tmp,"Fino ad ora hai preso %d due di picche !\nNon ti preoccupare, capita a tutti di prendere qualche due di picche nella vita ...",DDP);
-                MessageBox( hDlg,
-                    tmp, "La vita e' bella...", MB_OK | MB_ICONINFORMATION);
-                i = 0;
-                }
-            return(TRUE);
-
-            case IDCANCEL:
-            case IDOK:
-                EndDialog(hDlg, TRUE);
-                return(TRUE);
-
-         default:
-                return(TRUE);
-        }
-     }
-
-     return(FALSE);
-}
-#endif
-
-
-
-// ------------------------------------------------------------------------------------------
-// 4 gennaio 1999
-// ------------------------------------------------------------------------------------------
-/*
-# pragma argsused
-BOOL FAR PASCAL MostraSalutieBaci(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-    if (message == WM_INITDIALOG) {
-        return(TRUE);
-    } else if (message == WM_COMMAND) {
-
-        switch (wParam) {
-
-            case 205:
-            case IDOK:
-            case IDCANCEL:
-                EndDialog(hDlg, TRUE);
-                return(TRUE);
-
-            default:
-                return(TRUE);
-            }
-        }
-    return(FALSE);
-}
-*/
