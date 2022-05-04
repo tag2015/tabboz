@@ -8657,7 +8657,17 @@ static Fl_Image *image_2picche() {
 Fl_Box *ddp_box=(Fl_Box *)0;
 
 static void cb_Ci1(Fl_Return_Button*, void*) {
-  win_duedipicche->hide();
+  static int i=0;
+i++;
+if(i>4) {
+  MsgIcona(ICONA_AVVISO);
+  fl_message_title("La vita è bella");
+  fl_alert("Fino ad ora hai preso %d due di picche!\n\
+Non ti preoccupare, capita a tutti di prendere\n\
+qualche due di picche nella vita...",DDP);
+i=0;
+}
+win_duedipicche->hide();
 win_cercatipa->hide();
 }
 

@@ -216,8 +216,18 @@ Function {GUIDueDiPicche(int messaggio)} {open
     }
     Fl_Return_Button {} {
       label {Ci rinuncio...}
-      callback {win_duedipicche->hide();
-win_cercatipa->hide();}
+      callback {static int i=0;
+i++;
+if(i>4) {
+  MsgIcona(ICONA_AVVISO);
+  fl_message_title("La vita è bella");
+  fl_alert("Fino ad ora hai preso %d due di picche!\\n\\
+Non ti preoccupare, capita a tutti di prendere\\n\\
+qualche due di picche nella vita...",DDP);
+i=0;
+}
+win_duedipicche->hide();
+win_cercatipa->hide();} selected
       xywh {195 115 120 30}
     }
   }
@@ -289,7 +299,7 @@ Rapporti=30 + (rand() % 15 );
 Fama+= (FigTipa/10); if (Fama > 100) Fama=100;
 Reputazione+= (FigTipa/13);
 if (Reputazione > 100) Reputazione=100;
-win_duetipe->hide();} selected
+win_duetipe->hide();}
         xywh {7 230 312 25}
       }
     }
