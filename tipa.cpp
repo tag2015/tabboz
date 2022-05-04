@@ -71,7 +71,10 @@ void AggiornaTipa(void)
         tipa_val_rapporti->value(Rapporti);
     }
     tipa_val_fama->value(Fama);
-    tipa_val_credito->value(CALCSOLDI(AbbonamentData.creditorest));
+    if(AbbonamentData.creditorest>0)
+        tipa_val_credito->value(CALCSOLDI(AbbonamentData.creditorest));
+    else
+        tipa_val_credito->value(0);
 }
 
 
