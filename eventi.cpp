@@ -168,9 +168,9 @@ void Evento(void)
                 fl_message_title("Vieni mollata...");
                 fl_alert(StrEventi[MSG_TIPO+i]);  // 0<i<9, 10 possibili messaggi
             }
+            Reputazione-=(10 - i);    // quelle con numero piu' basso, sono peggiori...
+            if (Reputazione < 0) Reputazione = 0;
         }
-        Reputazione-=(10 - i);    // quelle con numero piu' basso, sono peggiori...
-        if (Reputazione < 0) Reputazione = 0;
     }
     
 
