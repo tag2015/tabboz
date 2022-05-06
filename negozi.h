@@ -21,9 +21,12 @@
 #ifndef TABBOZ_NEGOZI_H
 #define TABBOZ_NEGOZI_H
 
-#define COSTO_VESTITO_NATALIZIO 58
+/* Locazione di inizio dei vestiti nell'array */
+#define I_GIUBBOTTO 0
+#define I_PANTALONI 6
+#define I_SCARPE 11
 
-//BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam);
+#define COSTO_VESTITO_NATALIZIO 58
 
 extern STVARIE VestitiMem[];
 

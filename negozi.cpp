@@ -51,14 +51,16 @@ STVARIE VestitiMem[] = {
     {0, 0, 0, 0, 0,  5, 0,  170,  0, ""},    //    Pantaloni tuta
     {0, 0, 0, 0, 0,  6, 0,  248,  0, ""},    //    Pantaloni in plastika
     {0, 0, 0, 0, 0,  5, 0,  190,  0, ""},    //    Pantaloni scacchiera
+    {0, 0, 0, 0, 0,  5, 0,  190,  0, ""},    //    Pantaloni scacchiera
 
-    {0, 0, 0, 0, 0,  4, 0,  122,  0, ""},    // -- Scarpe da tabbozzi...
+    {0, 0, 0, 0, 0,  4, 0,  122,  0, ""},    // -- Simil-Nike nere
+    {0, 0, 0, 0, 0,  4, 0,  122,  0, ""},    //    "      "   gialle
+    {0, 0, 0, 0, 0,  4, 0,  122,  0, ""},    //    "      "   pastello
+    {0, 0, 0, 0, 0,  4, 0,  142,  0, ""},    //    Imbalance
+    {0, 0, 0, 0, 0,  5, 0,  166,  0, ""},    //    Imbalance Shocking
     {0, 0, 0, 0, 0,  6, 0,  220,  0, ""},    //    Buffalo
-    {0, 0, 0, 0, 0,  2, 0,   58,  0, ""},    //    Scarpe da tabbozzi...
-    {0, 0, 0, 0, 0,  4, 0,  142,  0, ""},    //    NUOVE Scarpe da tabbozzi...
-    {0, 0, 0, 0, 0,  4, 0,  142,  0, ""},    //    ""        ""
-    {0, 0, 0, 0, 0,  5, 0,  166,  0, ""},    //    ""        ""
-    {0, 0, 0, 0, 0,  6, 0,  230,  0, ""}     //    Nuove Buffalo
+    {0, 0, 0, 0, 0,  6, 0,  230,  0, ""},    //    Buffalo Prugna
+    {0, 0, 0, 0, 0,  2, 0,   58,  0, ""},    //    Scarpe con mattoni...
 };
 
 
@@ -98,30 +100,18 @@ STVARIE SizzeMem[] = {
 /* Routine per il pagamento di qualunque cosa... */
 void PagaQualcosa (int scelta)
 {
-    if (scelta != 0) {
+    if (scelta) {
         if (VestitiMem[scelta].prezzo > Soldi) {
             nomoney(VESTITI);
         } else {
             Soldi -= VestitiMem[scelta].prezzo;
-            switch (scelta) {
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:  current_giubbotto=scelta; break;   //FIXME cambiare i check
-                case 7:
-                case 8:
-                case 9:
-                case 10: current_pantaloni=scelta-6; break;
-                case 11:
-                case 12:
-                case 13:
-                case 14:
-                case 15:
-                case 16:
-                case 17: current_scarpe=scelta-10; break;
-            }
+
+            if(scelta <= I_PANTALONI)    // Giubbotti
+                current_giubbotto=scelta-I_GIUBBOTTO;
+            else if (scelta <= I_SCARPE)    // Pantaloni
+                current_pantaloni=scelta-I_PANTALONI;
+            else    // Scarpe
+                current_scarpe=scelta-I_SCARPE;
 
             if (logging) {
                 sprintf(log_buf,"negozi: Paga %s",MostraSoldi(VestitiMem[scelta].prezzo));
