@@ -2,7 +2,7 @@
 version 1.0308
 header_name {.h}
 code_name {.cpp}
-decl {\#include "GUITabboz.h"} {selected private local
+decl {\#include "GUITabboz.h"} {private local
 }
 
 decl {\#include "GUINegoziLauncher.h"} {private global
@@ -28,15 +28,13 @@ Function {add_prezzo(int scelta)} {open private C
   code {if(!euro)
   sprintf(buf, "Prezzo: L. %d",CALCSOLDI(VestitiMem[scelta].prezzo));
 else
-  sprintf(buf, "Prezzo: € %d",CALCSOLDI(VestitiMem[scelta].prezzo));
-boxtxt_vestiti->add(buf);} {}
+  sprintf(buf, "Prezzo: € %d",CALCSOLDI(VestitiMem[scelta].prezzo));} {}
 }
 
-Function {GUINegoziVestiti_1()} {open
-} {
+Function {GUINegoziVestiti_1()} {} {
   Fl_Window win_vestiti_1 {
     label {Bau House} open
-    xywh {383 592 580 320} type Double labelfont 1 labelsize 12 hotspot modal size_range {580 320 580 320} visible
+    xywh {235 206 580 320} type Double labelfont 1 labelsize 12 hide hotspot modal size_range {580 320 580 320}
   } {
     Fl_Group {} {open
       xywh {10 10 560 150}
@@ -46,14 +44,15 @@ Function {GUINegoziVestiti_1()} {open
 o->image(ImgGiubbotto[scelta]);
 giub_colore->activate();
 giub_colore->value(0);
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bGiubbotto \\"Fatiscenza\\"");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Elegante e raffinato, adatto a tutte le occasioni,");
-boxtxt_vestiti->add("dalle serate con gli amici alle feste più esclusive.");
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bGiubbotto \\"Fatiscenza\\"");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Elegante e raffinato, adatto a tutte le occasioni,");
+neg1_boxtxt->add("dalle serate con gli amici alle feste più esclusive.");
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();
 neg1_btn_compra->activate();}
         xywh {10 10 180 120} type Radio color 7 selection_color 3
@@ -61,15 +60,16 @@ neg1_btn_compra->activate();}
       }
       Fl_Button {} {
         callback {scelta=5;
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bGiubbotto di pelle");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Giacca di pelle...");
-boxtxt_vestiti->add("cos'altro dire?");
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bGiubbotto di pelle");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Giacca di pelle...");
+neg1_boxtxt->add("cos'altro dire?");
 giub_colore->deactivate();
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();
 neg1_btn_compra->activate();}
         xywh {200 10 180 120} type Radio color 7 selection_color 3
@@ -77,16 +77,17 @@ neg1_btn_compra->activate();}
       }
       Fl_Button {} {
         callback {scelta=6;
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bCappotto con pelliccia fluo");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Ecco qualcosa per i più ricercati!");
-boxtxt_vestiti->add("Come può mancare nell'armadio un vestito come questo?");
-boxtxt_vestiti->add("Compratelo subito, non ve ne pentirete.");
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bCappotto con pelliccia fluo");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Ecco qualcosa per i più ricercati!");
+neg1_boxtxt->add("Come può mancare nell'armadio un vestito come questo?");
+neg1_boxtxt->add("Compratelo subito, non ve ne pentirete.");
 giub_colore->deactivate();
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();
 neg1_btn_compra->activate();}
         xywh {390 10 180 120} type Radio color 7 selection_color 3
@@ -101,14 +102,15 @@ neg1_btn_compra->activate();}
         label {Original Blue}
         callback {scelta=1;
 neg1_btn_1->image(ImgGiubbotto[scelta]);
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bGiubbotto \\"Fatiscenza\\"");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Elegante e raffinato, adatto a tutte le occasioni,");
-boxtxt_vestiti->add("dalle serate con gli amici alle feste più esclusive.");
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bGiubbotto \\"Fatiscenza\\"");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Elegante e raffinato, adatto a tutte le occasioni,");
+neg1_boxtxt->add("dalle serate con gli amici alle feste più esclusive.");
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();}
         xywh {0 0 30 20} labelsize 12
       }
@@ -116,14 +118,15 @@ win_vestiti_1->redraw();}
         label Silver
         callback {scelta=2;
 neg1_btn_1->image(ImgGiubbotto[scelta]);
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bGiubbotto \\"Fatiscenza\\"");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Nuova collezione, per essere sempre in linea");
-boxtxt_vestiti->add("con i tempi che cambiano. Colore \\"Silver\\"");
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bGiubbotto \\"Fatiscenza\\"");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Nuova collezione, per essere sempre in linea");
+neg1_boxtxt->add("con i tempi che cambiano. Colore \\"Silver\\"");
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();}
         xywh {0 0 30 20} labelsize 12
       }
@@ -131,14 +134,15 @@ win_vestiti_1->redraw();}
         label {Green Line}
         callback {scelta=3;
 neg1_btn_1->image(ImgGiubbotto[scelta]);
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bGiubbotto \\"Fatiscenza\\"");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Nuova collezione, per essere sempre in linea");
-boxtxt_vestiti->add("con i tempi che cambiano. Colore \\"Acid Green\\"");
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bGiubbotto \\"Fatiscenza\\"");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Nuova collezione, per essere sempre in linea");
+neg1_boxtxt->add("con i tempi che cambiano. Colore \\"Acid Green\\"");
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();}
         xywh {0 0 30 20} labelsize 12
       }
@@ -146,19 +150,20 @@ win_vestiti_1->redraw();}
         label White
         callback {scelta=4;
 neg1_btn_1->image(ImgGiubbotto[scelta]);
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bGiubbotto \\"Fatiscenza\\"");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Versione \\"White\\", con una comoda imbottitura");
-boxtxt_vestiti->add("in piumino sintetico, è adatto a tutte le stagioni.");
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bGiubbotto \\"Fatiscenza\\"");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Versione \\"White\\", con una comoda imbottitura");
+neg1_boxtxt->add("in piumino sintetico, è adatto a tutte le stagioni.");
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();}
         xywh {0 0 30 20} labelsize 12
       }
     }
-    Fl_Browser boxtxt_vestiti {
+    Fl_Browser neg1_boxtxt {
       xywh {10 165 380 140} box EMBOSSED_FRAME color 54 when 0
     }
     Fl_Group {} {open
@@ -196,6 +201,375 @@ win_vestiti_1->hide();}
         label {%}
         xywh {493 204 15 16} labelfont 1
       }
+    }
+  }
+}
+
+Function {GUINegoziVestiti_2()} {} {
+  Fl_Window win_vestiti_2 {
+    label {Blue Rider} open
+    xywh {188 490 580 365} type Double labelfont 1 labelsize 12 hide hotspot modal size_range {580 365 580 365}
+  } {
+    Fl_Group {} {open
+      xywh {10 10 560 205}
+    } {
+      Fl_Button neg2_btn_1 {
+        callback {scelta=1;
+neg2_boxtxt->clear();
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("@bPantaloni Gessati");
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("Pantaloni gessati stile anni '30, comunque sono tornati");
+neg2_boxtxt->add("di moda ed ogni zarro che si rispetti dovrebbe averne un paio.");
+panta_colore->deactivate();
+neg2_boxtxt->add(NULL);
+add_prezzo(I_PANTALONI+scelta);
+neg2_boxtxt->add(buf);
+win_vestiti_2->redraw();
+neg2_btn_compra->activate();}
+        xywh {10 10 100 170} type Radio color 7 selection_color 3
+        code0 {o->image(ImgPantaloni[1]);}
+      }
+      Fl_Button {} {
+        callback {scelta=2;
+neg2_boxtxt->clear();
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("@bPantaloni Tuta");
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("Pantaloni per il tempo libero firmati da una delle marche più");
+neg2_boxtxt->add("prestigiose e costose di abbigliamento sportivo.");
+panta_colore->deactivate();
+neg2_boxtxt->add(NULL);
+add_prezzo(I_PANTALONI+scelta);
+neg2_boxtxt->add(buf);
+win_vestiti_2->redraw();
+neg2_btn_compra->activate();}
+        xywh {163 10 100 170} type Radio color 7 selection_color 3
+        code0 {o->image(ImgPantaloni[2]);}
+      }
+      Fl_Button {} {
+        callback {scelta=3;
+neg2_boxtxt->clear();
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("@bPantaloni in PVC");
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("Pantaloni realizzati da uno dei più eccentrici e stravaganti");
+neg2_boxtxt->add("stilisti del momento utilizzando fibra di bottiglie");
+neg2_boxtxt->add("di plastica riciclate.");
+panta_colore->deactivate();
+neg2_boxtxt->add(NULL);
+add_prezzo(I_PANTALONI+scelta);
+neg2_boxtxt->add(buf);
+win_vestiti_2->redraw();
+neg2_btn_compra->activate();}
+        xywh {316 10 100 170} type Radio color 7 selection_color 3
+        code0 {o->image(ImgPantaloni[3]);}
+      }
+      Fl_Button neg2_btn_4 {
+        callback {scelta=4;
+o->image(ImgPantaloni[4]);
+neg2_boxtxt->clear();
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("@bPantaloni a scacchi");
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("Hai sempre sognato di essere una scacchiera ??");
+neg2_boxtxt->add("Eccoti accontentato!");
+neg2_boxtxt->add("Realizzati in 100% acrilico.");
+panta_colore->activate();
+panta_colore->value(0);
+neg2_boxtxt->add(NULL);
+add_prezzo(I_PANTALONI+scelta);
+neg2_boxtxt->add(buf);
+win_vestiti_2->redraw();
+neg2_btn_compra->activate();}
+        xywh {470 10 100 170} type Radio color 7 selection_color 3
+        code0 {o->image(ImgPantaloni[4]);}
+      }
+    }
+    Fl_Choice panta_colore {open
+      xywh {470 185 100 20} down_box BORDER_BOX
+      code0 {o->deactivate();}
+    } {
+      MenuItem {} {
+        label {Giallo/Nero}
+        callback {scelta=4;
+neg2_btn_4->image(ImgPantaloni[scelta]);
+win_vestiti_2->redraw();}
+        xywh {0 0 30 20} labelsize 12
+      }
+      MenuItem {} {
+        label {Bianco/Nero}
+        callback {scelta=5;
+neg2_btn_4->image(ImgPantaloni[scelta]);
+win_vestiti_2->redraw();}
+        xywh {0 0 30 20} labelsize 12
+      }
+    }
+    Fl_Browser neg2_boxtxt {
+      xywh {10 215 380 140} box EMBOSSED_FRAME color 54 labelsize 12 when 0 textsize 12
+    }
+    Fl_Group {} {open
+      xywh {400 215 170 140} box EMBOSSED_FRAME
+    } {
+      Fl_Button neg2_btn_compra {
+        label {Compra!}
+        callback {PagaQualcosa(I_PANTALONI+scelta);
+win_principale->activate();
+AggiornaPrincipale();
+win_vestiti_2->hide();}
+        xywh {405 310 60 40}
+        code0 {o->deactivate();}
+      }
+      Fl_Return_Button {} {
+        callback {win_negozi->show();
+win_vestiti_2->hide();}
+        xywh {505 310 60 40} align 20
+        code0 {o->image(ImgExit);}
+      }
+      Fl_Value_Output {} {
+        label {Soldi  L.}
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {470 220 95 25} box FLAT_BOX selection_color 7 labelfont 2 labelsize 12 step 1 textfont 1
+        code0 {o->value(CALCSOLDI(Soldi));}
+        code1 {if(euro) o->label("Soldi  €");}
+      }
+      Fl_Value_Output {} {
+        label {Figosità }
+        callback {o->value(Fama);}
+        xywh {470 250 25 25} box FLAT_BOX labelfont 2 labelsize 12 value 100 textfont 1
+        code0 {o->value(Fama);}
+      }
+      Fl_Box {} {
+        label {%}
+        xywh {493 254 15 16} labelfont 1
+      }
+    }
+  }
+}
+
+Function {GUINegoziVestiti_3()} {open
+} {
+  Fl_Window win_vestiti_3 {
+    label {Foot Smoker} open
+    xywh {173 95 635 315} type Double labelfont 1 labelsize 12 hotspot modal size_range {635 315 635 315} visible
+  } {
+    Fl_Group {} {open
+      xywh {10 5 620 155}
+    } {
+      Fl_Button neg3_btn_1 {
+        callback {scelta=1;
+o->image(ImgScarpe[scelta]);
+neg3_scarpe2_colore->deactivate();
+neg3_scarpe3_colore->deactivate();
+neg3_scarpe1_colore->activate();
+neg3_scarpe1_colore->value(0);
+
+neg3_txt_nomescarpe->label("Scarpe \\"Dyke\\"");
+neg3_txt_descscarpe->label("Scarpe da ginnastica trendy e ad un prezzo accessibile, disponibili in vari colori e adatte a tutte le occasioni!");
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+neg3_btn_compra->activate();}
+        xywh {10 10 150 120} type Radio color 7 selection_color 3
+        code0 {o->image(ImgScarpe[1]);}
+      }
+      Fl_Button neg3_btn_2 {
+        callback {scelta=4;
+o->image(ImgScarpe[scelta]);
+neg3_scarpe1_colore->deactivate();
+neg3_scarpe3_colore->deactivate();
+neg3_scarpe2_colore->activate();
+neg3_scarpe2_colore->value(0);
+
+neg3_txt_nomescarpe->label("Scarpe \\"Imbalance\\"");
+neg3_txt_descscarpe->label("Sneakers moderni ed eleganti, disponibili in colorazione tenue e delicata o sgargiante e decisa!");
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+neg3_btn_compra->activate();}
+        xywh {165 10 150 120} type Radio color 7 selection_color 3
+        code0 {o->image(ImgScarpe[4]);}
+      }
+      Fl_Button neg3_btn_3 {
+        callback {scelta=6;
+o->image(ImgScarpe[scelta]);
+neg3_scarpe1_colore->deactivate();
+neg3_scarpe2_colore->deactivate();
+neg3_scarpe3_colore->activate();
+neg3_scarpe3_colore->value(0);
+
+neg3_txt_nomescarpe->label("Scarpe \\"Mufloon\\"");
+neg3_txt_descscarpe->label("Il massimo della tendenza per i giovani d'oggi!\\n\\
+Queste scarpe, scomode e brutte, faranno sicuramente per voi...\\n\\
+ora disponibili anche nella rivoluzionaria colorazione Prugna!");
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+neg3_btn_compra->activate();}
+        xywh {320 10 150 120} type Radio color 7 selection_color 3
+        code0 {o->image(ImgScarpe[6]);}
+      }
+      Fl_Button {} {
+        callback {scelta=8;
+o->image(ImgScarpe[scelta]);
+neg3_scarpe1_colore->deactivate();
+neg3_scarpe2_colore->deactivate();
+neg3_scarpe3_colore->deactivate();
+
+neg3_txt_nomescarpe->label("Scarpe con mattoni...");
+neg3_txt_descscarpe->label("Volete essere alla moda spendendo poco ??\\n\\
+Queste scarpe rialzate con mattoni forati sono quello che ci vuole per voi!");
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+neg3_btn_compra->activate();}
+        xywh {475 10 150 120} type Radio color 7 selection_color 3
+        code0 {o->image(ImgScarpe[8]);}
+      }
+    }
+    Fl_Choice neg3_scarpe1_colore {open
+      xywh {10 135 150 20} down_box BORDER_BOX
+      code0 {o->deactivate();}
+    } {
+      MenuItem neg3_scarpe1_menu {
+        label Nero
+        callback {scelta=1;
+neg3_btn_1->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();}
+        xywh {0 0 30 20} labelsize 12
+      }
+      MenuItem {} {
+        label Giallo
+        callback {scelta=2;
+neg3_btn_1->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();}
+        xywh {0 0 30 20} labelsize 12
+      }
+      MenuItem {} {
+        label Pastel
+        callback {scelta=3;
+neg3_btn_1->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();}
+        xywh {0 0 30 20} labelsize 12
+      }
+    }
+    Fl_Choice neg3_scarpe2_colore {open
+      xywh {165 135 150 20} down_box BORDER_BOX
+      code0 {o->deactivate();}
+    } {
+      MenuItem {} {
+        label White
+        callback {scelta=4;
+neg3_btn_2->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();}
+        xywh {0 0 30 20} labelsize 12
+      }
+      MenuItem {} {
+        label {Hot Fucsia}
+        callback {scelta=5;
+neg3_btn_2->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();}
+        xywh {0 0 30 20} labelsize 12
+      }
+    }
+    Fl_Choice neg3_scarpe3_colore {open
+      xywh {320 135 150 20} down_box BORDER_BOX
+      code0 {o->deactivate();}
+    } {
+      MenuItem {} {
+        label Blu
+        callback {scelta=6;
+neg3_btn_3->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();}
+        xywh {0 0 30 20} labelsize 12
+      }
+      MenuItem {} {
+        label Prugna
+        callback {scelta=7;
+neg3_btn_3->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();} selected
+        xywh {0 0 30 20} labelsize 12
+      }
+    }
+    Fl_Group {} {open
+      xywh {455 165 170 140} box EMBOSSED_FRAME
+    } {
+      Fl_Button neg3_btn_compra {
+        label {Compra!}
+        callback {PagaQualcosa(I_SCARPE+scelta);
+win_principale->activate();
+AggiornaPrincipale();
+win_vestiti_3->hide();}
+        xywh {460 260 60 40}
+        code0 {o->deactivate();}
+      }
+      Fl_Return_Button {} {
+        callback {win_negozi->show();
+win_vestiti_3->hide();}
+        xywh {560 260 60 40} align 20
+        code0 {o->image(ImgExit);}
+      }
+      Fl_Value_Output {} {
+        label {Soldi  L.}
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {525 170 95 25} box FLAT_BOX selection_color 7 labelfont 2 labelsize 12 step 1 textfont 1
+        code0 {o->value(CALCSOLDI(Soldi));}
+        code1 {if(euro) o->label("Soldi  €");}
+      }
+      Fl_Value_Output {} {
+        label {Figosità }
+        callback {o->value(Fama);}
+        xywh {525 200 25 25} box FLAT_BOX labelfont 2 labelsize 12 value 100 textfont 1
+        code0 {o->value(Fama);}
+      }
+      Fl_Box {} {
+        label {%}
+        xywh {548 204 15 16} labelfont 1
+      }
+    }
+    Fl_Box {} {
+      xywh {10 165 440 140} box EMBOSSED_FRAME
+    }
+    Fl_Box neg3_txt_nomescarpe {
+      xywh {25 179 410 20} labelfont 1 align 21
+    }
+    Fl_Box neg3_txt_descscarpe {
+      xywh {25 200 410 70} labelsize 12 align 149
+    }
+    Fl_Box neg3_txt_prezzoscarpe {
+      xywh {25 274 240 20} align 20
     }
   }
 }

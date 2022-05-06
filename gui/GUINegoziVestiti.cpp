@@ -14,7 +14,6 @@ static void add_prezzo(int scelta) {
     sprintf(buf, "Prezzo: L. %d",CALCSOLDI(VestitiMem[scelta].prezzo));
   else
     sprintf(buf, "Prezzo: € %d",CALCSOLDI(VestitiMem[scelta].prezzo));
-  boxtxt_vestiti->add(buf);
 }
 
 Fl_Double_Window *win_vestiti_1=(Fl_Double_Window *)0;
@@ -26,45 +25,48 @@ static void cb_neg1_btn_1(Fl_Button* o, void*) {
 o->image(ImgGiubbotto[scelta]);
 giub_colore->activate();
 giub_colore->value(0);
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bGiubbotto \"Fatiscenza\"");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Elegante e raffinato, adatto a tutte le occasioni,");
-boxtxt_vestiti->add("dalle serate con gli amici alle feste più esclusive.");
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bGiubbotto \"Fatiscenza\"");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Elegante e raffinato, adatto a tutte le occasioni,");
+neg1_boxtxt->add("dalle serate con gli amici alle feste più esclusive.");
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();
 neg1_btn_compra->activate();
 }
 
 static void cb_(Fl_Button*, void*) {
   scelta=5;
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bGiubbotto di pelle");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Giacca di pelle...");
-boxtxt_vestiti->add("cos'altro dire?");
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bGiubbotto di pelle");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Giacca di pelle...");
+neg1_boxtxt->add("cos'altro dire?");
 giub_colore->deactivate();
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();
 neg1_btn_compra->activate();
 }
 
 static void cb_1(Fl_Button*, void*) {
   scelta=6;
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bCappotto con pelliccia fluo");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Ecco qualcosa per i più ricercati!");
-boxtxt_vestiti->add("Come può mancare nell'armadio un vestito come questo?");
-boxtxt_vestiti->add("Compratelo subito, non ve ne pentirete.");
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bCappotto con pelliccia fluo");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Ecco qualcosa per i più ricercati!");
+neg1_boxtxt->add("Come può mancare nell'armadio un vestito come questo?");
+neg1_boxtxt->add("Compratelo subito, non ve ne pentirete.");
 giub_colore->deactivate();
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();
 neg1_btn_compra->activate();
 }
@@ -74,56 +76,60 @@ Fl_Choice *giub_colore=(Fl_Choice *)0;
 static void cb_Original(Fl_Menu_*, void*) {
   scelta=1;
 neg1_btn_1->image(ImgGiubbotto[scelta]);
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bGiubbotto \"Fatiscenza\"");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Elegante e raffinato, adatto a tutte le occasioni,");
-boxtxt_vestiti->add("dalle serate con gli amici alle feste più esclusive.");
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bGiubbotto \"Fatiscenza\"");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Elegante e raffinato, adatto a tutte le occasioni,");
+neg1_boxtxt->add("dalle serate con gli amici alle feste più esclusive.");
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();
 }
 
 static void cb_Silver(Fl_Menu_*, void*) {
   scelta=2;
 neg1_btn_1->image(ImgGiubbotto[scelta]);
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bGiubbotto \"Fatiscenza\"");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Nuova collezione, per essere sempre in linea");
-boxtxt_vestiti->add("con i tempi che cambiano. Colore \"Silver\"");
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bGiubbotto \"Fatiscenza\"");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Nuova collezione, per essere sempre in linea");
+neg1_boxtxt->add("con i tempi che cambiano. Colore \"Silver\"");
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();
 }
 
 static void cb_Green(Fl_Menu_*, void*) {
   scelta=3;
 neg1_btn_1->image(ImgGiubbotto[scelta]);
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bGiubbotto \"Fatiscenza\"");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Nuova collezione, per essere sempre in linea");
-boxtxt_vestiti->add("con i tempi che cambiano. Colore \"Acid Green\"");
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bGiubbotto \"Fatiscenza\"");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Nuova collezione, per essere sempre in linea");
+neg1_boxtxt->add("con i tempi che cambiano. Colore \"Acid Green\"");
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();
 }
 
 static void cb_White(Fl_Menu_*, void*) {
   scelta=4;
 neg1_btn_1->image(ImgGiubbotto[scelta]);
-boxtxt_vestiti->clear();
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("@bGiubbotto \"Fatiscenza\"");
-boxtxt_vestiti->add(NULL);
-boxtxt_vestiti->add("Versione \"White\", con una comoda imbottitura");
-boxtxt_vestiti->add("in piumino sintetico, è adatto a tutte le stagioni.");
-boxtxt_vestiti->add(NULL);
+neg1_boxtxt->clear();
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("@bGiubbotto \"Fatiscenza\"");
+neg1_boxtxt->add(NULL);
+neg1_boxtxt->add("Versione \"White\", con una comoda imbottitura");
+neg1_boxtxt->add("in piumino sintetico, è adatto a tutte le stagioni.");
+neg1_boxtxt->add(NULL);
 add_prezzo(scelta);
+neg1_boxtxt->add(buf);
 win_vestiti_1->redraw();
 }
 
@@ -135,7 +141,7 @@ Fl_Menu_Item menu_giub_colore[] = {
  {0,0,0,0,0,0,0,0,0}
 };
 
-Fl_Browser *boxtxt_vestiti=(Fl_Browser *)0;
+Fl_Browser *neg1_boxtxt=(Fl_Browser *)0;
 
 Fl_Button *neg1_btn_compra=(Fl_Button *)0;
 
@@ -193,11 +199,11 @@ Fl_Double_Window* GUINegoziVestiti_1() {
       giub_colore->menu(menu_giub_colore);
       o->deactivate();
     } // Fl_Choice* giub_colore
-    { boxtxt_vestiti = new Fl_Browser(10, 165, 380, 140);
-      boxtxt_vestiti->box(FL_EMBOSSED_FRAME);
-      boxtxt_vestiti->color(FL_LIGHT3);
-      boxtxt_vestiti->when(FL_WHEN_NEVER);
-    } // Fl_Browser* boxtxt_vestiti
+    { neg1_boxtxt = new Fl_Browser(10, 165, 380, 140);
+      neg1_boxtxt->box(FL_EMBOSSED_FRAME);
+      neg1_boxtxt->color(FL_LIGHT3);
+      neg1_boxtxt->when(FL_WHEN_NEVER);
+    } // Fl_Browser* neg1_boxtxt
     { Fl_Group* o = new Fl_Group(400, 165, 170, 140);
       o->box(FL_EMBOSSED_FRAME);
       { Fl_Button* o = neg1_btn_compra = new Fl_Button(405, 260, 60, 40, "Compra!");
@@ -239,4 +245,522 @@ Fl_Double_Window* GUINegoziVestiti_1() {
     win_vestiti_1->end();
   } // Fl_Double_Window* win_vestiti_1
   return win_vestiti_1;
+}
+
+Fl_Double_Window *win_vestiti_2=(Fl_Double_Window *)0;
+
+Fl_Button *neg2_btn_1=(Fl_Button *)0;
+
+static void cb_neg2_btn_1(Fl_Button*, void*) {
+  scelta=1;
+neg2_boxtxt->clear();
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("@bPantaloni Gessati");
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("Pantaloni gessati stile anni '30, comunque sono tornati");
+neg2_boxtxt->add("di moda ed ogni zarro che si rispetti dovrebbe averne un paio.");
+panta_colore->deactivate();
+neg2_boxtxt->add(NULL);
+add_prezzo(I_PANTALONI+scelta);
+neg2_boxtxt->add(buf);
+win_vestiti_2->redraw();
+neg2_btn_compra->activate();
+}
+
+static void cb_3(Fl_Button*, void*) {
+  scelta=2;
+neg2_boxtxt->clear();
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("@bPantaloni Tuta");
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("Pantaloni per il tempo libero firmati da una delle marche più");
+neg2_boxtxt->add("prestigiose e costose di abbigliamento sportivo.");
+panta_colore->deactivate();
+neg2_boxtxt->add(NULL);
+add_prezzo(I_PANTALONI+scelta);
+neg2_boxtxt->add(buf);
+win_vestiti_2->redraw();
+neg2_btn_compra->activate();
+}
+
+static void cb_4(Fl_Button*, void*) {
+  scelta=3;
+neg2_boxtxt->clear();
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("@bPantaloni in PVC");
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("Pantaloni realizzati da uno dei più eccentrici e stravaganti");
+neg2_boxtxt->add("stilisti del momento utilizzando fibra di bottiglie");
+neg2_boxtxt->add("di plastica riciclate.");
+panta_colore->deactivate();
+neg2_boxtxt->add(NULL);
+add_prezzo(I_PANTALONI+scelta);
+neg2_boxtxt->add(buf);
+win_vestiti_2->redraw();
+neg2_btn_compra->activate();
+}
+
+Fl_Button *neg2_btn_4=(Fl_Button *)0;
+
+static void cb_neg2_btn_4(Fl_Button* o, void*) {
+  scelta=4;
+o->image(ImgPantaloni[4]);
+neg2_boxtxt->clear();
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("@bPantaloni a scacchi");
+neg2_boxtxt->add(NULL);
+neg2_boxtxt->add("Hai sempre sognato di essere una scacchiera ??");
+neg2_boxtxt->add("Eccoti accontentato!");
+neg2_boxtxt->add("Realizzati in 100% acrilico.");
+panta_colore->activate();
+panta_colore->value(0);
+neg2_boxtxt->add(NULL);
+add_prezzo(I_PANTALONI+scelta);
+neg2_boxtxt->add(buf);
+win_vestiti_2->redraw();
+neg2_btn_compra->activate();
+}
+
+Fl_Choice *panta_colore=(Fl_Choice *)0;
+
+static void cb_Giallo(Fl_Menu_*, void*) {
+  scelta=4;
+neg2_btn_4->image(ImgPantaloni[scelta]);
+win_vestiti_2->redraw();
+}
+
+static void cb_Bianco(Fl_Menu_*, void*) {
+  scelta=5;
+neg2_btn_4->image(ImgPantaloni[scelta]);
+win_vestiti_2->redraw();
+}
+
+Fl_Menu_Item menu_panta_colore[] = {
+ {"Giallo/Nero", 0,  (Fl_Callback*)cb_Giallo, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {"Bianco/Nero", 0,  (Fl_Callback*)cb_Bianco, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {0,0,0,0,0,0,0,0,0}
+};
+
+Fl_Browser *neg2_boxtxt=(Fl_Browser *)0;
+
+Fl_Button *neg2_btn_compra=(Fl_Button *)0;
+
+static void cb_neg2_btn_compra(Fl_Button*, void*) {
+  PagaQualcosa(I_PANTALONI+scelta);
+win_principale->activate();
+AggiornaPrincipale();
+win_vestiti_2->hide();
+}
+
+static void cb_5(Fl_Return_Button*, void*) {
+  win_negozi->show();
+win_vestiti_2->hide();
+}
+
+static void cb_Soldi1(Fl_Value_Output* o, void*) {
+  o->value(CALCSOLDI(Soldi));
+}
+
+static void cb_Figosit1(Fl_Value_Output* o, void*) {
+  o->value(Fama);
+}
+
+Fl_Double_Window* GUINegoziVestiti_2() {
+  { win_vestiti_2 = new Fl_Double_Window(580, 365, "Blue Rider");
+    win_vestiti_2->labelfont(1);
+    win_vestiti_2->labelsize(12);
+    win_vestiti_2->hotspot(win_vestiti_2);
+    { Fl_Group* o = new Fl_Group(10, 10, 560, 205);
+      { Fl_Button* o = neg2_btn_1 = new Fl_Button(10, 10, 100, 170);
+        neg2_btn_1->type(102);
+        neg2_btn_1->color(FL_BACKGROUND2_COLOR);
+        neg2_btn_1->selection_color((Fl_Color)3);
+        neg2_btn_1->callback((Fl_Callback*)cb_neg2_btn_1);
+        o->image(ImgPantaloni[1]);
+      } // Fl_Button* neg2_btn_1
+      { Fl_Button* o = new Fl_Button(163, 10, 100, 170);
+        o->type(102);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color((Fl_Color)3);
+        o->callback((Fl_Callback*)cb_3);
+        o->image(ImgPantaloni[2]);
+      } // Fl_Button* o
+      { Fl_Button* o = new Fl_Button(316, 10, 100, 170);
+        o->type(102);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color((Fl_Color)3);
+        o->callback((Fl_Callback*)cb_4);
+        o->image(ImgPantaloni[3]);
+      } // Fl_Button* o
+      { Fl_Button* o = neg2_btn_4 = new Fl_Button(470, 10, 100, 170);
+        neg2_btn_4->type(102);
+        neg2_btn_4->color(FL_BACKGROUND2_COLOR);
+        neg2_btn_4->selection_color((Fl_Color)3);
+        neg2_btn_4->callback((Fl_Callback*)cb_neg2_btn_4);
+        o->image(ImgPantaloni[4]);
+      } // Fl_Button* neg2_btn_4
+      o->end();
+    } // Fl_Group* o
+    { Fl_Choice* o = panta_colore = new Fl_Choice(470, 185, 100, 20);
+      panta_colore->down_box(FL_BORDER_BOX);
+      panta_colore->menu(menu_panta_colore);
+      o->deactivate();
+    } // Fl_Choice* panta_colore
+    { neg2_boxtxt = new Fl_Browser(10, 215, 380, 140);
+      neg2_boxtxt->box(FL_EMBOSSED_FRAME);
+      neg2_boxtxt->color(FL_LIGHT3);
+      neg2_boxtxt->labelsize(12);
+      neg2_boxtxt->textsize(12);
+      neg2_boxtxt->when(FL_WHEN_NEVER);
+    } // Fl_Browser* neg2_boxtxt
+    { Fl_Group* o = new Fl_Group(400, 215, 170, 140);
+      o->box(FL_EMBOSSED_FRAME);
+      { Fl_Button* o = neg2_btn_compra = new Fl_Button(405, 310, 60, 40, "Compra!");
+        neg2_btn_compra->callback((Fl_Callback*)cb_neg2_btn_compra);
+        o->deactivate();
+      } // Fl_Button* neg2_btn_compra
+      { Fl_Return_Button* o = new Fl_Return_Button(505, 310, 60, 40);
+        o->callback((Fl_Callback*)cb_5);
+        o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+        o->image(ImgExit);
+      } // Fl_Return_Button* o
+      { Fl_Value_Output* o = new Fl_Value_Output(470, 220, 95, 25, "Soldi  L.");
+        o->box(FL_FLAT_BOX);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(2);
+        o->labelsize(12);
+        o->step(1);
+        o->textfont(1);
+        o->callback((Fl_Callback*)cb_Soldi1);
+        o->value(CALCSOLDI(Soldi));
+        if(euro) o->label("Soldi  €");
+      } // Fl_Value_Output* o
+      { Fl_Value_Output* o = new Fl_Value_Output(470, 250, 25, 25, "Figosit\303\240 ");
+        o->box(FL_FLAT_BOX);
+        o->labelfont(2);
+        o->labelsize(12);
+        o->value(100);
+        o->textfont(1);
+        o->callback((Fl_Callback*)cb_Figosit1);
+        o->value(Fama);
+      } // Fl_Value_Output* o
+      { Fl_Box* o = new Fl_Box(493, 254, 15, 16, "%");
+        o->labelfont(1);
+      } // Fl_Box* o
+      o->end();
+    } // Fl_Group* o
+    win_vestiti_2->set_modal();
+    win_vestiti_2->size_range(580, 365, 580, 365);
+    win_vestiti_2->end();
+  } // Fl_Double_Window* win_vestiti_2
+  return win_vestiti_2;
+}
+
+Fl_Double_Window *win_vestiti_3=(Fl_Double_Window *)0;
+
+Fl_Button *neg3_btn_1=(Fl_Button *)0;
+
+static void cb_neg3_btn_1(Fl_Button* o, void*) {
+  scelta=1;
+o->image(ImgScarpe[scelta]);
+neg3_scarpe2_colore->deactivate();
+neg3_scarpe3_colore->deactivate();
+neg3_scarpe1_colore->activate();
+neg3_scarpe1_colore->value(0);
+
+neg3_txt_nomescarpe->label("Scarpe \"Dyke\"");
+neg3_txt_descscarpe->label("Scarpe da ginnastica trendy e ad un prezzo accessibile, disponibili in vari colori e adatte a tutte le occasioni!");
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+neg3_btn_compra->activate();
+}
+
+Fl_Button *neg3_btn_2=(Fl_Button *)0;
+
+static void cb_neg3_btn_2(Fl_Button* o, void*) {
+  scelta=4;
+o->image(ImgScarpe[scelta]);
+neg3_scarpe1_colore->deactivate();
+neg3_scarpe3_colore->deactivate();
+neg3_scarpe2_colore->activate();
+neg3_scarpe2_colore->value(0);
+
+neg3_txt_nomescarpe->label("Scarpe \"Imbalance\"");
+neg3_txt_descscarpe->label("Sneakers moderni ed eleganti, disponibili in colorazione tenue e delicata o sgargiante e decisa!");
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+neg3_btn_compra->activate();
+}
+
+Fl_Button *neg3_btn_3=(Fl_Button *)0;
+
+static void cb_neg3_btn_3(Fl_Button* o, void*) {
+  scelta=6;
+o->image(ImgScarpe[scelta]);
+neg3_scarpe1_colore->deactivate();
+neg3_scarpe2_colore->deactivate();
+neg3_scarpe3_colore->activate();
+neg3_scarpe3_colore->value(0);
+
+neg3_txt_nomescarpe->label("Scarpe \"Mufloon\"");
+neg3_txt_descscarpe->label("Il massimo della tendenza per i giovani d'oggi!\n\
+Queste scarpe, scomode e brutte, faranno sicuramente per voi...\n\
+ora disponibili anche nella rivoluzionaria colorazione Prugna!");
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+neg3_btn_compra->activate();
+}
+
+static void cb_6(Fl_Button* o, void*) {
+  scelta=8;
+o->image(ImgScarpe[scelta]);
+neg3_scarpe1_colore->deactivate();
+neg3_scarpe2_colore->deactivate();
+neg3_scarpe3_colore->deactivate();
+
+neg3_txt_nomescarpe->label("Scarpe con mattoni...");
+neg3_txt_descscarpe->label("Volete essere alla moda spendendo poco ??\n\
+Queste scarpe rialzate con mattoni forati sono quello che ci vuole per voi!");
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+neg3_btn_compra->activate();
+}
+
+Fl_Choice *neg3_scarpe1_colore=(Fl_Choice *)0;
+
+static void cb_neg3_scarpe1_menu(Fl_Menu_*, void*) {
+  scelta=1;
+neg3_btn_1->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+}
+
+static void cb_Giallo1(Fl_Menu_*, void*) {
+  scelta=2;
+neg3_btn_1->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+}
+
+static void cb_Pastel(Fl_Menu_*, void*) {
+  scelta=3;
+neg3_btn_1->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+}
+
+Fl_Menu_Item menu_neg3_scarpe1_colore[] = {
+ {"Nero", 0,  (Fl_Callback*)cb_neg3_scarpe1_menu, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {"Giallo", 0,  (Fl_Callback*)cb_Giallo1, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {"Pastel", 0,  (Fl_Callback*)cb_Pastel, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {0,0,0,0,0,0,0,0,0}
+};
+
+Fl_Choice *neg3_scarpe2_colore=(Fl_Choice *)0;
+
+static void cb_White1(Fl_Menu_*, void*) {
+  scelta=4;
+neg3_btn_2->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+}
+
+static void cb_Hot(Fl_Menu_*, void*) {
+  scelta=5;
+neg3_btn_2->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+}
+
+Fl_Menu_Item menu_neg3_scarpe2_colore[] = {
+ {"White", 0,  (Fl_Callback*)cb_White1, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {"Hot Fucsia", 0,  (Fl_Callback*)cb_Hot, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {0,0,0,0,0,0,0,0,0}
+};
+
+Fl_Choice *neg3_scarpe3_colore=(Fl_Choice *)0;
+
+static void cb_Blu(Fl_Menu_*, void*) {
+  scelta=6;
+neg3_btn_3->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+}
+
+static void cb_Prugna(Fl_Menu_*, void*) {
+  scelta=7;
+neg3_btn_3->image(ImgScarpe[scelta]);
+
+add_prezzo(I_SCARPE+scelta);
+neg3_txt_prezzoscarpe->copy_label(buf);
+
+win_vestiti_3->redraw();
+}
+
+Fl_Menu_Item menu_neg3_scarpe3_colore[] = {
+ {"Blu", 0,  (Fl_Callback*)cb_Blu, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {"Prugna", 0,  (Fl_Callback*)cb_Prugna, 0, 0, (uchar)FL_NORMAL_LABEL, 0, 12, 0},
+ {0,0,0,0,0,0,0,0,0}
+};
+
+Fl_Button *neg3_btn_compra=(Fl_Button *)0;
+
+static void cb_neg3_btn_compra(Fl_Button*, void*) {
+  PagaQualcosa(I_SCARPE+scelta);
+win_principale->activate();
+AggiornaPrincipale();
+win_vestiti_3->hide();
+}
+
+static void cb_7(Fl_Return_Button*, void*) {
+  win_negozi->show();
+win_vestiti_3->hide();
+}
+
+static void cb_Soldi2(Fl_Value_Output* o, void*) {
+  o->value(CALCSOLDI(Soldi));
+}
+
+static void cb_Figosit2(Fl_Value_Output* o, void*) {
+  o->value(Fama);
+}
+
+Fl_Box *neg3_txt_nomescarpe=(Fl_Box *)0;
+
+Fl_Box *neg3_txt_descscarpe=(Fl_Box *)0;
+
+Fl_Box *neg3_txt_prezzoscarpe=(Fl_Box *)0;
+
+Fl_Double_Window* GUINegoziVestiti_3() {
+  { win_vestiti_3 = new Fl_Double_Window(635, 315, "Foot Smoker");
+    win_vestiti_3->labelfont(1);
+    win_vestiti_3->labelsize(12);
+    win_vestiti_3->hotspot(win_vestiti_3);
+    { Fl_Group* o = new Fl_Group(10, 5, 620, 155);
+      { Fl_Button* o = neg3_btn_1 = new Fl_Button(10, 10, 150, 120);
+        neg3_btn_1->type(102);
+        neg3_btn_1->color(FL_BACKGROUND2_COLOR);
+        neg3_btn_1->selection_color((Fl_Color)3);
+        neg3_btn_1->callback((Fl_Callback*)cb_neg3_btn_1);
+        o->image(ImgScarpe[1]);
+      } // Fl_Button* neg3_btn_1
+      { Fl_Button* o = neg3_btn_2 = new Fl_Button(165, 10, 150, 120);
+        neg3_btn_2->type(102);
+        neg3_btn_2->color(FL_BACKGROUND2_COLOR);
+        neg3_btn_2->selection_color((Fl_Color)3);
+        neg3_btn_2->callback((Fl_Callback*)cb_neg3_btn_2);
+        o->image(ImgScarpe[4]);
+      } // Fl_Button* neg3_btn_2
+      { Fl_Button* o = neg3_btn_3 = new Fl_Button(320, 10, 150, 120);
+        neg3_btn_3->type(102);
+        neg3_btn_3->color(FL_BACKGROUND2_COLOR);
+        neg3_btn_3->selection_color((Fl_Color)3);
+        neg3_btn_3->callback((Fl_Callback*)cb_neg3_btn_3);
+        o->image(ImgScarpe[6]);
+      } // Fl_Button* neg3_btn_3
+      { Fl_Button* o = new Fl_Button(475, 10, 150, 120);
+        o->type(102);
+        o->color(FL_BACKGROUND2_COLOR);
+        o->selection_color((Fl_Color)3);
+        o->callback((Fl_Callback*)cb_6);
+        o->image(ImgScarpe[8]);
+      } // Fl_Button* o
+      o->end();
+    } // Fl_Group* o
+    { Fl_Choice* o = neg3_scarpe1_colore = new Fl_Choice(10, 135, 150, 20);
+      neg3_scarpe1_colore->down_box(FL_BORDER_BOX);
+      neg3_scarpe1_colore->menu(menu_neg3_scarpe1_colore);
+      o->deactivate();
+    } // Fl_Choice* neg3_scarpe1_colore
+    { Fl_Choice* o = neg3_scarpe2_colore = new Fl_Choice(165, 135, 150, 20);
+      neg3_scarpe2_colore->down_box(FL_BORDER_BOX);
+      neg3_scarpe2_colore->menu(menu_neg3_scarpe2_colore);
+      o->deactivate();
+    } // Fl_Choice* neg3_scarpe2_colore
+    { Fl_Choice* o = neg3_scarpe3_colore = new Fl_Choice(320, 135, 150, 20);
+      neg3_scarpe3_colore->down_box(FL_BORDER_BOX);
+      neg3_scarpe3_colore->menu(menu_neg3_scarpe3_colore);
+      o->deactivate();
+    } // Fl_Choice* neg3_scarpe3_colore
+    { Fl_Group* o = new Fl_Group(455, 165, 170, 140);
+      o->box(FL_EMBOSSED_FRAME);
+      { Fl_Button* o = neg3_btn_compra = new Fl_Button(460, 260, 60, 40, "Compra!");
+        neg3_btn_compra->callback((Fl_Callback*)cb_neg3_btn_compra);
+        o->deactivate();
+      } // Fl_Button* neg3_btn_compra
+      { Fl_Return_Button* o = new Fl_Return_Button(560, 260, 60, 40);
+        o->callback((Fl_Callback*)cb_7);
+        o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+        o->image(ImgExit);
+      } // Fl_Return_Button* o
+      { Fl_Value_Output* o = new Fl_Value_Output(525, 170, 95, 25, "Soldi  L.");
+        o->box(FL_FLAT_BOX);
+        o->selection_color(FL_BACKGROUND2_COLOR);
+        o->labelfont(2);
+        o->labelsize(12);
+        o->step(1);
+        o->textfont(1);
+        o->callback((Fl_Callback*)cb_Soldi2);
+        o->value(CALCSOLDI(Soldi));
+        if(euro) o->label("Soldi  €");
+      } // Fl_Value_Output* o
+      { Fl_Value_Output* o = new Fl_Value_Output(525, 200, 25, 25, "Figosit\303\240 ");
+        o->box(FL_FLAT_BOX);
+        o->labelfont(2);
+        o->labelsize(12);
+        o->value(100);
+        o->textfont(1);
+        o->callback((Fl_Callback*)cb_Figosit2);
+        o->value(Fama);
+      } // Fl_Value_Output* o
+      { Fl_Box* o = new Fl_Box(548, 204, 15, 16, "%");
+        o->labelfont(1);
+      } // Fl_Box* o
+      o->end();
+    } // Fl_Group* o
+    { Fl_Box* o = new Fl_Box(10, 165, 440, 140);
+      o->box(FL_EMBOSSED_FRAME);
+    } // Fl_Box* o
+    { neg3_txt_nomescarpe = new Fl_Box(25, 179, 410, 20);
+      neg3_txt_nomescarpe->labelfont(1);
+      neg3_txt_nomescarpe->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
+    } // Fl_Box* neg3_txt_nomescarpe
+    { neg3_txt_descscarpe = new Fl_Box(25, 200, 410, 70);
+      neg3_txt_descscarpe->labelsize(12);
+      neg3_txt_descscarpe->align(Fl_Align(133|FL_ALIGN_INSIDE));
+    } // Fl_Box* neg3_txt_descscarpe
+    { neg3_txt_prezzoscarpe = new Fl_Box(25, 274, 240, 20);
+      neg3_txt_prezzoscarpe->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
+    } // Fl_Box* neg3_txt_prezzoscarpe
+    win_vestiti_3->set_modal();
+    win_vestiti_3->size_range(635, 315, 635, 315);
+    win_vestiti_3->end();
+  } // Fl_Double_Window* win_vestiti_3
+  return win_vestiti_3;
 }

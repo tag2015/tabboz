@@ -32,6 +32,30 @@ static void cb_Bau(Fl_Button*, void*) {
 };
 }
 
+static void cb_Blue(Fl_Button*, void*) {
+  if (x_vacanza != 2) {
+  GUINegoziVestiti_2();
+  win_vestiti_2->show();
+  if(sound_active) TabbozPlaySound(204);
+}else {
+  MsgIcona(ICONA_AVVISO);
+  fl_message_title("Negozio chiuso");
+  fl_alert("Oh, tip%c... i negozi sono chiusi di festa...",ao);
+};
+}
+
+static void cb_Footsmocker(Fl_Button*, void*) {
+  if (x_vacanza != 2) {
+  GUINegoziVestiti_3();
+  win_vestiti_3->show();
+  if(sound_active) TabbozPlaySound(204);
+}else {
+  MsgIcona(ICONA_AVVISO);
+  fl_message_title("Negozio chiuso");
+  fl_alert("Oh, tip%c... i negozi sono chiusi di festa...",ao);
+};
+}
+
 static void cb_Tabaccaio(Fl_Button*, void*) {
   if (x_vacanza != 2) {
 //  GUINegozioVestiti_1();
@@ -51,16 +75,16 @@ win_telefonia->show();
 }
 
 Fl_Double_Window* GUINegoziLauncher() {
-  { win_negozi = new Fl_Double_Window(395, 215, "Negozi");
+  { win_negozi = new Fl_Double_Window(395, 161, "Negozi");
     win_negozi->labelfont(1);
     win_negozi->labelsize(12);
     win_negozi->hotspot(win_negozi);
-    { Fl_Return_Button* o = new Fl_Return_Button(325, 165, 60, 40);
+    { Fl_Return_Button* o = new Fl_Return_Button(320, 110, 60, 40);
       o->callback((Fl_Callback*)cb_);
       o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
       o->image(ImgExit);
     } // Fl_Return_Button* o
-    { Fl_Group* o = new Fl_Group(10, 25, 180, 180, "Abbigliamento");
+    { Fl_Group* o = new Fl_Group(10, 25, 180, 110, "Abbigliamento");
       o->box(FL_EMBOSSED_FRAME);
       o->labelfont(1);
       o->labelsize(12);
@@ -68,30 +92,24 @@ Fl_Double_Window* GUINegoziLauncher() {
       { Fl_Button* o = new Fl_Button(15, 30, 170, 30, "Bau House");
         o->callback((Fl_Callback*)cb_Bau);
       } // Fl_Button* o
-      { new Fl_Button(15, 65, 170, 30, "Blue Rider");
+      { Fl_Button* o = new Fl_Button(15, 65, 170, 30, "Blue Rider");
+        o->callback((Fl_Callback*)cb_Blue);
       } // Fl_Button* o
-      { new Fl_Button(15, 100, 170, 30, "Zoccolaro");
-      } // Fl_Button* o
-      { new Fl_Button(15, 135, 170, 30, "Footsmocker");
-      } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(15, 170, 170, 30, "Footsmocker II");
-        o->deactivate();
-      } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(15, 135, 170, 30, "Footsmocker");
-        o->deactivate();
+      { Fl_Button* o = new Fl_Button(15, 100, 170, 30, "Footsmocker");
+        o->callback((Fl_Callback*)cb_Footsmocker);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(205, 25, 180, 75, "Altri Negozi");
+    { Fl_Group* o = new Fl_Group(200, 25, 180, 75, "Altri Negozi");
       o->box(FL_EMBOSSED_FRAME);
       o->labelfont(1);
       o->labelsize(12);
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
-      { Fl_Button* o = new Fl_Button(210, 30, 170, 30, "Tabaccaio");
+      { Fl_Button* o = new Fl_Button(205, 30, 170, 30, "Tabaccaio");
         o->callback((Fl_Callback*)cb_Tabaccaio);
         o->deactivate();
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(210, 65, 170, 30, "Telefonia");
+      { Fl_Button* o = new Fl_Button(205, 65, 170, 30, "Telefonia");
         o->callback((Fl_Callback*)cb_Telefonia);
       } // Fl_Button* o
       o->end();

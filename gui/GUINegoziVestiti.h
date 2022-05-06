@@ -11,11 +11,35 @@ extern Fl_Button *neg1_btn_1;
 #include <FL/Fl_Choice.H>
 extern Fl_Choice *giub_colore;
 #include <FL/Fl_Browser.H>
-extern Fl_Browser *boxtxt_vestiti;
+extern Fl_Browser *neg1_boxtxt;
 extern Fl_Button *neg1_btn_compra;
 #include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Value_Output.H>
 #include <FL/Fl_Box.H>
 Fl_Double_Window* GUINegoziVestiti_1();
 extern Fl_Menu_Item menu_giub_colore[];
+extern Fl_Double_Window *win_vestiti_2;
+extern Fl_Button *neg2_btn_1;
+extern Fl_Button *neg2_btn_4;
+extern Fl_Choice *panta_colore;
+extern Fl_Browser *neg2_boxtxt;
+extern Fl_Button *neg2_btn_compra;
+Fl_Double_Window* GUINegoziVestiti_2();
+extern Fl_Menu_Item menu_panta_colore[];
+extern Fl_Double_Window *win_vestiti_3;
+extern Fl_Button *neg3_btn_1;
+extern Fl_Button *neg3_btn_2;
+extern Fl_Button *neg3_btn_3;
+extern Fl_Choice *neg3_scarpe1_colore;
+extern Fl_Choice *neg3_scarpe2_colore;
+extern Fl_Choice *neg3_scarpe3_colore;
+extern Fl_Button *neg3_btn_compra;
+extern Fl_Box *neg3_txt_nomescarpe;
+extern Fl_Box *neg3_txt_descscarpe;
+extern Fl_Box *neg3_txt_prezzoscarpe;
+Fl_Double_Window* GUINegoziVestiti_3();
+extern Fl_Menu_Item menu_neg3_scarpe1_colore[];
+#define neg3_scarpe1_menu (menu_neg3_scarpe1_colore+0)
+extern Fl_Menu_Item menu_neg3_scarpe2_colore[];
+extern Fl_Menu_Item menu_neg3_scarpe3_colore[];
 #endif
