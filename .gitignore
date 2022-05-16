@@ -10,3 +10,4 @@ tabboz.exe
 tabbozng.exe
 *.log
 .vscode/launch.json
+.vscode/settings.json
