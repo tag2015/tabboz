@@ -9,7 +9,7 @@ Le righe (BF) indicano bugfix
 
 [GENERALI]
 Il gioco è ora compilabile su qualsiasi piattaforma supporti il toolkit FLTK (Windows, Unix/Linux e derivati, etc...)
-Il gioco non usa più il registro di configurazione e salva nel profilo dell'utente (%APPDATA%\Roaming\TabbozNG per windows, .TabbozNG per Unix)
+Il gioco non usa più il registro di configurazione e salva nel profilo dell'utente (%APPDATA%\Roaming\TabbozNG per windows, .fltk/.TabbozNG per Unix)
 I testi supportano i caratteri accentati
 La schermata principale è stata riorganizzata con indicazioni aggiuntive
 Sono stati aggiunti alcuni nuovi suoni (metallaro / incidente / ripara scooter / stipendio / acquisti / pagella)
@@ -20,6 +20,7 @@ Sono stati aggiunti alcuni nuovi suoni (metallaro / incidente / ripara scooter /
 Il voto minimo per una materia è 2 (anzichè zero)
 L'andamento scolastico complessivo viene indicato come media con un decimale (es. 6.5) anzichè in centesimi
 I voti sono indicati in colore (rosso - nero - verde)
+Il risultato dell'anno scolastico (promosso o bocciato) ha ripercussioni sulla paghetta
 
 [LAVORO]
 E' possibile scegliere l'azienda con cui tentare il test anzichè selezionarla a random
@@ -33,9 +34,10 @@ Si può andare in palestra solo una volta al giorno
 
 [NEGOZI]
 I vestiti di base del tabboz sono più "neutri" anzichè essere praticamente identici a quelli acquistabili
-Ora è presente un negozio solo per ogni tipologia di abbigliamento (Bau Haus per le giacche, Blue Rider per i pantaloni e Zoccolaio per le scarpe)
+Ora è presente un negozio solo per ogni tipologia di abbigliamento (Bau Haus per le giacche, Blue Rider per i pantaloni e Footsmoker per le scarpe)
 
 [DISCO]
+I bonus figosità sono stati notevolmente ridotti (alcune disco incrementavano la figosità di 15 punti alla volta...)
 (BF) La figosità viene incrementata correttamente per tutte le discoteche
 (*) La riproduzione CD audio nella finestra Disco è rimossa
 
