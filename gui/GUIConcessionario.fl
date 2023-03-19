@@ -31,100 +31,96 @@ if(!euro)
   sprintf(buf, "L. %d",CALCSOLDI(ScooterMem[scelta_gui].prezzo));
 else
   sprintf(buf, "€ %d",CALCSOLDI(ScooterMem[scelta_gui].prezzo));
-conce_txt_prezzo->value(buf);} {}
+conce_txt_prezzo->value(buf);
+conce_box_descr->copy_label("");
+conce_box_nome->copy_label(ScooterMem[scelta_gui].nome);} {}
 }
 
 Function {GUIConcessionario()} {open
 } {
   Fl_Window win_conce {
     label Concessionario open
-    xywh {436 414 575 485} type Double hotspot modal size_range {575 485 575 485} visible
+    xywh {578 357 585 460} type Double hotspot modal size_range {585 460 585 460} visible
   } {
-    Fl_Tabs {} {open selected
-      xywh {5 5 565 420} box UP_BOX
+    Fl_Tabs {} {
+      callback {scelta_gui=0;
+RiempiScheda(scelta_gui);
+conce_btn_compra->deactivate();
+
+//per azzerare i pulsanti
+conce_btn_malagutty->setonly();
+conce_btn_malagutty->clear();
+conce_btn_altri->setonly();
+conce_btn_altri->clear();} open selected
+      xywh {10 5 565 185} box UP_BOX when 3
     } {
       Fl_Group {} {
-        label Malagutty
-        xywh {5 40 565 385}
+        label Malagutty open
+        xywh {10 40 565 150} when 3
       } {
         Fl_Group {} {
-          label tasti
-          xywh {10 50 560 150} labeltype NO_LABEL
+          label tasti open
+          xywh {10 50 565 135} labeltype NO_LABEL
         } {
-          Fl_Button {} {
+          Fl_Button conce_btn_malagutty {
             callback {scelta_gui=1;
 RiempiScheda(scelta_gui);
 conce_btn_compra->activate();}
-            image {../res/pic/scooter_1.png} xywh {15 55 175 125} type Radio color 7 selection_color 3
+            image {../res/pic/scooter_1.png} xywh {20 50 175 125} type Radio color 7 selection_color 3
           }
           Fl_Button {} {
             callback {scelta_gui=4;
 RiempiScheda(scelta_gui);
 conce_btn_compra->activate();}
-            image {../res/pic/scooter_2.png} xywh {200 55 175 125} type Radio color 7 selection_color 3
+            image {../res/pic/scooter_2.png} xywh {205 50 175 125} type Radio color 7 selection_color 3
           }
           Fl_Button {} {
             callback {scelta_gui=5;
 RiempiScheda(scelta_gui);
 conce_btn_compra->activate();}
-            image {../res/pic/scooter_3.png} xywh {385 55 175 125} type Radio color 7 selection_color 3
+            image {../res/pic/scooter_3.png} xywh {390 50 175 125} type Radio color 7 selection_color 3
           }
-        }
-        Fl_Group {} {open
-          xywh {15 195 250 185} box EMBOSSED_FRAME
-        } {
-          Fl_Output conce_txt_speed {
-            label {Velocità max }
-            xywh {100 205 150 25} box EMBOSSED_BOX labelsize 12
-            code0 {o->clear_visible_focus();}
-          }
-          Fl_Output conce_txt_marmitta {
-            label {Marmitta }
-            xywh {100 305 150 25} box EMBOSSED_BOX labelsize 12
-            code0 {o->clear_visible_focus();}
-          }
-          Fl_Output conce_txt_carb {
-            label {Carburatore }
-            xywh {100 255 150 25} box EMBOSSED_BOX labelsize 12
-            code0 {o->clear_visible_focus();}
-          }
-          Fl_Output conce_txt_cc {
-            label {Cilindrata }
-            xywh {100 230 150 25} box EMBOSSED_BOX labelsize 12
-            code0 {o->clear_visible_focus();}
-          }
-          Fl_Output conce_txt_filtro {
-            label {Filtro aria }
-            xywh {100 280 150 25} box EMBOSSED_BOX labelsize 12
-            code0 {o->clear_visible_focus();}
-          }
-          Fl_Output conce_txt_prezzo {
-            label {Prezzo L. }
-            xywh {100 345 150 25} box EMBOSSED_BOX labelsize 12 textfont 5
-            code0 {if (euro) o->label("Prezzo € ");}
-            code1 {o->clear_visible_focus();}
-          }
-        }
-        Fl_Box {} {
-          label {Scegli il tuo scooter preferito...}
-          xywh {280 195 280 184}
         }
       }
       Fl_Group {} {
         label {Altre marche} open
-        xywh {5 40 565 385} box EMBOSSED_FRAME color 54 hide
-      } {}
+        xywh {10 40 565 145} when 3 hide
+      } {
+        Fl_Group {} {
+          label tasti open
+          xywh {10 45 565 135} labeltype NO_LABEL
+        } {
+          Fl_Button conce_btn_altri {
+            callback {scelta_gui=2;
+RiempiScheda(scelta_gui);
+conce_btn_compra->activate();}
+            image {../res/pic/scooter_4.png} xywh {20 50 175 125} type Radio color 7 selection_color 3
+          }
+          Fl_Button {} {
+            callback {scelta_gui=6;
+RiempiScheda(scelta_gui);
+conce_btn_compra->activate();}
+            image {../res/pic/scooter_5.png} xywh {205 50 175 125} type Radio color 7 selection_color 3
+          }
+          Fl_Button {} {
+            callback {scelta_gui=3;
+RiempiScheda(scelta_gui);
+conce_btn_compra->activate();}
+            image {../res/pic/scooter_6.png} xywh {390 50 175 125} type Radio color 7 selection_color 3
+          }
+        }
+      }
     }
     Fl_Group {} {open
-      xywh {5 430 565 50} box EMBOSSED_FRAME
+      xywh {10 400 565 50} box EMBOSSED_FRAME
     } {
       Fl_Box {} {
-        image {icons/negozi.png} xywh {10 435 40 40}
+        image {icons/negozi.png} xywh {15 405 40 40}
       }
       Fl_Value_Output conce_soldi {
         label {Soldi L.}
         callback {o->value(CALCSOLDI(Soldi));}
-        xywh {110 442 95 25} box FLAT_BOX labelfont 2 labelsize 12 step 1 value 1e+10 textfont 1
+        xywh {115 412 95 25} box FLAT_BOX labelfont 2 labelsize 12 step 1 value 1e+10 textfont 1
         code0 {o->value(CALCSOLDI(Soldi));}
         code1 {if(euro) o->label("Soldi  €");}
       }
@@ -136,7 +132,7 @@ AggiornaScooter();
 o->deactivate();
 }
 win_conce->redraw();}
-        xywh {340 435 60 40}
+        xywh {345 405 60 40}
         code0 {if(ScooterData.stato==-1000) o->deactivate();}
       }
       Fl_Button conce_btn_compra {
@@ -145,15 +141,56 @@ win_conce->redraw();}
 win_scooter->activate();
 AggiornaScooter();
 win_conce->hide();}
-        xywh {435 435 60 40}
+        xywh {440 405 60 40}
         code0 {o->deactivate();}
       }
       Fl_Return_Button {} {
         callback {win_scooter->activate();
 win_conce->hide();}
-        xywh {505 435 60 40} align 20
+        xywh {510 405 60 40} align 20
         code0 {o->image(ImgExit);}
       }
+    }
+    Fl_Group {} {
+      xywh {10 205 250 185} box SHADOW_BOX
+    } {
+      Fl_Output conce_txt_speed {
+        label {Velocità max }
+        xywh {95 215 150 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
+      }
+      Fl_Output conce_txt_marmitta {
+        label {Marmitta }
+        xywh {95 315 150 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
+      }
+      Fl_Output conce_txt_carb {
+        label {Carburatore }
+        xywh {95 265 150 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
+      }
+      Fl_Output conce_txt_cc {
+        label {Cilindrata }
+        xywh {95 240 150 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
+      }
+      Fl_Output conce_txt_filtro {
+        label {Filtro aria }
+        xywh {95 290 150 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
+      }
+      Fl_Output conce_txt_prezzo {
+        label Prezzo
+        xywh {95 355 150 25} box EMBOSSED_BOX labelsize 12 textfont 5
+        code1 {o->clear_visible_focus();}
+      }
+    }
+    Fl_Box conce_box_descr {
+      label {Scegli il tuo scooter preferito...}
+      xywh {265 206 305 184}
+    }
+    Fl_Box conce_box_nome {
+      xywh {265 206 305 28} labelfont 1
     }
   }
 }

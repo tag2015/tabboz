@@ -8,6 +8,14 @@ extern Fl_Double_Window *win_conce;
 #include <FL/Fl_Tabs.H>
 #include <FL/Fl_Group.H>
 #include <FL/Fl_Button.H>
+extern Fl_Button *conce_btn_malagutty;
+extern Fl_Button *conce_btn_altri;
+#include <FL/Fl_Box.H>
+#include <FL/Fl_Value_Output.H>
+extern Fl_Value_Output *conce_soldi;
+extern Fl_Button *conce_btn_vendi;
+extern Fl_Button *conce_btn_compra;
+#include <FL/Fl_Return_Button.H>
 #include <FL/Fl_Output.H>
 extern Fl_Output *conce_txt_speed;
 extern Fl_Output *conce_txt_marmitta;
@@ -15,11 +23,7 @@ extern Fl_Output *conce_txt_carb;
 extern Fl_Output *conce_txt_cc;
 extern Fl_Output *conce_txt_filtro;
 extern Fl_Output *conce_txt_prezzo;
-#include <FL/Fl_Box.H>
-#include <FL/Fl_Value_Output.H>
-extern Fl_Value_Output *conce_soldi;
-extern Fl_Button *conce_btn_vendi;
-extern Fl_Button *conce_btn_compra;
-#include <FL/Fl_Return_Button.H>
+extern Fl_Box *conce_box_descr;
+extern Fl_Box *conce_box_nome;
 Fl_Double_Window* GUIConcessionario();
 #endif
