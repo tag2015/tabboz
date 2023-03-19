@@ -14,6 +14,9 @@ decl {\#include "../zarrosim.h"} {private global
 decl {\#include "../global.h"} {private global
 }
 
+decl {\#include "../debug.h"} {private global
+}
+
 decl {\#include "../eventi.h"} {private global
 }
 
@@ -40,7 +43,7 @@ Function {GUITestbed()} {open
   Fl_Window win_testbed {
     label TestBed
     callback {win_principale->activate();
-win_testbed->hide();} open
+win_testbed->hide();} open selected
     xywh {355 311 673 520} type Double color 54 hotspot
     code0 {num_file=0;} size_range {673 520 673 520} visible
   } {
@@ -99,7 +102,7 @@ win_testbed->redraw();}
     }
     Fl_Button {} {
       label RunV
-      callback {FinestraEvento(num_evento,num_evento,"",true);} selected
+      callback {FinestraEvento(num_evento,num_evento,"",true);}
       xywh {465 465 64 25}
     }
     Fl_Group {} {
@@ -220,6 +223,33 @@ fl_alert("Sei un figo!");}
         callback {fl_beep(FL_BEEP_NOTIFICATION);}
         xywh {570 380 85 20}
       }
+    }
+    Fl_Button {} {
+      label {+F}
+      callback {Fama+=10;}
+      xywh {470 410 20 20}
+    }
+    Fl_Button {} {
+      label {+R}
+      callback {Reputazione+=10;}
+      xywh {490 410 20 20}
+    }
+    Fl_Button {} {
+      label DumpData
+      callback {char tmp[256];
+sprintf(tmp,"Rep: %d Fama: %d",Reputazione,Fama);
+writelog(tmp);}
+      xywh {585 425 64 20}
+    }
+    Fl_Button {} {
+      label {-F}
+      callback {Fama-=10;}
+      xywh {470 430 20 20}
+    }
+    Fl_Button {} {
+      label {-R}
+      callback {Reputazione-=10;}
+      xywh {490 430 20 20}
     }
   }
 }

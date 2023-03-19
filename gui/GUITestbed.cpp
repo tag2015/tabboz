@@ -5,6 +5,7 @@
 #include "GUITabboz.h"
 #include "../zarrosim.h"
 #include "../global.h"
+#include "../debug.h"
 #include "../eventi.h"
 #include "../sound.h"
 #include "../sharedimg.h"
@@ -153,6 +154,28 @@ static void cb_notification(Fl_Button*, void*) {
   fl_beep(FL_BEEP_NOTIFICATION);
 }
 
+static void cb_F(Fl_Button*, void*) {
+  Fama+=10;
+}
+
+static void cb_R(Fl_Button*, void*) {
+  Reputazione+=10;
+}
+
+static void cb_DumpData(Fl_Button*, void*) {
+  char tmp[256];
+sprintf(tmp,"Rep: %d Fama: %d",Reputazione,Fama);
+writelog(tmp);
+}
+
+static void cb_F1(Fl_Button*, void*) {
+  Fama-=10;
+}
+
+static void cb_R1(Fl_Button*, void*) {
+  Reputazione-=10;
+}
+
 Fl_Double_Window* GUITestbed() {
   { win_testbed = new Fl_Double_Window(673, 520, "TestBed");
     win_testbed->color(FL_LIGHT3);
@@ -252,6 +275,21 @@ Fl_Double_Window* GUITestbed() {
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
+    { Fl_Button* o = new Fl_Button(470, 410, 20, 20, "+F");
+      o->callback((Fl_Callback*)cb_F);
+    } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(490, 410, 20, 20, "+R");
+      o->callback((Fl_Callback*)cb_R);
+    } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(585, 425, 64, 20, "DumpData");
+      o->callback((Fl_Callback*)cb_DumpData);
+    } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(470, 430, 20, 20, "-F");
+      o->callback((Fl_Callback*)cb_F1);
+    } // Fl_Button* o
+    { Fl_Button* o = new Fl_Button(490, 430, 20, 20, "-R");
+      o->callback((Fl_Callback*)cb_R1);
+    } // Fl_Button* o
     num_file=0;
     win_testbed->size_range(673, 520, 673, 520);
     win_testbed->end();
