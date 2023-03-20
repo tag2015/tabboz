@@ -17,15 +17,18 @@ OBJFILES = $(CPPFILES:.cpp=.o)
 GUIOBJFILES = $(wildcard $(GUI_DIR)/*.o )
 
 COMPILER = $(shell fltk-config  --use-images --cxx --cxxflags --optim)
-LINK = $(shell fltk-config  --use-images --ldflags)
+LINK = $(shell fltk-config  --use-images --ldstaticflags)
 ifeq ($(DETECTED_OS),WIN)   #per i suoni
 	LINK += -lwinmm
 endif
+# static build
+COMPILER += -static -static-libgcc -static-libstdc++
+
+POSTBUILD = fltk-config --post # Required on OSX, does nothing on other platforms
 
 all: common gui
 	echo;
 	echo "Run 'make tabbozng' to build executable"
-
 
 common:	$(OBJFILES)
 
@@ -42,3 +45,4 @@ clean:
 
 tabbozng: $(OBJFILES) $(GUIOBJFILES)
 	$(COMPILER) $^ $(LINK) -o $@
+	$(POSTBUILD) $@
