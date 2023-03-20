@@ -46,12 +46,14 @@ STVARIE VestitiMem[] = {
     {0, 0, 0, 0, 0, 10, 0,  418,  0, ""},    //    Fatiscenza bianco
     {0, 0, 0, 0, 0,  8, 0,  248,  0, ""},    //    Giacca di pelle
     {0, 0, 0, 0, 0,  7, 0,  298,  0, ""},    //    Cappotto fluo
+    {0, 0, 0, 0, 0,  0, 0,   58,  0, ""},    //    Cappotto da Babbo Natale
 
     {0, 0, 0, 0, 0,  3, 0,   90,  0, ""},    // -- Pantaloni gessati
     {0, 0, 0, 0, 0,  5, 0,  170,  0, ""},    //    Pantaloni tuta
     {0, 0, 0, 0, 0,  6, 0,  248,  0, ""},    //    Pantaloni in plastika
     {0, 0, 0, 0, 0,  5, 0,  190,  0, ""},    //    Pantaloni scacchiera
     {0, 0, 0, 0, 0,  5, 0,  190,  0, ""},    //    Pantaloni scacchiera
+    {0, 0, 0, 0, 0,  0, 0,    0,  0, ""},    //    Pantaloni da Babbo Natale
 
     {0, 0, 0, 0, 0,  4, 0,  122,  0, ""},    // -- Simil-Nike nere
     {0, 0, 0, 0, 0,  4, 0,  122,  0, ""},    //    "      "   gialle
@@ -130,15 +132,15 @@ bool OfferteDiNatale(void)
 {
     char tmp[128];
 
-    if ((x_mese == 12) && (Soldi >= COSTO_VESTITO_NATALIZIO)) {
-        if ((x_giorno > 14) && ( x_giorno < 25) && ( current_giubbotto!=19) && (current_pantaloni!=19)) {
-            sprintf(tmp,"Vuoi comperare, per %s, un meraviglioso vestito da Babbo Natale ?",MostraSoldi(COSTO_VESTITO_NATALIZIO));
+    if ((x_mese == 12) && (Soldi >= VestitiMem[GIUBBOTTO_BABBO].prezzo)) {
+        if ((x_giorno > 14) && ( x_giorno < 25) && (current_giubbotto!=GIUBBOTTO_BABBO) && (current_pantaloni!=(PANTALONI_BABBO - I_PANTALONI))) {
+            sprintf(tmp,"Vuoi comperare, per %s, un meraviglioso vestito da Babbo Natale ?",MostraSoldi(VestitiMem[GIUBBOTTO_BABBO].prezzo));
             MsgIcona(ICONA_DOMANDA);
             fl_message_title("Offerte Natalizie...");
             if(fl_choice(tmp,"No","Si!",0)) {
-                current_giubbotto=19;
-                current_pantaloni=19;
-                Soldi-=COSTO_VESTITO_NATALIZIO;
+                current_giubbotto=GIUBBOTTO_BABBO;
+                current_pantaloni=PANTALONI_BABBO - I_PANTALONI;
+                Soldi-=VestitiMem[GIUBBOTTO_BABBO].prezzo;
                 return true;  //se compriamo il vestito (per far chiudere il launcher negozi)
             }
         }

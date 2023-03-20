@@ -23,10 +23,12 @@
 
 /* Locazione di inizio dei vestiti nell'array */
 #define I_GIUBBOTTO 0
-#define I_PANTALONI 6
-#define I_SCARPE 11
+#define I_PANTALONI 7
+#define I_SCARPE 13
 
-#define COSTO_VESTITO_NATALIZIO 58
+/* Locazioni vestiti speciali */
+#define GIUBBOTTO_BABBO 7
+#define PANTALONI_BABBO 13
 
 extern STVARIE VestitiMem[];
 

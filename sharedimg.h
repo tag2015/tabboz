@@ -29,8 +29,8 @@
 
 /* N. di elementi in ciascun array di immagini */
 #define N_TESTA         5
-#define N_GIUBBOTTO     7
-#define N_PANTALONI     6
+#define N_GIUBBOTTO     8
+#define N_PANTALONI     7
 #define N_SCARPE        9
 
 #define N_EVENTI        9

@@ -30,6 +30,7 @@
 #include "scuola.h"
 #include "lavoro.h"
 #include "eventi.h"  // per gli auguri di natale
+#include "negozi.h"  // per il vestito natalizio
 
 #include "calendario.h"
 
@@ -240,7 +241,7 @@ void Giorno(void)
                     if (Rapporti > 0 ) current_tipa=1; /* Tipa vestita da Babbo Natale... */
                 }
                 if (x_giorno == 25) {  /* Natale */
-                    if ((current_pantaloni == 19) && (current_giubbotto == 19)) {
+                    if ((current_pantaloni == (PANTALONI_BABBO-I_PANTALONI)) && (current_giubbotto == (GIUBBOTTO_BABBO-I_GIUBBOTTO))) {
                         MsgIcona(ICONA_COOL);
                         fl_message_title("Natale...");
                         fl_message("Con il tuo vestito da Babbo Natale riesci a stupire tutti...");
@@ -252,7 +253,7 @@ void Giorno(void)
                         auguri_tipa = true;
                     }
                 }
-                if ((x_giorno == 28) && ((current_pantaloni == 19) || (current_giubbotto == 19))) {
+                if ((x_giorno == 28) && ((current_pantaloni == (PANTALONI_BABBO-I_PANTALONI)) || (current_giubbotto == (GIUBBOTTO_BABBO-I_GIUBBOTTO)))) {
                     MsgIcona(ICONA_AVVISO);
                     fl_message_title("Natale...");
                     fl_message("Natale è già passato... Togliti quel dannato vestito...");
