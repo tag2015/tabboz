@@ -1,0 +1,362 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cpp}
+decl {\#include "GUITabboz.h"} {private local
+}
+
+decl {\#include "GUINegoziLauncher.h"} {private global
+}
+
+decl {\#include "../zarrosim.h"} {private global
+}
+
+decl {\#include "../negozi.h"} {private global
+}
+
+decl {\#include "../sharedimg.h"} {private global
+}
+
+Function {add_testo(int scelta)} {open private C
+} {
+  code {static char desc[80], buf[80];
+div_t nico;
+
+nico = div(SizzeMem[scelta].aux2, 10);
+sprintf(desc,"Condensato: %d - Nicotina: %d.%d", SizzeMem[scelta].aux1, nico.quot, nico.rem);
+tabac_txt_descsizze->label(desc);
+
+if(!euro)
+  sprintf(buf, "Prezzo: L. %d",CALCSOLDI(SizzeMem[scelta].prezzo));
+else
+  sprintf(buf, "Prezzo: € %d",CALCSOLDI(SizzeMem[scelta].prezzo));
+tabac_txt_prezzosizze->label(buf);} {}
+}
+
+Function {GUITabacchi()} {open
+} {
+  Fl_Window win_tabacchi {
+    label Tabaccaio open
+    xywh {199 490 490 400} type Double labelfont 1 labelsize 12 hotspot modal size_range {490 400 490 400} visible
+  } {
+    Fl_Group {} {open
+      xywh {5 5 480 231} box EMBOSSED_BOX
+    } {
+      Fl_Button tabac_btn_1 {
+        callback {scelta_gui=0;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_0.png} xywh {10 10 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=1;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_1.png} xywh {68 10 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=2;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_2.png} xywh {127 10 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=3;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_3.png} xywh {186 10 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=4;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_4.png} xywh {245 10 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=5;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_5.png} xywh {304 10 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=6;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_6.png} xywh {363 10 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=7;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_7.png} xywh {422 10 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=8;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_8.png} xywh {10 83 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=9;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_9.png} xywh {68 83 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=10;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_10.png} xywh {127 83 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=11;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_11.png} xywh {186 83 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=12;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_12.png} xywh {245 83 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=13;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_13.png} xywh {304 83 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=14;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_14.png} xywh {363 83 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=15;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_15.png} xywh {422 83 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=16;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_16.png} xywh {10 158 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=17;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_17.png} xywh {68 158 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=18;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_18.png} xywh {127 158 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=19;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_19.png} xywh {186 158 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=20;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_20.png} xywh {245 158 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=21;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_21.png} xywh {304 158 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=22;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_22.png} xywh {363 158 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+      Fl_Button {} {
+        callback {scelta_gui=23;
+
+tabac_txt_nomesizze->label(SizzeMem[scelta_gui].nome);
+
+add_testo(scelta_gui);
+
+win_tabacchi->redraw();
+tabac_btn_compra->activate();}
+        image {pic/sizze/sizze_23.png} xywh {422 158 58 72} type Radio box NO_BOX down_box FLAT_BOX color 7 selection_color 2
+      }
+    }
+    Fl_Group {} {open
+      xywh {5 235 480 110} box EMBOSSED_BOX
+    } {
+      Fl_Box tabac_txt_nomesizze {
+        xywh {10 240 470 20} labelfont 1 align 21
+      }
+      Fl_Box tabac_txt_descsizze {selected
+        xywh {10 260 470 45} labelsize 12 align 149
+        code0 {static char tmp[80];}
+        code1 {sprintf(tmp, "Che sigarette vuoi, ragazz%c ?",ao);}
+        code2 {o->label(tmp);}
+      }
+      Fl_Box tabac_txt_prezzosizze {
+        xywh {10 305 245 30} align 20
+      }
+    }
+    Fl_Group {} {open
+      xywh {5 345 480 50} box EMBOSSED_FRAME
+    } {
+      Fl_Box {} {
+        image {icons/tabacchi.png} xywh {10 350 40 40}
+      }
+      Fl_Value_Output {} {
+        label {Soldi  L.}
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {145 355 75 30} box FLAT_BOX selection_color 7 labelfont 2 labelsize 12 step 1 textfont 1
+        code0 {o->value(CALCSOLDI(Soldi));}
+        code1 {if(euro) o->label("Soldi  €");}
+      }
+      Fl_Value_Output {} {
+        label Sizze
+        callback {o->value(sizze);}
+        xywh {275 365 25 10} box FLAT_BOX labelfont 2 labelsize 12 value 100 textfont 1
+        code0 {o->value(sizze);}
+      }
+      Fl_Button tabac_btn_compra {
+        label {Compra!}
+        callback {PagaSizze(scelta_gui);
+win_principale->activate();
+AggiornaPrincipale();
+win_tabacchi->hide();}
+        xywh {350 350 60 40}
+        code0 {o->deactivate();}
+      }
+      Fl_Return_Button {} {
+        callback {win_negozi->show();
+win_tabacchi->hide();}
+        xywh {420 350 60 40} align 20
+        code0 {o->image(ImgExit);}
+      }
+    }
+  }
+}

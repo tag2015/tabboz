@@ -24,7 +24,9 @@
 #include <stdlib.h>
 
 #include "zarrosim.h"
+#include "global.h"
 #include "dialogs.h"
+#include "sound.h"
 #include "debug.h"
 
 #include "calendario.h"
@@ -71,7 +73,7 @@ STVARIE SizzeMem[] = {
     { 0,  5,  5, 0, 0, 2, 0,  6, 0, "Barclay"},
     { 0,  8,  7, 0, 0, 1, 0,  6, 0, "Camel"},
     { 0,  7,  6, 0, 0, 2, 0,  6, 0, "Davidoff Superior Lights"},
-    { 0,  7,  6, 0, 0, 2, 0,  6, 0, "Davidoff Mildnes"},
+    { 0,  7,  6, 0, 0, 2, 0,  6, 0, "Davidoff Mild"},
     { 0, 13,  9, 0, 0, 2, 0,  6, 0, "Davidoff Classic"},
     { 0,  9,  7, 0, 0, 1, 0,  5, 0, "Diana Blu"},
     { 0, 12,  9, 0, 0, 1, 0,  5, 0, "Diana Rosse"},
@@ -84,8 +86,8 @@ STVARIE SizzeMem[] = {
     { 0,  8,  6, 0, 0, 2, 0,  6, 0, "Malborro Medium"},    // dovrebbero essere come le lights
     { 0, 12,  9, 0, 0, 2, 0,  6, 0, "Malborro Rosse"},
     { 0,  8,  6, 0, 0, 2, 0,  6, 0, "Malborro Lights"},
-    { 0, 11, 10, 0, 0, 0, 0,  5, 0, "NS Rosse"},
-    { 0,  9,  8, 0, 0, 0, 0,  5, 0, "NS Mild"},
+    { 0, 11, 10, 0, 0, 0, 0,  5, 0, "MS Rosse"},
+    { 0,  9,  8, 0, 0, 0, 0,  5, 0, "MS Mild"},
     { 0,  9,  7, 0, 0, 1, 0,  5, 0, "Poll Mon Blu"},
     { 0, 12,  9, 0, 0, 1, 0,  5, 0, "Poll Mon Rosse"},
     { 0, 12, 10, 0, 0, 2, 0,  6, 0, "Philip Morris"},
@@ -99,7 +101,7 @@ STVARIE SizzeMem[] = {
 
 
 
-/* Routine per il pagamento di qualunque cosa... */
+/* Routine per il pagamento dei vestiti... */
 void PagaQualcosa (int scelta)
 {
     if (scelta) {
@@ -127,6 +129,34 @@ void PagaQualcosa (int scelta)
 }
 
 
+/* Routine per pagare le sigarette */
+void PagaSizze(int scelta)
+{
+    if (scelta != -1) {
+        if (SizzeMem[scelta].prezzo > Soldi) {
+            nomoney(TABACCAIO);
+        }
+        else {
+            Soldi -= SizzeMem[scelta].prezzo;
+            if (logging) {
+                sprintf(log_buf, "tabaccaio: Paga %s", MostraSoldi(SizzeMem[scelta].prezzo));
+                writelog(log_buf);
+            }
+            Fama += SizzeMem[scelta].fama_inc;
+            if (Fama > 100)
+                Fama = 100;
+            sizze += 20;
+            if (sound_active) TabbozPlaySound(206);
+        }
+        MsgIcona(ICONA_AVVISO);
+        fl_message_title("ART. 46 L. 29/12/1990 n. 428");
+        fl_alert(StrTabacco[rand() % 7]); // messaggio random contro il fumo
+
+        Evento();
+    }
+}
+
+
 /* Proposta vestito rosso se in periodo natalizio */
 bool OfferteDiNatale(void)
 {
@@ -149,180 +179,75 @@ bool OfferteDiNatale(void)
 }
 
 
-/* FIXME Questa dovrebbe essere non più necessaria */
-// //*******************************************************************
-// // Routine di acquisto generica
-// //*******************************************************************
-
-// # pragma argsused
-// BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//      char          tmp[128];
-//      int          i;
-
-//      if (message == WM_INITDIALOG) {
-//     scelta=0;
-//     SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
-//     sprintf(tmp, "%d/100", Fama);
-//     SetDlgItemText(hDlg, 121, tmp);
-
-//     for (i=101;i<120;i++) {
-//         SetDlgItemText(hDlg, i, MostraSoldi(VestitiMem[i-100].prezzo));
-//     }
-//     return(TRUE);
-//     }
-
-//      else if (message == WM_COMMAND)
-//      {
-//     switch (wParam)
-//     {
-//          case 101:
-//          case 102:
-//          case 103:
-//          case 104:
-//          case 105:
-//          case 106:
-//          case 107:
-//          case 108:
-//          case 109:
-//          case 110:
-//          case 111:
-//          case 112:
-//          case 113:
-//          case 114:
-//          case 115:
-//          case 116:
-//          case 117:
-//          case 118:
-//          case 119:
-//         scelta=wParam-100;
-//         return(TRUE);
-
-//          case IDCANCEL:
-//         scelta=0;
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
-
-//          case IDOK:
-//         PagaQualcosa(hDlg);
-//         EndDialog(hDlg, TRUE);
-//         return(TRUE);
-
-//          default:
-//         return(TRUE);
-//     }
-//      }
-
-//      return(FALSE);
-// }
-
-
-// FIXME Il tabaccaio si fa dopo x lo sbatta di mettere tutte le icone...
-// //*******************************************************************
-// // Tabaccaio ! (che centra tra i vestiti ??? Come procedura e' simile...)
-// //*******************************************************************
-
-// # pragma argsused
-// BOOL FAR PASCAL Tabaccaio(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-// {
-//      char      tmp_descrizione[1024];
-//      char      tmp[255];
-//      div_t      nico;
-//      int          i;
-
-//      if (message == WM_INITDIALOG) {
-//      if (sound_active) TabbozPlaySound(203);
-//         scelta=-1; // Fino alla 0.8.51pr c'era un bug che non faceva comprare le Barclay...
-//         SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
-//         sprintf(tmp, "%d", sizze);
-//         SetDlgItemText(hDlg, 105, tmp);
-//         sprintf(tmp, "Che sigarette vuoi, ragazz%c ?",ao);
-//         SetDlgItemText(hDlg, 106, tmp);
-//         return(TRUE);
-//      } else if (message == WM_COMMAND) {
-//         switch (wParam) {
-//          case 400:
-//          case 401:
-//          case 402:
-//          case 403:
-//          case 404:
-//          case 405:
-//          case 406:
-//          case 407:
-//          case 408:
-//          case 409:
-//          case 410:
-//          case 411:
-//          case 412:
-//          case 413:
-//          case 414:
-//          case 415:
-//          case 416:
-//          case 417:
-//          case 418:
-//          case 419:
-//          case 420:
-//          case 421:
-//          case 422:
-//          case 423:
-//             scelta=wParam-400;
-//             LoadString(hInst, (wParam + 1000), tmp, 254);
-
-//             if (SizzeMem[scelta].cc == 0) {
-//                 /* Se i valori sono impostati a 0, non li scrive */
-//                 sprintf(tmp_descrizione,"%s\n%s",
-//                     SizzeMem[scelta].nome, tmp );
-//             } else {
-//                 nico = div(SizzeMem[scelta].cc, 10);
-//                 sprintf(tmp_descrizione,"%s\n%sCondensato: %d Nicotina: %d.%d",
-//                     SizzeMem[scelta].nome, tmp, SizzeMem[scelta].speed, nico.quot, nico.rem);
-//             }
-
-//             SetDlgItemText(hDlg, 106, tmp_descrizione);
-//             return(TRUE);
-
-
-//          case IDCANCEL:
-//             scelta=-1;
-//             EndDialog(hDlg, TRUE);
-//             return(TRUE);
-
-//          case IDOK:
-//             if (scelta != -1) {
-//                 if (SizzeMem[scelta].prezzo > Soldi) {
-//                     nomoney(hDlg,TABACCAIO);
-//                 } else {
-//                     Soldi-= SizzeMem[scelta].prezzo;
-//                     #ifdef TABBOZ_DEBUG
-//                     sprintf(tmp,"tabaccaio: Paga %s",MostraSoldi(SizzeMem[scelta].prezzo));
-//                     writelog(tmp);
-//                     #endif
-//                     Fama+=SizzeMem[scelta].fama;
-//                     if (Fama > 100) Fama=100;
-//                     sizze+=20;
-//                 }
-//                 i = random(8) + 600;
-//                 LoadString(hInst, i, (LPSTR)tmp, 254);  // 600 -> 607
-//                 MessageBox( hDlg,
-//                 (LPSTR)tmp,
-//                 "ART. 46 L. 29/12/1990 n. 428", MB_OK | MB_ICONINFORMATION );
-
-//                 Evento(hDlg);
-//                 }
-
-//             EndDialog(hDlg, TRUE);
-//             return(TRUE);
-
-//          default:
-//             return(TRUE);
-//         }
-//      }
-
-//      return(FALSE);
-// }
-
 
 #ifdef DEADCODE
+
+/*******************************************************************
+ Routine di acquisto generica
+*******************************************************************/
+
+# pragma argsused
+BOOL FAR PASCAL CompraQualcosa(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+{
+     char          tmp[128];
+     int          i;
+
+     if (message == WM_INITDIALOG) {
+    scelta=0;
+    SetDlgItemText(hDlg, 120, MostraSoldi(Soldi));
+    sprintf(tmp, "%d/100", Fama);
+    SetDlgItemText(hDlg, 121, tmp);
+
+    for (i=101;i<120;i++) {
+        SetDlgItemText(hDlg, i, MostraSoldi(VestitiMem[i-100].prezzo));
+    }
+    return(TRUE);
+    }
+
+     else if (message == WM_COMMAND)
+     {
+    switch (wParam)
+    {
+         case 101:
+         case 102:
+         case 103:
+         case 104:
+         case 105:
+         case 106:
+         case 107:
+         case 108:
+         case 109:
+         case 110:
+         case 111:
+         case 112:
+         case 113:
+         case 114:
+         case 115:
+         case 116:
+         case 117:
+         case 118:
+         case 119:
+        scelta=wParam-100;
+        return(TRUE);
+
+         case IDCANCEL:
+        scelta=0;
+        EndDialog(hDlg, TRUE);
+        return(TRUE);
+
+         case IDOK:
+        PagaQualcosa(hDlg);
+        EndDialog(hDlg, TRUE);
+        return(TRUE);
+
+         default:
+        return(TRUE);
+    }
+     }
+
+     return(FALSE);
+}
+
 /* Implementato direttamente in gui */
 # pragma argsused
 BOOL FAR PASCAL Vestiti(HWND hDlg, WORD message, WORD wParam, LONG lParam)
@@ -384,10 +309,110 @@ BOOL FAR PASCAL Vestiti(HWND hDlg, WORD message, WORD wParam, LONG lParam)
 
      return(FALSE);
 }
-#endif
+
+//*******************************************************************
+// Tabaccaio ! (che centra tra i vestiti ??? Come procedura e' simile...)
+//*******************************************************************
+
+# pragma argsused
+BOOL FAR PASCAL Tabaccaio(HWND hDlg, WORD message, WORD wParam, LONG lParam)
+{
+     char      tmp_descrizione[1024];
+     char      tmp[255];
+     div_t      nico;
+     int          i;
+
+     if (message == WM_INITDIALOG) {
+     if (sound_active) TabbozPlaySound(203);
+        scelta=-1; // Fino alla 0.8.51pr c'era un bug che non faceva comprare le Barclay...
+        SetDlgItemText(hDlg, 104, MostraSoldi(Soldi));
+        sprintf(tmp, "%d", sizze);
+        SetDlgItemText(hDlg, 105, tmp);
+        sprintf(tmp, "Che sigarette vuoi, ragazz%c ?",ao);
+        SetDlgItemText(hDlg, 106, tmp);
+        return(TRUE);
+     } else if (message == WM_COMMAND) {
+        switch (wParam) {
+         case 400:
+         case 401:
+         case 402:
+         case 403:
+         case 404:
+         case 405:
+         case 406:
+         case 407:
+         case 408:
+         case 409:
+         case 410:
+         case 411:
+         case 412:
+         case 413:
+         case 414:
+         case 415:
+         case 416:
+         case 417:
+         case 418:
+         case 419:
+         case 420:
+         case 421:
+         case 422:
+         case 423:
+            scelta=wParam-400;
+            LoadString(hInst, (wParam + 1000), tmp, 254);
+
+            if (SizzeMem[scelta].cc == 0) {
+                /* Se i valori sono impostati a 0, non li scrive */
+                sprintf(tmp_descrizione,"%s\n%s",
+                    SizzeMem[scelta].nome, tmp );
+            } else {
+                nico = div(SizzeMem[scelta].cc, 10);
+                sprintf(tmp_descrizione,"%s\n%sCondensato: %d Nicotina: %d.%d",
+                    SizzeMem[scelta].nome, tmp, SizzeMem[scelta].speed, nico.quot, nico.rem);
+            }
+
+            SetDlgItemText(hDlg, 106, tmp_descrizione);
+            return(TRUE);
 
 
-#ifdef DEADCODE
+         case IDCANCEL:
+            scelta=-1;
+            EndDialog(hDlg, TRUE);
+            return(TRUE);
+
+         case IDOK:
+            if (scelta != -1) {
+                if (SizzeMem[scelta].prezzo > Soldi) {
+                    nomoney(hDlg,TABACCAIO);
+                } else {
+                    Soldi-= SizzeMem[scelta].prezzo;
+                    #ifdef TABBOZ_DEBUG
+                    sprintf(tmp,"tabaccaio: Paga %s",MostraSoldi(SizzeMem[scelta].prezzo));
+                    writelog(tmp);
+                    #endif
+                    Fama+=SizzeMem[scelta].fama;
+                    if (Fama > 100) Fama=100;
+                    sizze+=20;
+                }
+                i = random(8) + 600;
+                LoadString(hInst, i, (LPSTR)tmp, 254);  // 600 -> 607
+                MessageBox( hDlg,
+                (LPSTR)tmp,
+                "ART. 46 L. 29/12/1990 n. 428", MB_OK | MB_ICONINFORMATION );
+
+                Evento(hDlg);
+                }
+
+            EndDialog(hDlg, TRUE);
+            return(TRUE);
+
+         default:
+            return(TRUE);
+        }
+     }
+
+     return(FALSE);
+}
+
 /* Implementata in gui */
 void RunTabacchi(HWND hDlg)
 {

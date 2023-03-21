@@ -31,8 +31,11 @@
 #define PANTALONI_BABBO 13
 
 extern STVARIE VestitiMem[];
+extern STVARIE SizzeMem[];
 
 void PagaQualcosa(int scelta);
+void PagaSizze(int scelta);
+
 bool OfferteDiNatale(void);
 
 #endif

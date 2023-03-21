@@ -53,4 +53,6 @@ extern const char *StrNomiTipi[];               // Elenco nomi tipi
 extern const char *StrRisposteTipe[];           // Stringhe due di picche (dalle tipe)
 extern const char *StrRisposteTipi[];           // Stringhe due di picche (dai tipi)
 
+extern const char *StrTabacco[];                // Utili (?) avvisi su i pacchetti di sigarette
+
 #endif

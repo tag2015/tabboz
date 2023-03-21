@@ -549,3 +549,13 @@ const char *StrRisposteTipi[] = {
     "Ti vedo solo come una amica",
     "Si è fatto tardi, scusa, ora devo andare... ne riparliamo domani, ok...",
 };
+
+const char *StrTabacco[] = {
+    "Nuoce gravemente alla salute",  // id=600
+    "Il fumo nuoce alle persone che vi circondano",
+    "Ogni anno il tabagismo fa più vittime degli incidenti stradali",
+    "Proteggete i bambini: non fate loro respirare il vostro fumo",
+    "Il fumo provoca malattie cardiovascolari",
+    "Donne incinte: il fumo nuoce alla salute del vostro bambino",
+    "Il fumo provoca il cancro",
+};

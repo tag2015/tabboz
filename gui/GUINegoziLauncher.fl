@@ -14,6 +14,9 @@ decl {\#include "GUITabboz.h"} {private global
 decl {\#include "GUINegoziVestiti.h"} {private global
 }
 
+decl {\#include "GUITabacchi.h"} {private global
+}
+
 decl {\#include "GUITelefonia.h"} {private global
 }
 
@@ -39,7 +42,7 @@ Function {GUINegoziLauncher()} {open
 } {
   Fl_Window win_negozi {
     label Negozi open
-    xywh {490 735 395 161} type Double labelfont 1 labelsize 12 hotspot modal size_range {395 215 395 215} visible
+    xywh {490 735 395 161} type Double labelfont 1 labelsize 12 hotspot modal size_range {395 161 395 161} visible
   } {
     Fl_Return_Button {} {
       callback {win_principale->activate();
@@ -87,7 +90,7 @@ win_negozi->hide();}
   MsgIcona(ICONA_AVVISO);
   fl_message_title("Negozio chiuso");
   fl_alert("Oh, tip%c... i negozi sono chiusi di festa...",ao);
-}} selected
+}}
         xywh {15 100 170 30}
       }
     }
@@ -98,16 +101,16 @@ win_negozi->hide();}
       Fl_Button {} {
         label Tabaccaio
         callback {if (x_vacanza != 2) {
-//  GUINegozioVestiti_1();
-//  win_vestiti_1->show();
-//  win_negozi->hide();
-//  if(sound_active) TabbozPlaySound(204);
+  GUITabacchi();
+  win_tabacchi->show();
+  win_negozi->hide();
+  if(sound_active) TabbozPlaySound(203);
 }else {
   MsgIcona(ICONA_AVVISO);
   fl_message_title("Tabaccaio chiuso");
   fl_alert("Rimani fiss%c a guardare la saracinesca del tabaccaio irrimediabilmente chiusa...",ao);
-}}
-        xywh {205 30 170 30} deactivate
+}} selected
+        xywh {205 30 170 30}
       }
       Fl_Button {} {
         label Telefonia

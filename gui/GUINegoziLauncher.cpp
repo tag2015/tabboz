@@ -5,6 +5,7 @@
 #include <FL/fl_ask.H>
 #include "GUITabboz.h"
 #include "GUINegoziVestiti.h"
+#include "GUITabacchi.h"
 #include "GUITelefonia.h"
 #include "../zarrosim.h"
 #include "../dialogs.h"
@@ -58,10 +59,10 @@ static void cb_Footsmocker(Fl_Button*, void*) {
 
 static void cb_Tabaccaio(Fl_Button*, void*) {
   if (x_vacanza != 2) {
-//  GUINegozioVestiti_1();
-//  win_vestiti_1->show();
-//  win_negozi->hide();
-//  if(sound_active) TabbozPlaySound(204);
+  GUITabacchi();
+  win_tabacchi->show();
+  win_negozi->hide();
+  if(sound_active) TabbozPlaySound(203);
 }else {
   MsgIcona(ICONA_AVVISO);
   fl_message_title("Tabaccaio chiuso");
@@ -107,7 +108,6 @@ Fl_Double_Window* GUINegoziLauncher() {
       o->align(Fl_Align(FL_ALIGN_TOP_LEFT));
       { Fl_Button* o = new Fl_Button(205, 30, 170, 30, "Tabaccaio");
         o->callback((Fl_Callback*)cb_Tabaccaio);
-        o->deactivate();
       } // Fl_Button* o
       { Fl_Button* o = new Fl_Button(205, 65, 170, 30, "Telefonia");
         o->callback((Fl_Callback*)cb_Telefonia);
@@ -115,7 +115,7 @@ Fl_Double_Window* GUINegoziLauncher() {
       o->end();
     } // Fl_Group* o
     win_negozi->set_modal();
-    win_negozi->size_range(395, 215, 395, 215);
+    win_negozi->size_range(395, 161, 395, 161);
     win_negozi->end();
   } // Fl_Double_Window* win_negozi
   return win_negozi;

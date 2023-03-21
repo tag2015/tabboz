@@ -22,7 +22,7 @@
 #define TABBOZ_ZARROSIM_H
 
 /* Versione gioco... */
-#define VERSION "NG-pre20220501"
+#define VERSION "NG-pre20230321"
 
 /* Per attivare il Debug... */
 #define TABBOZ_DEBUG
