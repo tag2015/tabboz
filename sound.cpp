@@ -33,10 +33,10 @@
 /* Inizia la riproduzione di un suono */
 void TabbozPlaySound(int number)
 {
-    char filename[20];
+    char filename[STR_MAX];
 
     #ifdef TABBOZ_WIN
-        sprintf_s(filename, (sizeof(filename)/sizeof(char)), "tabs%04d.wav", number);
+        sprintf_s(filename, (sizeof(filename)/sizeof(char)), "res\\wav\\tabs%04d.wav", number);
         PlaySoundA(filename, NULL, SND_FILENAME | SND_ASYNC);
         #ifdef TABBOZ_DEBUG
             sprintf(log_buf,"Riproduci suono: %s",filename);
