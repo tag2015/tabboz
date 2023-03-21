@@ -17,8 +17,8 @@ decl {\#include "../compagnia.h"} {private global
 Function {GUITabbozCompagnia()} {open
 } {
   Fl_Window win_compagnia {
-    label Compagnia open selected
-    xywh {167 601 310 360} type Double hotspot modal size_range {310 360 310 360} visible
+    label Compagnia open
+    xywh {542 514 310 360} type Double hotspot modal size_range {310 360 310 360} visible
   } {
     Fl_Box {} {
       image {pic/compagnia.png} xywh {10 0 290 190} box BORDER_FRAME
@@ -47,12 +47,9 @@ AggiornaPrincipale();
 win_compagnia->hide();}
       xywh {10 265 290 30}
     }
-    Fl_Group {} {open
+    Fl_Group {} {open selected
       xywh {10 300 290 50} box EMBOSSED_FRAME labelsize 10 align 5
     } {
-      Fl_Box {} {
-        image {icons/compagnia.png} xywh {15 305 40 40}
-      }
       Fl_Value_Output compa_val_rep {
         label {Reputazione }
         xywh {160 312 25 25} box FLAT_BOX labelfont 2 labelsize 12 value 50 textfont 1

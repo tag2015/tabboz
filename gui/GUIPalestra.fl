@@ -21,7 +21,7 @@ Function {GUITabbozPalestra()} {open
     xywh {223 510 486 251} type Double labelfont 1 labelsize 12 hotspot
     code0 {AggiornaPalestra();} modal size_range {486 251 486 251} visible
   } {
-    Fl_Box {} {
+    Fl_Box {} {selected
       image {pic/palestra.png} xywh {5 5 250 185}
     }
     Fl_Button {} {
@@ -29,7 +29,7 @@ Function {GUITabbozPalestra()} {open
       callback {VaiInPalestra();
 AggiornaPrincipale();
 win_principale->activate();
-win_palestra->hide();} selected
+win_palestra->hide();}
       xywh {260 105 220 25}
     }
     Fl_Group {} {open
@@ -91,7 +91,7 @@ win_palestra->hide();} selected
       xywh {5 195 475 50} box EMBOSSED_FRAME
     } {
       Fl_Box {} {
-        image {icons/palestra2.png} xywh {10 200 40 40}
+        image {icons/palestra.png} xywh {10 200 40 40}
       }
       Fl_Value_Output pal_soldi {
         label {Soldi  L.}
