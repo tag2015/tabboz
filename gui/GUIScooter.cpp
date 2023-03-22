@@ -5,6 +5,7 @@
 #include <FL/fl_ask.H>
 #include "GUITabboz.h"
 #include "GUIConcessionario.h"
+#include "GUIElaborare.h"
 #include "../zarrosim.h"
 #include "../dialogs.h"
 #include "../sound.h"
@@ -39,6 +40,25 @@ AggiornaScooter();
 
 static void cb_Fai(Fl_Button*, void*) {
   FaiBenza();
+}
+
+static void cb_Elabora(Fl_Button*, void*) {
+  fl_message_title("Elabora scooter");
+if (ScooterData.stato == -1000) {
+  MsgIcona(ICONA_DOMANDA);
+  fl_alert("Mi spieghi come fai a elaborare lo scooter se non lo hai ???");
+  return;
+}
+
+if (x_vacanza != 2) {
+  GUIElaborare();
+  win_elabora->show();
+  win_scooter->deactivate();
+}else {
+  MsgIcona(ICONA_AVVISO);
+  fl_message_title("Meccanico chiuso");
+  fl_alert("Oh, tip%c... oggi il meccanico è chiuso...",ao);
+};
 }
 
 static void cb_Ripara(Fl_Button*, void*) {
@@ -215,7 +235,7 @@ Fl_Double_Window* GUIScooter() {
       o->callback((Fl_Callback*)cb_Fai);
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(260, 165, 240, 30, "Elabora Scooter");
-      o->deactivate();
+      o->callback((Fl_Callback*)cb_Elabora);
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(260, 200, 240, 30, "Ripara Scooter");
       o->callback((Fl_Callback*)cb_Ripara);

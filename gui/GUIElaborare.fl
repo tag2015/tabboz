@@ -1,0 +1,391 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0308
+header_name {.h}
+code_name {.cpp}
+decl {\#include "GUITabboz.h"} {private local
+}
+
+decl {\#include "GUIScooter.h"} {private global
+}
+
+decl {\#include "../zarrosim.h"} {private global
+}
+
+decl {\#include "../scooter.h"} {private global
+}
+
+decl {\#include "../sharedimg.h"} {private global
+}
+
+decl {\#include "../dialogs.h"} {private global
+}
+
+Function {RiempiCampi()} {open private C
+} {
+  code {char buf[80];
+if (ScooterData.attivita == 1)
+  sprintf(buf, "%d Km/h",ScooterData.speed);
+else
+  sprintf(buf, "%s!", n_attivita[ScooterData.attivita]);
+elabora_txt_speed->value(buf);
+elabora_txt_cc->value(n_cc[ScooterData.cc]);
+elabora_txt_carb->value(n_carburatore[ScooterData.carburatore]);
+elabora_txt_filtro->value(n_filtro[ScooterData.filtro]);
+elabora_txt_marm->value(n_marmitta[ScooterData.marmitta]);} {selected
+  }
+}
+
+Function {GUIElaborare()} {open
+} {
+  Fl_Window win_elabora {
+    label {Elabora Scooter} open
+    xywh {638 301 600 430} type Double hotspot modal size_range {600 430 600 430} visible
+  } {
+    Fl_Group {} {
+      label Marmitta open
+      xywh {5 22 290 163} box EMBOSSED_FRAME labelfont 3 labelsize 12 align 5
+    } {
+      Fl_Box {} {
+        image {pic/marmitta.png} xywh {10 28 100 100}
+      }
+      Fl_Output elabora_txt_marm {
+        xywh {127 43 163 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
+      }
+      Fl_Choice elabora_menu_marm {
+        callback {char buf[80];
+int scelta = elabora_menu_marm->value();
+
+if(!euro)
+  sprintf(buf, "L. %d",CALCSOLDI(PezziMem[MARMITTA][scelta]));
+else
+  sprintf(buf, "€ %d",CALCSOLDI(PezziMem[MARMITTA][scelta]));
+
+if(scelta!=ScooterData.marmitta) {
+  elabora_txt_prezzo_marm->value(buf);
+  elabora_btn_compra_marm->activate();
+}
+else {
+  elabora_txt_prezzo_marm->value("---");
+  elabora_btn_compra_marm->deactivate();
+}} open
+        xywh {127 98 163 25} down_box BORDER_BOX
+        code0 {o->value(ScooterData.marmitta);}
+      } {
+        MenuItem {} {
+          label standard
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label silenziosa
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label rumorosa
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label rumorosissima
+          xywh {0 0 30 20}
+        }
+      }
+      Fl_Box {} {
+        label Attuale
+        xywh {195 27 30 16} labelsize 12
+      }
+      Fl_Box {} {
+        label {Sostituisci con:}
+        xywh {195 82 30 16} labelfont 1 labelsize 12
+      }
+      Fl_Button elabora_btn_compra_marm {
+        label Elabora
+        callback {if(CompraUnPezzo(MARMITTA, elabora_menu_marm->value())) {
+  AggiornaScooter();
+  RiempiCampi();
+  elabora_menu_marm->do_callback();
+  win_elabora->redraw();
+  }
+else {
+  win_scooter->activate();
+  win_elabora->hide();
+}}
+        xywh {230 138 60 40}
+        code0 {o->deactivate();}
+      }
+      Fl_Output elabora_txt_prezzo_marm {
+        label Prezzo
+        xywh {50 148 150 25} box EMBOSSED_BOX labelsize 12 textfont 5
+        code1 {o->clear_visible_focus();}
+      }
+    }
+    Fl_Group {} {
+      label {Filtro Aria} open
+      xywh {305 22 290 162} box EMBOSSED_FRAME labelfont 3 labelsize 12 align 5
+    } {
+      Fl_Box {} {
+        image {pic/filtro.png} xywh {310 28 100 100}
+      }
+      Fl_Output elabora_txt_filtro {
+        xywh {427 43 163 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
+      }
+      Fl_Choice elabora_menu_filtro {
+        callback {char buf[80];
+int scelta = elabora_menu_filtro->value();
+
+if(!euro)
+  sprintf(buf, "L. %d",CALCSOLDI(PezziMem[FILTRO][scelta]));
+else
+  sprintf(buf, "€ %d",CALCSOLDI(PezziMem[FILTRO][scelta]));
+
+if(scelta!=ScooterData.filtro) {
+  elabora_txt_prezzo_filtro->value(buf);
+  elabora_btn_compra_filtro->activate();
+}
+else {
+  elabora_txt_prezzo_filtro->value("---");
+  elabora_btn_compra_filtro->deactivate();
+}} open
+        xywh {427 98 163 25} down_box BORDER_BOX
+        code0 {o->value(ScooterData.filtro);}
+      } {
+        MenuItem {} {
+          label standard
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label P1
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label P2
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label {P2+}
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label Extreme
+          xywh {0 0 30 20}
+        }
+      }
+      Fl_Box {} {
+        label Attuale
+        xywh {495 27 30 16} labelsize 12
+      }
+      Fl_Box {} {
+        label {Sostituisci con:}
+        xywh {495 82 30 16} labelfont 1 labelsize 12
+      }
+      Fl_Button elabora_btn_compra_filtro {
+        label Elabora
+        callback {if(CompraUnPezzo(FILTRO, elabora_menu_filtro->value())) {
+  AggiornaScooter();
+  RiempiCampi();
+  elabora_menu_filtro->do_callback();
+  win_elabora->redraw();
+  }
+else {
+  win_scooter->activate();
+  win_elabora->hide();
+}}
+        xywh {530 138 60 40}
+        code0 {o->deactivate();}
+      }
+      Fl_Output elabora_txt_prezzo_filtro {
+        label Prezzo
+        xywh {350 148 150 25} box EMBOSSED_BOX labelsize 12 textfont 5
+        code1 {o->clear_visible_focus();}
+      }
+    }
+    Fl_Group {} {
+      label Carburatore
+      xywh {5 207 290 163} box EMBOSSED_FRAME labelfont 3 labelsize 12 align 5
+    } {
+      Fl_Box {} {
+        image {pic/carburatore.png} xywh {10 213 100 100}
+      }
+      Fl_Output elabora_txt_carb {
+        xywh {127 228 163 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
+      }
+      Fl_Choice elabora_menu_carb {
+        callback {char buf[80];
+int scelta = elabora_menu_carb->value();
+
+if(!euro)
+  sprintf(buf, "L. %d",CALCSOLDI(PezziMem[CARB][scelta]));
+else
+  sprintf(buf, "€ %d",CALCSOLDI(PezziMem[CARB][scelta]));
+
+if(scelta!=ScooterData.carburatore) {
+  elabora_txt_prezzo_carb->value(buf);
+  elabora_btn_compra_carb->activate();
+}
+else {
+  elabora_txt_prezzo_carb->value("---");
+  elabora_btn_compra_carb->deactivate();
+}} open
+        xywh {127 283 163 25} down_box BORDER_BOX
+        code0 {o->value(ScooterData.carburatore);}
+      } {
+        MenuItem {} {
+          label {12/10}
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label {16/16}
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label {19/19}
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label {20/20}
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label {24/24}
+          xywh {0 0 30 20}
+        }
+      }
+      Fl_Box {} {
+        label Attuale
+        xywh {195 212 30 16} labelsize 12
+      }
+      Fl_Box {} {
+        label {Sostituisci con:}
+        xywh {195 267 30 16} labelfont 1 labelsize 12
+      }
+      Fl_Button elabora_btn_compra_carb {
+        label Elabora
+        callback {if(CompraUnPezzo(CARB, elabora_menu_carb->value())) {
+  AggiornaScooter();
+  RiempiCampi();
+  elabora_menu_carb->do_callback();
+  win_elabora->redraw();
+  }
+else {
+  win_scooter->activate();
+  win_elabora->hide();
+}}
+        xywh {230 323 60 40}
+        code0 {o->deactivate();}
+      }
+      Fl_Output elabora_txt_prezzo_carb {
+        label Prezzo
+        xywh {50 333 150 25} box EMBOSSED_BOX labelsize 12 textfont 5
+        code1 {o->clear_visible_focus();}
+      }
+    }
+    Fl_Group {} {
+      label {Gruppo Termico}
+      xywh {305 207 290 163} box EMBOSSED_FRAME labelfont 3 labelsize 12 align 5
+    } {
+      Fl_Box {} {
+        image {pic/cc.png} xywh {310 213 100 100}
+      }
+      Fl_Output elabora_txt_cc {
+        xywh {427 228 163 25} box EMBOSSED_BOX labelsize 12
+        code0 {o->clear_visible_focus();}
+      }
+      Fl_Choice elabora_menu_cc {
+        callback {char buf[80];
+int scelta = elabora_menu_cc->value();
+
+if(!euro)
+  sprintf(buf, "L. %d",CALCSOLDI(PezziMem[CC][scelta]));
+else
+  sprintf(buf, "€ %d",CALCSOLDI(PezziMem[CC][scelta]));
+
+if(scelta!=ScooterData.cc) {
+  elabora_txt_prezzo_cc->value(buf);
+  elabora_btn_compra_cc->activate();
+}
+else {
+  elabora_txt_prezzo_cc->value("---");
+  elabora_btn_compra_cc->deactivate();
+}} open
+        xywh {427 283 163 25} down_box BORDER_BOX
+        code0 {o->value(ScooterData.cc);}
+      } {
+        MenuItem {} {
+          label 50cc
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label 70cc
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label 90cc
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label 120cc
+          xywh {0 0 30 20}
+        }
+        MenuItem {} {
+          label 150cc
+          xywh {0 0 30 20}
+        }
+      }
+      Fl_Box {} {
+        label Attuale
+        xywh {495 212 30 16} labelsize 12
+      }
+      Fl_Box {} {
+        label {Sostituisci con:}
+        xywh {495 267 30 16} labelfont 1 labelsize 12
+      }
+      Fl_Button elabora_btn_compra_cc {
+        label Elabora
+        callback {if(CompraUnPezzo(CC, elabora_menu_cc->value())) {
+  AggiornaScooter();
+  RiempiCampi();
+  elabora_menu_cc->do_callback();
+  win_elabora->redraw();
+  }
+else {
+  win_scooter->activate();
+  win_elabora->hide();
+}}
+        xywh {530 323 60 40}
+        code0 {o->deactivate();}
+      }
+      Fl_Output elabora_txt_prezzo_cc {
+        label Prezzo
+        xywh {350 333 150 25} box EMBOSSED_BOX labelsize 12 textfont 5
+        code1 {o->clear_visible_focus();}
+      }
+    }
+    Fl_Group {} {open
+      xywh {5 375 590 50} box EMBOSSED_FRAME
+    } {
+      Fl_Box {} {
+        image {icons/elabora.png} xywh {10 380 40 40}
+      }
+      Fl_Value_Output elabora_soldi {
+        label {Soldi L.}
+        callback {o->value(CALCSOLDI(Soldi));}
+        xywh {415 387 95 25} box FLAT_BOX labelfont 2 labelsize 12 step 1 value 1e+10 textfont 1
+        code0 {o->value(CALCSOLDI(Soldi));}
+        code1 {if(euro) o->label("Soldi  €");}
+      }
+      Fl_Return_Button {} {
+        callback {win_scooter->activate();
+win_elabora->hide();}
+        xywh {530 380 60 40} align 20
+        code0 {o->image(ImgExit);}
+      }
+      Fl_Output elabora_txt_speed {
+        label {Velocità max }
+        xywh {145 387 195 25} box EMBOSSED_BOX labelfont 2 labelsize 12 textfont 1
+        code0 {o->clear_visible_focus();}
+        code1 {RiempiCampi();}
+      }
+    }
+  }
+}

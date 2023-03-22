@@ -2,7 +2,7 @@
 version 1.0308
 header_name {.h}
 code_name {.cpp}
-decl {\#include <FL/Fl.H>} {selected private global
+decl {\#include <FL/Fl.H>} {private global
 }
 
 decl {\#include <FL/fl_ask.H>} {private global
@@ -12,6 +12,9 @@ decl {\#include "GUITabboz.h"} {private global
 }
 
 decl {\#include "GUIConcessionario.h"} {private global
+}
+
+decl {\#include "GUIElaborare.h"} {private global
 }
 
 decl {\#include "../zarrosim.h"} {private global
@@ -70,7 +73,23 @@ AggiornaScooter();}
     }
     Fl_Button {} {
       label {Elabora Scooter}
-      xywh {260 165 240 30} deactivate
+      callback {fl_message_title("Elabora scooter");
+if (ScooterData.stato == -1000) {
+  MsgIcona(ICONA_DOMANDA);
+  fl_alert("Mi spieghi come fai a elaborare lo scooter se non lo hai ???");
+  return;
+}
+
+if (x_vacanza != 2) {
+  GUIElaborare();
+  win_elabora->show();
+  win_scooter->deactivate();
+}else {
+  MsgIcona(ICONA_AVVISO);
+  fl_message_title("Meccanico chiuso");
+  fl_alert("Oh, tip%c... oggi il meccanico è chiuso...",ao);
+}} selected
+      xywh {260 165 240 30}
     }
     Fl_Button {} {
       label {Ripara Scooter}

@@ -36,9 +36,17 @@ typedef struct tagNEWSTSCOOTER {
     int         fama;           // Figosità scooter
 } NEWSTSCOOTER;
 
+enum PezziMoto {
+    MARMITTA,
+    CARB,
+    CC,
+    FILTRO,
+};
+
 extern NEWSTSCOOTER ScooterData;        // Dati scooter del tabbozzo
 extern NEWSTSCOOTER ScooterMem[];       // Array scooter disponibili in concessionario
 
+extern int           PezziMem[][5];     // Costo dei vari pezzi
 extern const char    *n_carburatore[];  // Descrizioni carburatori
 extern const char    *n_cc[];           // Cilindrate
 extern const char    *n_marmitta[];     // Descrizioni marmitte
@@ -58,5 +66,7 @@ bool    VendiScooter(void);
 bool    ParcheggiaScooter(void);
 void    FaiBenza(void);
 void    RiparaScooter(void);
+
+bool    CompraUnPezzo(PezziMoto pezzo, int scelta);
 
 #endif

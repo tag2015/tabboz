@@ -75,12 +75,12 @@ const int elaborazione[]= {
     -1000,  -1000,  -1000,  -1000,  -1000,    250
 };
 
-
-int    PezziMem[] = {
-    400,  500,  600,          /* marmitte    */
-    300,  470,  650,  800,    /* carburatori */
-    200,  400,  800, 1000,    /* cc          */
-     50,  120,  270,  400     /* filtro      */
+/* Costo dei vari pezzi di motorino*/
+int    PezziMem[][5] = {
+    { 100, 400,  500,  600,      },   /* marmitte    */
+    { 100, 300,  470,  650,  800 },   /* carburatori */
+    { 150, 200,  400,  800, 1000 },   /* cc          */
+    {  20,  50,  120,  270,  400 },   /* filtro      */
 };
 
 
@@ -118,14 +118,6 @@ void AggiornaScooter(void)
         d = div(benzina,10);
         sprintf(tmp, "%d.%dl", d.quot, d.rem);
         sco_txt_benza->value(tmp);
-
-//        SetDlgItemText(hDlg, 111, n_marmitta[ScooterData.marmitta] );
-//        SetDlgItemText(hDlg, 112, n_carburatore[ScooterData.carburatore] );
-//        SetDlgItemText(hDlg, 113, n_cc[ScooterData.cc] );
-//        SetDlgItemText(hDlg, 114, n_filtro[ScooterData.filtro] );
-//        sprintf(tmp, "%d%", ScooterData.stato);       SetDlgItemText(hDlg, 115, tmp);
-
-//        SetDlgItemText(hDlg, 117, MostraSoldi(ScooterData.prezzo));
 
     } else {
         sco_txt_nome->value("Nessuno scooter");
@@ -418,8 +410,94 @@ return false;
 }
 
 
+/* Routine di acquisto generika di un pezzo di motorino */
+bool CompraUnPezzo(PezziMoto pezzo, int scelta)
+{
+    char  tmp[256];
 
-//FIXME manca elaborazione scooter
+    MsgIcona(ICONA_DOMANDA);
+    fl_message_title("Sei sicuro?");
+    switch (pezzo) {
+        case MARMITTA:
+            if(!euro)
+                sprintf(tmp, "Vuoi passare ad una marmitta %s?\nPrezzo: L. %d (manodopera inclusa)", n_marmitta[scelta], CALCSOLDI(PezziMem[MARMITTA][scelta]));
+            else
+                sprintf(tmp, "Vuoi passare ad una marmitta %s?\nPrezzo: € %d (manodopera inclusa)", n_marmitta[scelta], CALCSOLDI(PezziMem[MARMITTA][scelta]));
+            break;
+        case CARB:
+            if(!euro)
+                sprintf(tmp, "Vuoi passare ad un carburatore %s?\nPrezzo: L. %d (manodopera inclusa)\n\nATTENZIONE: una combinazione errata carburatore/gruppo termico può rendere\nil motorino grippato o ingolfato!!!", n_carburatore[scelta], CALCSOLDI(PezziMem[CARB][scelta]));
+            else
+                sprintf(tmp, "Vuoi passare ad un carburatore %s?\nPrezzo: € %d (manodopera inclusa)\n\nATTENZIONE: una combinazione errata carburatore/gruppo termico può rendere\nil motorino grippato o ingolfato!!!", n_carburatore[scelta], CALCSOLDI(PezziMem[CARB][scelta]));
+            break;
+        case CC:
+            if(!euro)
+                sprintf(tmp, "Vuoi passare ad un gruppo termico da %s?\nPrezzo: L. %d (manodopera inclusa)\n\nATTENZIONE: una combinazione errata carburatore/gruppo termico può rendere\nil motorino grippato o ingolfato!!!", n_cc[scelta], CALCSOLDI(PezziMem[CC][scelta]));
+            else
+                sprintf(tmp, "Vuoi passare ad un gruppo termico da %s?\nPrezzo: € %d (manodopera inclusa)\n\nATTENZIONE: una combinazione errata carburatore/gruppo termico può rendere\nil motorino grippato o ingolfato!!!", n_cc[scelta], CALCSOLDI(PezziMem[CC][scelta]));
+            break;
+        case FILTRO:
+            if(!euro)
+                sprintf(tmp, "Vuoi passare ad un filtro aria %s?\nPrezzo: L. %d (manodopera inclusa)", n_filtro[scelta], CALCSOLDI(PezziMem[FILTRO][scelta]));
+            else
+                sprintf(tmp, "Vuoi passare ad un filtro aria %s?\nPrezzo: € %d (manodopera inclusa)", n_filtro[scelta], CALCSOLDI(PezziMem[FILTRO][scelta]));
+            break;
+    }
+    if(fl_choice(tmp,"OK!","No...", 0))
+        return true;
+
+    if (Soldi < PezziMem[pezzo][scelta]) {
+        nomoney(SCOOTER);
+        return false;
+    }
+    Soldi -= PezziMem[pezzo][scelta];
+    if (sound_active) TabbozPlaySound(103);
+
+    switch (pezzo) {
+        case MARMITTA: /* marmitte ----------------------------------------------------------- */
+            if (logging) {
+                sprintf(tmp, "scooter: Paga marmitta (%s)", MostraSoldi(PezziMem[pezzo][scelta]));
+                writelog(tmp);
+            }
+            ScooterData.marmitta = scelta; /* (1 - 3 ) */
+            CalcolaVelocita(false);
+            return true;
+
+        case CARB: /* carburatore -------------------------------------------------------- */
+            if (logging) {
+                sprintf(tmp, "scooter: Paga carburatore (%s)", MostraSoldi(PezziMem[pezzo][scelta]));
+                writelog(tmp);
+            }
+            ScooterData.carburatore = scelta; /* ( 1 - 4 ) */
+            CalcolaVelocita(false);
+            return true;
+
+        case CC: /* cc ----------------------------------------------------------------- */
+            if (logging) {
+                sprintf(tmp,"scooter: Paga cilindro e pistone (%s)",MostraSoldi(PezziMem[pezzo][scelta]));
+                writelog(tmp);
+            }
+            /* Piccolo bug della versione 0.6.91, qui c'era scritto ScooterData.marmitta */
+            /* al posto di ScooterData.cc :-) */
+            ScooterData.cc = scelta; /* ( 1 - 4 ) */
+            CalcolaVelocita(false);
+            return true;
+
+        case FILTRO:   /* filtro dell' aria -------------------------------------------------- */
+            if (logging) {
+                sprintf(tmp,"scooter: Paga filtro dell' aria (%s)",MostraSoldi(PezziMem[pezzo][scelta]));
+              writelog(tmp);
+            }
+            ScooterData.filtro = scelta; /* (1 - 4) */
+            CalcolaVelocita(false);
+            return true;
+
+        default:
+            return false;
+    }
+}
+
+
 /********************************************************************/
 /* Scooter...                                                       */
 /********************************************************************/
