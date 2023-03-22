@@ -439,8 +439,8 @@ static void ResetMe(int primavolta)
         sesso               = 'M';
         comp_mese           = rand() % 12 + 1;
         comp_giorno         = rand() % InfoMese[comp_mese-1].num_giorni + 1;
-        strcpy(Nome,"TIZIO");
-        strcpy(Cognome,"CAIO");
+        strcpy(Nome,"Johnny");
+        strcpy(Cognome,"Tabboz");
         strcpy(City,"Milano");
         CalcolaSesso();
     }
@@ -1315,10 +1315,10 @@ int main(int argc, char **argv)
             win_principale->hide();     //Al primo avvio, nascondiamo la principale e apriamo la finestra anagrafica
             GUICartaID(true);
             win_cartaid->position( (Fl::w() - win_cartaid->w() ) / 2, (Fl::h() - win_cartaid->h() ) / 2);   // centra finestra
-            win_cartaid->show();
-            MsgIcona(ICONA_INFO);
-            fl_message_title("A new tabboz is born");
-            fl_message("Benvenuto in Tabboz Simulator NG!\nIn questa finestra puoi personalizzare\nil personaggio (o accettare i valori di default...)");
+            win_cartaid->hide();
+            win_intro_help->position( (Fl::w() - win_intro_help->w() ) / 2, (Fl::h() - win_intro_help->h() ) / 2);   // centra finestra help
+            win_intro_help->show();
+            while(win_intro_help->shown()) Fl::wait();
             while(win_cartaid->shown()) Fl::wait();
             win_principale->show();
         }
@@ -1336,6 +1336,7 @@ int main(int argc, char **argv)
     while(chiusura != SAVEGAME);   // uscita normale (salva)
 
     SalvaTutto();
+    SpegniISuoni();
     #ifdef TABBOZ_DEBUG
         writelog("tabboz: standard exit (save & quit)");
     #endif

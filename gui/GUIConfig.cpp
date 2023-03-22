@@ -672,6 +672,13 @@ win_principale->activate();
 win_cartaid->hide();
 }
 
+Fl_Double_Window *win_intro_help=(Fl_Double_Window *)0;
+
+static void cb_Ho(Fl_Button*, void*) {
+  win_intro_help->hide();
+win_cartaid->show();
+}
+
 Fl_Double_Window* GUICartaID(bool avvio) {
   char buf[80];
   Fl_Shared_Image *sh_img = Fl_Shared_Image::get("foto.png");
@@ -823,5 +830,18 @@ Fl_Double_Window* GUICartaID(bool avvio) {
     win_cartaid->size_range(520, 295, 520, 295);
     win_cartaid->end();
   } // Fl_Double_Window* win_cartaid
-  return win_cartaid;
+  { win_intro_help = new Fl_Double_Window(433, 202, "A new tabboz is born");
+    { Fl_Box* o = new Fl_Box(9, 4, 415, 142, "Benvenuto in Tabboz Simulator NG!\n\nNella prossima finestra puoi inserire i \
+tuoi dati per personalizzare\n il personaggio (o accettare i valori di default\
+...)\n\nNella schermata principale, clicca sull\'icona con l\'ingranaggio per\
+\ncambiare le opzioni (tra cui la difficolt\303\240)");
+      o->labelsize(12);
+    } // Fl_Box* o
+    { Fl_Button* o = new Fl_Button(111, 150, 210, 30, "Ho capito!! Fammi giocare!!");
+      o->callback((Fl_Callback*)cb_Ho);
+    } // Fl_Button* o
+    win_intro_help->set_modal();
+    win_intro_help->end();
+  } // Fl_Double_Window* win_intro_help
+  return win_intro_help;
 }

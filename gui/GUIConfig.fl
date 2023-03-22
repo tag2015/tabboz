@@ -229,7 +229,7 @@ di presentare il biglietto o lo presentasse irriconoscibile,\\no comunque \\
 non valido, verrà abbattuto.\\n\\
 La notifica del decesso verrà inviata ai parenti solo previo pagamento \\
 delle spese postali.");
-fl_message_font(FL_HELVETICA, 14);} selected
+fl_message_font(FL_HELVETICA, 14);}
       xywh {5 175 90 15} labelsize 10
     }
     Fl_Button {} {
@@ -246,7 +246,7 @@ Function {GUICartaID(bool avvio)} {open
 Fl_Shared_Image *sh_img = Fl_Shared_Image::get("foto.png");} {}
   Fl_Window win_cartaid {
     label {Carta d'Identità} open
-    xywh {520 472 520 295} type Double hotspot modal size_range {520 295 520 295} visible
+    xywh {693 576 520 295} type Double hotspot modal size_range {520 295 520 295} visible
   } {
     Fl_Group {} {open
       xywh {5 5 255 285} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
@@ -413,7 +413,7 @@ comp_mese = cid_in_mcomp->value()+1;
 
 main_box_nome->copy_label(Nome);
 win_principale->activate();
-win_cartaid->hide();}
+win_cartaid->hide();} selected
         xywh {440 260 70 25}
       }
       Fl_Button {} {
@@ -421,6 +421,27 @@ win_cartaid->hide();}
         xywh {355 260 70 25} deactivate
         code0 {if(!avvio) o->hide();}
       }
+    }
+  }
+  Fl_Window win_intro_help {
+    label {A new tabboz is born} open
+    xywh {700 459 433 202} type Double modal visible
+  } {
+    Fl_Box {} {
+      label {Benvenuto in Tabboz Simulator NG!
+
+Nella prossima finestra puoi inserire i tuoi dati per personalizzare
+ il personaggio (o accettare i valori di default...)
+
+Nella schermata principale, clicca sull'icona con l'ingranaggio per
+cambiare le opzioni (tra cui la difficoltà)}
+      xywh {9 4 415 142} labelsize 12
+    }
+    Fl_Button {} {
+      label {Ho capito!! Fammi giocare!!}
+      callback {win_intro_help->hide();
+win_cartaid->show();}
+      xywh {111 150 210 30}
     }
   }
 }
