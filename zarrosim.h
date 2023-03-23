@@ -22,10 +22,10 @@
 #define TABBOZ_ZARROSIM_H
 
 /* Versione gioco... */
-#define VERSION "NG-pre20230321"
+#define VERSION "1.0alpha1"
 
 /* Per attivare il Debug... */
-#define TABBOZ_DEBUG
+// #define TABBOZ_DEBUG
 
 /* Per disattivare la possibilita' di giocare con la tabbozza */
 #define NOTABBOZZA
