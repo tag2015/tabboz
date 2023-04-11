@@ -1381,65 +1381,6 @@ void SaveFileDlg(HWND hwnd)
 #endif
 
 
-/* FIXME Splash screen, implementare in futuro */
-/* BOOL FAR PASCAL Logo(HWND hDlg, WORD message, WORD wParam, LONG lParam)
-{
-    int x,y,w,h;
-
-    if (message == WM_INITDIALOG) {
-
-        if (sound_active) TabbozPlaySound(0);
-
-        GetWindowRect(hDlg, (LPRECT) &wrect);    // Posiziona il logo a centro dello schermo
-        w = wrect.right - wrect.left;
-        h = wrect.bottom - wrect.top;
-
-        w = 522;    // dimensioni dell' immagine del logo
-        h = 402;
-
-        x=GetSystemMetrics(SM_CXSCREEN);
-        y=GetSystemMetrics(SM_CYSCREEN);
-
-        x= (x - w) / 2;
-        y= (y - h) / 2;
-
-        MoveWindow(hDlg, x, y, w, h, 1);
-
-        if ( fase_di_avvio == 1)
-            SetTimer(hDlg, WM_TIMER, 10000, NULL);    // 10 Secondi
-
-        return(TRUE);
-    }
-
-    if (message == WM_TIMER) {
-        if ( fase_di_avvio == 1) {
-            KillTimer(hDlg, WM_TIMER);         // Distrugge il timer...
-            EndDialog(hDlg, TRUE);
-        }
-    }
-
-    if (message == WM_COMMAND) {
-        switch (LOWORD(wParam))
-        {
-            case IDOK:
-            case 202:
-            case 203:
-                if ( fase_di_avvio == 1) {
-                    KillTimer(hDlg, WM_TIMER);
-                }
-                EndDialog(hDlg, TRUE);
-                return(TRUE);
-            
-            default:
-                return(TRUE);
-        }
-    }
-
-    return(FALSE);
-}
-*/
-
-
 /* FIXME: Cheats */
 /*
 I cheat non sono implementati. Nel tabboz originale si attivano cliccando 10
