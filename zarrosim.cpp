@@ -1440,37 +1440,37 @@ void SaveFileDlg(HWND hwnd)
 */
 
 
-/* Ex Schermata About */
+/* FIXME: Cheats */
 /*
-FIXME l'unica cosa interessante è il cheat... nel tabboz originale si avvia cliccando 10
-FIXME volte sull'icona centrale quando il nome/cognome del tabbozzo corrispondono
-FIXME ai valori indicati sotto...
-   "Dino Lucci"
-       Soldi=Soldi+1000;
-       Reputazione=random(4);
-       Fama=random(40);
-   
-   "Giulio Lucci"
-       Soldi=Soldi+1000;
-       Reputazione=random(30);
-       Fama=random(5);
+I cheat non sono implementati. Nel tabboz originale si attivano cliccando 10
+volte sull'icona centrale nella schermata about se il nome/cognome del tabbozzo corrispondono
+ai valori indicati sotto...
+    "Dino Lucci"
+        Soldi=Soldi+1000;
+        Reputazione=random(4);
+        Fama=random(40);
 
-   "Daniele Gazzarri"
-       ScooterData=ScooterMem[7];
-       benzina=850;
-       Reputazione=100;
-       
-   "Emanuele Caccialanza"
-       Soldi=Soldi+10000;
-       Fama=100;
-       
-   "Andrea Bonomi"
-       for (i=1;i<10;i++)
-         MaterieMem[i].voto=10;
-       CalcolaStudio();
-       if ( Rapporti > 1 )
-         Rapporti=100;
-       impegno=100;
-       numeroditta=1;
-       stipendio=5000;
+    "Giulio Lucci"
+        Soldi=Soldi+1000;
+        Reputazione=random(30);
+        Fama=random(5);
+
+    "Daniele Gazzarri"
+        ScooterData=ScooterMem[7];
+        benzina=850;
+        Reputazione=100;
+
+    "Emanuele Caccialanza"
+        Soldi=Soldi+10000;
+        Fama=100;
+
+    "Andrea Bonomi"
+        for (i=1;i<10;i++)
+            MaterieMem[i].voto=10;
+        CalcolaStudio();
+        if ( Rapporti > 1 )
+            Rapporti=100;
+        impegno=100;
+        numeroditta=1;
+        stipendio=5000;
 */

@@ -43,6 +43,7 @@
 
 NEWSTSCOOTER ScooterData;
 
+/* FIXME: La Lexux è un cheat non ancora implementato */
 NEWSTSCOOTER ScooterMem[] = {
     {0,   0,  0, 0, 0, 0,     0,  0, -1000, "---",                         0},
     {1,  65,  0, 0, 0, 0,  2498,  1,   100, "Malagutty Firecow",           5},
