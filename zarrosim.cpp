@@ -837,441 +837,105 @@ int vvc(int i)
 }
 
 
-
-//*******************************************************************
-// MainDlgBoxProc - handle Main dialog messages (modeless)
-//
-// This is a modeless dialog box procedure that controls this
-// entire application.
-//
-// paramaters:
-//             hDlg          - The window handle for this message
-//             message       - The message number
-//             wParam        - The WORD parmater for this message
-//             lParam        - The LONG parmater for this message
-//
-//*******************************************************************
-//TAG2015 questa è la mega-funzione che gestisce la finestra principale
-//e spawna le altre. Non serve più ma va considerata per vedere quando
-//fa i check logici e la gestione del tempo
-// #pragma argsused
-
-// #ifdef WIN32
-// #pragma argsused
-// BOOL CALLBACK _export TabbozWndProc( HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-// #else
-// #pragma argsused
-// BOOL FAR PASCAL TabbozWndProc(HWND hWnd, WORD message, WORD wParam, LONG lParam)
-// #endif
-// {
-// static HICON      hIcon;
-//          FARPROC  lpproc;
-
-//     switch (message) {
-
-//     case WM_ENDSESSION:
-//          if (wParam)
-//             FineProgramma("end session");
-//          break;
-
-//     case WM_QUERYDRAGICON:       // 25 Feb 1999 - Questa e' l' icona per ALT-TAB...
-//          if (!hIcon)
-//             hIcon = LoadIcon(hInst,MAKEINTRESOURCE(1));
-//          return (long)hIcon;
-
-
-//     case WM_DESTROY:
-//          if (hIcon)
-//             DestroyIcon(hIcon);
-//          KillTimer(hWnd, WM_TIMER);
-//          break;
-
-//     case WM_SYSCOMMAND:
-//          switch (LOWORD(wParam))
-//          {
-//          FARPROC lpproc;
-
-//          case QX_ABOUT:
-//              /* Display about box. */
-//              lpproc = MakeProcInstance(About, hInst);
-//              DialogBox(hInst,
-//                     MAKEINTRESOURCE(ABOUT),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-
-//              return(TRUE);
-
-//          case SC_CLOSE:
-
-//             lpproc = MakeProcInstance(Spegnimi, hInst);
-//             DialogBox(hInst,
-//               MAKEINTRESOURCE(SPEGNIMI),
-//               hWnd,
-//               lpproc);
-//             FreeProcInstance(lpproc);
-
-//             if (boolean_shutdown != 0)
-//                 EndDialog(hWnd,TRUE); // Chiudi la baracca...
-
-//             return(TRUE);
-
-//          }
-//          return(FALSE);
-
-//     case WM_INITDIALOG:
-//          hIcon = LoadIcon(hInst,MAKEINTRESOURCE(1));
-//          hWndMain = hWnd;
-//          // Scrive quanti soldi ci sono... ( ed ora scrive anche molta altra roba...)
-//          AggiornaPrincipale(hWnd);
-
-
-// #ifndef NONETWORK
-//          hModule = GetModuleHandle("WINSOCK.DLL");
-
-//          NEThDlg=hWnd;
-
-//          if (net_enable)
-//         TabbozStartNet(NEThDlg);
-// #endif
-
-//          /* 11 Jun 98 - Modifika il menu' di sistema... */
-//          AppendMenu(GetSystemMenu(hWnd, 0), MF_SEPARATOR, 0, 0);
-//          AppendMenu(GetSystemMenu(hWnd, 0), MF_STRING, QX_ABOUT, "&About Tabboz Simulator...");
-
-// //        AppendMenu( GetSubMenu(GetMenu(hWnd),1), MF_STRING, QX_ABOUT, "&Chiesa..."); // Aggiunge la chiesa ai negozi :-)))
-// //        DeleteMenu(GetMenu(hWnd), QX_ABOUT, MF_BYCOMMAND); // Cancella l' about(per esempio...)
-// //        EnableMenuItem(GetMenu(hWnd), QX_NETWORK, MF_GRAYED); // Disabilita un menu'
-
-// #ifndef NONETWORK
-// // Aggiunge la voce "Network..." al menu' "Special" - 04 Jan 1999
-//          AppendMenu(GetSubMenu(GetMenu(hWnd),2), MF_SEPARATOR, 0, NULL);
-//          AppendMenu(GetSubMenu(GetMenu(hWnd),2), MF_STRING, QX_NETWORK, "&Network...");
-// #endif
-// #ifdef PROMPT_ACTIVE
-//          AppendMenu(GetSubMenu(GetMenu(hWnd),2), MF_SEPARATOR, 0, NULL);
-//          AppendMenu(GetSubMenu(GetMenu(hWnd),2), MF_STRING, QX_PROMPT, "&Prompt...");
-// #endif
-
-//          DrawMenuBar(hWnd);
-
-
-// /*        MessageBeep(0x0050); Crea un beep. Non e' necessario qui, ma e' solo x ricordarselo... */
-
-
-
-//          /* Inizio implementazione timer: 9 giugno 1998 */
-//          SetTimer(hWnd, WM_TIMER, 60000, NULL);     /* 60 secondi.. (il massimo e' 65534, 65 secondi...) */
-//          t_random=6 + random(20);    /* 6 - 26 minuti tra un evento ed il seguente...*/
-//          t_random=1;
-
-//          fase_di_avvio=0;    /* 11 Giugno 1998 */
-//          return TRUE;
-
-//     case WM_TIMER :
-//         if (timer_active == 1) {
-//              /* Il timer viene contollato SOLO se la finestra e' ridotta ad ICONA */
-//              if (IsIconic(hWndMain) != 0) {
-//             if (t_random > 0) {
-//                 /* Per un altro minuto siamo a posto... */
-//                 t_random--;
-//                 break;
-//             }
-//             t_random=12 + random(20);    /* 12 - 21 minuti tra un evento ed il seguente...*/
-//             t_random=1;
-
-//             KillTimer(hWnd, WM_TIMER);         /* Distrugge il timer... */
-//             ShowWindow(hWndMain, SW_SHOWNORMAL); /* Ingrandisce la finestra */
-//             Giorno(hWnd);
-
-//             SetTimer(hWnd, WM_TIMER, 60000, NULL);     /* 60 secondi.. (il massimo e' 65534, 65 secondi...) */
-//              }
-//         }
-//         return TRUE;
-
-// #ifndef NONETWORK
-//     case SOCKET_MESSAGE:
-//         switch(WSAGETSELECTEVENT(lParam))
-//         {
-
-//              case FD_ACCEPT:
-//              {
-//             /* Get a pending accept */
-
-//             clientSocket = accept(serverSocket,(LPSOCKADDR) &clientSockAddr, &addrLen);
-
-//             /* Memorizza l' indirizzo dell' ultima connessione... */
-
-//             sprintf(lastconnect,"%d.%d.%d.%d",
-//                 clientSockAddr.sin_addr.s_net,clientSockAddr.sin_addr.s_host,
-//                 clientSockAddr.sin_addr.s_lh,clientSockAddr.sin_addr.s_impno);
-
-
-//             #ifdef TABBOZ_DEBUG
-//             sprintf(tmp,"tabboz: Got a connection from %s",lastconnect);
-//             writelog(tmp);
-//             #endif
-
-//             if (clientSocket == INVALID_SOCKET)
-//             {
-//                 #ifdef TABBOZ_DEBUG
-//                 writelog("tabboz: ERROR: Unable to accept connection.");
-//                 #endif
-//                 break;
-//             }
-
-//             SendReceiveToClient((void *)clientSocket);
-
-//             }
-//         }
-//         break;
-// #endif
-
-//     case WM_COMMAND:
-//          switch (LOWORD(wParam))
-//          {
-//          case QX_LOAD:
-//              OpenFileDlg(hWnd);
-//              AggiornaPrincipale(hWnd);
-//              break;
-
-//          case QX_SAVE:
-//              SaveFileDlg(hWnd);
-//              AggiornaPrincipale(hWnd);
-//              break;
-
-//          case QX_CLOSE:
-
-//             lpproc = MakeProcInstance(Spegnimi, hInst);
-//             DialogBox(hInst,
-//               MAKEINTRESOURCE(SPEGNIMI),
-//               hWnd,
-//               lpproc);
-//             FreeProcInstance(lpproc);
-
-//             if (boolean_shutdown != 0)
-//                 EndDialog(hWnd,TRUE); // Chiudi la baracca...
-
-//             return(TRUE);
-
-//          case QX_ABOUT:
-//              /* Display about box. */
-//              lpproc = MakeProcInstance(About, hInst);
-//              DialogBox(hInst,
-//                     MAKEINTRESOURCE(ABOUT),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-
-//              AggiornaPrincipale(hWnd);
-//              break;
-//         case QX_LOGO:
-//              lpproc = MakeProcInstance(Logo, hInst);
-//              DialogBox(hInst,
-//                   MAKEINTRESOURCE(LOGO),
-//                     hWnd,
-//                   lpproc);
-//             FreeProcInstance(lpproc);
-
-//             AggiornaPrincipale(hWnd);
-//             break;
-//         case QX_CONFIG:
-//              /* Display configuration box. */
-//              lpproc = MakeProcInstance(Configuration, hInst);
-//              DialogBox(hInst,
-//                     MAKEINTRESOURCE(CONFIGURATION),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-
-//              AggiornaPrincipale(hWnd);
-//              break;
-// //        case 251: /* Ex Immagine Tabbozzo */
-//         case QX_INFO:
-//              /* Display Personal Information box. */
-//              lpproc = MakeProcInstance(PersonalInfo, hInst);
-//              DialogBox(hInst,
-//                     MAKEINTRESOURCE(PERSONALINFO),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-
-//              AggiornaPrincipale(hWnd);
-//              break;
-//         case QX_FAMIGLIA:
-//              ShowWindow(hWnd, WIN_PICCOLO);
-//              /* Display Famiglia box. */
-//              lpproc = MakeProcInstance(Famiglia, hInst);
-//              DialogBox(hInst,
-//                     MAKEINTRESOURCE(FAMIGLIA),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-
-//              AggiornaPrincipale(hWnd);
-//              break;
-//         case QX_DISCO:
-//              ShowWindow(hWnd, WIN_PICCOLO);
-//              /* Display Disco box. */
-//              lpproc = MakeProcInstance(Disco, hInst);
-//              DialogBox(hInst,
-//                     MAKEINTRESOURCE(DISCO),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-
-//              AggiornaPrincipale(hWnd);
-//              break;
-//         case QX_COMPAGNIA:
-//              ShowWindow(hWnd, WIN_PICCOLO);
-//              /* Display Compagnia box. */
-//              lpproc = MakeProcInstance(Compagnia, hInst);
-
-//               DialogBox(hInst,
-//                     MAKEINTRESOURCE(COMPAGNIA),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-
-//              AggiornaPrincipale(hWnd);
-//              break;
-//         case QX_SCUOLA:
-//              if ( x_vacanza == 0 ) {
-//                  ShowWindow(hWnd, WIN_PICCOLO);
-//                  /* Display Scuola box. */
-//                  lpproc = MakeProcInstance(Scuola, hInst);
-//                   DialogBox(hInst,
-//                         MAKEINTRESOURCE(SCUOLA),
-//                         hWnd,
-//                         lpproc);
-//                  FreeProcInstance(lpproc);
-//                  AggiornaPrincipale(hWnd);
-
-//              } else {
-//                  MessageBox( hWnd,
-//                         "Non puoi andare a scuola in un giorno di vacanza !",
-//                         "Scuola", MB_OK | MB_ICONINFORMATION);
-//              }
-
-//              break;
-//         case QX_SCOOTER:
-//              /* Display Scooter box. */
-//              ShowWindow(hWnd, WIN_PICCOLO);
-
-//              lpproc = MakeProcInstance(Scooter, hInst);
-//              DialogBox(hInst,
-//                     MAKEINTRESOURCE(SCOOTER),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-
-//              AggiornaPrincipale(hWnd);
-//              break;
-//         case QX_VESTITI:
-//              /* Display Vestiti box. */
-//              ShowWindow(hWnd, WIN_PICCOLO);
-
-//              lpproc = MakeProcInstance(Vestiti, hInst);
-//              DialogBox(hInst,
-//                     MAKEINTRESOURCE(VESTITI),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-
-//              AggiornaPrincipale(hWnd);
-//              break;
-//         case QX_TABACCHI:
-//              ShowWindow(hWnd, WIN_PICCOLO);
-//              RunTabacchi(hWnd);
-//              AggiornaPrincipale(hWnd);
-//              break;
-//         case QX_PALESTRA:
-//              ShowWindow(hWnd, WIN_PICCOLO);
-//              RunPalestra(hWnd);
-//              AggiornaPrincipale(hWnd);
-//              break;
-//         case QX_CELLULAR:  // 31 Marzo 1999
-//              ShowWindow(hWnd, WIN_PICCOLO);
-//              lpproc = MakeProcInstance(Cellular, hInst);
-//              DialogBox(hInst,
-//                     MAKEINTRESOURCE(CELLULAR),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-//              AggiornaPrincipale(hWnd);
-//              break;
-//         case QX_VESTITI1:
-//         case QX_VESTITI2:
-//         case QX_VESTITI3:
-//         case QX_VESTITI4:
-//         case QX_VESTITI5:
-//              ShowWindow(hWnd, WIN_PICCOLO);
-//              RunVestiti(hWnd, (wParam - QX_VESTITI1 + BAUHOUSE));
-//              AggiornaPrincipale(hWnd);
-//              break;
-//         case QX_TIPA:
-//              ShowWindow(hWnd, WIN_PICCOLO);
-//              lpproc = MakeProcInstance(Tipa, hInst);
-//              if (sesso == 'M')
-//                  DialogBox(hInst,
-//                         MAKEINTRESOURCE(TIPA),
-//                         hWnd,
-//                         lpproc);
-//              else
-//                  DialogBox(hInst,
-//                         MAKEINTRESOURCE(190),
-//                         hWnd,
-//                         lpproc);
-//              FreeProcInstance(lpproc);
-
-//              AggiornaPrincipale(hWnd);
-//              break;
-//         case QX_LAVORO:
-//              ShowWindow(hWnd, WIN_PICCOLO);
-//              // Display Lavoro box.
-//              lpproc = MakeProcInstance(Lavoro, hInst);
-//              DialogBox(hInst,
-//                     MAKEINTRESOURCE(LAVORO),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-
-//              AggiornaPrincipale(hWnd);
-//              break;
-// #ifdef PROMPT_ACTIVE
-//         case QX_PROMPT:            /* Display Tabboz Simulator Prompt */
-//              lpproc = MakeProcInstance(Prompt, hInst);
-//              DialogBox(hInst,
-//                     MAKEINTRESOURCE(PROMPT),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-
-//              AggiornaPrincipale(hWnd);
-//              break;
-// #endif
-// #ifndef NONETWORK
-//         case QX_NETWORK:    /* Tabboz Simulator Network Config/Stat */
-//              lpproc = MakeProcInstance(Network, hInst);
-//              DialogBox(hInst,
-//                     MAKEINTRESOURCE(NETWORK),
-//                     hWnd,
-//                     lpproc);
-//              FreeProcInstance(lpproc);
-
-//              AggiornaPrincipale(hWnd);
-//              break;
-// #endif
-//         default:
-//              break;
-//          }
-//          break;
-
-//      }
-
-//      return FALSE;
-// }
-
+/* Routine principale gioco originale*/
+/* FIXME: controllare la parte relativa al timer */
+#ifdef DEADCODE
+{
+
+    switch (message) {
+
+    case WM_ENDSESSION:
+         if (wParam)
+            FineProgramma("end session");
+         break;
+
+    case WM_QUERYDRAGICON:       // 25 Feb 1999 - Questa e' l' icona per ALT-TAB...
+         if (!hIcon)
+            hIcon = LoadIcon(hInst,MAKEINTRESOURCE(1));
+         return (long)hIcon;
+
+    case WM_DESTROY:
+         if (hIcon)
+            DestroyIcon(hIcon);
+         KillTimer(hWnd, WM_TIMER);
+         break;
+
+    case WM_SYSCOMMAND:
+
+         case SC_CLOSE:
+
+            lpproc = MakeProcInstance(Spegnimi, hInst);
+            DialogBox(hInst,
+              MAKEINTRESOURCE(SPEGNIMI),
+              hWnd,
+              lpproc);
+            FreeProcInstance(lpproc);
+
+            if (boolean_shutdown != 0)
+                EndDialog(hWnd,TRUE); // Chiudi la baracca...
+
+            return(TRUE);
+
+         }
+         return(FALSE);
+
+         /* 11 Jun 98 - Modifika il menu' di sistema... */
+         AppendMenu(GetSystemMenu(hWnd, 0), MF_SEPARATOR, 0, 0);
+         AppendMenu(GetSystemMenu(hWnd, 0), MF_STRING, QX_ABOUT, "&About Tabboz Simulator...");
+
+//       AppendMenu( GetSubMenu(GetMenu(hWnd),1), MF_STRING, QX_ABOUT, "&Chiesa..."); // Aggiunge la chiesa ai negozi :-)))
+//       DeleteMenu(GetMenu(hWnd), QX_ABOUT, MF_BYCOMMAND); // Cancella l' about(per esempio...)
+//       EnableMenuItem(GetMenu(hWnd), QX_NETWORK, MF_GRAYED); // Disabilita un menu'
+
+         DrawMenuBar(hWnd);
+
+/*        MessageBeep(0x0050); Crea un beep. Non e' necessario qui, ma e' solo x ricordarselo... */
+
+         /* Inizio implementazione timer: 9 giugno 1998 */
+        SetTimer(hWnd, WM_TIMER, 60000, NULL);     /* 60 secondi.. (il massimo e' 65534, 65 secondi...) */
+        t_random=6 + random(20);    /* 6 - 26 minuti tra un evento ed il seguente...*/
+        t_random=1;
+
+        fase_di_avvio=0;    /* 11 Giugno 1998 */
+        return TRUE;
+
+    case WM_TIMER :
+        if (timer_active == 1) {
+             /* Il timer viene contollato SOLO se la finestra e' ridotta ad ICONA */
+             if (IsIconic(hWndMain) != 0) {
+            if (t_random > 0) {
+                /* Per un altro minuto siamo a posto... */
+                t_random--;
+                break;
+            }
+            t_random=12 + random(20);    /* 12 - 21 minuti tra un evento ed il seguente...*/
+            t_random=1;
+
+            KillTimer(hWnd, WM_TIMER);         /* Distrugge il timer... */
+            ShowWindow(hWndMain, SW_SHOWNORMAL); /* Ingrandisce la finestra */
+            Giorno(hWnd);
+
+            SetTimer(hWnd, WM_TIMER, 60000, NULL);     /* 60 secondi.. (il massimo e' 65534, 65 secondi...) */
+             }
+        }
+        return TRUE;
+
+        case QX_CLOSE:
+
+            lpproc = MakeProcInstance(Spegnimi, hInst);
+            DialogBox(hInst,
+              MAKEINTRESOURCE(SPEGNIMI),
+              hWnd,
+              lpproc);
+            FreeProcInstance(lpproc);
+
+            if (boolean_shutdown != 0)
+                EndDialog(hWnd,TRUE); // Chiudi la baracca...
+
+            return(TRUE);
+
+}
+#endif
 
 /* PROCEDURA PRINCIPALE (MAIN) */
 int main(int argc, char **argv)
