@@ -7,42 +7,65 @@
 #include "../scuola.h"
 int materia_selezionata; 
 
+static void AggiornaBottoni() {
+  static char buf1[128], buf2[128], buf3[128];
+  
+  sprintf(buf1, "Studia %s", MaterieMem[materia_selezionata].nome);
+  scuola_btn_studia->label(buf1);
+  sprintf(buf2, "Corrompi il prof. di %s",MaterieMem[materia_selezionata].nome);
+  scuola_btn_corrompi->label(buf2);
+  if (sesso == 'M')
+    sprintf(buf3, "Minaccia il prof. di %s",MaterieMem[materia_selezionata].nome);
+  else
+    sprintf(buf3, "Seduci il prof. di %s",MaterieMem[materia_selezionata].nome);
+  scuola_btn_minaccia->label(buf3);
+}
+
 Fl_Double_Window *win_scuola=(Fl_Double_Window *)0;
 
 static void cb_Agraria(Fl_Round_Button*, void*) {
   materia_selezionata=1;
+AggiornaBottoni();
 }
 
 static void cb_Fisica(Fl_Round_Button*, void*) {
   materia_selezionata=2;
+AggiornaBottoni();
 }
 
 static void cb_Attivit(Fl_Round_Button*, void*) {
   materia_selezionata=3;
+AggiornaBottoni();
 }
 
 static void cb_Attivit1(Fl_Round_Button*, void*) {
   materia_selezionata=4;
+AggiornaBottoni();
 }
 
 static void cb_Scienze(Fl_Round_Button*, void*) {
   materia_selezionata=5;
+AggiornaBottoni();
 }
 
 static void cb_Elettrochimica(Fl_Round_Button*, void*) {
   materia_selezionata=6;
+AggiornaBottoni();
 }
 
 static void cb_Petrolchimica(Fl_Round_Button*, void*) {
   materia_selezionata=7;
+AggiornaBottoni();
 }
 
 static void cb_Filosofia(Fl_Round_Button*, void*) {
   materia_selezionata=8;
+AggiornaBottoni();
 }
 
 static void cb_Metallurgia(Fl_Round_Button*, void*) {
   materia_selezionata=9;
+AggiornaBottoni();
 }
 
 Fl_Group *grp_voti=(Fl_Group *)0;
@@ -5834,15 +5857,21 @@ static Fl_Image *image_scuola() {
   return image;
 }
 
-static void cb_Studia(Fl_Button*, void*) {
+Fl_Button *scuola_btn_studia=(Fl_Button *)0;
+
+static void cb_scuola_btn_studia(Fl_Button*, void*) {
   StudiaMateria(materia_selezionata);
 }
 
-static void cb_Corrompi(Fl_Button*, void*) {
+Fl_Button *scuola_btn_corrompi=(Fl_Button *)0;
+
+static void cb_scuola_btn_corrompi(Fl_Button*, void*) {
   CorrompiProf(materia_selezionata);
 }
 
-static void cb_Minaccia(Fl_Button*, void*) {
+Fl_Button *scuola_btn_minaccia=(Fl_Button *)0;
+
+static void cb_scuola_btn_minaccia(Fl_Button*, void*) {
   MinacciaSeduciProf(materia_selezionata);
 }
 
@@ -6182,15 +6211,18 @@ Fl_Double_Window* GUITabbozScuola() {
       o->box(FL_EMBOSSED_FRAME);
       o->image( image_scuola() );
     } // Fl_Box* o
-    { Fl_Button* o = new Fl_Button(260, 185, 270, 30, "Studia");
-      o->callback((Fl_Callback*)cb_Studia);
-    } // Fl_Button* o
-    { Fl_Button* o = new Fl_Button(260, 220, 270, 30, "Corrompi");
-      o->callback((Fl_Callback*)cb_Corrompi);
-    } // Fl_Button* o
-    { Fl_Button* o = new Fl_Button(260, 255, 270, 30, "Minaccia");
-      o->callback((Fl_Callback*)cb_Minaccia);
-    } // Fl_Button* o
+    { scuola_btn_studia = new Fl_Button(260, 185, 270, 30, "Studia Agraria");
+      scuola_btn_studia->labelsize(13);
+      scuola_btn_studia->callback((Fl_Callback*)cb_scuola_btn_studia);
+    } // Fl_Button* scuola_btn_studia
+    { scuola_btn_corrompi = new Fl_Button(260, 220, 270, 30, "Corrompi il prof. di Agraria");
+      scuola_btn_corrompi->labelsize(13);
+      scuola_btn_corrompi->callback((Fl_Callback*)cb_scuola_btn_corrompi);
+    } // Fl_Button* scuola_btn_corrompi
+    { scuola_btn_minaccia = new Fl_Button(260, 255, 270, 30, "Minaccia il prof. di Agraria");
+      scuola_btn_minaccia->labelsize(13);
+      scuola_btn_minaccia->callback((Fl_Callback*)cb_scuola_btn_minaccia);
+    } // Fl_Button* scuola_btn_minaccia
     { grp_barrastato = new Fl_Group(10, 290, 520, 50);
       grp_barrastato->box(FL_EMBOSSED_FRAME);
       grp_barrastato->labelsize(10);

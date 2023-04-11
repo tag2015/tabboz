@@ -21,6 +21,9 @@ extern Fl_Value_Output *val_voto9;
 extern Fl_Value_Output *scuola_val_media;
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Button.H>
+extern Fl_Button *scuola_btn_studia;
+extern Fl_Button *scuola_btn_corrompi;
+extern Fl_Button *scuola_btn_minaccia;
 extern Fl_Group *grp_barrastato;
 extern Fl_Value_Output *scuola_val_soldi;
 extern Fl_Value_Output *scuola_val_rep;

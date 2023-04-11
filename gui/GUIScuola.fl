@@ -17,11 +17,27 @@ decl {\#include "../scuola.h"} {private global
 decl {int materia_selezionata;} {private global
 }
 
+Function {AggiornaBottoni()} {open private C
+} {
+  code {static char buf1[128], buf2[128], buf3[128];
+
+sprintf(buf1, "Studia %s", MaterieMem[materia_selezionata].nome);
+scuola_btn_studia->label(buf1);
+sprintf(buf2, "Corrompi il prof. di %s",MaterieMem[materia_selezionata].nome);
+scuola_btn_corrompi->label(buf2);
+if (sesso == 'M')
+  sprintf(buf3, "Minaccia il prof. di %s",MaterieMem[materia_selezionata].nome);
+else
+  sprintf(buf3, "Seduci il prof. di %s",MaterieMem[materia_selezionata].nome);
+scuola_btn_minaccia->label(buf3);} {selected
+  }
+}
+
 Function {GUITabbozScuola()} {open
 } {
   Fl_Window win_scuola {
     label Scuola open
-    xywh {170 593 540 350} type Double hotspot
+    xywh {523 546 540 350} type Double hotspot
     code0 {materia_selezionata=1;}
     code1 {AggiornaScuola();} modal size_range {540 350 540 350} visible
   } {
@@ -30,48 +46,57 @@ Function {GUITabbozScuola()} {open
     } {
       Fl_Round_Button {} {
         label {Agraria.................}
-        callback {materia_selezionata=1;}
+        callback {materia_selezionata=1;
+AggiornaBottoni();}
         xywh {12 20 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
         code0 {o->set();}
       }
       Fl_Round_Button {} {
         label {Fisica..................}
-        callback {materia_selezionata=2;}
+        callback {materia_selezionata=2;
+AggiornaBottoni();}
         xywh {12 44 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Attività Culturali......}
-        callback {materia_selezionata=3;}
+        callback {materia_selezionata=3;
+AggiornaBottoni();}
         xywh {12 68 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Attività Matematiche....}
-        callback {materia_selezionata=4;}
+        callback {materia_selezionata=4;
+AggiornaBottoni();}
         xywh {12 93 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Scienze Industriali.....}
-        callback {materia_selezionata=5;}
+        callback {materia_selezionata=5;
+AggiornaBottoni();}
         xywh {12 117 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Elettrochimica..........}
-        callback {materia_selezionata=6;}
+        callback {materia_selezionata=6;
+AggiornaBottoni();}
         xywh {12 141 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Petrolchimica...........}
-        callback {materia_selezionata=7;}
+        callback {materia_selezionata=7;
+AggiornaBottoni();}
         xywh {12 166 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Filosofia Aziendale.....}
-        callback {materia_selezionata=8;}
+        callback {materia_selezionata=8;
+AggiornaBottoni();}
         xywh {12 190 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Round_Button {} {
         label {Metallurgia.............}
-        callback {materia_selezionata=9;}
+        callback {materia_selezionata=9;
+AggiornaBottoni();}
         xywh {12 215 215 15} type Radio down_box DIAMOND_UP_BOX color 7 labelfont 5
       }
       Fl_Group grp_voti {open
@@ -117,20 +142,20 @@ Function {GUITabbozScuola()} {open
     Fl_Box {} {
       image {pic/scuola.png} xywh {260 10 270 170} box EMBOSSED_FRAME
     }
-    Fl_Button {} {
-      label Studia
+    Fl_Button scuola_btn_studia {
+      label {Studia Agraria}
       callback {StudiaMateria(materia_selezionata);}
-      xywh {260 185 270 30}
+      xywh {260 185 270 30} labelsize 13
     }
-    Fl_Button {} {
-      label Corrompi
+    Fl_Button scuola_btn_corrompi {
+      label {Corrompi il prof. di Agraria}
       callback {CorrompiProf(materia_selezionata);}
-      xywh {260 220 270 30}
+      xywh {260 220 270 30} labelsize 13
     }
-    Fl_Button {} {
-      label Minaccia
+    Fl_Button scuola_btn_minaccia {
+      label {Minaccia il prof. di Agraria}
       callback {MinacciaSeduciProf(materia_selezionata);}
-      xywh {260 255 270 30}
+      xywh {260 255 270 30} labelsize 13
     }
     Fl_Group grp_barrastato {open
       xywh {10 290 520 50} box EMBOSSED_FRAME labelsize 10 align 5
@@ -159,7 +184,7 @@ Function {GUITabbozScuola()} {open
       Fl_Return_Button {} {
         callback {win_principale->activate();
 AggiornaPrincipale();
-win_scuola->hide();} selected
+win_scuola->hide();}
         xywh {465 295 60 40} shortcut 0xff1b align 20
         code0 {o->image(ImgExit);}
       }
@@ -167,8 +192,7 @@ win_scuola->hide();} selected
   }
 }
 
-Function {GUIPagella()} {open
-} {
+Function {GUIPagella()} {} {
   Fl_Window win_pagella {
     label {Pagella!} open
     xywh {554 564 540 325} type Double hide hotspot modal size_range {540 325 540 325}
