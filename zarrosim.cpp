@@ -376,27 +376,6 @@ static void InitTabboz(void)
     #endif
     
     firsttime=false;
-
-    #ifdef TABBOZ_WIN
-        /* Parametro 'config' sulla linea di comando */
-        //TAG2015 per ora commentiamo tutto sto pezzo ma è da controllare
-        // if (_argc > 1)
-        //     if ( !strcmp(_argv[1],"config") ) {
-        //         hWndMain = 0; // Segnala che non esiste proc. principale.
-        //         DialogBox(hInst,MAKEINTRESOURCE(CONFIGURATION),NULL,Configuration);
-        //         FineProgramma("config");
-        //         exit(0);
-        //     }
-        // if (intro_active)
-        //     DialogBox(hInst,MAKEINTRESOURCE(LOGO),NULL,Logo);
-        
-        // /* Formattazione iniziale Tabbozzo */
-        // if (firsttime == 1) {
-        //     lpproc = MakeProcInstance(FormatTabboz, hInst);
-        //     DialogBox(hInst, MAKEINTRESOURCE(15), hInst, lpproc);
-        //     FreeProcInstance(lpproc);
-        // }
-    #endif
 }
 
 
