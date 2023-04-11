@@ -34,6 +34,7 @@
 #include "eventi.h"
 #include "telefono.h"
 #include "scooter.h"
+#include "calendario.h"
 
 #include "tipa.h"
 #include "gui/GUITipa.h"
@@ -287,6 +288,34 @@ void LasciaTipa(void)
         Evento();
     }
     AggiornaTipa();
+}
+
+/* "Iterattività" dell'immagine della tipa */
+void Palpatin(void)
+{
+    fl_message_title("Palpatina...");
+    if (Rapporti < (20 + (FigTipa / 2))) {
+        // + e' figa, - te la da' (perla di saggezza)
+        if (sound_active) TabbozPlaySound(604);
+        MsgIcona(ICONA_STOP);
+        fl_message("Brutto porco, che cazzo tocchi?");
+        if (Rapporti > 5)
+            Rapporti -= 3;
+        AggiornaTipa();
+    }
+    else if (Rapporti < (30 + (FigTipa / 2))) {
+        MsgIcona(ICONA_AVVISO);
+        fl_message("Dai, smettila... Voi uomini pensato solo a quello...");
+    }
+    else {
+        MsgIcona(ICONA_COOL);
+        fl_message("Mmhhhhhhhh.........");
+        Rapporti += 3;
+        if (Rapporti < 100)
+            Rapporti = 100;
+        Giorno();
+        AggiornaTipa();
+    }
 }
 
 

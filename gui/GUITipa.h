@@ -19,6 +19,8 @@ extern Fl_Box *tipa_txt_nome;
 extern Fl_Value_Output *tipa_val_fama;
 #include <FL/Fl_Return_Button.H>
 extern Fl_Value_Output *tipa_val_credito;
+extern Fl_Button *tipa_btn_tette;
+extern Fl_Button *tipa_btn_culo;
 Fl_Double_Window* GUITipa();
 extern Fl_Double_Window *win_cercatipa;
 #include <FL/Fl_Output.H>

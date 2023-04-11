@@ -28,6 +28,7 @@ void AggiornaTipa(void);
 void CercaTipa(void);
 bool Provaci(void);
 int  DueDiPicche(void);
+void Palpatin(void);
 
 void LasciaTipa(void);
 void TelefonaTipa(void);

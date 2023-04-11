@@ -45,8 +45,8 @@ Function {GUITipa()} {open
 } {
   Fl_Window win_tipa {
     label Tipa open
-    xywh {430 459 425 275} type Double labelfont 1 labelsize 12 hide hotspot
-    code0 {AggiornaTipa();} modal size_range {425 275 425 275}
+    xywh {528 549 425 275} type Double labelfont 1 labelsize 12 hotspot
+    code0 {AggiornaTipa();} modal size_range {425 275 425 275} visible
   } {
     Fl_Button tipa_btn_cercatipa {
       label {Cerca tipa}
@@ -124,6 +124,14 @@ win_tipa->hide();}
     Fl_Box {} {
       image {pic/tipa_0.png} xywh {5 5 210 140} box EMBOSSED_FRAME
     }
+    Fl_Button tipa_btn_tette {
+      callback {Palpatin();}
+      xywh {145 55 40 30} box NO_BOX
+    }
+    Fl_Button tipa_btn_culo {
+      callback {Palpatin();} selected
+      xywh {115 102 45 25} box NO_BOX
+    }
   }
 }
 
@@ -131,9 +139,9 @@ Function {GUICercaTipa()} {open
 } {
   Fl_Window win_cercatipa {
     label {Cerca Tipa} open
-    xywh {708 641 340 280} type Double labelfont 1 labelsize 12 hotspot
+    xywh {708 641 340 280} type Double labelfont 1 labelsize 12 hide hotspot
     code0 {CercaTipa();}
-    code1 {if(sesso=='F') o->label("Cerca Tipo");} modal size_range {340 280 340 280} visible
+    code1 {if(sesso=='F') o->label("Cerca Tipo");} modal size_range {340 280 340 280}
   } {
     Fl_Group {} {open
       xywh {5 5 210 270} box EMBOSSED_FRAME labelfont 1 labelsize 12
@@ -205,7 +213,7 @@ Function {GUIDueDiPicche(int messaggio)} {open
 } {
   Fl_Window win_duedipicche {
     label {Oggi è un giorno fortunato} open
-    xywh {539 362 325 155} type Double hotspot modal size_range {325 155 325 155} visible
+    xywh {539 362 325 155} type Double hide hotspot modal size_range {325 155 325 155}
   } {
     Fl_Box {} {
       image {pic/2picche.png} xywh {10 9 65 96}
@@ -227,7 +235,7 @@ qualche due di picche nella vita...",DDP);
 i=0;
 }
 win_duedipicche->hide();
-win_cercatipa->hide();} selected
+win_cercatipa->hide();}
       xywh {195 115 120 30}
     }
   }
@@ -239,7 +247,7 @@ Function {GUICasanova(int i_nome_nuovatipa, int figosita_nuovatipa)} {open
 fig_nuovatipa = figosita_nuovatipa;} {}
   Fl_Window win_duetipe {
     label {Troppe donne...} open
-    xywh {711 419 325 260} type Double labelfont 1 labelsize 12 hotspot modal size_range {325 260 325 260} visible
+    xywh {711 419 325 260} type Double labelfont 1 labelsize 12 hide hotspot modal size_range {325 260 325 260}
   } {
     Fl_Box {} {
       label {   Ti trovi nell'imbarazzante (?) situazione di avere due ragazze... che cosa fai???}

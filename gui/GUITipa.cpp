@@ -3434,6 +3434,18 @@ static Fl_Image *image_tipa_0() {
   return image;
 }
 
+Fl_Button *tipa_btn_tette=(Fl_Button *)0;
+
+static void cb_tipa_btn_tette(Fl_Button*, void*) {
+  Palpatin();
+}
+
+Fl_Button *tipa_btn_culo=(Fl_Button *)0;
+
+static void cb_tipa_btn_culo(Fl_Button*, void*) {
+  Palpatin();
+}
+
 Fl_Double_Window* GUITipa() {
   { win_tipa = new Fl_Double_Window(425, 275, "Tipa");
     win_tipa->labelfont(1);
@@ -3519,6 +3531,14 @@ Fl_Double_Window* GUITipa() {
       o->box(FL_EMBOSSED_FRAME);
       o->image( image_tipa_0() );
     } // Fl_Box* o
+    { tipa_btn_tette = new Fl_Button(145, 55, 40, 30);
+      tipa_btn_tette->box(FL_NO_BOX);
+      tipa_btn_tette->callback((Fl_Callback*)cb_tipa_btn_tette);
+    } // Fl_Button* tipa_btn_tette
+    { tipa_btn_culo = new Fl_Button(115, 102, 45, 25);
+      tipa_btn_culo->box(FL_NO_BOX);
+      tipa_btn_culo->callback((Fl_Callback*)cb_tipa_btn_culo);
+    } // Fl_Button* tipa_btn_culo
     AggiornaTipa();
     win_tipa->set_modal();
     win_tipa->size_range(425, 275, 425, 275);
