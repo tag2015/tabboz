@@ -56,7 +56,6 @@ extern const char    *n_filtro[];       // Descrizioni filtri aria
 
 extern const char    *n_attivita[];     // situazione scooter (ok, a secco, ingrippato...)
 extern int           benzina;           // Benzina nel serbatoio
-extern int           antifurto;         // NON USATO
 
 
 void    AggiornaScooter(void);

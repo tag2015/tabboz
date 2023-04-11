@@ -63,7 +63,6 @@ const char  *n_filtro[]=      { "standard", "P1", "P2", "P2+" , "Extreme" };
 
 const char  *n_attivita[]=    { "incidentato", "funzionante", "ingrippato", "invasato" , "parcheggiato", "sequestrato", "a secco" };
 int         benzina;
-int         antifurto;
 
 
 /* Questa tabella controlla che il carburatore selezionato sia adatto al cilindro/pistone montato e

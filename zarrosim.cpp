@@ -674,9 +674,6 @@ static void CaricaTutto(void)
     benzina = new_check_i(buf_i);
     if (benzina < 0) benzina=0;
 
-//    ScooterProfilo.get("Antifurto",buf_i,0);
-//    ScooterData.antifurto = new_check_i(buf_i);
-
     ScooterProfilo.get("Nome",ScooterData.nome,"Nessuno...",STR_MAX);
 
     /* carica dati cellulare */
@@ -826,7 +823,6 @@ static void SalvaTutto(void)
     ScooterProfilo.set("Attivita",new_check_i(ScooterData.attivita));
     ScooterProfilo.set("Stato",new_check_i(ScooterData.stato));
     ScooterProfilo.set("Benzina",new_check_i(benzina));
-//    ScooterProfilo.set("Antifurto",new_check_i(antifurto));
     ScooterProfilo.set("Nome", ScooterData.nome);
 
     /* salva dati cellulare */
