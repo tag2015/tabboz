@@ -42,93 +42,19 @@
 // #define DEADCODE
 
 
-/* Define per la gui originale */
-#ifdef DEADCODE
-#define IDOK            1
-#define IDCANCEL        2
-#define IDABORT         3
-#define IDYES           6
-#define IDNO            7
-
-#define QX_NOME         102
-#define QX_SOLDI        105
-#define QX_LOAD         106
-#define QX_SAVE         107
-#define QX_CLOSE        108
-
-#define QX_ADDW         119
-#define QX_NOREDRAW     120
-#define QX_REDRAW       121
-
-#define QX_ABOUT        120
-#define QX_LOGO         121
-
-#define QX_SCOOTER      130
-#define QX_VESTITI      131
-#define QX_DISCO        132
-#define QX_TIPA         133
-#define QX_COMPAGNIA    134
-#define QX_FAMIGLIA     135
-#define QX_SCUOLA       136
-#define QX_LAVORO       137
-#define QX_INFO         139
-#define QX_CONFIG       140
-#define QX_TABACCHI     141
-#define QX_PALESTRA     142
-#define QX_VESTITI1     143
-#define QX_VESTITI2     144
-#define QX_VESTITI3     145
-#define QX_VESTITI4     146
-#define QX_VESTITI5     147
-#define QX_PROMPT       150
-#define QX_NETWORK      151
-#define QX_CELLULAR     155
-#endif
-
 /* DIALOG (identificativi finestre, molti non usati) */
 #define MAIN            1
-#define ABOUT           2
-#define WARNING         3
-#define DISCO           4
-#define FAMIGLIA        5
-#define COMPAGNIA       6
-#define SCOOTER         7
-#define VESTITI         8
-#define TIPA            9
 #define SCUOLA          10
-#define PERSONALINFO    11
-#define LOGO            12
-#define LAVORO          13
-#define CONFIGURATION   14
-#define SPEGNIMI        16
-#define NETWORK         17
-#define PROMPT          20
-
-#define ACQUISTASCOOTER 70
-#define VENDISCOOTER    71
-#define RIPARASCOOTER   72
-#define TAROCCASCOOTER  73
-
-#define BAUHOUSE        80
-#define ZOCCOLARO       81
-#define FOOTSMOCKER     82
-#define ALTRIVESTITI4   83
-#define ALTRIVESTITI5   84
-#define ALTRIVESTITI6   85
-
-#define TABACCAIO       88
-#define PALESTRA        89
-
-#define CERCATIPA       91
-#define LASCIATIPA      92
-#define ESCICONLATIPA   93
-#define DUEDIPICCHE     95
-
-#define CELLULAR        120
-#define COMPRACELLULAR  121
-#define VENDICELLULAR   122
-#define CELLULRABBONAM  123
-
+#define LAVORO          20
+#define PALESTRA        30
+#define TIPA            40
+#define COMPAGNIA       50
+#define FAMIGLIA        60
+#define SCOOTER         70
+#define VESTITI         80
+#define TABACCAIO       81
+#define CELLULAR        82
+#define DISCO           90
 
 /* Attesa per soldi dai genitori (1 settimana) */
 #define ATTESAMAX         6

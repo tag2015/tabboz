@@ -92,7 +92,7 @@ void AggiornaCell(void)
 bool CompraCellulare(int scelta)
 {
     if (Soldi < CellularMem[scelta].prezzo) { // Controlla se ha abbastanza soldi...
-        nomoney(CELLULRABBONAM);
+        nomoney(CELLULAR);
         return false;
     }
 
@@ -142,7 +142,7 @@ bool VendiCellulare(void)
 bool AbbonaCellulare(int scelta)
 {
     if (Soldi < AbbonamentMem[scelta].prezzo) {    // Controlla se ha abbastanza soldi...
-        nomoney(CELLULRABBONAM);
+        nomoney(CELLULAR);
         return false;
     }
 

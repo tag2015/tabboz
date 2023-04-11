@@ -295,7 +295,7 @@ void nomoney(int tipo)
                 Fama-=1;
             break;;
     
-        case CELLULRABBONAM:
+        case CELLULAR:
             fl_message_title("Non hai abbastanza soldi...");
             fl_alert("Forse non ti sei accorto di non avere abbastanza soldi, stronzett%c...",ao);
             if (Fama > 2)
