@@ -35,6 +35,7 @@
 #include "debug.h"
 
 #include "calendario.h"
+#include "eventi.h"
 
 #include "scuola.h"
 #include "lavoro.h"
@@ -109,11 +110,10 @@ char    tema_grafico[STR_MAX];
 int     logging;
 
 
-#ifndef NOTIMER
-    static  int  t_random;              // Attesa a random tra i vari eventi timer
-#endif
 int     fase_di_avvio;      // FIXME per il timer... inutile?
 int     intro_active;       // Visualizza schermata introduttiva
+
+static  int  t_random;      // Attesa a random tra i vari eventi timer
 
 
 static const char *dir_profilo = "TabbozNG";
@@ -837,6 +837,27 @@ int vvc(int i)
 }
 
 
+void TimerCallback(void *)
+{
+    if (win_principale->shown() && !win_principale->visible() && timer_active) {  // timer controllato solo se ridotto a icona
+        #ifdef TABBOZ_DEBUG
+            writelog("timer: ciclo terminato!");
+            sprintf(log_buf,"timer: prossimo evento fra %d cicli", t_random);
+            writelog(log_buf);
+        #endif
+        if(t_random == 0) {    // quando arriva a 0, esegue un evento casuale
+            Evento();
+            t_random = 5 + ( rand() % 21);  // 5 - 25 cicli tra un evento ed il seguente...
+        }
+        else {  // altrimenti semplicemente passa al giorno successivo
+            t_random--;
+            Giorno();
+        }
+    }
+    Fl::repeat_timeout(TIMER_INTERVAL, TimerCallback);    // ricarica il timer
+}
+
+
 /* Routine principale gioco originale*/
 /* FIXME: controllare la parte relativa al timer */
 #ifdef DEADCODE
@@ -963,6 +984,11 @@ int main(int argc, char **argv)
             while(win_cartaid->shown()) Fl::wait();
             win_principale->show();
         }
+        #ifndef NOTIMER
+        Fl::add_timeout(TIMER_INTERVAL, TimerCallback);  // Inizializza il timer per l'avanzamento automatico dei giorni
+        t_random = 5 + ( rand() % 21);  // 5 - 25 cicli tra un evento ed il seguente...
+        #endif
+
         Fl::run();
 
         if(chiusura == NEWGAME) {   // nuova partita (resetta e ricomincia)

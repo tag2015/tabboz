@@ -87,6 +87,7 @@ else
   strcpy(tema_grafico,"none");
 
 euro = cfg_euro->value();
+timer_active = cfg_timer->value();
 sound_active = cfg_suono->value();
 logging = cfg_log->value();
 if(logging) openlog();
@@ -171,8 +172,8 @@ to/licenziato e la\nfrequenza degli eventi casuali");
         o->value(euro);
       } // Fl_Check_Button* cfg_euro
       { Fl_Check_Button* o = cfg_timer = new Fl_Check_Button(265, 90, 220, 25, "Timer");
-        cfg_timer->tooltip("Se attivato, i giorni avanzano automaticamente\nanche se l\'utente non effett\
-ua azioni");
+        cfg_timer->tooltip("Se attivato, i giorni avanzano automaticamente\nquando la finestra \303\250 r\
+idotta a icona");
         cfg_timer->down_box(FL_DOWN_BOX);
         o->value(timer_active);
         if(!timer_gui) o->deactivate();

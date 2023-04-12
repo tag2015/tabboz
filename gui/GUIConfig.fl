@@ -93,7 +93,7 @@ frequenza degli eventi casuali} xywh {10 25 240 145} box EMBOSSED_FRAME labelfon
       }
     }
     Fl_Group {} {
-      label Opzioni
+      label Opzioni open
       xywh {255 25 240 145} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
     } {
       Fl_Choice {} {
@@ -131,9 +131,9 @@ frequenza degli eventi casuali} xywh {10 25 240 145} box EMBOSSED_FRAME labelfon
         code0 {o->value(euro);}
       }
       Fl_Check_Button cfg_timer {
-        label Timer
+        label Timer selected
         tooltip {Se attivato, i giorni avanzano automaticamente
-anche se l'utente non effettua azioni} xywh {265 90 220 25} down_box DOWN_BOX
+quando la finestra è ridotta a icona} xywh {265 90 220 25} down_box DOWN_BOX
         code0 {o->value(timer_active);}
         code1 {if(!timer_gui) o->deactivate();}
       }
@@ -166,6 +166,7 @@ else
   strcpy(tema_grafico,"none");
 
 euro = cfg_euro->value();
+timer_active = cfg_timer->value();
 sound_active = cfg_suono->value();
 logging = cfg_log->value();
 if(logging) openlog();
@@ -413,7 +414,7 @@ comp_mese = cid_in_mcomp->value()+1;
 
 main_box_nome->copy_label(Nome);
 win_principale->activate();
-win_cartaid->hide();} selected
+win_cartaid->hide();}
         xywh {440 260 70 25}
       }
       Fl_Button {} {

@@ -73,12 +73,13 @@ Function {InitVars()} {open private
   code {\#ifdef TABBOZ_DEBUG
   debug_gui = true;
 \#endif
-\#ifdef NOTIMER
-  timer_gui = false;
+\#ifndef NOTIMER
+  timer_gui = true;
 \#endif
-\#ifdef NOTABBOZZA
-  tabbozza_gui = false;
-\#endif} {}
+\#ifndef NOTABBOZZA
+  tabbozza_gui = true;
+\#endif} {selected
+  }
 }
 
 Function {GUITabboz()} {open
@@ -102,7 +103,7 @@ Function {GUITabboz()} {open
   else
     chiusura = NOEXIT;
 }} open
-    xywh {662 388 475 470} type Double align 5
+    xywh {853 436 475 470} type Double align 5
     code0 {AggiornaPrincipale();}
     code1 {InitVars();}
     code2 {if(!debug_gui) main_grp_debug->hide();} size_range {475 470 475 470} visible
@@ -111,7 +112,7 @@ Function {GUITabboz()} {open
       xywh {0 0 475 20} labeltype NO_LABEL labelsize 12 textsize 12
     } {
       Submenu {} {
-        label Gioco open selected
+        label Gioco open
         xywh {0 0 62 20} labelsize 12
       } {
         MenuItem {} {

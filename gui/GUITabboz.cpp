@@ -28,11 +28,11 @@ static void InitVars() {
   #ifdef TABBOZ_DEBUG
     debug_gui = true;
   #endif
-  #ifdef NOTIMER
-    timer_gui = false;
+  #ifndef NOTIMER
+    timer_gui = true;
   #endif
-  #ifdef NOTABBOZZA
-    tabbozza_gui = false;
+  #ifndef NOTABBOZZA
+    tabbozza_gui = true;
   #endif
 }
 
