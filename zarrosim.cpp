@@ -110,7 +110,6 @@ char    tema_grafico[STR_MAX];
 int     logging;
 
 
-int     fase_di_avvio;      // FIXME per il timer... inutile?
 int     intro_active;       // Visualizza schermata introduttiva
 
 static  int  t_random;      // Attesa a random tra i vari eventi timer
@@ -362,7 +361,6 @@ static void InitTabboz(void)
     Fortuna=0;                        // Uguale a me...
     AttesaSoldi=ATTESAMAX;            // attesa per avere soldi...
     timer_active=0;
-    fase_di_avvio=1;
     tempo_pestaggio=0;
     current_tipa=0;
     logging=false;
