@@ -672,7 +672,7 @@ Fl_Box *main_fig_testa=(Fl_Box *)0;
 Fl_Group *main_grp_debug=(Fl_Group *)0;
 
 static void cb_(Fl_Button*, void*) {
-  Giorno();
+  Giorno(false);
 AggiornaPrincipale();
 }
 

@@ -59,7 +59,7 @@ void Evento(void)
     if (Fortuna > 100) Fortuna = 100;
 
 
-    Giorno();  // avanza il calendario
+    Giorno(false);  // avanza il calendario
 
     if (tempo_pestaggio > 0)
         tempo_pestaggio--;

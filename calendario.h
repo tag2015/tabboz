@@ -42,6 +42,6 @@ extern   int  scad_pal_giorno;
 extern   int  scad_pal_mese;
 
 
-void  Giorno(void);
+void  Giorno(bool no_alerts);
 
 #endif

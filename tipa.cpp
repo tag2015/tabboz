@@ -313,7 +313,7 @@ void Palpatin(void)
         Rapporti += 3;
         if (Rapporti < 100)
             Rapporti = 100;
-        Giorno();
+        Giorno(false);
         AggiornaTipa();
     }
 }

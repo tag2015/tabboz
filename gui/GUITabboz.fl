@@ -78,8 +78,7 @@ Function {InitVars()} {open private
 \#endif
 \#ifndef NOTABBOZZA
   tabbozza_gui = true;
-\#endif} {selected
-  }
+\#endif} {}
 }
 
 Function {GUITabboz()} {open
@@ -112,7 +111,7 @@ Function {GUITabboz()} {open
       xywh {0 0 475 20} labeltype NO_LABEL labelsize 12 textsize 12
     } {
       Submenu {} {
-        label Gioco open
+        label Gioco open selected
         xywh {0 0 62 20} labelsize 12
       } {
         MenuItem {} {
@@ -329,12 +328,12 @@ o->value(MEDIAVOTI(Studio,N_MATERIE));}
     Fl_Box main_fig_testa {
       xywh {42 56 60 65}
     }
-    Fl_Group main_grp_debug {
+    Fl_Group main_grp_debug {open
       xywh {335 35 100 20}
     } {
       Fl_Button {} {
         label {>>}
-        callback {Giorno();
+        callback {Giorno(false);
 AggiornaPrincipale();}
         xywh {375 35 20 20}
       }

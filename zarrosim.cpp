@@ -699,7 +699,7 @@ static void CaricaTutto(void)
     if(giorni_di_lavoro > 0)
         giorni_di_lavoro--;  // Come sopra
     AttesaSoldi++;  //Idem ma al contrario, per evitare che scenda ad ogni avvio
-    Giorno();
+    Giorno(true);
 
      // Guarda se qualche "bastardino" ha modificato dei valori nel registro...
     TabbozProfilo.get("SoftCheck",buf_i,0);
@@ -849,7 +849,7 @@ void TimerCallback(void *)
         }
         else {  // altrimenti semplicemente passa al giorno successivo
             t_random--;
-            Giorno();
+            Giorno(true);
         }
     }
     Fl::repeat_timeout(TIMER_INTERVAL, TimerCallback);    // ricarica il timer
