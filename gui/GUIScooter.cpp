@@ -286,6 +286,7 @@ Fl_Double_Window* GUIScooter() {
         if (euro) o->label("Soldi  €");
       } // Fl_Value_Output* sco_val_soldi
       { Fl_Return_Button* o = new Fl_Return_Button(185, 185, 60, 40);
+        o->shortcut(0xff1b);
         o->callback((Fl_Callback*)cb_);
         o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
         o->image(ImgExit);

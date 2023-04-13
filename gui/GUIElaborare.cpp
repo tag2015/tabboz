@@ -5860,6 +5860,7 @@ Fl_Double_Window* GUIElaborare() {
         if(euro) o->label("Soldi  €");
       } // Fl_Value_Output* elabora_soldi
       { Fl_Return_Button* o = new Fl_Return_Button(530, 380, 60, 40);
+        o->shortcut(0xff1b);
         o->callback((Fl_Callback*)cb_);
         o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
         o->image(ImgExit);

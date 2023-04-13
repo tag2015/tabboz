@@ -7902,6 +7902,7 @@ Fl_Double_Window* GUILavoro() {
         if (euro) o->label("Stipendio  €");
       } // Fl_Value_Output* lavoro_val_stipendio
       { Fl_Return_Button* o = new Fl_Return_Button(435, 190, 60, 40);
+        o->shortcut(0xff1b);
         o->callback((Fl_Callback*)cb_);
         o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
         o->image(ImgExit);

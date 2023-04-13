@@ -39,7 +39,7 @@ Function {GUIScooter()} {open
 } {
   Fl_Window win_scooter {
     label Scooter open
-    xywh {368 380 510 240} type Double labelfont 1 labelsize 12 hotspot
+    xywh {603 419 510 240} type Double labelfont 1 labelsize 12 hotspot
     code0 {AggiornaScooter();} modal size_range {510 240 510 240} visible
   } {
     Fl_Button {} {
@@ -88,7 +88,7 @@ if (x_vacanza != 2) {
   MsgIcona(ICONA_AVVISO);
   fl_message_title("Meccanico chiuso");
   fl_alert("Oh, tip%c... oggi il meccanico è chiuso...",ao);
-}} selected
+}}
       xywh {260 165 240 30}
     }
     Fl_Button {} {
@@ -136,8 +136,8 @@ if (x_vacanza != 2) {
       Fl_Return_Button {} {
         callback {win_principale->activate();
 AggiornaPrincipale();
-win_scooter->hide();}
-        xywh {185 185 60 40} align 20
+win_scooter->hide();} selected
+        xywh {185 185 60 40} shortcut 0xff1b align 20
         code0 {o->image(ImgExit);}
       }
       Fl_Box {} {

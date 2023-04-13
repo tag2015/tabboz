@@ -46,8 +46,8 @@ Function {GUINegoziLauncher()} {open
   } {
     Fl_Return_Button {} {
       callback {win_principale->activate();
-win_negozi->hide();}
-      xywh {320 110 60 40} align 20
+win_negozi->hide();} selected
+      xywh {320 110 60 40} shortcut 0xff1b align 20
       code0 {o->image(ImgExit);}
     }
     Fl_Group {} {
@@ -103,13 +103,12 @@ win_negozi->hide();}
         callback {if (x_vacanza != 2) {
   GUITabacchi();
   win_tabacchi->show();
-  win_negozi->hide();
   if(sound_active) TabbozPlaySound(203);
 }else {
   MsgIcona(ICONA_AVVISO);
   fl_message_title("Tabaccaio chiuso");
   fl_alert("Rimani fiss%c a guardare la saracinesca del tabaccaio irrimediabilmente chiusa...",ao);
-}} selected
+}}
         xywh {205 30 170 30}
       }
       Fl_Button {} {

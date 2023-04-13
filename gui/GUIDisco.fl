@@ -132,7 +132,7 @@ win_disco->redraw();}
 win_principale->activate();
 AggiornaPrincipale();
 win_disco->hide();
-disco_scelta=0;} selected
+disco_scelta=0;}
         xywh {345 240 60 40}
         code0 {if(!disco_scelta) o->deactivate();}
       }
@@ -140,8 +140,8 @@ disco_scelta=0;} selected
         callback {win_principale->activate();
 AggiornaPrincipale();
 win_disco->hide();
-disco_scelta=0;}
-        xywh {415 240 60 40} align 20
+disco_scelta=0;} selected
+        xywh {415 240 60 40} shortcut 0xff1b align 20
         code0 {o->image(ImgExit);}
       }
     }

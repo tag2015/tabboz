@@ -21,7 +21,7 @@ Function {GUITabbozPalestra()} {open
     xywh {223 510 486 251} type Double labelfont 1 labelsize 12 hotspot
     code0 {AggiornaPalestra();} modal size_range {486 251 486 251} visible
   } {
-    Fl_Box {} {selected
+    Fl_Box {} {
       image {pic/palestra.png} xywh {5 5 250 185}
     }
     Fl_Button {} {
@@ -112,8 +112,8 @@ win_palestra->hide();}
       Fl_Return_Button {} {
         callback {win_principale->activate();
 AggiornaPrincipale();
-win_palestra->hide();}
-        xywh {415 200 60 40} align 20
+win_palestra->hide();} selected
+        xywh {415 200 60 40} shortcut 0xff1b align 20
         code0 {o->image(ImgExit);}
       }
     }

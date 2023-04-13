@@ -15158,6 +15158,7 @@ Fl_Double_Window* GUIConcessionario() {
         o->deactivate();
       } // Fl_Button* conce_btn_compra
       { Fl_Return_Button* o = new Fl_Return_Button(510, 405, 60, 40);
+        o->shortcut(0xff1b);
         o->callback((Fl_Callback*)cb_5);
         o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
         o->image(ImgExit);

@@ -313,7 +313,7 @@ tabac_btn_compra->activate();}
       Fl_Box tabac_txt_nomesizze {
         xywh {10 240 470 20} labelfont 1 align 21
       }
-      Fl_Box tabac_txt_descsizze {selected
+      Fl_Box tabac_txt_descsizze {
         xywh {10 260 470 45} labelsize 12 align 149
         code0 {static char tmp[80];}
         code1 {sprintf(tmp, "Che sigarette vuoi, ragazz%c ?",ao);}
@@ -353,8 +353,8 @@ win_tabacchi->hide();}
       }
       Fl_Return_Button {} {
         callback {win_negozi->show();
-win_tabacchi->hide();}
-        xywh {420 350 60 40} align 20
+win_tabacchi->hide();} selected
+        xywh {420 350 60 40} shortcut 0xff1b align 20
         code0 {o->image(ImgExit);}
       }
     }

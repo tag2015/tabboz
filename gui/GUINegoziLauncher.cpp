@@ -61,7 +61,6 @@ static void cb_Tabaccaio(Fl_Button*, void*) {
   if (x_vacanza != 2) {
   GUITabacchi();
   win_tabacchi->show();
-  win_negozi->hide();
   if(sound_active) TabbozPlaySound(203);
 }else {
   MsgIcona(ICONA_AVVISO);
@@ -81,6 +80,7 @@ Fl_Double_Window* GUINegoziLauncher() {
     win_negozi->labelsize(12);
     win_negozi->hotspot(win_negozi);
     { Fl_Return_Button* o = new Fl_Return_Button(320, 110, 60, 40);
+      o->shortcut(0xff1b);
       o->callback((Fl_Callback*)cb_);
       o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
       o->image(ImgExit);

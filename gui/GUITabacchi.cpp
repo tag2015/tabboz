@@ -11084,6 +11084,7 @@ Fl_Double_Window* GUITabacchi() {
         o->deactivate();
       } // Fl_Button* tabac_btn_compra
       { Fl_Return_Button* o = new Fl_Return_Button(420, 350, 60, 40);
+        o->shortcut(0xff1b);
         o->callback((Fl_Callback*)cb_17);
         o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
         o->image(ImgExit);

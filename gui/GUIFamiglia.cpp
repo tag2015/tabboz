@@ -5349,6 +5349,7 @@ Fl_Double_Window* GUITabbozFamiglia() {
         if(euro) o->label("Paghetta  €");
       } // Fl_Value_Output* fam_val_paghetta
       { Fl_Return_Button* o = new Fl_Return_Button(325, 270, 60, 40);
+        o->shortcut(0xff1b);
         o->callback((Fl_Callback*)cb_);
         o->align(Fl_Align(FL_ALIGN_LEFT|FL_ALIGN_INSIDE));
         o->image(ImgExit);

@@ -158,8 +158,8 @@ Sciopera();}
       Fl_Return_Button {} {
         callback {win_principale->activate();
 AggiornaPrincipale();
-win_lavoro->hide();}
-        xywh {435 190 60 40} align 20
+win_lavoro->hide();} selected
+        xywh {435 190 60 40} shortcut 0xff1b align 20
         code0 {o->image(ImgExit);}
       }
       Fl_Box lavoro_val_impegno_percent {
@@ -182,7 +182,7 @@ Function {GUICercaLavoro()} {open
 } {
   Fl_Window win_cercalavoro {
     label {Annunci - Offro Lavoro} open
-    xywh {429 471 400 390} type Double labelfont 1 labelsize 12 hotspot modal size_range {400 390 400 390} visible
+    xywh {429 471 400 390} type Double labelfont 1 labelsize 12 hide hotspot modal size_range {400 390 400 390}
   } {
     Fl_Button lav_btn_ok {
       label OK
@@ -195,7 +195,7 @@ Function {GUICercaLavoro()} {open
 n_scheda = (rand() % NUM_SCHEDEQUIZ);
 GUIQuizzone();
 win_quizzone->show();
-win_cercalavoro->hide();} selected
+win_cercalavoro->hide();}
       xywh {45 320 310 30}
       code0 {o->label(StrOfferteLavoro[num_ditta][1]);}
     }

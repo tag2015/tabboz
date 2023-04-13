@@ -31,15 +31,14 @@ elabora_txt_speed->value(buf);
 elabora_txt_cc->value(n_cc[ScooterData.cc]);
 elabora_txt_carb->value(n_carburatore[ScooterData.carburatore]);
 elabora_txt_filtro->value(n_filtro[ScooterData.filtro]);
-elabora_txt_marm->value(n_marmitta[ScooterData.marmitta]);} {selected
-  }
+elabora_txt_marm->value(n_marmitta[ScooterData.marmitta]);} {}
 }
 
 Function {GUIElaborare()} {open
 } {
   Fl_Window win_elabora {
     label {Elabora Scooter} open
-    xywh {638 301 600 430} type Double hotspot modal size_range {600 430 600 430} visible
+    xywh {540 360 600 430} type Double hotspot modal size_range {600 430 600 430} visible
   } {
     Fl_Group {} {
       label Marmitta open
@@ -376,8 +375,8 @@ else {
       }
       Fl_Return_Button {} {
         callback {win_scooter->activate();
-win_elabora->hide();}
-        xywh {530 380 60 40} align 20
+win_elabora->hide();} selected
+        xywh {530 380 60 40} shortcut 0xff1b align 20
         code0 {o->image(ImgExit);}
       }
       Fl_Output elabora_txt_speed {

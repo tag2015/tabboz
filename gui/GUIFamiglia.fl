@@ -17,7 +17,7 @@ decl {\#include "../famiglia.h"} {private global
 Function {GUITabbozFamiglia()} {open
 } {
   Fl_Window win_famiglia {
-    label Famiglia open selected
+    label Famiglia open
     xywh {726 508 400 330} type Double hotspot modal size_range {400 330 400 330} visible
   } {
     Fl_Box {} {
@@ -62,8 +62,8 @@ Function {GUITabbozFamiglia()} {open
       Fl_Return_Button {} {
         callback {win_principale->activate();
 AggiornaPrincipale();
-win_famiglia->hide();}
-        xywh {325 270 60 40} align 20
+win_famiglia->hide();} selected
+        xywh {325 270 60 40} shortcut 0xff1b align 20
         code0 {o->image(ImgExit);}
       }
     }
