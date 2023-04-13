@@ -93,7 +93,7 @@ void GareggiaScooter(void)
     benzina-=5;
     if (benzina < 1) benzina = 0;
     CalcolaVelocita(false);
-    Evento();
+    Evento(false);
 }
 
 
@@ -107,7 +107,7 @@ void EsciCompagnia(void)
     if (Reputazione < 12)
         Reputazione+=1;
 
-    Evento();
+    Evento(false);
 }
 
 
@@ -118,7 +118,7 @@ void ChiamaCompagnia(void)
     if (Reputazione < 16) {
         MsgIcona(ICONA_AVVISO);
         fl_message("Con la scarsa reputazione che hai, tutti trovano qualcosa di meglio da fare piuttosto che venire...");
-        Evento();
+        Evento(false);
         return;
     }
     if (tempo_pestaggio > 0) {
@@ -134,7 +134,7 @@ void ChiamaCompagnia(void)
                 Reputazione+=5;
             }
         tempo_pestaggio=0;  // BUGFIX si può contrattaccare una sola volta x pestaggio
-        Evento();
+        Evento(false);
     } else {
         MsgIcona(ICONA_DOMANDA);
         fl_message_title("Chiama la Compagnia (perchè?)");

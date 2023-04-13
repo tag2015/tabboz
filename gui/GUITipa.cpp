@@ -3579,7 +3579,7 @@ if(Provaci()) {
   win_duedipicche->show();
   while(win_duedipicche->shown()) Fl::wait();
 }
-Evento();
+Evento(false);
 AggiornaTipa();
 }
 

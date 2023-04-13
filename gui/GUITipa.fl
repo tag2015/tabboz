@@ -44,7 +44,7 @@ decl {int fig_nuovatipa;} {public local
 Function {GUITipa()} {open
 } {
   Fl_Window win_tipa {
-    label Tipa open
+    label Tipa
     xywh {528 549 425 275} type Double labelfont 1 labelsize 12 hotspot
     code0 {AggiornaTipa();} modal size_range {425 275 425 275} visible
   } {
@@ -129,7 +129,7 @@ win_tipa->hide();}
       xywh {145 55 40 30} box NO_BOX
     }
     Fl_Button tipa_btn_culo {
-      callback {Palpatin();} selected
+      callback {Palpatin();}
       xywh {115 102 45 25} box NO_BOX
     }
   }
@@ -139,9 +139,9 @@ Function {GUICercaTipa()} {open
 } {
   Fl_Window win_cercatipa {
     label {Cerca Tipa} open
-    xywh {708 641 340 280} type Double labelfont 1 labelsize 12 hide hotspot
+    xywh {708 641 340 280} type Double labelfont 1 labelsize 12 hotspot
     code0 {CercaTipa();}
-    code1 {if(sesso=='F') o->label("Cerca Tipo");} modal size_range {340 280 340 280}
+    code1 {if(sesso=='F') o->label("Cerca Tipo");} modal size_range {340 280 340 280} visible
   } {
     Fl_Group {} {open
       xywh {5 5 210 270} box EMBOSSED_FRAME labelfont 1 labelsize 12
@@ -193,8 +193,8 @@ if(Provaci()) {
   win_duedipicche->show();
   while(win_duedipicche->shown()) Fl::wait();
 }
-Evento();
-AggiornaTipa();}
+Evento(false);
+AggiornaTipa();} selected
         xywh {10 195 200 35}
       }
       Fl_Button {} {
@@ -209,11 +209,10 @@ AggiornaTipa();}
   }
 }
 
-Function {GUIDueDiPicche(int messaggio)} {open
-} {
+Function {GUIDueDiPicche(int messaggio)} {} {
   Fl_Window win_duedipicche {
     label {Oggi è un giorno fortunato} open
-    xywh {539 362 325 155} type Double hide hotspot modal size_range {325 155 325 155}
+    xywh {539 362 325 155} type Double hotspot modal size_range {325 155 325 155} visible
   } {
     Fl_Box {} {
       image {pic/2picche.png} xywh {10 9 65 96}
@@ -241,8 +240,7 @@ win_cercatipa->hide();}
   }
 }
 
-Function {GUICasanova(int i_nome_nuovatipa, int figosita_nuovatipa)} {open
-} {
+Function {GUICasanova(int i_nome_nuovatipa, int figosita_nuovatipa)} {} {
   code {n_nuovatipa = i_nome_nuovatipa;
 fig_nuovatipa = figosita_nuovatipa;} {}
   Fl_Window win_duetipe {

@@ -77,7 +77,7 @@ void PagaDisco(int scelta)
         MsgIcona(ICONA_AVVISO);
         fl_message_title("Discoteca fuori porta");
         fl_alert("Senza uno scooter funzionante non puoi andare nelle discoteche fuori porta...");
-        Evento();
+        Evento(false);
         return;
     }
     
@@ -115,5 +115,5 @@ void PagaDisco(int scelta)
             if (Fama > 100) Fama=100;
             if (Reputazione > 100) Reputazione=100;
         }
-    Evento();
+    Evento(false);
 }

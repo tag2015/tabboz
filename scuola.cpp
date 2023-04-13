@@ -93,7 +93,7 @@ void StudiaMateria(int scelta)
         MaterieMem[scelta].voto+=1;
         if (MaterieMem[scelta].voto > 10) MaterieMem[scelta].voto=10;
 
-    Evento();
+    Evento(false);
     AggiornaScuola();  //siccome l'evento potrebbe alterare i voti, meglio risolverlo prima
     }
 }
@@ -135,7 +135,7 @@ void CorrompiProf(int scelta)
         }
         case 1: {} // No
     }
-    Evento();
+    Evento(false);
     AggiornaScuola();
     }
 }
@@ -173,7 +173,7 @@ void MinacciaSeduciProf(int scelta)
                     MaterieMem[scelta].voto-=1;
             }
         }
-    Evento();
+    Evento(false);
     AggiornaScuola();
     }
 }

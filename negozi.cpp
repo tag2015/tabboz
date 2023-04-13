@@ -126,7 +126,7 @@ void PagaQualcosa (int scelta)
             Fama+=VestitiMem[scelta].fama_inc;  // FIXME bisognerebbe rendere i bonus permanenti
             if (Fama > 100) Fama=100;
         }
-        Evento();
+        Evento(false);
     }
 }
 
@@ -154,7 +154,7 @@ void PagaSizze(int scelta)
         fl_message_title("ART. 46 L. 29/12/1990 n. 428");
         fl_alert(StrTabacco[rand() % 7]); // messaggio random contro il fumo
 
-        Evento();
+        Evento(false);
     }
 }
 

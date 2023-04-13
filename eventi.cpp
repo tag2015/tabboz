@@ -49,7 +49,8 @@ static char txt_finestra[256];  // stringa per le finestre metallari/scooter/cam
 
 
 /* Generatore Eventi (Casuali e Non) */
-void Evento(void)
+/* Se no_alerts = true, non vengono visualizzati i messagebox (utile per funzionamento automatico) */
+void Evento(bool no_alerts)
 {
     int     caso,i;
     char    tmp[128];
@@ -59,7 +60,7 @@ void Evento(void)
     if (Fortuna > 100) Fortuna = 100;
 
 
-    Giorno(false);  // avanza il calendario
+    Giorno(no_alerts);  // avanza il calendario
 
     if (tempo_pestaggio > 0)
         tempo_pestaggio--;
@@ -70,12 +71,14 @@ void Evento(void)
         if (sizze == 0) {
             MsgIcona(ICONA_STOP);
             fl_message_title("Sei senza sigarette!");
-            fl_alert("Apri il tuo pacchetto di sigarette e lo trovi disperatamente vuoto...");
+            if (!no_alerts) fl_alert("Apri il tuo pacchetto di sigarette e lo trovi disperatamente vuoto...");
             if (Reputazione > 10) Reputazione -= 3;
+            if (logging)
+                writelog("eventi: Sigarette finite!");
         } else if (sizze < 3) {
             MsgIcona(ICONA_AVVISO);
             fl_message_title("Sigarette...");
-            fl_message("Ti accorgi che stai per finire le tue sizze.");
+            if (!no_alerts) fl_message("Ti accorgi che stai per finire le tue sizze.");
         }
     }
 
@@ -87,11 +90,13 @@ void Evento(void)
         if (AbbonamentData.creditorest == 0) {
             MsgIcona(ICONA_STOP);
             fl_message_title("Telefonino");
-            fl_alert("Cerchi di telefonare e ti accorgi di aver finito i soldi a tua disposizione...");
+            if (!no_alerts) fl_alert("Cerchi di telefonare e ti accorgi di aver finito i soldi a tua disposizione...");
+            if (logging)
+                writelog("eventi: Cellulare - credito esaurito!");
         } else if (AbbonamentData.creditorest < 3) {
             MsgIcona(ICONA_AVVISO);
             fl_message_title("Telefonino");
-            fl_message("Ti accorgi che stai per finire la ricarica del tuo telefonino.");
+            if (!no_alerts) fl_message("Ti accorgi che stai per finire la ricarica del tuo telefonino.");
         }
     }
 
@@ -99,7 +104,9 @@ void Evento(void)
         CellularData.stato=-100;
         MsgIcona(ICONA_STOP);
         fl_message_title("Telefonino KO");
-        fl_alert("Dopo una vita di duro lavoro, a furia di prendere botte,\nil tuo cellulare si spacca...");
+        if (!no_alerts) fl_alert("Dopo una vita di duro lavoro, a furia di prendere botte,\nil tuo cellulare si spacca...");
+        if (logging)
+            writelog("eventi: Cellulare - distrutto!");
     }
 
 
@@ -117,23 +124,23 @@ void Evento(void)
             if (Studio >= 80) {
                 if (sound_active) TabbozPlaySound(1201);
                 Soldi+=Paghetta;
-                if (logging)
-                    writelog("eventi: Paghetta doppia !!!");
                 MsgIcona(ICONA_COOL);
                 fl_message_title("Paghetta settimanale");
-                fl_message("Visto che vai bene a scuola, ti diamo il doppio della paghetta...");
+                if (!no_alerts) fl_message("Visto che vai bene a scuola, ti diamo il doppio della paghetta...");
+                if (logging)
+                    writelog("eventi: Paghetta doppia !!!");
             }
-        
+
         } else {  // Studio < 45
             if (sound_active) TabbozPlaySound(1200);
             Soldi+=(Paghetta / 2);
+            MsgIcona(ICONA_STOP);
+            fl_message_title("Paghetta settimanale");
+            if (!no_alerts) fl_message("Finchè non andrai bene a scuola, ti daremo solo metà della paghetta...");
             if (logging) {
                 sprintf(log_buf,"eventi: Mezza paghetta (%s)...",MostraSoldi(Paghetta));
                 writelog(log_buf);
             }
-            MsgIcona(ICONA_STOP);
-            fl_message_title("Paghetta settimanale");
-            fl_message("Finchè non andrai bene a scuola, ti daremo solo metà della paghetta...");
         }
     }
 
@@ -160,17 +167,19 @@ void Evento(void)
             if (sesso == 'M') {
                 MsgIcona(ICONA_STOP);
                 fl_message_title("La tipa ti molla...");
-                fl_alert(StrEventi[MSG_TIPA+i]);  // 0<i<9, 10 possibili messaggi
+                if (!no_alerts) fl_alert(StrEventi[MSG_TIPA+i]);  // 0<i<9, 10 possibili messaggi
             } else {
                 MsgIcona(ICONA_STOP);
                 fl_message_title("Vieni mollata...");
-                fl_alert(StrEventi[MSG_TIPO+i]);  // 0<i<9, 10 possibili messaggi
+                if (!no_alerts) fl_alert(StrEventi[MSG_TIPO+i]);  // 0<i<9, 10 possibili messaggi
             }
             Reputazione-=(10 - i);    // quelle con numero piu' basso, sono peggiori...
             if (Reputazione < 0) Reputazione = 0;
+            if (logging)
+                writelog("eventi: Tipa/o ti molla...");
         }
     }
-    
+
 
 /* Lavoro ----------------------------------------------------------- */
     if (impegno > 3) {
@@ -198,7 +207,9 @@ void Evento(void)
             if (sound_active) TabbozPlaySound(504);
             MsgIcona(ICONA_STOP);
             fl_message_title("Perdi il lavoro...");
-            fl_alert("Un bel giorno ti svegli e scopri di essere stat%c licenziat%c.",ao,ao);
+            if (!no_alerts) fl_alert("Un bel giorno ti svegli e scopri di essere stat%c licenziat%c.",ao,ao);
+            if (logging)
+                writelog("eventi: Perdi il lavoro...");
         }
     }
 
@@ -232,9 +243,9 @@ void Evento(void)
 
                 i=rand() % 6;    /* estrae un metallaro a caso 0-5 */
                 if(i<=4)
-                    FinestraEvento(i,i,"Rissa con un metallaro",true);  //metallari
+                    if (!no_alerts) FinestraEvento(i,i,"Rissa con un metallaro",true);  //metallari
                 else
-                    FinestraEvento(i,i,"Rissa con un manovale",false);  //manovale
+                    if (!no_alerts) FinestraEvento(i,i,"Rissa con un manovale",false);  //manovale
                 if (logging) {
                     sprintf(log_buf,"eventi: Rissa con metallaro/manovale n. %d",i);
                     writelog(log_buf);
@@ -266,13 +277,13 @@ void Evento(void)
 
                     if (caso < 15) {  // Camionista - ( caso 11-14) BUGFIX visto che danneggia + del muro, abbasssato di 2 i possibili casi
                         ScooterData.stato-=35;
-                        FinestraEvento(6,6,"Fai incazzare un camionista",false);  //camionista
+                        if (!no_alerts) FinestraEvento(6,6,"Fai incazzare un camionista",false);  //camionista
                         if(logging)
                             writelog("eventi: Scooter - Ciocco con camionista...");
                     
                     } else {  // Muro ! ( caso 15 - 20) -------------------
                         ScooterData.stato-=20;
-                        FinestraEvento(7,7,"Incidente",false);  //muro
+                        if (!no_alerts) FinestraEvento(7,7,"Incidente",false);  //muro
                         if(logging)
                             writelog("eventi: Scooter - A muro...");
                     }
@@ -282,7 +293,7 @@ void Evento(void)
                     if (ScooterData.stato <= 0) {
                         MsgIcona(ICONA_STOP);
                         fl_message_title("Scooter Distrutto");
-                        fl_alert("Quando ti rialzi ti accorgi che il tuo scooter è ormai ridotto ad un ammasso di rottami.");
+                        if (!no_alerts) fl_alert("Quando ti rialzi ti accorgi che il tuo scooter è ormai ridotto ad un ammasso di rottami.");
                         ScooterData.stato = 0;
                         ScooterData.attivita=0;  //anziche azzerare lo scooter, lo incidentiamo
                         if(logging)
@@ -306,7 +317,7 @@ void Evento(void)
             MsgIcona(ICONA_AVVISO);
             sprintf(tmp,"Sei fortunat%c...",ao);
             fl_message_title(tmp);
-            fl_alert(StrEventi[MSG_SFIGHE+(caso - 21)]);  // togliamo 21 da caso per renderlo 0-9
+            if (!no_alerts) fl_alert(StrEventi[MSG_SFIGHE+(caso - 21)]);  // togliamo 21 da caso per renderlo 0-9
             Fama-=2;
             if (Fama < 0) Fama = 0;
             if(logging)
@@ -332,7 +343,7 @@ void Evento(void)
                 strcat(messaggio,MaterieMem[i].nome);   //accoda nome materia al messaggio
                 MsgIcona(ICONA_AVVISO);
                 fl_message_title("Scuola...");
-                fl_alert(messaggio);
+                if (!no_alerts) fl_alert(messaggio);
            
                 MaterieMem[i].voto-=2;
                 if(MaterieMem[i].voto < 2) MaterieMem[i].voto=2;
@@ -351,7 +362,7 @@ void Evento(void)
 
             int     figTemp;
             int     i_nomeTemp;
-            
+
             figTemp = (rand() % (Fama-30) ) + 30;   // Figosita' minima tipa = 30...
 
             if (sesso == 'M') {
@@ -447,7 +458,7 @@ void Evento(void)
                 if (CellularData.stato < 0 ) CellularData.stato=0;
                 MsgIcona(ICONA_AVVISO);
                 fl_message_title("Telefonino");
-                fl_alert("Il telefonino ti cade di tasca e vola per terra...");
+                if (!no_alerts) fl_alert("Il telefonino ti cade di tasca e vola per terra...");
                 if(logging)
                     writelog("eventi: Telefonino - Cade...");
             }

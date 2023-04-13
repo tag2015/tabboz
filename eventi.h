@@ -23,7 +23,7 @@
 #ifndef TABBOZ_EVENTI_H
 #define TABBOZ_EVENTI_H
 
-void Evento(void);
+void Evento(bool no_alerts);
 void EventiPalestra(void);
 
 void FinestraEvento(int n_evento, int n_testo, const char *titolo, bool verticale);

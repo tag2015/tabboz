@@ -87,7 +87,7 @@ void VaiInPalestra(void)
         if (Fama < 82) Fama+=2;  //BUGFIX solo 1 volta al giorno, ma incrementa +2 anzichè +1
         if(rand() % 2)  //BUGFIX Solo il 50% di probabilità, per compensare l'evento obbligatorio
             EventiPalestra();
-        Evento();    //BUGFIX Bisogna chiamare Evento se no il calendario non avanza
+        Evento(false);    //BUGFIX Bisogna chiamare Evento se no il calendario non avanza
         AggiornaPalestra();
     }
 }
@@ -122,7 +122,7 @@ void FaiLampada(void)
         #endif
     }
     i=rand() % (5 + Fortuna);
-    if (i==0) Evento();
+    if (i==0) Evento(false);
     AggiornaPalestra();
 }
 
@@ -174,6 +174,6 @@ void CompraAbbonamento(int scelta)
                     break;;
         }
     }
-    Evento();
+    Evento(false);
     AggiornaPalestra();
 }

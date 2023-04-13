@@ -844,7 +844,7 @@ void TimerCallback(void *)
             writelog(log_buf);
         #endif
         if(t_random == 0) {    // quando arriva a 0, esegue un evento casuale
-            Evento();
+            Evento(true);
             t_random = 5 + ( rand() % 21);  // 5 - 25 cicli tra un evento ed il seguente...
         }
         else {  // altrimenti semplicemente passa al giorno successivo

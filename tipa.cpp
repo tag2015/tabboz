@@ -285,7 +285,7 @@ void LasciaTipa(void)
             Reputazione+=4;
             if (Reputazione > 100) Reputazione=100;
         }
-        Evento();
+        Evento(false);
     }
     AggiornaTipa();
 }

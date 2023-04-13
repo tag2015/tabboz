@@ -197,7 +197,7 @@ void AcquistaScooter(int scelta)
         if (Reputazione > 100) Reputazione=100;
         CalcolaVelocita(true);    
     }
-    Evento();
+    Evento(false);
 }
 
 
@@ -305,7 +305,7 @@ void RiparaScooter(void)
                                     writelog(log_buf);
                                 }
                             }
-                            Evento();  //avanziamo il calendario solo se accettiamo
+                            Evento(false);  //avanziamo il calendario solo se accettiamo
                         }
                         break;
 
@@ -327,7 +327,7 @@ void RiparaScooter(void)
                                     writelog(log_buf);
                                 }
                             }
-                            Evento();  //avanziamo il calendario solo se accettiamo
+                            Evento(false);  //avanziamo il calendario solo se accettiamo
                         }
                         break;
 
@@ -351,7 +351,7 @@ void RiparaScooter(void)
                                     writelog(log_buf);
                                 }
                             }
-                            Evento();  //avanziamo il calendario solo se accettiamo
+                            Evento(false);  //avanziamo il calendario solo se accettiamo
                         }
                         break;
                 }

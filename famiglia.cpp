@@ -52,12 +52,12 @@ void ChiediAumentoPaghetta(void)
             fl_message_title("Aumento paghetta !");
             fl_message(tmp);
             Paghetta+=5;
-            Evento();
+            Evento(false);
         } else {
             MsgIcona(ICONA_AVVISO);
             fl_message_title("Errore irrecuperabile");
             fl_alert("Vedi di scordartelo...\nDovrà passare molto tempo prima che ti venga aumentata la paghetta...");
-            Evento();
+            Evento(false);
         }
     } else {
         MsgIcona(ICONA_AVVISO);
@@ -87,12 +87,12 @@ void ChiediSoldiExtra(void)
                 sprintf(tmp,"famiglia: paghetta extra (%s)",MostraSoldi(10));
                 writelog(tmp);
             }
-            Evento();
+            Evento(false);
         } else {
             MsgIcona(ICONA_AVVISO);
             fl_message_title("Non te li diamo");
             fl_alert("Ma insomma! Non puoi continuamente chiedere soldi!\nAspetta ancora qualche giorno. Fai qualche cosa di economico nel frattempo...");
-            Evento();
+            Evento(false);
         }
     } else {
         MsgIcona(ICONA_AVVISO);
@@ -111,5 +111,5 @@ void ChiediSoldiPapa(void)
     MsgIcona(ICONA_STOP);
     fl_message_title("Errore irrecuperabile");
     fl_alert("Non pensarci neanche lontanamente...");
-    Evento();
+    Evento(false);
 }

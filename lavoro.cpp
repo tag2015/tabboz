@@ -112,7 +112,7 @@ void ControllaRisposte(int n_ditta, int n_scheda)
             fl_message_title("Sei un po' stupida...");
             fl_alert("Signorina, mi spieghi perchè dovremmo assumere qualcuno che non è neanche in grado di mettere delle crocette su un foglio ???");
         }
-        Evento();
+        Evento(false);
         AggiornaLavoro();
         return;
     }
@@ -142,7 +142,7 @@ void ControllaRisposte(int n_ditta, int n_scheda)
         if (Reputazione > 10)
             Reputazione-=2;
     }
-    Evento();
+    Evento(false);
     AggiornaLavoro();
 }
 
@@ -163,7 +163,7 @@ void Licenziati(void)
         impegno=0;
         giorni_di_lavoro=0;
         stipendio=0;
-        Evento();
+        Evento(false);
     }
     AggiornaLavoro();
 }
@@ -177,7 +177,7 @@ void Lavora(void)
     if (impegno < 85)
         impegno++;
     if (sound_active) TabbozPlaySound(501);
-    Evento();
+    Evento(false);
     AggiornaLavoro();
 
 }
@@ -201,7 +201,7 @@ void FaiIlLeccaculo(void)
         impegno++;
 
     if( (rand() % (Fortuna+3)) == 0 )    // evento casuale per sfigati
-        Evento();
+        Evento(false);
 
     AggiornaLavoro();
 }
@@ -226,7 +226,7 @@ void ChiediAumento(void)
             stipendio+=( (rand() % 10) + 10 ) * 10;   // BUGFIX questa sì
 
             impegno-=30;
-            Evento();
+            Evento(false);
         } else {
             MsgIcona(ICONA_AVVISO);
             if (sesso == 'M' )  // visto che l'impegno è >90, sfanculata politically correct
@@ -234,7 +234,7 @@ void ChiediAumento(void)
             else
                 fl_alert("Siamo soddisfatti del tuo rendimento, ma attualmente\nnon possiamo applicare variazioni agli emolumenti per i dipendenti.");
             impegno-=20;
-            Evento();
+            Evento(false);
         }
     } else {
         MsgIcona(ICONA_STOP);
@@ -257,9 +257,9 @@ void Sciopera(void)
     impegno-=15;
 
     if( (rand() % (Fortuna+3)) == 0 )    // evento casuale per sfigati
-        Evento();
+        Evento(false);
 
-    Evento();    // due eventi? azz...
+    Evento(false);    // due eventi? azz...
     AggiornaLavoro();
 }
 
