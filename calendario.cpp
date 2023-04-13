@@ -199,6 +199,7 @@ void Giorno(bool no_alerts)
                     if (!no_alerts) fl_message("Da domani iniziano le vacanza estive!");
                 }
                 if ((x_giorno == 22) && (win_principale)) {  /* Mostra pagella (controlla se inizializzato)*/
+                    win_principale->show();
                     if(MostraPagella()) {
                         MsgIcona(ICONA_COOL);
                         fl_message_title("Studiare paga...");

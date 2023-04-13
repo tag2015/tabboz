@@ -187,6 +187,7 @@ bool MostraPagella(void)
     int     insuf=0, grav_insuf=0;
 
     GUIPagella();			// mostra finestra pagella
+    win_pagella->position( (Fl::w() - win_pagella->w() ) / 2, (Fl::h() - win_pagella->h() ) / 2);   // centra finestra
     win_pagella->show();
     for (i=0;i<N_MATERIE;i++) {
         Fl_Value_Output *casella = (Fl_Value_Output *) pag_voti->child(i);    // pag_voti è il gruppo contenente le ValueBox per i voti
