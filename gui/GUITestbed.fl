@@ -17,6 +17,9 @@ decl {\#include "../global.h"} {private global
 decl {\#include "../debug.h"} {private global
 }
 
+decl {\#include "../calendario.h"} {private global
+}
+
 decl {\#include "../eventi.h"} {private global
 }
 
@@ -42,14 +45,16 @@ Function {GUITestbed()} {open
 } {
   Fl_Window win_testbed {
     label TestBed
-    callback {win_principale->activate();
+    callback {AggiornaPrincipale();
+win_principale->redraw();
+win_principale->activate();
 win_testbed->hide();} open selected
-    xywh {355 311 673 520} type Double color 54 hotspot
+    xywh {439 315 673 520} type Double color 54 hotspot
     code0 {num_file=0;} size_range {673 520 673 520} visible
   } {
     Fl_Box box_1 {
       label box_1
-      xywh {10 150 450 305} box ENGRAVED_FRAME labelsize 16 align 21
+      xywh {40 150 185 130} box ENGRAVED_FRAME labelsize 16 align 21
     }
     Fl_Button {} {
       label caricapics
@@ -67,7 +72,7 @@ but_3->image(ImgScarpe[0]);
 win_testbed->redraw();}
       xywh {560 465 100 30}
     }
-    Fl_Group {} {open
+    Fl_Group {} {
       xywh {10 15 670 130}
     } {
       Fl_Button but_1 {
@@ -106,37 +111,37 @@ win_testbed->redraw();}
       xywh {465 465 64 25}
     }
     Fl_Group {} {
-      label Tema
-      xywh {515 170 95 80}
+      label Tema open
+      xywh {45 360 95 80}
     } {
       Fl_Button {} {
         label {Tema Win}
         callback {Fl::scheme("base");
 win_testbed->redraw();}
-        xywh {515 170 95 20}
+        xywh {45 360 95 20}
       }
       Fl_Button {} {
         label {Tema Plastic}
         callback {Fl::scheme("plastic");
 win_testbed->redraw();}
-        xywh {515 210 95 20}
+        xywh {45 400 95 20}
       }
       Fl_Button {} {
         label {Tema GTK}
         callback {Fl::scheme("gtk+");
 win_testbed->redraw();}
-        xywh {515 190 95 20}
+        xywh {45 380 95 20}
       }
       Fl_Button {} {
         label {Tema Gleam}
         callback {Fl::scheme("gleam");
 win_testbed->redraw();}
-        xywh {515 230 95 20}
+        xywh {45 420 95 20}
       }
     }
     Fl_Group {} {
-      label Dialogs
-      xywh {470 300 75 100} box EMBOSSED_FRAME
+      label Dialogs open
+      xywh {175 325 75 100} box EMBOSSED_FRAME
     } {
       Fl_Button {} {
         label info
@@ -147,7 +152,7 @@ message_icon->box(FL_NO_BOX);
 message_icon->align(FL_ALIGN_IMAGE_BACKDROP);
 fl_message("messaggio informativo");
 message_icon->image(ImgInfo);}
-        xywh {470 300 75 20}
+        xywh {175 325 75 20}
       }
       Fl_Button {} {
         label warn
@@ -158,7 +163,7 @@ message_icon->box(FL_NO_BOX);
 message_icon->align(FL_ALIGN_IMAGE_BACKDROP);
 message_icon->image(ImgAvviso);
 fl_alert("Sei quasi fottuto");}
-        xywh {470 320 75 20}
+        xywh {175 345 75 20}
       }
       Fl_Button {} {
         label alert
@@ -169,7 +174,7 @@ message_icon->box(FL_NO_BOX);
 message_icon->align(FL_ALIGN_IMAGE_BACKDROP);
 message_icon->image(ImgStop);
 fl_alert("Sei fottuto!");}
-        xywh {470 340 75 20}
+        xywh {175 365 75 20}
       }
       Fl_Button {} {
         label question
@@ -180,7 +185,7 @@ message_icon->box(FL_NO_BOX);
 message_icon->align(FL_ALIGN_IMAGE_BACKDROP);
 message_icon->image(ImgDomanda);
 fl_choice("domanda","si","no","forse");}
-        xywh {470 360 75 20}
+        xywh {175 385 75 20}
       }
       Fl_Button {} {
         label cool
@@ -191,48 +196,48 @@ message_icon->box(FL_NO_BOX);
 message_icon->align(FL_ALIGN_IMAGE_BACKDROP);
 message_icon->image(ImgCool);
 fl_alert("Sei un figo!");}
-        xywh {470 380 75 20}
+        xywh {175 405 75 20}
       }
     }
     Fl_Group {} {
       label Beeps
-      xywh {570 300 85 100}
+      xywh {275 325 85 100}
     } {
       Fl_Button {} {
         label default
         callback {fl_beep(FL_BEEP_DEFAULT);}
-        xywh {570 300 85 20}
+        xywh {275 325 85 20}
       }
       Fl_Button {} {
         label message
         callback {fl_beep(FL_BEEP_MESSAGE);}
-        xywh {570 320 85 20}
+        xywh {275 345 85 20}
       }
       Fl_Button {} {
         label error
         callback {fl_beep(FL_BEEP_ERROR);}
-        xywh {570 340 85 20}
+        xywh {275 365 85 20}
       }
       Fl_Button {} {
         label question
         callback {fl_beep(FL_BEEP_QUESTION);}
-        xywh {570 360 85 20}
+        xywh {275 385 85 20}
       }
       Fl_Button {} {
         label notification
         callback {fl_beep(FL_BEEP_NOTIFICATION);}
-        xywh {570 380 85 20}
+        xywh {275 405 85 20}
       }
     }
     Fl_Button {} {
       label {+F}
       callback {Fama+=10;}
-      xywh {470 410 20 20}
+      xywh {250 170 20 20}
     }
     Fl_Button {} {
       label {+R}
       callback {Reputazione+=10;}
-      xywh {490 410 20 20}
+      xywh {270 170 20 20}
     }
     Fl_Button {} {
       label DumpData
@@ -244,12 +249,30 @@ writelog(tmp);}
     Fl_Button {} {
       label {-F}
       callback {Fama-=10;}
-      xywh {470 430 20 20}
+      xywh {250 190 20 20}
     }
     Fl_Button {} {
       label {-R}
       callback {Reputazione-=10;}
-      xywh {490 430 20 20}
+      xywh {270 190 20 20}
+    }
+    Fl_Spinner testbed_gg {
+      label Data
+      xywh {375 171 45 24} maximum 31
+      code0 {o->value(x_giorno);}
+    }
+    Fl_Spinner testbed_mm {
+      xywh {420 171 45 24} maximum 12
+      code0 {o->value(x_mese);}
+    }
+    Fl_Spinner {} {
+      xywh {470 171 55 24} minimum 1998 maximum 2000 value 1998 deactivate
+    }
+    Fl_Button {} {
+      label Set
+      callback {x_giorno=testbed_gg->value();
+x_mese=testbed_mm->value();}
+      xywh {530 170 35 25}
     }
   }
 }

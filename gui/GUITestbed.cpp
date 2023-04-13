@@ -6,6 +6,7 @@
 #include "../zarrosim.h"
 #include "../global.h"
 #include "../debug.h"
+#include "../calendario.h"
 #include "../eventi.h"
 #include "../sound.h"
 #include "../sharedimg.h"
@@ -17,7 +18,9 @@ static int num_evento;
 Fl_Double_Window *win_testbed=(Fl_Double_Window *)0;
 
 static void cb_win_testbed(Fl_Double_Window*, void*) {
-  win_principale->activate();
+  AggiornaPrincipale();
+win_principale->redraw();
+win_principale->activate();
 win_testbed->hide();
 }
 
@@ -176,12 +179,21 @@ static void cb_R1(Fl_Button*, void*) {
   Reputazione-=10;
 }
 
+Fl_Spinner *testbed_gg=(Fl_Spinner *)0;
+
+Fl_Spinner *testbed_mm=(Fl_Spinner *)0;
+
+static void cb_Set(Fl_Button*, void*) {
+  x_giorno=testbed_gg->value();
+x_mese=testbed_mm->value();
+}
+
 Fl_Double_Window* GUITestbed() {
   { win_testbed = new Fl_Double_Window(673, 520, "TestBed");
     win_testbed->color(FL_LIGHT3);
     win_testbed->callback((Fl_Callback*)cb_win_testbed);
     win_testbed->hotspot(win_testbed);
-    { box_1 = new Fl_Box(10, 150, 450, 305, "box_1");
+    { box_1 = new Fl_Box(40, 150, 185, 130, "box_1");
       box_1->box(FL_ENGRAVED_FRAME);
       box_1->labelsize(16);
       box_1->align(Fl_Align(FL_ALIGN_TOP_LEFT|FL_ALIGN_INSIDE));
@@ -223,72 +235,89 @@ Fl_Double_Window* GUITestbed() {
     { Fl_Button* o = new Fl_Button(465, 465, 64, 25, "RunV");
       o->callback((Fl_Callback*)cb_RunV);
     } // Fl_Button* o
-    { Fl_Group* o = new Fl_Group(515, 170, 95, 80, "Tema");
-      { Fl_Button* o = new Fl_Button(515, 170, 95, 20, "Tema Win");
+    { Fl_Group* o = new Fl_Group(45, 360, 95, 80, "Tema");
+      { Fl_Button* o = new Fl_Button(45, 360, 95, 20, "Tema Win");
         o->callback((Fl_Callback*)cb_Tema);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(515, 210, 95, 20, "Tema Plastic");
+      { Fl_Button* o = new Fl_Button(45, 400, 95, 20, "Tema Plastic");
         o->callback((Fl_Callback*)cb_Tema1);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(515, 190, 95, 20, "Tema GTK");
+      { Fl_Button* o = new Fl_Button(45, 380, 95, 20, "Tema GTK");
         o->callback((Fl_Callback*)cb_Tema2);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(515, 230, 95, 20, "Tema Gleam");
+      { Fl_Button* o = new Fl_Button(45, 420, 95, 20, "Tema Gleam");
         o->callback((Fl_Callback*)cb_Tema3);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(470, 300, 75, 100, "Dialogs");
+    { Fl_Group* o = new Fl_Group(175, 325, 75, 100, "Dialogs");
       o->box(FL_EMBOSSED_FRAME);
-      { Fl_Button* o = new Fl_Button(470, 300, 75, 20, "info");
+      { Fl_Button* o = new Fl_Button(175, 325, 75, 20, "info");
         o->callback((Fl_Callback*)cb_info);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(470, 320, 75, 20, "warn");
+      { Fl_Button* o = new Fl_Button(175, 345, 75, 20, "warn");
         o->callback((Fl_Callback*)cb_warn);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(470, 340, 75, 20, "alert");
+      { Fl_Button* o = new Fl_Button(175, 365, 75, 20, "alert");
         o->callback((Fl_Callback*)cb_alert);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(470, 360, 75, 20, "question");
+      { Fl_Button* o = new Fl_Button(175, 385, 75, 20, "question");
         o->callback((Fl_Callback*)cb_question);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(470, 380, 75, 20, "cool");
+      { Fl_Button* o = new Fl_Button(175, 405, 75, 20, "cool");
         o->callback((Fl_Callback*)cb_cool);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
-    { Fl_Group* o = new Fl_Group(570, 300, 85, 100, "Beeps");
-      { Fl_Button* o = new Fl_Button(570, 300, 85, 20, "default");
+    { Fl_Group* o = new Fl_Group(275, 325, 85, 100, "Beeps");
+      { Fl_Button* o = new Fl_Button(275, 325, 85, 20, "default");
         o->callback((Fl_Callback*)cb_default);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(570, 320, 85, 20, "message");
+      { Fl_Button* o = new Fl_Button(275, 345, 85, 20, "message");
         o->callback((Fl_Callback*)cb_message);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(570, 340, 85, 20, "error");
+      { Fl_Button* o = new Fl_Button(275, 365, 85, 20, "error");
         o->callback((Fl_Callback*)cb_error);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(570, 360, 85, 20, "question");
+      { Fl_Button* o = new Fl_Button(275, 385, 85, 20, "question");
         o->callback((Fl_Callback*)cb_question1);
       } // Fl_Button* o
-      { Fl_Button* o = new Fl_Button(570, 380, 85, 20, "notification");
+      { Fl_Button* o = new Fl_Button(275, 405, 85, 20, "notification");
         o->callback((Fl_Callback*)cb_notification);
       } // Fl_Button* o
       o->end();
     } // Fl_Group* o
-    { Fl_Button* o = new Fl_Button(470, 410, 20, 20, "+F");
+    { Fl_Button* o = new Fl_Button(250, 170, 20, 20, "+F");
       o->callback((Fl_Callback*)cb_F);
     } // Fl_Button* o
-    { Fl_Button* o = new Fl_Button(490, 410, 20, 20, "+R");
+    { Fl_Button* o = new Fl_Button(270, 170, 20, 20, "+R");
       o->callback((Fl_Callback*)cb_R);
     } // Fl_Button* o
     { Fl_Button* o = new Fl_Button(585, 425, 64, 20, "DumpData");
       o->callback((Fl_Callback*)cb_DumpData);
     } // Fl_Button* o
-    { Fl_Button* o = new Fl_Button(470, 430, 20, 20, "-F");
+    { Fl_Button* o = new Fl_Button(250, 190, 20, 20, "-F");
       o->callback((Fl_Callback*)cb_F1);
     } // Fl_Button* o
-    { Fl_Button* o = new Fl_Button(490, 430, 20, 20, "-R");
+    { Fl_Button* o = new Fl_Button(270, 190, 20, 20, "-R");
       o->callback((Fl_Callback*)cb_R1);
+    } // Fl_Button* o
+    { Fl_Spinner* o = testbed_gg = new Fl_Spinner(375, 171, 45, 24, "Data");
+      testbed_gg->maximum(31);
+      o->value(x_giorno);
+    } // Fl_Spinner* testbed_gg
+    { Fl_Spinner* o = testbed_mm = new Fl_Spinner(420, 171, 45, 24);
+      testbed_mm->maximum(12);
+      o->value(x_mese);
+    } // Fl_Spinner* testbed_mm
+    { Fl_Spinner* o = new Fl_Spinner(470, 171, 55, 24);
+      o->minimum(1998);
+      o->maximum(2000);
+      o->value(1998);
+      o->deactivate();
+    } // Fl_Spinner* o
+    { Fl_Button* o = new Fl_Button(530, 170, 35, 25, "Set");
+      o->callback((Fl_Callback*)cb_Set);
     } // Fl_Button* o
     num_file=0;
     win_testbed->size_range(673, 520, 673, 520);

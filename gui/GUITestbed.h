@@ -13,5 +13,8 @@ extern Fl_Button *but_1;
 extern Fl_Button *but_2;
 extern Fl_Button *but_3;
 #include <FL/Fl_Value_Input.H>
+#include <FL/Fl_Spinner.H>
+extern Fl_Spinner *testbed_gg;
+extern Fl_Spinner *testbed_mm;
 Fl_Double_Window* GUITestbed();
 #endif
