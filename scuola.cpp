@@ -71,7 +71,7 @@ void AggiornaScuola(void)
     scuola_val_soldi->value(CALCSOLDI(Soldi));
     scuola_val_rep->value(Reputazione);
     scuola_val_studio->value(Studio);
-    scuola_val_media->precision(1);  //TAG2015 mostra media decimale
+    scuola_val_media->precision(1);  // mostra media decimale
     scuola_val_media->value(MEDIAVOTI(Studio,N_MATERIE));
     if(scuola_val_media->value() < 5)              // aggiunge colore ai voti
         scuola_val_media->textcolor(FL_RED);
@@ -148,7 +148,7 @@ void MinacciaSeduciProf(int scelta)
 
     if (!CheckVacanza()) {
         if (sesso == 'M') { // Maschietto - minaccia prof.
-            if ((Reputazione >= 30) || (rand() % 10 < 1)) {    //TAG2015 rep>30 è sufficiente per minacciare?
+            if ((Reputazione >= 30) || (rand() % 10 < 1)) {    //FIXME rep>30 è sufficiente per minacciare?
                 MaterieMem[scelta].voto+=2;
                 if (MaterieMem[scelta].voto > 10) MaterieMem[scelta].voto=10;
             } else {
