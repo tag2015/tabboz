@@ -91,6 +91,7 @@ void StudiaMateria(int scelta)
         if (Fama > 5 )
             Fama-=1;
         MaterieMem[scelta].voto+=1;
+        if (sound_active) TabbozPlaySound(403);
         if (MaterieMem[scelta].voto > 10) MaterieMem[scelta].voto=10;
 
     Evento(false);
@@ -115,6 +116,7 @@ void CorrompiProf(int scelta)
         case 0: { // Si
                 if (Soldi >= i) {
                     Soldi-=i;
+                    if (sound_active) TabbozPlaySound(207);
                     #ifdef TABBOZ_DEBUG
                         sprintf(log_buf,"scuola: Corrompi un professore per %s",MostraSoldi(i));
                         writelog(log_buf);

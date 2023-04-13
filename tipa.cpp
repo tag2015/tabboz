@@ -308,10 +308,11 @@ void Palpatin(void)
         fl_message("Dai, smettila... Voi uomini pensato solo a quello...");
     }
     else {
+        if (sound_active) TabbozPlaySound(605);
         MsgIcona(ICONA_COOL);
         fl_message("Mmhhhhhhhh.........");
         Rapporti += 3;
-        if (Rapporti < 100)
+        if (Rapporti > 100)
             Rapporti = 100;
         Giorno(false);
         AggiornaTipa();

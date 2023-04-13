@@ -111,6 +111,7 @@ void PagaQualcosa (int scelta)
             nomoney(VESTITI);
         } else {
             Soldi -= VestitiMem[scelta].prezzo;
+            if (sound_active) TabbozPlaySound(207);
 
             if(scelta <= I_PANTALONI)    // Giubbotti
                 current_giubbotto=scelta-I_GIUBBOTTO;

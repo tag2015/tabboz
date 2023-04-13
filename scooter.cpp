@@ -190,12 +190,13 @@ void AcquistaScooter(int scelta)
         }
         ScooterData=ScooterMem[scelta];
         benzina=20;
+        if (sound_active) TabbozPlaySound(103);
         MsgIcona(ICONA_COOL);
         fl_message_title("Scooter nuovo!");
         fl_message("Fai un giro del quartiere per farti vedere con lo scooter nuovo...");
         Reputazione+=4;
         if (Reputazione > 100) Reputazione=100;
-        CalcolaVelocita(true);    
+        CalcolaVelocita(true);
     }
     Evento(false);
 }
