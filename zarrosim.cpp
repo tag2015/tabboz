@@ -52,6 +52,7 @@
 #include <FL/Fl_Window.H>
 #include <FL/Fl_Box.H>
 #include <FL/Fl_Preferences.H>
+#include <FL/filename.H>
 #include <FL/fl_ask.H>
 #include <FL/Fl_Shared_Image.H>
 #include <FL/Fl_PNG_Image.H>
@@ -63,7 +64,7 @@
 int     cheat;
 bool    firsttime;
 int     chiusura;
-
+char    path_profilo[FL_PATH_MAX];
 
 
 /* Caratteristiche tabbozzo */
@@ -117,7 +118,6 @@ static  int  t_random;      // Attesa a random tra i vari eventi timer
 
 static const char *dir_profilo = "TabbozNG";
 static const char *file_profilo = "TabbozNG";
-char              path_profilo[STR_MAX]="dummy.tbz";  // FIXME Path e file dove salvare (per ora non usato)
 
 
 static void    InitTabboz(void);
@@ -332,7 +332,6 @@ void  ApplicaDifficolta(void)
 /* Inizializza grafica e parametri di base */
 static void InitTabboz(void)
 {
-    path_profilo[0]=0;
 
     /* Carica immagini shared */
     fl_register_images();
@@ -454,6 +453,8 @@ static void CaricaTutto(void)
     Fl_Preferences TabbozProfilo(Fl_Preferences::USER, dir_profilo, file_profilo);  //apre file configurazione/salvataggio
     Fl_Preferences ScooterProfilo(TabbozProfilo, "Scooter");
     Fl_Preferences CellularProfilo(TabbozProfilo, "Cellular");
+
+    TabbozProfilo.getUserdataPath(path_profilo, FL_PATH_MAX);  // salva path profilo
 
     /* Prima che vengano caricate le informazioni... */
     /* azzera il checksum...                         */

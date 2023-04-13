@@ -22,9 +22,15 @@
 
 
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 
+#include "zarrosim.h"
+
 #include "debug.h"
+
+/* Header per toolkit FLTK */
+#include <FL/filename.H>
 
 
 FILE *debugfile = NULL;
@@ -33,8 +39,13 @@ char  log_buf[128] = "";
 
 void openlog()
 {
+    char  log_path[FL_PATH_MAX];
+    strcpy(log_path, path_profilo);
+    strcat(log_path, "zarrosim.log");
     if(!debugfile)
-        debugfile = fopen("zarrosim.log", "w");
+        debugfile = fopen(log_path, "w");
+    if(debugfile)
+        fprintf(debugfile,"Aperto log: %s\n", log_path);
 }
 
 

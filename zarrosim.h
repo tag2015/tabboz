@@ -91,6 +91,7 @@ typedef struct tagSTVARIE {
 extern  int     cheat;              // NON USATO
 extern  bool    firsttime;          // 0: File profilo presente 1: Primo avvio o nuova partita
 extern  int     chiusura;           // 0: Non uscire 1: Nuova partita 2: Salva ed esci
+extern  char    path_profilo[];     // path ai file profilo/log
 
 
 /* Caratteristiche tabbozzo */
