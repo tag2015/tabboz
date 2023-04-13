@@ -358,7 +358,8 @@ void Evento(bool no_alerts)
         case 41:
         case 42: // 41-42: Una tipa/o ci prova...
 
-            if (Fama < 35) break; // Figosita' < 35 = nessuna speranza...
+            if (no_alerts) break;  // Salta evento interattivo se in modalità automatica
+            if (Fama < 35) break;  // Figosita' < 35 = nessuna speranza...
 
             int     figTemp;
             int     i_nomeTemp;
@@ -411,6 +412,8 @@ void Evento(bool no_alerts)
 
         case 43: // 43-44: Domande inutili...
         case 44:
+
+            if (no_alerts) break;  // Salta evento interattivo se in modalità automatica
 
             if ((Rapporti > 0) && (sesso == 'M')) {
                 if (caso == 43) {
