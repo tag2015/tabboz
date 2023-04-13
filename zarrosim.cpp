@@ -139,9 +139,9 @@ void AggiornaPrincipale(void)
     main_valbox_fama->value(Fama);
     main_valbox_studio->precision(1);
     main_valbox_studio->value(MEDIAVOTI(Studio,N_MATERIE));
+    main_valbox_rapporti->value(Rapporti);
     if(Rapporti) {
         main_txtbox_tipa->value(Nometipa);
-        main_valbox_rapporti->value(Rapporti);
         main_valbox_rapporti->activate();
     }
     else {
