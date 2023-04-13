@@ -107,18 +107,16 @@ int  scad_pal_mese;
 /* Se no_alerts = true, non vengono visualizzati i messagebox (utile per funzionamento automatico)*/
 void Giorno(bool no_alerts)
 {
-    
+
     char tmp[255];
     bool auguri_tipa = false;
 
     x_giorno++;
     if (x_giorno > InfoMese[x_mese-1].num_giorni) {
         if ((x_mese == 2) && (x_anno_bisesto == 0) && (x_giorno == 29)) {
-            if (!no_alerts) {
-                MsgIcona(ICONA_INFO);
-                fl_message_title("Anno Bisestile");
-                fl_message("Anno bisesto, anno funesto...");
-            }
+            MsgIcona(ICONA_INFO);
+            fl_message_title("Anno Bisestile");
+            if (!no_alerts) fl_message("Anno bisesto, anno funesto...");
         } else {
             x_giorno=1;
             x_mese++;
@@ -147,7 +145,7 @@ void Giorno(bool no_alerts)
     if (impegno > 0)  {
 
         giorni_di_lavoro++;
-        
+
         if ((x_giorno == 27) && (giorni_di_lavoro > 3)) {
             int totale_stipendio;
             if ( giorni_di_lavoro > 29)
@@ -157,11 +155,10 @@ void Giorno(bool no_alerts)
 
             giorni_di_lavoro=1;
 
-            if(!no_alerts) {
-                MsgIcona(ICONA_COOL);
-                fl_message_title("Stipendio!");
-                fl_message("Visto che sei stat%c %s brav%c dipendente sottomess%c, ora ti arriva il tuo misero stipendio di %s",ao, un_una, ao, ao, MostraSoldi(totale_stipendio));
-            }
+            MsgIcona(ICONA_COOL);
+            fl_message_title("Stipendio!");
+            if (!no_alerts) fl_message("Visto che sei stat%c %s brav%c dipendente sottomess%c, ora ti arriva il tuo misero stipendio di %s",ao, un_una, ao, ao, MostraSoldi(totale_stipendio));
+
             Soldi+=totale_stipendio;
 
             if(logging) {
@@ -173,18 +170,15 @@ void Giorno(bool no_alerts)
 
 
     /* ---------------> P A L E S T R A <---------------  */
-    if (scad_pal_mese == x_mese)
-        if (scad_pal_giorno == x_giorno) {
-            if(!no_alerts) {
-                MsgIcona(ICONA_AVVISO);
-                fl_message_title("Palestra");
-                fl_message("E' appena scaduto il tuo abbonamento della palestra...");
-            }
-            scad_pal_giorno = 0;
-            scad_pal_mese = 0;
-            if(logging)
-                writelog("calendario: Scaduto abbonamento alla palestra");
-        }
+    if (scad_pal_mese == x_mese && scad_pal_giorno == x_giorno) {
+        MsgIcona(ICONA_AVVISO);
+        fl_message_title("Palestra");
+        if (!no_alerts) fl_message("E' appena scaduto il tuo abbonamento della palestra...");
+        scad_pal_giorno = 0;
+        scad_pal_mese = 0;
+        if(logging)
+            writelog("calendario: Scaduto abbonamento alla palestra");
+    }
 
 
     x_vacanza=0;     // 0 = giorno lavorativo
@@ -200,11 +194,9 @@ void Giorno(bool no_alerts)
 
         case 6: /* Giugno ---------------------------------------------------------- */
                 if (x_giorno == 15) {
-                    if(!no_alerts) {
-                        MsgIcona(ICONA_COOL);
-                        fl_message_title("Ultimo giorno di scuola");
-                        fl_message("Da domani iniziano le vacanza estive!");
-                    }
+                    MsgIcona(ICONA_COOL);
+                    fl_message_title("Ultimo giorno di scuola");
+                    if (!no_alerts) fl_message("Da domani iniziano le vacanza estive!");
                 }
                 if ((x_giorno == 22) && (win_principale)) {  /* Mostra pagella (controlla se inizializzato)*/
                     if(MostraPagella()) {
@@ -237,11 +229,9 @@ void Giorno(bool no_alerts)
         case 9: /* Settembre ------------------------------------------------------- */
                 if (x_giorno < 15) x_vacanza=1;   /* Vacanze Estive */
                 if (x_giorno == 15) {
-                    if(!no_alerts) {
-                        MsgIcona(ICONA_INFO);
-                        fl_message_title("Primo giorno di scuola");
-                        fl_message("Questa mattina devi tornare a scuola...");
-                    }
+                    MsgIcona(ICONA_INFO);
+                    fl_message_title("Primo giorno di scuola");
+                    if (!no_alerts) fl_message("Questa mattina devi tornare a scuola...");
                     for (int i=1;i<10;i++)    /* Azzera le materie... */
                         MaterieMem[i].voto=2;
                     CalcolaStudio();    
@@ -262,7 +252,7 @@ void Giorno(bool no_alerts)
                         if (Fama > 100) Fama=100;
                     }
                     if (Rapporti > 30) { /* Buon Natale dalla tipa */
-                        FinestraEvento(8,8,"Tanti Auguri",false);
+                        if (!no_alerts) FinestraEvento(8,8,"Tanti Auguri",false);
                         auguri_tipa = true;
                     }
                 }
@@ -286,11 +276,9 @@ void Giorno(bool no_alerts)
         if (InfoVacanze[i].mese == x_mese)
             if (InfoVacanze[i].giorno == x_giorno) {
                 if(auguri_tipa)  break; // se già visualizzato "buon natale", usciamo dal ciclo
-                if(!no_alerts) {
-                    MsgIcona(ICONA_INFO);
-                    fl_message_title(InfoVacanze[i].nome);
-                    fl_message(InfoVacanze[i].descrizione);
-                }
+                MsgIcona(ICONA_INFO);
+                fl_message_title(InfoVacanze[i].nome);
+                if (!no_alerts) fl_message(InfoVacanze[i].descrizione);
                 x_vacanza=2;        /* 2 = sono chiusi anche i negozi... */
             }
         i++;
