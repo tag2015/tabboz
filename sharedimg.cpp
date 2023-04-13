@@ -78,12 +78,12 @@ void CaricaSharedImgs()
         ImgDitte[i] = Fl_Shared_Image::get(path);
     }
 
-    ImgExit = Fl_Shared_Image::get("gui/icons/b_exit.png");
+    ImgExit = Fl_Shared_Image::get("res/gui/icons/b_exit.png");
 
-    ImgInfo = Fl_Shared_Image::get("gui/icons/msg_info.png");
-    ImgDomanda = Fl_Shared_Image::get("gui/icons/msg_question.png");
-    ImgAvviso = Fl_Shared_Image::get("gui/icons/msg_warn.png");
-    ImgStop = Fl_Shared_Image::get("gui/icons/msg_error.png");
-    ImgCool = Fl_Shared_Image::get("gui/icons/msg_cool.png");
+    ImgInfo = Fl_Shared_Image::get("res/gui/icons/msg_info.png");
+    ImgDomanda = Fl_Shared_Image::get("res/gui/icons/msg_question.png");
+    ImgAvviso = Fl_Shared_Image::get("res/gui/icons/msg_warn.png");
+    ImgStop = Fl_Shared_Image::get("res/gui/icons/msg_error.png");
+    ImgCool = Fl_Shared_Image::get("res/gui/icons/msg_cool.png");
 
 }
