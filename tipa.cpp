@@ -235,6 +235,7 @@ void EsciConTipa(void)
         writelog(log_buf);
     #endif
 
+    Evento(false);
     CalcolaVelocita(false);
     AggiornaTipa();
 }
