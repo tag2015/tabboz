@@ -236,6 +236,7 @@ char *MostraSoldi(int i)
 /* Routine che gestisce diverse situazioni quando i soldi sono < di quelli richiesti */
 void nomoney(int tipo)
 {
+    if (sound_active) TabbozPlaySound(302);
     MsgIcona(ICONA_STOP);
     switch (tipo) {
         
