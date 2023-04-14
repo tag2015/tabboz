@@ -363,6 +363,9 @@ void Evento(bool no_alerts)
             if (no_alerts) break;  // Salta evento interattivo se in modalità automatica
             if (Fama < 35) break;  // Figosita' < 35 = nessuna speranza...
 
+            if(logging)
+                writelog("eventi: Una tipa/o ci prova...");
+
             int     figTemp;
             int     i_nomeTemp;
 
@@ -392,6 +395,8 @@ void Evento(bool no_alerts)
             // Controlla che tu non abbia gia' una tipa -------------------------
             if (Rapporti > 0) { // hai gia' una tipa..<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 GUICasanova(i_nomeTemp,figTemp);  // FIXME completare per la tabbozza
+                win_duetipe->show();
+                while(win_duetipe->shown()) Fl::wait();
                 break;
             } else { // bravo, non hai una tipa...<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 if (sesso == 'M')
@@ -405,10 +410,6 @@ void Evento(bool no_alerts)
                 Reputazione+= (FigTipa / 13);
                 if (Reputazione > 100) Reputazione=100;
             }
-
-            #ifdef TABBOZ_DEBUG
-                writelog("eventi: Una tipa/o ci prova...");
-            #endif
             break;
 
 
@@ -416,6 +417,9 @@ void Evento(bool no_alerts)
         case 44:
 
             if (no_alerts) break;  // Salta evento interattivo se in modalità automatica
+
+            if(logging)
+                writelog("eventi: Domande inutili della tipa...");
 
             if ((Rapporti > 0) && (sesso == 'M')) {
                 if (caso == 43) {
@@ -440,9 +444,6 @@ void Evento(bool no_alerts)
                     }
                 }
             }
-            #ifdef TABBOZ_DEBUG
-                writelog("eventi: Domande inutili della tipa...");
-            #endif
             break;
 
         case 45:
