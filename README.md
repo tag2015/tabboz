@@ -2,16 +2,15 @@
 
 **Tabboz Simulator NG** (Next Generation :D) è un moderno remake dello storico **Tabboz Simulator**!\
 \
-Al fine di mantenere il più possibile il codice originale, il progetto è stato mantenuto in C, utilizzando il toolkit FLTK per realizzare la GUI
+Al fine di preservare il più possibile il codice originale, il progetto è stato mantenuto in C, utilizzando il toolkit FLTK per realizzare la GUI
 (in sostituzione delle librerie della Borland).
 
 Nel file **whatsnew.txt** è presente un elenco delle novità e bugfix rispetto alla versione originale.
 
 ## To-Do
 Le seguenti funzionalità non sono ancora state implementate:
-* Salvataggio/caricamento su file diversi (attualmente è possibile "mantenere" un solo tabbozzo alla volta)
+* Salvataggio/caricamento su file diversi (attualmente è possibile utilizzare un solo tabbozzo alla volta)
 * Tabbozza (con i relativi vestiti/negozi)
-* Timer - avanzamento automatico
 * Effetti sonori su OS diversi da Windows
 
 ## No-Do
