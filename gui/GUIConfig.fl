@@ -131,7 +131,7 @@ frequenza degli eventi casuali} xywh {10 25 240 145} box EMBOSSED_FRAME labelfon
         code0 {o->value(euro);}
       }
       Fl_Check_Button cfg_timer {
-        label Timer selected
+        label Timer
         tooltip {Se attivato, i giorni avanzano automaticamente
 quando la finestra è ridotta a icona} xywh {265 90 220 25} down_box DOWN_BOX
         code0 {o->value(timer_active);}
@@ -213,8 +213,8 @@ Function {GUIAbout()} {open
       code2 {o->copy_label(tabz_ver);}
     }
     Fl_Box {} {
-      label {Copyright (C) 2022 by Walter Agazzi ( github.com/tag2015 )
-Basato sul progetto originale copyright 1997-2000 by Andrea Bonomi, Emanuele Caccialanza, Daniele Gazzarri.}
+      label {Copyright (C) 2023 by Walter Agazzi ( github.com/tag2015 )
+Basato sul progetto originale copyright 1997-2000 by Andrea Bonomi, Emanuele Caccialanza, Daniele Gazzarri.} selected
       xywh {5 55 395 100} labelsize 12 align 128
     }
     Fl_Button {} {
@@ -426,7 +426,7 @@ win_cartaid->hide();}
   }
   Fl_Window win_intro_help {
     label {A new tabboz is born} open
-    xywh {700 459 433 202} type Double modal visible
+    xywh {700 459 433 202} type Double hide modal
   } {
     Fl_Box {} {
       label {Benvenuto in Tabboz Simulator NG!

@@ -244,7 +244,7 @@ Fl_Double_Window* GUIAbout() {
       sprintf(tabz_ver,"%s (build del %s)",VERSION,__DATE__);
       o->copy_label(tabz_ver);
     } // Fl_Box* o
-    { Fl_Box* o = new Fl_Box(5, 55, 395, 100, "Copyright (C) 2022 by Walter Agazzi ( github.com/tag2015 )\nBasato sul proget\
+    { Fl_Box* o = new Fl_Box(5, 55, 395, 100, "Copyright (C) 2023 by Walter Agazzi ( github.com/tag2015 )\nBasato sul proget\
 to originale copyright 1997-2000 by Andrea Bonomi, Emanuele Caccialanza, Danie\
 le Gazzarri.");
       o->labelsize(12);

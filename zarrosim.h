@@ -24,7 +24,7 @@
 #define TABBOZ_ZARROSIM_H
 
 /* Versione gioco... */
-#define VERSION "1.0alpha1"
+#define VERSION "1.0alpha2"
 
 /* Per attivare il Debug... */
 // #define TABBOZ_DEBUG
