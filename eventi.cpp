@@ -242,10 +242,12 @@ void Evento(bool no_alerts)
                 if(sound_active) TabbozPlaySound(1400);
 
                 i=rand() % 6;    /* estrae un metallaro a caso 0-5 */
-                if(i<=4)
+                if(i<=4) {
                     if (!no_alerts) FinestraEvento(i,i,"Rissa con un metallaro",true);  //metallari
-                else
+                }
+                else {
                     if (!no_alerts) FinestraEvento(i,i,"Rissa con un manovale",false);  //manovale
+                }
                 if (logging) {
                     sprintf(log_buf,"eventi: Rissa con metallaro/manovale n. %d",i);
                     writelog(log_buf);

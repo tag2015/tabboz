@@ -663,7 +663,7 @@ static void CaricaTutto(void)
     AbbonamentData.creditorest = new_check_i(buf_i);
 
     CellularProfilo.get("NomeAbb",AbbonamentData.nome,0,STR_MAX);
-    if(AbbonamentData.nome==0)  AbbonamentData.creditorest= -1;
+    if(AbbonamentData.nome[0]==0)  AbbonamentData.creditorest= -1;
 
     CellularProfilo.get("DualBand",buf_i,-1);
     CellularData.dual = new_check_i(buf_i);
@@ -675,7 +675,7 @@ static void CaricaTutto(void)
     CellularData.prezzo = new_check_i(buf_i);
 
     CellularProfilo.get("Nome",CellularData.nome,0,STR_MAX);
-    if(CellularData.nome==0) CellularData.stato = -100;
+    if(CellularData.nome[0]==0) CellularData.stato = -100;
 
     #ifdef TABBOZ_DEBUG
         sprintf(log_buf,"tabboz: (R) new_counter %d", new_counter);

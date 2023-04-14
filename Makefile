@@ -22,7 +22,7 @@ ifeq ($(DETECTED_OS),WIN)   #per i suoni
 	LINK += -lwinmm
 endif
 # static build
-COMPILER += -static -static-libgcc -static-libstdc++
+COMPILER += -static -static-libgcc -static-libstdc++ -Wall
 
 POSTBUILD = fltk-config --post # Required on OSX, does nothing on other platforms
 
