@@ -33,15 +33,12 @@
 #define NOTABBOZZA
 
 /* Per disattivare gli eventi casuali (e gran parte del divertimento... da usare solo per debug) */
-//#define NORANDOM
+// #define NORANDOM
 
 /* Per disattivare il timer di avanzamento automatico */
 // #define NOTIMER
 /* Intervallo timer - default: 1 ciclo (1 giorno del gioco) ogni 60 secondi */
 #define TIMER_INTERVAL  60.0
-
-/* Per abilitare parti non più necessarie (e non compilabili) */
-// #define DEADCODE
 
 
 /* DIALOG (identificativi finestre, molti non usati) */

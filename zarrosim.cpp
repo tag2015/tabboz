@@ -837,6 +837,7 @@ int vvc(int i)
 }
 
 
+/* Se il timer è abilitato, questa funzione viene eseguita ogni TIMER_INTERVAL secondi */
 void TimerCallback(void *)
 {
     if (win_principale->shown() && !win_principale->visible() && timer_active) {  // timer controllato solo se ridotto a icona
@@ -913,7 +914,8 @@ int main(int argc, char **argv)
 }
 
 
-#ifdef DEADCODE
+/* FIXME: Salva/Carica su file a scelta*/
+#if 0
 //*******************************************************************
 // Dialog x la scelta del file da aprire...
 //*******************************************************************
