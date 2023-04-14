@@ -199,17 +199,18 @@ void Evento(bool no_alerts)
             sprintf(tmp,"eventi: Licenziamento random (se i<2) i=%d",i);
             writelog(tmp);
         #endif
-        if (i < 2) {           // perdi il lavoro
-            impegno=0;
-            giorni_di_lavoro=0;
-            stipendio=0;
-            numeroditta=0;
+        if (i < 2) {  // perdi il lavoro
             if (sound_active) TabbozPlaySound(504);
             MsgIcona(ICONA_STOP);
             fl_message_title("Perdi il lavoro...");
             if (!no_alerts) fl_alert("Un bel giorno ti svegli e scopri di essere stat%c licenziat%c.",ao,ao);
             if (logging)
                 writelog("eventi: Perdi il lavoro...");
+            CalcolaTFR();
+            impegno=0;
+            giorni_di_lavoro=0;
+            stipendio=0;
+            numeroditta=0;
         }
     }
 

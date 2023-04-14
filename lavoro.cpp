@@ -169,6 +169,17 @@ void Licenziati(void)
 }
 
 
+/* Calcola i soldi spettanti dopo licenziamento */
+void CalcolaTFR(void) {
+    int tfr;
+    tfr = stipendio * (giorni_di_lavoro / 30.0 );
+    MsgIcona(ICONA_INFO);
+    fl_message_title("Trattamento di fine rapporto");
+    fl_message("Il tuo T.F.R. ammonta a %s", MostraSoldi(tfr));
+    Soldi+=tfr;
+}
+
+
 /* Incrementa l'impegno */
 void Lavora(void)
 {

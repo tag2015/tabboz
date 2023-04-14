@@ -43,6 +43,7 @@ void AggiornaLavoro(void);
 void ControllaRisposte(int n_ditta, int n_scheda);
 
 void Licenziati(void);
+void CalcolaTFR(void);
 
 void Lavora(void);
 void FaiIlLeccaculo(void);
