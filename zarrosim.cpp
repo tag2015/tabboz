@@ -111,8 +111,6 @@ char    tema_grafico[STR_MAX];
 int     logging;
 
 
-int     intro_active;       // Visualizza schermata introduttiva
-
 static  int  t_random;      // Attesa a random tra i vari eventi timer
 
 
@@ -411,7 +409,6 @@ static void ResetMe(int primavolta)
 
     if (primavolta) { // Se e' la prima volta che uso il tabboz resetta anche la configurazione...
         difficolta          =  5;
-        intro_active        =  1;
         timer_active        =  0;
         sound_active        =  1;
         euro                =  0;
@@ -591,9 +588,6 @@ static void CaricaTutto(void)
     #endif
 
     CalcolaSesso();
-
-    TabbozProfilo.get("IntroActive",intro_active,-1);
-    if (intro_active < 0) intro_active=1;
 
     TabbozProfilo.get("TimerActive",timer_active,-1);
     if (timer_active < 0) timer_active=0;
@@ -781,7 +775,6 @@ static void SalvaTutto(void)
     /* salva opzioni */
     TabbozProfilo.set("Difficolta", difficolta);
     TabbozProfilo.set("Euro", euro);
-    TabbozProfilo.set("IntroActive", intro_active);
     TabbozProfilo.set("TimerActive", timer_active);
     TabbozProfilo.set("SoundActive", sound_active);
     TabbozProfilo.set("TemaGrafico", tema_grafico);
