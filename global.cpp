@@ -155,7 +155,7 @@ const char *StrOfferteLavoro[][3] = {
         "Lascio perdere...",
     },
     {
-        "Cercasi n.6 addetti alla manutenzione delle apparecchiature, n.4 ballerine di danza classica con esperienza decennale, n.20 operai non specializzati da sfruttare e retribuire male, n.1 figli di puttana per quadri dirigenziali.",
+        "Cercasi n. 6 addetti alla manutenzione delle apparecchiature, n. 4 ballerine di danza classica con esperienza decennale, n. 20 operai non specializzati da sfruttare e retribuire male, n. 1 figli di puttana per quadri dirigenziali.",
         "Potrei provare...",
         "Non ho molta voglia di lavorare...",
     },
@@ -165,7 +165,7 @@ const char *StrOfferteLavoro[][3] = {
         "Lavoro??? Sto cercando di smettere...",
     },
     {
-        "TIBB cerca: n.10 Apprendisti, n.1 Tecnico specializzato riparazione materiale rotabile disponibili trasferte settimanali; inglese o tedesco saranno requisiti preferenziali. N.4 collaboratori/collaboaratrici età massima anni 30, esperti in vendita, automuniti.",
+        "T.I.B.B. cerca: n. 10 Apprendisti, n. 1 Tecnico specializzato riparazione materiale rotabile disponibili trasferte settimanali; inglese o tedesco saranno requisiti preferenziali. N. 4 collaboratori/collaboaratrici età massima anni 30, esperti in vendita, automuniti.",
         "Voglio trovare un posto!",
         "Che palle lavorare...",
     },
@@ -185,7 +185,7 @@ const char *StrOfferteLavoro[][3] = {
         "Ma io sono un po' tabboz...",
     },
     {
-        "La RICOPIO, e' la prima azienda al mondo che vanta innumerevoli copie illegali di libri, CD, cassette, persone, oggetti, progetti, brevetti, ecc... Cercasi personale disinvolto, di piccola presenza, da assumersi come copertura.",
+        "La RICOPIO, prima azienda al mondo che vanta innumerevoli copie illegali di libri, CD, cassette, persone, oggetti, progetti, brevetti, ecc... cerca personale disinvolto, di piccola presenza, da assumersi come copertura.",
         "Potrei provare...",
         "Piccola presenza?? No, grazie!",
     },

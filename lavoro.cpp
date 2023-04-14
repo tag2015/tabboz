@@ -52,13 +52,13 @@ bool GiornoDiLavoro(const char *titolo_dialog);
 
 STVARIE LavoroMem[] =
     {   {0, 0, 0, 0, 0, 0, 0, 0, 0, "---"},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, "Magneti Budelli"},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, "Diamine"},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, "Testmec"},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, "Ti Impalo Bene Bene"},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, "October"},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, "Magneti Budelli"}, 
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, "Acciaierie Diamine"},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, "TestMec"},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, "T.I.B.B."},
+        {1, 0, 0, 0, 0, 0, 0, 0, 0, "October Heavy"},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, "Arlond's"},
-        {1, 0, 0, 0, 0, 0, 0, 0, 0, "286 - Computer d'annata"},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, "286 - Computer d'annata"},
         {1, 0, 0, 0, 0, 0, 0, 0, 0, "Ricopio" }
     };
 //       |                    \stipendio base
