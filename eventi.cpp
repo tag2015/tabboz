@@ -317,6 +317,7 @@ void Evento(bool no_alerts)
         case 28:            // \|/
         case 29:            //  - gravi
         case 30:
+            if(sound_active) TabbozPlaySound(1402);
             MsgIcona(ICONA_AVVISO);
             sprintf(tmp,"Sei fortunat%c...",ao);
             fl_message_title(tmp);
@@ -344,10 +345,11 @@ void Evento(bool no_alerts)
                 i = (rand() % 9) + 1;  // materia a random 1-10
                 strcpy(messaggio,StrEventi[MSG_SCUOLA+(caso - 31)]); // togliamo 31 da caso per renderlo 0-9
                 strcat(messaggio,MaterieMem[i].nome);   //accoda nome materia al messaggio
+                if(sound_active) TabbozPlaySound(1403);
                 MsgIcona(ICONA_AVVISO);
                 fl_message_title("Scuola...");
                 if (!no_alerts) fl_alert(messaggio);
-           
+
                 MaterieMem[i].voto-=2;
                 if(MaterieMem[i].voto < 2) MaterieMem[i].voto=2;
                 CalcolaStudio();
