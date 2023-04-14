@@ -78,6 +78,17 @@ void AggiornaTipa(void)
         tipa_val_credito->value(CALCSOLDI(AbbonamentData.creditorest));
     else
         tipa_val_credito->value(0);
+
+    if (sesso == 'M') {
+        switch(current_tipa) {
+            case 1:  tipa_box_natalepic->show();
+                     break;
+            case 2:  tipa_box_marepic->show();
+                     break;
+            default: tipa_box_natalepic->hide();
+                     tipa_box_marepic->hide();
+        }
+    }
 }
 
 
